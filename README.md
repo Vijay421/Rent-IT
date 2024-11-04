@@ -14,7 +14,7 @@ Students:
 Step 1: copy `local_config.dist.json` to `local_config.json` and fill in the database url.
 
 > [!WARNING]
-> <u>**Do not**</u> delete the `local_config.dist.json` file!
+> **Do not** delete the `local_config.dist.json` file!
 
 Step 2: create the database with: `dotnet ef database update`
 
