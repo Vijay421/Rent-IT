@@ -18,6 +18,8 @@ Step 1: copy `local_config.dist.json` to `local_config.json` and fill in the dat
 
 Step 2: create the database with: `dotnet ef database update`
 
+Step 3: run the project with through your IDE.
+
 ### Frontend
 
 To install the packages use `npm install`
