@@ -1,4 +1,7 @@
 
+using backend.Data;
+using backend.Models;
+
 namespace backend;
 
 public class Program
@@ -6,6 +9,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddDbContext<RentalContext>();
 
         // Add services to the container.
 
@@ -13,6 +17,9 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        // Add identity.
+        builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();
 
         var app = builder.Build();
 
@@ -29,6 +36,9 @@ public class Program
 
 
         app.MapControllers();
+
+        // Add login and logout endpoints.
+        app.MapIdentityApi<User>();
 
         app.Run();
     }
