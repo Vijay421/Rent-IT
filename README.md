@@ -16,14 +16,16 @@ Step 1: copy `local_config.dist.json` to `local_config.json` and fill in the dat
 > [!WARNING]
 > **Do not** delete the `local_config.dist.json` file!
 
-Step 2: create the database with: `dotnet ef database update`
+Step 2: create the db in ssms and name it: `Rent-IT` 
 
-Step 3: run the project through your IDE.
+Step 3: create the database with: `dotnet ef database update`. It should create the identity tables in the db.
+
+Step 4: run the project through your IDE.
 
 ### Frontend
 
-To install the packages use `npm install`
+Step 1: install the packages use `npm install`
 
-To launch the frontend in dev mode use `npm run dev`
+Step 2: launch the frontend in dev mode use `npm run dev`
 
 [Work in progress.]
