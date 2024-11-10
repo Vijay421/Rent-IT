@@ -58,3 +58,7 @@ body {
   background-color: forestgreen;
   transition: background-color 0.1s;
 }
+
+.login-button:active {
+  background-color: mediumvioletred;
+}

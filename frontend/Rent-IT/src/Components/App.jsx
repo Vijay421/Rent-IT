@@ -1,5 +1,5 @@
-import Navbar from './Components/Navbar.jsx'
-import Login from "./Components/Login.jsx";
+import Navbar from './Navbar.jsx'
+import Login from "./Login.jsx";
 
 function App() {
 
