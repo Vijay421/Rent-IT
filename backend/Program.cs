@@ -26,7 +26,7 @@ public class Program
         builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<RentalContext>().AddDefaultTokenProviders();
 
         // Add identity endpoints.
-        builder.Services.AddIdentityApiEndpoints<Admin>().AddEntityFrameworkStores<RentalContext>();
+        builder.Services.AddIdentityApiEndpoints<ElevatedUser>().AddEntityFrameworkStores<RentalContext>();
         builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();
 
         var app = builder.Build();
@@ -46,7 +46,7 @@ public class Program
         app.MapControllers();
 
         // Add registering, login and logout endpoints.
-        app.MapIdentityApi<Admin>();
+        app.MapIdentityApi<ElevatedUser>();
         app.MapIdentityApi<User>();
 
         app.Run();

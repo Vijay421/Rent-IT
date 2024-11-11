@@ -2,7 +2,7 @@
 
 namespace backend.Models
 {
-    public class Admin : IdentityUser
+    public class ElevatedUser : IdentityUser
     {
     }
 }

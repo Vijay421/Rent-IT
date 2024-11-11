@@ -222,11 +222,11 @@ namespace backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("backend.Models.Admin", b =>
+            modelBuilder.Entity("backend.Models.ElevatedUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("ElevatedUsers", (string)null);
 
                     b.HasData(
                         new
@@ -325,11 +325,11 @@ namespace backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.Admin", b =>
+            modelBuilder.Entity("backend.Models.ElevatedUser", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithOne()
-                        .HasForeignKey("backend.Models.Admin", "Id")
+                        .HasForeignKey("backend.Models.ElevatedUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
