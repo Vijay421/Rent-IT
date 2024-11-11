@@ -1,6 +1,7 @@
 
 using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace backend;
 
@@ -13,7 +14,6 @@ public class Program
 
         AddLocalConfig(builder);
         
-
         // Add services to the container.
         builder.Services.AddControllers();
 
@@ -21,7 +21,12 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+
+        // Add identity tokens.
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<RentalContext>().AddDefaultTokenProviders();
+
         // Add identity endpoints.
+        builder.Services.AddIdentityApiEndpoints<Admin>().AddEntityFrameworkStores<RentalContext>();
         builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();
 
         var app = builder.Build();
@@ -41,6 +46,7 @@ public class Program
         app.MapControllers();
 
         // Add registering, login and logout endpoints.
+        app.MapIdentityApi<Admin>();
         app.MapIdentityApi<User>();
 
         app.Run();
