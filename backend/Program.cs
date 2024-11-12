@@ -1,7 +1,6 @@
 
 using backend.Data;
 using backend.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace backend;
 
@@ -37,7 +36,6 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-
 
         app.MapControllers();
 
