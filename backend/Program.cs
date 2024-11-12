@@ -21,12 +21,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-
-        // Add identity tokens.
-        builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<RentalContext>().AddDefaultTokenProviders();
-
-        // Add identity endpoints.
-        builder.Services.AddIdentityApiEndpoints<ElevatedUser>().AddEntityFrameworkStores<RentalContext>();
+        // Add identity store.
         builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();
 
         var app = builder.Build();
@@ -40,18 +35,14 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
 
         app.MapControllers();
 
         // Add registering, login and logout endpoints.
-        // TODO: should probably rename "elevated" to something clandestine.
-        app.MapGroup("/auth")
-            .MapIdentityApi<User>();
-
-        app.MapGroup("/auth/elevated")
-            .MapIdentityApi<ElevatedUser>();
+        app.MapGroup("/auth").MapIdentityApi<User>();
 
         app.Run();
     }
