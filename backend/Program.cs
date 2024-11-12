@@ -46,8 +46,12 @@ public class Program
         app.MapControllers();
 
         // Add registering, login and logout endpoints.
-        app.MapIdentityApi<ElevatedUser>();
-        app.MapIdentityApi<User>();
+        // TODO: should probably rename "elevated" to something clandestine.
+        app.MapGroup("/auth")
+            .MapIdentityApi<User>();
+
+        app.MapGroup("/auth/elevated")
+            .MapIdentityApi<ElevatedUser>();
 
         app.Run();
     }
