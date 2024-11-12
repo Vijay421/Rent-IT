@@ -41,7 +41,7 @@ public class Program
 
         app.MapControllers();
 
-        // Add registering, login and logout endpoints.
+        // Add identity endpoints.
         app.MapGroup("/auth").MapIdentityApi<User>();
 
         app.Run();
