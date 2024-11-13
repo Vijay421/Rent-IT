@@ -1,6 +1,7 @@
 
 using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -33,8 +34,14 @@ public class Program
             options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
-        // Add identity store.
-        builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();
+        // Configure the identity user with roles and a token provider.
+        builder.Services.AddIdentityCore<User>()
+            .AddRoles<IdentityRole>() // This codes originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-8.0#add-role-services-to-identity
+            .AddEntityFrameworkStores<RentalContext>()
+            .AddDefaultTokenProviders();
+
+        // Add identity endpoints.
+        builder.Services.AddIdentityApiEndpoints<User>();
 
         var app = builder.Build();
 
