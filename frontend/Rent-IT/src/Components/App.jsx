@@ -1,5 +1,6 @@
 import Navbar from './Navbar.jsx'
 import Login from "./Login.jsx";
+import Footer from "./Footer.jsx"
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
         <>
             <Navbar />
             <Login />
+            {/*<Footer />*/}
         </>
     )
 }
