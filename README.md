@@ -29,3 +29,7 @@ Step 1: install the packages use `npm install`
 Step 2: launch the frontend in dev mode use `npm run dev`
 
 [Work in progress.]
+
+## Use swagger with authorizations
+
+This [video](https://youtu.be/8J3nuUegtL4?si=ljkSM-gqVgWBbSYJ&t=1099) has been used to make authorizations possible with Swagger.

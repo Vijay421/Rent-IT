@@ -1,6 +1,8 @@
 
 using backend.Data;
 using backend.Models;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace backend;
 
@@ -18,7 +20,18 @@ public class Program
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            // The following code (in this lambda function) has been taken from: https://youtu.be/8J3nuUegtL4?si=IjVjG_w903US27EH
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+            });
+
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
+        });
 
         // Add identity store.
         builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<RentalContext>();

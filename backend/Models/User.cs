@@ -4,7 +4,9 @@ namespace backend.Models
 {
     public class User : IdentityUser
     {
-        public BackOffice? BackOffice { get; set; }
-        public FrontOffice? FrontOffice { get; set; }
+        public BackOfficeMedewerker? BackOffice { get; set; }
+        public FrontOfficeMedewerker? FrontOffice { get; set; }
+        public ZakelijkeHuurder? ZakelijkeHuurder { get; set; }
+        public ParticuliereHuurder? ParticuliereHuurder { get; set; }
     }
 }

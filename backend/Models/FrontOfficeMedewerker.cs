@@ -1,6 +1,6 @@
 ﻿namespace backend.Models
 {
-    public class BackOffice
+    public class FrontOfficeMedewerker
     {
         public string Id { get; set; }
     }
