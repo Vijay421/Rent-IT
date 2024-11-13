@@ -35,4 +35,4 @@ Step 2: launch the frontend in dev mode use `npm run dev`
 This [video](https://youtu.be/8J3nuUegtL4?si=ljkSM-gqVgWBbSYJ&t=1099) has been used to make authorizations possible with Swagger.
 
 > [!IMPORTANT]
-> Besure to add 'bearer' in front of the token, when filling in the token in Swagger.
+> Besure to add 'Bearer' in front of the token, when filling in the token in Swagger. Like so 'Bearer [insert token here!]'.
