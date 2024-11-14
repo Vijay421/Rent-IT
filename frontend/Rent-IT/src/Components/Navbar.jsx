@@ -1,4 +1,5 @@
 import TempImage from '../assets/temp.jpg'
+import NavButton from './NavButton.jsx'
 
 function Navbar() {
     return(
@@ -7,9 +8,9 @@ function Navbar() {
                 <img src={TempImage} width="70"/>
 
                 <div className='navigation-buttons-div'>
-                    <button>button1</button>
-                    <button>button2</button>
-                    <button>button3</button>
+                    <NavButton title={"button"}></NavButton>
+                    <NavButton title={"button"}></NavButton>
+                    <NavButton title={"button"}></NavButton>
                 </div>
                 <div className='login-buttons-div'>
                     <button>Login</button>
