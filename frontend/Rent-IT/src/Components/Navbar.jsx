@@ -1,10 +1,10 @@
+import TempImage from '../assets/temp.jpg'
+
 function Navbar() {
-
-
     return(
         <div>
             <nav className='navbar'>
-                <a href="#"><img src="#" alt="CarAndAll logo"/></a>
+                <img src={TempImage} width="70"/>
 
                 <div className='navigation-buttons-div'>
                     <button>button1</button>

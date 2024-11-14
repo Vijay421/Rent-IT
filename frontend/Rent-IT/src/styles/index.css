@@ -8,22 +8,24 @@ body {
   width: 100%;
   align-items: center;
   overflow: hidden;
-  background-image: url("../assets/background2.png");
+  background-image: url("../assets/backgroundblurred.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom;
 }
 
+/*Entire navigation bar*/
 .navbar {
   background-color: #c8d8e4;
   display: flex;
   align-items: center;
   height: clamp(20px, 4vw, 150px);
   min-height: 70px;
-  padding: 0 20px;
+  padding: 0 20px 0 15px;
 }
 
+/*Div for buttons in nagivation bar*/
 .navigation-buttons-div {
   background-color: #c8d8e4;
   display: flex;
@@ -32,7 +34,7 @@ body {
   width: 75%;
   height: 100%;
 }
-
+/*The buttons inside the said div above*/
 .navigation-buttons-div button {
   background-color: #2b6777;
   color: white;
@@ -40,15 +42,17 @@ body {
   min-width: 50px;
   width: 10%;
   font-size: clamp(10px, 1.3vw, 3vw);
-  border-radius: 1vw;
+  border-radius: 0.5vw;
   border: transparent;
   margin-left: 1vw;
 }
 
+/*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
 .navigation-buttons-div button:hover, .login-buttons-div button:hover {
   background-color: #52ab98;
 }
 
+/*Div for the login buttons in navigation bar*/
 .login-buttons-div {
   background-color: #c8d8e4;
   display: flex;
@@ -58,6 +62,7 @@ body {
   height: 100%;
 }
 
+/*Buttons inside said div above*/
 .login-buttons-div button {
   background-color: #2b6777;
   color: white;
@@ -73,7 +78,7 @@ body {
 
 
 
-
+/*Login box that contains all the login fields in center of screen*/
 .login-box {
   background-color: white;
   display: flex;
@@ -90,17 +95,20 @@ body {
   border: 2px solid black
 }
 
+/*Large text at the top of the login box*/
 .login-text {
   margin: 30px 0 0 0;
   font-size: clamp(2.5rem, 3vw, 3rem);
 }
 
+/*Input fields inside the login box*/
 .input-field {
   width: 66%;
   height: 30px;
   font-size: 1.25rem;
 }
 
+/*Input text above the input fields inside the login box*/
 .input-text {
   /*background-color: lightgreen;*/
   margin-right: auto;
@@ -110,6 +118,7 @@ body {
   text-align: left;
 }
 
+/*Login button at the bottom of the login box*/
 .login-button {
   width: 120px;
   height: 50px;
@@ -120,20 +129,24 @@ body {
   color: white;
 }
 
+/*Action for hovering on the login button*/
 .login-button:hover {
   background-color: dimgray;
   transition: background-color 0.1s;
 }
 
+/*Action for when the login button is active (clicking)*/
 .login-button:active {
   background-color: #52ab98;
 }
 
+/*Hyperlink div under the login button*/
 .login-box-hyperlinks {
   display: flex;
   flex-direction: column;
 }
 
+/*Hyperlinks inside said div above inside the login box*/
 .login-box-hyperlinks a {
   /*background-color: mediumvioletred;*/
   text-align: center;
@@ -142,6 +155,7 @@ body {
   color: #0000EE;
 }
 
+/*Action for when hyperlinks inside hyperlink div is active (clicking)*/
 .login-box-hyperlinks a:active {
   color: #2b6777;
 }
@@ -157,11 +171,13 @@ footer {
   padding: 0 1vw;
 }
 
+/*Hyperlinks inside footer*/
 footer a {
   text-decoration: none;
   color: blue;
 }
 
+/*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
 footer a:active, footer a:hover, footer a:visited {
   color: blue;
 }
