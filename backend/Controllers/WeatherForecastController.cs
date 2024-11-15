@@ -19,6 +19,19 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
+    [HttpPost]
+    public string ShouldBePublic()
+    {
+        return "hello world";
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpPut(Name = "AdminOnly")]
+    public string AdminOnly()
+    {
+        return "please work!";
+    }
+
     [Authorize]
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()

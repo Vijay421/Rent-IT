@@ -6,18 +6,39 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Data
 {
+    public enum RoleName
+    {
+        ADMIN,
+    }
+
     public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
+        public Dictionary<RoleName, string> RoleIds { get; set; }
+
+        public RoleConfiguration()
+        {
+            RoleIds = new Dictionary<RoleName, string>();
+        }
+
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
+            IdentityRole adminRole = new IdentityRole
+            {
+                //Id = "admin-id",
+                Id = Guid.NewGuid().ToString(), // TODO: figure out how this works.
+                Name = "admin",
+                NormalizedName = "ADMIN",
+            };
+
             builder.HasData
             (
-                new IdentityRole
+                /*new IdentityRole
                 {
                     Name = "admin",
                     NormalizedName = "ADMIN",
-                },
-                new IdentityRole
+                },*/
+                adminRole
+                /*new IdentityRole
                 {
                     Name = "backoffice_medewerker",
                     NormalizedName = "BACKOFFICE_MEDEWERKER",
@@ -36,8 +57,10 @@ namespace backend.Data
                 {
                     Name = "particuliere_huurder",
                     NormalizedName = "PARTICULIERE_HUURDER",
-                }
+                }*/
             );
+
+            RoleIds.Add(RoleName.ADMIN, adminRole.Id);
         }
     }
 }

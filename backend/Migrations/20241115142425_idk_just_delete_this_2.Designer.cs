@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20241115142425_idk_just_delete_this_2")]
+    partial class idk_just_delete_this_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "392a3a73-8728-4de6-a185-5eb7c71976b9",
+                            Id = "6dbece94-a05b-47a8-95af-8eec3ba0b77f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -142,6 +145,13 @@ namespace backend.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "935b949c-c866-4f81-939d-7638ddd6b336",
+                            RoleId = "6dbece94-a05b-47a8-95af-8eec3ba0b77f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -276,6 +286,24 @@ namespace backend.Migrations
                     b.HasIndex("ZakelijkeHuurderId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "935b949c-c866-4f81-939d-7638ddd6b336",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e5726f9b-0ade-485f-ad70-f938f1767011",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBiFT0ne7FPvN+zBGbgJb9jTN2KEbhGByR4EmQNdOo+RaheTve4LaFelHllB3Z+0aw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "07c678b9-42ac-4756-9c2b-a97bf59f370d",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
