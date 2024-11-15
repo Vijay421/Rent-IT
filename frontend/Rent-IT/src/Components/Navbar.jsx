@@ -4,14 +4,14 @@ import NavButton from './NavButton.jsx';
 function Navbar() {
     return(
         <nav className='navbar'>
-            <img src={TempImage} width="70" alt="CarAndAll logo"/>
+            <a href="#"><img src={TempImage} width="70" alt="CarAndAll logo"/></a>
 
-            <ul className='navigation-buttons-div'>
+            <ul className='navbar__navigation-buttons'>
                 <NavButton title="button"></NavButton>
                 <NavButton title="button"></NavButton>
                 <NavButton title="button"></NavButton>
             </ul>
-            <ul className='login-buttons-div'>
+            <ul className='navbar__login-box__button'>
                 <button>Login</button>
                 <button>Register</button>
             </ul>

@@ -18,17 +18,17 @@ function Login() {
 
     return (
         <main className='login-box'>
-            <h1 className='login-text'>Login</h1>
+            <h1 className='login-box__text'>Login</h1>
 
-            <h2 className='input-text'>E-mail adres:</h2>
-            <input className='input-field' type="text" value={email} onChange={handleEmail}/>
+            <h2 className='login-box__input-text'>E-mail adres:</h2>
+            <input className='login-box__input-field' type="text" value={email} onChange={handleEmail}/>
 
-            <h2 className='input-text'>Wachtwoord:</h2>
-            <input className='input-field' type='password' value={password} onChange={handlePassword}/>
+            <h2 className='login-box__input-text'>Wachtwoord:</h2>
+            <input className='login-box__input-field' type='password' value={password} onChange={handlePassword}/>
 
-            <button className='login-button' type='button'>Login</button>
+            <button className='login-box__button' type='button'>Login</button>
 
-            <nav className="login-box-hyperlinks">
+            <nav className="login-box__hyperlinks">
                 <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
                 <a href="#">Geen account? Maak hier een account aan</a>
             </nav>

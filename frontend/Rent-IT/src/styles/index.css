@@ -26,7 +26,7 @@ body {
 }
 
 /*Div for buttons in nagivation bar*/
-.navigation-buttons-div {
+.navbar__navigation-buttons {
   background-color: #c8d8e4;
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@ body {
   height: 100%;
 }
 /*The buttons inside the said div above*/
-.navigation-buttons-div button {
+.navbar__navigation-buttons button {
   background-color: #2b6777;
   color: white;
   height: 50%;
@@ -48,12 +48,13 @@ body {
 }
 
 /*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
-.navigation-buttons-div button:hover, .login-buttons-div button:hover {
+.navbar__navigation-buttons button:hover, .navbar__login-box__button button:hover {
   background-color: #52ab98;
+  cursor: pointer;
 }
 
 /*Div for the login buttons in navigation bar*/
-.login-buttons-div {
+.navbar__login-box__button {
   background-color: #c8d8e4;
   display: flex;
   align-items: center;
@@ -63,7 +64,7 @@ body {
 }
 
 /*Buttons inside said div above*/
-.login-buttons-div button {
+.navbar__login-box__button button {
   background-color: #2b6777;
   color: white;
   height: 50%;
@@ -96,20 +97,20 @@ body {
 }
 
 /*Large text at the top of the login box*/
-.login-text {
+.login-box__text {
   margin: 30px 0 0 0;
   font-size: clamp(2.5rem, 3vw, 3rem);
 }
 
 /*Input fields inside the login box*/
-.input-field {
+.login-box__input-field {
   width: 66%;
   height: 30px;
   font-size: 1.25rem;
 }
 
 /*Input text above the input fields inside the login box*/
-.input-text {
+.login-box__input-text {
   /*background-color: lightgreen;*/
   margin-right: auto;
   margin-left: 80px;
@@ -119,7 +120,7 @@ body {
 }
 
 /*Login button at the bottom of the login box*/
-.login-button {
+.login-box__button {
   width: 120px;
   height: 50px;
   font-size: 1.5rem;
@@ -130,25 +131,25 @@ body {
 }
 
 /*Action for hovering on the login button*/
-.login-button:hover {
+.login-box__button:hover {
   background-color: dimgray;
   transition: background-color 0.1s;
+  cursor: pointer;
 }
 
 /*Action for when the login button is active (clicking)*/
-.login-button:active {
+.login-box__button:active {
   background-color: #52ab98;
 }
 
 /*Hyperlink div under the login button*/
-.login-box-hyperlinks {
+.login-box__hyperlinks {
   display: flex;
   flex-direction: column;
 }
 
 /*Hyperlinks inside said div above inside the login box*/
-.login-box-hyperlinks a {
-  /*background-color: mediumvioletred;*/
+.login-box__hyperlinks a {
   text-align: center;
   margin-bottom: 5px;
   font-size: 1em;
@@ -156,7 +157,7 @@ body {
 }
 
 /*Action for when hyperlinks inside hyperlink div is active (clicking)*/
-.login-box-hyperlinks a:active {
+.login-box__hyperlinks a:active {
   color: #2b6777;
 }
 
