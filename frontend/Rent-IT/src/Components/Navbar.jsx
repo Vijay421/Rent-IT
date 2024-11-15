@@ -1,5 +1,7 @@
 import TempImage from '../assets/temp.jpg';
 import NavButton from './NavButton.jsx';
+import '../styles/Navbar.css';
+
 
 function Navbar() {
     return(
