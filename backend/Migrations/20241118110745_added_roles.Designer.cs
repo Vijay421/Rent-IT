@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241115135032_a_test_delete_this")]
-    partial class a_test_delete_this
+    [Migration("20241118110745_added_roles")]
+    partial class added_roles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,9 +54,33 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f5335f6b-93d4-4bc5-9491-bab5cda39ebf",
+                            Id = "e277a8e7-db76-41ca-969f-cadc77a8a181",
                             Name = "admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "fc49af1a-1f3e-4baa-b536-ef2ea9f1c65e",
+                            Name = "backoffice_medewerker",
+                            NormalizedName = "BACKOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "410cc187-b6dd-49bc-8023-144a00e05d58",
+                            Name = "frontoffice_medewerker",
+                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "a40ea996-32b7-4cdc-ab08-ba561d372814",
+                            Name = "zakelijke_huurder",
+                            NormalizedName = "ZAKELIJKE_HUURDER"
+                        },
+                        new
+                        {
+                            Id = "a90a301e-585d-455e-9447-3e04a016fe57",
+                            Name = "particuliere_huurder",
+                            NormalizedName = "PARTICULIERE_HUURDER"
                         });
                 });
 

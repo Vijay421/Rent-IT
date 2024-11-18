@@ -11,11 +11,6 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        /*var passwordHasher = new PasswordHasher<User>();
-        var result = passwordHasher.VerifyHashedPassword(null, "AQAAAAIAAYagAAAAEPIhXVL5igU8vnYKZ1IV1+bZqayZkl6ZnE/5WwBiwSdBXpvyXLDoGgDD1V75eLiSgQ==", "Qwerty123!");
-        Console.WriteLine(result); // Should be Success if hashes match
-
-        return;*/
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
         builder.Services.AddDbContext<RentalContext>();
@@ -68,27 +63,7 @@ public class Program
         // Add identity endpoints.
         app.MapGroup("/auth").MapIdentityApi<User>();
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var serviceProvider = scope.ServiceProvider;
-
-            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            var signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
-
-            var result = await signInManager.PasswordSignInAsync("admin", "Qwerty123!", false, false);
-            //var result = await signInManager.PasswordSignInAsync("email@email.com", "Qwerty123!", false, false);
-
-            //var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
-            //Console.WriteLine($"error: {errorText}");
-
-            Console.WriteLine(result.ToString());
-            // TODO: delete the unnecessary migrations files.
-            return;
-
-
-            var userSeeder = new UserSeeder();
-            await userSeeder.Seed(userManager);
-        }
+        await SeedUsers(app);
 
         app.Run();
     }
@@ -96,8 +71,6 @@ public class Program
     /// <summary>
     /// Adds the local config file to the provided builder. Will throw an error if there is no file named: 'local_config.json'.
     /// </summary>
-    /// <param name="builder"></param>
-    /// <exception cref="Exception"></exception>
     private static void AddLocalConfig(WebApplicationBuilder builder)
     {
         string configFile = "local_config.json";
@@ -107,5 +80,23 @@ public class Program
         }
 
         builder.Configuration.AddJsonFile(configFile);
+    }
+
+    /// <summary>
+    /// Creates default user accounts.
+    /// </summary>
+    private static async Task SeedUsers(WebApplication app)
+    {
+        // The usage of 'scope' originates from: https://learn.microsoft.com/en-us/dotnet/api/system.guid.newguid?view=net-8.0
+        using (var scope = app.Services.CreateScope())
+        {
+            var serviceProvider = scope.ServiceProvider;
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
+
+            var userSeeder = new UserSeeder();
+            await userSeeder.Seed(userManager);
+        }
     }
 }

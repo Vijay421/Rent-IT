@@ -51,9 +51,33 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "392a3a73-8728-4de6-a185-5eb7c71976b9",
+                            Id = "e277a8e7-db76-41ca-969f-cadc77a8a181",
                             Name = "admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "fc49af1a-1f3e-4baa-b536-ef2ea9f1c65e",
+                            Name = "backoffice_medewerker",
+                            NormalizedName = "BACKOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "410cc187-b6dd-49bc-8023-144a00e05d58",
+                            Name = "frontoffice_medewerker",
+                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "a40ea996-32b7-4cdc-ab08-ba561d372814",
+                            Name = "zakelijke_huurder",
+                            NormalizedName = "ZAKELIJKE_HUURDER"
+                        },
+                        new
+                        {
+                            Id = "a90a301e-585d-455e-9447-3e04a016fe57",
+                            Name = "particuliere_huurder",
+                            NormalizedName = "PARTICULIERE_HUURDER"
                         });
                 });
 

@@ -1,8 +1,6 @@
 ﻿using backend.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace backend.Data
 {
@@ -26,9 +24,6 @@ namespace backend.Data
 
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
-            //_userSeeder.Seed(_serviceProvider, modelBuilder, roleConfig.RoleIds);
-
-            //modelBuilder.Entity<User>().HasData(new User() { Id = "1", UserName = "user1", NormalizedUserName = "USER1", Email = "test@email.com", NormalizedEmail = "TEST@EMAIL.COM", EmailConfirmed = true, PasswordHash = "AQAAAAEAACcQAAAAEJ9Z", SecurityStamp = "QJ9Z", ConcurrencyStamp = "QJ9Z", PhoneNumber = "1234567890", PhoneNumberConfirmed = true, TwoFactorEnabled = false, LockoutEnd = null, LockoutEnabled = true, AccessFailedCount = 0, });*/
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -7,14 +7,14 @@ namespace backend.Data
     public class UserSeeder
     {
           public async Task Seed(UserManager<User> userManager)
-        {
+          {
+            // Create the admin only when it does not exists already.
             var admin = await userManager.FindByNameAsync("admin");
             if (admin != null)
             {
                 return;
             }
 
-            Console.WriteLine("Will crete the admin user");
             admin = new User
             {
                 UserName = "admin",
@@ -30,33 +30,8 @@ namespace backend.Data
             else
             {
                 var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
-                Console.WriteLine($"error: {errorText}");
+                Console.Error.WriteLine($"error: {errorText}");
             }
-
-            return;
-
-            /*var adminId = Guid.NewGuid().ToString();
-            var passwordHasher = new PasswordHasher<User>();
-
-            var admin = new User
-            {
-                Id = adminId,
-                UserName = "admin",
-                NormalizedUserName = "ADMIN",
-                Email = "admin@admin.com",
-                NormalizedEmail = "ADMIN@ADMIN.COM",
-                EmailConfirmed = true,
-                PasswordHash = passwordHasher.HashPassword(null, "Qwerty123!") // TODO: figure out how this works.
-            };
-
-            modelBuilder.Entity<User>().HasData(admin);
-
-            // TODO: add link to fluent api.
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                UserId = adminId,
-                RoleId = roleIds[RoleName.ADMIN],
-            });*/
         }
     }
 }
