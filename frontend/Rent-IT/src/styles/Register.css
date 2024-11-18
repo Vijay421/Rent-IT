@@ -1,4 +1,4 @@
-/*Login box that contains all the login fields in center of screen*/
+/*register box that contains all the register fields in center of screen*/
 .register-box {
     background-color: white;
     display: flex;
@@ -15,32 +15,32 @@
     border: 2px solid black
 }
 
-/*Large text at the top of the login box*/
+/*Large text at the top of the register box*/
 .register-box__text {
     margin: 30px 0 0 0;
     font-size: clamp(2.5rem, 3vw, 3rem);
 }
 
-/*Input fields inside the login box*/
+/*Input fields inside the register box*/
 .register-box__input-field {
     width: 66%;
     height: 30px;
     font-size: 1.25rem;
 }
 
-/*Input text above the input fields inside the login box*/
+/*Input text above the input fields inside the register box*/
 .register-box__input-text {
     /*background-color: lightgreen;*/
     margin-right: auto;
     margin-left: 80px;
     padding: 3px 0;
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: left;
 }
 
-/*Login button at the bottom of the login box*/
+/*Register button at the bottom of the register box*/
 .register-box__button {
-    width: 120px;
+    width: 140px;
     height: 50px;
     font-size: 1.5rem;
     margin: 20px;
@@ -49,25 +49,25 @@
     color: white;
 }
 
-/*Action for hovering on the login button*/
+/*Action for hovering on the register button*/
 .register-box__button:hover {
     background-color: dimgray;
     transition: background-color 0.1s;
     cursor: pointer;
 }
 
-/*Action for when the login button is active (clicking)*/
+/*Action for when the register button is active (clicking)*/
 .register-box__button:active {
     background-color: #52ab98;
 }
 
-/*Hyperlink div under the login button*/
+/*Hyperlink div under the register button*/
 .register-box__hyperlinks {
     display: flex;
     flex-direction: column;
 }
 
-/*Hyperlinks inside said div above inside the login box*/
+/*Hyperlinks inside said div above inside the register box*/
 .register-box__hyperlinks a {
     text-align: center;
     margin-bottom: 5px;
