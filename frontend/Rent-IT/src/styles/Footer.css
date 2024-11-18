@@ -1,0 +1,17 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1vw;
+    padding: 0 1vw;
+}
+
+/*Hyperlinks inside footer*/
+footer a {
+    text-decoration: none;
+    color: blue;
+}
+
+/*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
+footer a:active, footer a:hover, footer a:visited {
+    color: blue;
+}

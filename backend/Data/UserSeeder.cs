@@ -18,7 +18,7 @@ namespace backend.Data
             if (!adminConfig.Exists())
             {
                 return;
-            } 
+            }
 
             // Create the admin only when it does not exists already.
             var admin = await userManager.FindByNameAsync("admin");
