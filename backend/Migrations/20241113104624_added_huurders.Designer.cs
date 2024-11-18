@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241104192609_initial")]
-    partial class initial
+    [Migration("20241113104624_added_huurders")]
+    partial class added_huurders
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,36 @@ namespace backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BackOfficeMedewerker");
+                });
+
+            modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FrontOfficeMedewerker");
+                });
+
+            modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParticuliereHuurder");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -165,6 +195,9 @@ namespace backend.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("BackOfficeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -176,6 +209,9 @@ namespace backend.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FrontOfficeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -190,6 +226,9 @@ namespace backend.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ParticuliereHuurderId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -210,7 +249,14 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("ZakelijkeHuurderId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BackOfficeId");
+
+                    b.HasIndex("FrontOfficeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -220,7 +266,21 @@ namespace backend.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("ParticuliereHuurderId");
+
+                    b.HasIndex("ZakelijkeHuurderId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ZakelijkeHuurder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -272,6 +332,33 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.HasOne("backend.Models.BackOfficeMedewerker", "BackOffice")
+                        .WithMany()
+                        .HasForeignKey("BackOfficeId");
+
+                    b.HasOne("backend.Models.FrontOfficeMedewerker", "FrontOffice")
+                        .WithMany()
+                        .HasForeignKey("FrontOfficeId");
+
+                    b.HasOne("backend.Models.ParticuliereHuurder", "ParticuliereHuurder")
+                        .WithMany()
+                        .HasForeignKey("ParticuliereHuurderId");
+
+                    b.HasOne("backend.Models.ZakelijkeHuurder", "ZakelijkeHuurder")
+                        .WithMany()
+                        .HasForeignKey("ZakelijkeHuurderId");
+
+                    b.Navigation("BackOffice");
+
+                    b.Navigation("FrontOffice");
+
+                    b.Navigation("ParticuliereHuurder");
+
+                    b.Navigation("ZakelijkeHuurder");
                 });
 #pragma warning restore 612, 618
         }

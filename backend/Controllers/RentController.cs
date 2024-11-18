@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,5 +27,25 @@ public class RentController : ControllerBase
     public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
     {
         return await _context.Users.ToListAsync();
+    }
+
+    [HttpGet("everyone")]
+    public string EveryoneCouldAccesthis()
+    {
+        return "hello everyone";
+    }
+
+    [Authorize]
+    [HttpGet("users-only")]
+    public string OnlyUsersCanAccessThis()
+    {
+        return "hello user";
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("admins-only")]
+    public string OnlyAdminsCanAccessThis()
+    {
+        return "hello admin";
     }
 }
