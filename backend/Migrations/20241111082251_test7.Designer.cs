@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20241111082251_test7")]
+    partial class test7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,38 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "e277a8e7-db76-41ca-969f-cadc77a8a181",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "fc49af1a-1f3e-4baa-b536-ef2ea9f1c65e",
-                            Name = "backoffice_medewerker",
-                            NormalizedName = "BACKOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "410cc187-b6dd-49bc-8023-144a00e05d58",
-                            Name = "frontoffice_medewerker",
-                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "a40ea996-32b7-4cdc-ab08-ba561d372814",
-                            Name = "zakelijke_huurder",
-                            NormalizedName = "ZAKELIJKE_HUURDER"
-                        },
-                        new
-                        {
-                            Id = "a90a301e-585d-455e-9447-3e04a016fe57",
-                            Name = "particuliere_huurder",
-                            NormalizedName = "PARTICULIERE_HUURDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -187,34 +158,44 @@ namespace backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
+            modelBuilder.Entity("backend.Models.Bedrijf", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BackOfficeMedewerker");
-                });
+                    b.ToTable("Bedrijven");
 
-            modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FrontOfficeMedewerker");
-                });
-
-            modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ParticuliereHuurder");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bedrijf1",
+                            PhoneNumber = "1234567890"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bedrijf2",
+                            PhoneNumber = "1234567891"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bedrijf3",
+                            PhoneNumber = "1234567892"
+                        });
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -224,9 +205,6 @@ namespace backend.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("BackOfficeId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -238,9 +216,6 @@ namespace backend.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FrontOfficeId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -255,9 +230,6 @@ namespace backend.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("ParticuliereHuurderId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -278,14 +250,7 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("ZakelijkeHuurderId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BackOfficeId");
-
-                    b.HasIndex("FrontOfficeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -295,21 +260,26 @@ namespace backend.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ParticuliereHuurderId");
-
-                    b.HasIndex("ZakelijkeHuurderId");
-
                     b.ToTable("AspNetUsers", (string)null);
-                });
 
-            modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ZakelijkeHuurder");
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "QJ9Z",
+                            Email = "test@email.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "TEST@EMAIL.COM",
+                            NormalizedUserName = "USER1",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ9Z",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "QJ9Z",
+                            TwoFactorEnabled = false,
+                            UserName = "user1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -361,33 +331,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.HasOne("backend.Models.BackOfficeMedewerker", "BackOffice")
-                        .WithMany()
-                        .HasForeignKey("BackOfficeId");
-
-                    b.HasOne("backend.Models.FrontOfficeMedewerker", "FrontOffice")
-                        .WithMany()
-                        .HasForeignKey("FrontOfficeId");
-
-                    b.HasOne("backend.Models.ParticuliereHuurder", "ParticuliereHuurder")
-                        .WithMany()
-                        .HasForeignKey("ParticuliereHuurderId");
-
-                    b.HasOne("backend.Models.ZakelijkeHuurder", "ZakelijkeHuurder")
-                        .WithMany()
-                        .HasForeignKey("ZakelijkeHuurderId");
-
-                    b.Navigation("BackOffice");
-
-                    b.Navigation("FrontOffice");
-
-                    b.Navigation("ParticuliereHuurder");
-
-                    b.Navigation("ZakelijkeHuurder");
                 });
 #pragma warning restore 612, 618
         }

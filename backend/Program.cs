@@ -15,6 +15,18 @@ public class Program
         builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
         builder.Services.AddDbContext<RentalContext>();
 
+        // Adds CORS services
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+
         AddLocalConfig(builder);
         
         // Add services to the container.
@@ -52,6 +64,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        // Use the CORS policy.
+        app.UseCors("AllowAllOrigins");
 
         app.UseHttpsRedirection();
 
