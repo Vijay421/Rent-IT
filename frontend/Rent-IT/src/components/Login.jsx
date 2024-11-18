@@ -19,21 +19,46 @@ function Login() {
     }
 
     return (
-        <main className='login-box'>
-            <h1 className='login-box__text'>Login</h1>
+        <main className='login-page'>
+            <div className='login-box'>
+                <h1 className='login-box__text'>Login</h1>
 
-            <h2 className='login-box__input-text'>E-mail adres:</h2>
-            <input className='login-box__input-field' type="text" value={email} onChange={handleEmail}/>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                }}>
+                    <div className="form-group">
+                        <label htmlFor="login-email" className='login-box__input-text'>E-mail adres:</label>
+                        <input
+                            id="login-email"
+                            className='login-box__input-field'
+                            type="text"
+                            placeholder="Vul hier uw e-mailadres in"
+                            value={email}
+                            onChange={handleEmail}
+                        />
+                    </div>
 
-            <h2 className='login-box__input-text'>Wachtwoord:</h2>
-            <input className='login-box__input-field' type='password' value={password} onChange={handlePassword}/>
+                    <div className="form-group">
+                        <label htmlFor="login-password" className='login-box__input-text'>Wachtwoord:</label>
+                        <input
+                            id="login-password"
+                            className='login-box__input-field'
+                            type='password'
+                            placeholder="Vul hier uw wachtwoord in"
+                            value={password}
+                            onChange={handlePassword}
+                        />
+                    </div>
 
-            <button className='login-box__button' type='button'>Login</button>
+                    <button className='login-box__button' type='submit'>Login</button>
 
-            <nav className="login-box__hyperlinks">
-                <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
-                <a href="#">Geen account? Maak hier een account aan</a>
-            </nav>
+                    <nav className="login-box__hyperlinks">
+                        <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
+                        <a href="#">Geen account? Maak hier een account aan</a>
+                    </nav>
+                </form>
+
+            </div>
         </main>
     );
 }
