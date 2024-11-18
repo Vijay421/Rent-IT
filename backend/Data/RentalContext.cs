@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
     namespace backend.Data
 {

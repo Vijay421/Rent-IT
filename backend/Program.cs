@@ -109,9 +109,10 @@ public class Program
 
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             var signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
+            var config = serviceProvider.GetRequiredService<IConfiguration>();
 
             var userSeeder = new UserSeeder();
-            await userSeeder.Seed(userManager);
+            await userSeeder.Seed(userManager, config);
         }
     }
 }
