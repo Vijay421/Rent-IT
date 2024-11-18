@@ -1,18 +1,16 @@
 import '../styles/Register.css';
-import {useState} from "react";
+import { useState } from "react";
 
 export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState();
+    const [phoneNumber, setPhoneNumber] = useState("");
 
-    // // Handles action when typing in email field
     function handleEmail(e) {
         setEmail(e.target.value);
     }
 
-    // Handles action when typing in password field
     function handlePassword(e) {
         setPassword(e.target.value);
     }
@@ -29,24 +27,65 @@ export default function Register() {
         <main className='register-box'>
             <h1 className='register-box__text'>Registeren</h1>
 
-            <h2 className='register-box__input-text'>Naam:</h2>
-            <input className='register-box__input-field' type="text" value={username} onChange={handleUsername}/>
+            <form>
+                <div className="form-group">
+                    <label htmlFor="username" className='register-box__input-text'>Naam:</label><br/>
+                    <input
+                        id="username"
+                        className='register-box__input-field'
+                        type="text"
+                        placeholder='Vul hier je naam in'
+                        value={username}
+                        onChange={handleUsername}
+                    />
+                </div>
 
-            <h2 className='register-box__input-text'>E-mail adres:</h2>
-            <input className='register-box__input-field' type="text" value={email} onChange={handleEmail}/>
+                <div className="form-group">
+                    <label htmlFor="email" className='register-box__input-text'>E-mail adres:</label><br/>
+                    <input
+                        id="email"
+                        className='register-box__input-field'
+                        type="email"
+                        placeholder='Vul hier uw e-mailadres in'
+                        value={email}
+                        onChange={handleEmail}
+                    />
+                </div>
 
-            <h2 className='register-box__input-text'>Wachtwoord:</h2>
-            <input className='register-box__input-field' type='password' value={password} onChange={handlePassword}/>
+                <div className="form-group">
+                    <label htmlFor="password" className='register-box__input-text'>Wachtwoord:</label><br/>
+                    <input
+                        id="password"
+                        className='register-box__input-field'
+                        type="password"
+                        placeholder='Vul hier uw wachtwoord in'
+                        value={password}
+                        onChange={handlePassword}
+                    />
+                </div>
 
-            <h2 className='register-box__input-text'>Telefoonnummer:</h2>
-            <input className='register-box__input-field' type='tel' value={phoneNumber} onChange={handlePhoneNumber} maxLength='13' pattern="[0-9]*" inputMode='numeric' onKeyDown={(e) => {
-                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
-                    e.preventDefault();
-                }
-            }}
-            />
+                <div className="form-group">
+                    <label htmlFor="phone" className='register-box__input-text'>Telefoonnummer:</label><br/>
+                    <input
+                        id="phone"
+                        className='register-box__input-field'
+                        type="tel"
+                        placeholder='Vul hier uw telefoonnummer in'
+                        value={phoneNumber}
+                        onChange={handlePhoneNumber}
+                        maxLength="15"
+                        pattern="[0-9]*"
+                        inputMode="numeric"
+                        onKeyDown={(e) => {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
+                </div>
 
-            <button className='register-box__button' type='button'>Submit</button>
+                <button className='register-box__button' type='submit'>Submit</button>
+            </form>
 
             <nav className="register-box__hyperlinks">
                 <a href="#">Heb je al een account? Klik hier om in te loggen</a>
