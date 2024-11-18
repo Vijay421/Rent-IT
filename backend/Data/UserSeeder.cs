@@ -15,6 +15,10 @@ namespace backend.Data
         private async Task SeedAdmin(UserManager<User> userManager, IConfiguration config)
         {
             var adminConfig = config.GetSection("accounts").GetSection("admin");
+            if (!adminConfig.Exists())
+            {
+                return;
+            }
 
             // Create the admin only when it does not exists already.
             var admin = await userManager.FindByNameAsync("admin");
