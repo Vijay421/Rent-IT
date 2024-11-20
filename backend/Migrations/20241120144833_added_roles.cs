@@ -15,38 +15,38 @@ namespace backend.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5eab4cab-b84a-4a14-b95c-7920d8354aa9");
+                keyValue: "130dab9e-f9ca-496b-a65f-174bb31a7723");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "83d40d7c-db62-4acd-ae4d-3c939240cfb2");
+                keyValue: "2533523c-359c-4240-acff-2160d78c434d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c815ec6e-8e75-4f68-87dd-4aa874e7d871");
+                keyValue: "3c5a66fe-ef6f-4f48-8b71-e8153aa57507");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e69a863b-26e9-49e7-b7b7-c71c69247115");
+                keyValue: "a0d96e1a-d36a-4824-8339-2849da0854b2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e8e922ed-6e1c-4228-beeb-484c0b9e089a");
+                keyValue: "cd225630-c191-40cf-85ce-4919de78cd3d");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "410cc187-b6dd-49bc-8023-144a00e05d58", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
-                    { "a40ea996-32b7-4cdc-ab08-ba561d372814", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "a90a301e-585d-455e-9447-3e04a016fe57", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
-                    { "e277a8e7-db76-41ca-969f-cadc77a8a181", null, "admin", "ADMIN" },
-                    { "fc49af1a-1f3e-4baa-b536-ef2ea9f1c65e", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" }
+                    { "3554fdae-fe29-4c35-b63b-b895b9e858c6", null, "admin", "ADMIN" },
+                    { "3c11627a-4d3a-4534-8bd8-68f896bfeb97", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
+                    { "d25297b6-193d-4a48-ac58-5afafd86b534", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
+                    { "e4620d6d-0936-4b01-8c85-313e5e6f3edb", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "f98b57b5-9812-48b2-8636-d1677d9ee707", null, "particuliere_huurder", "PARTICULIERE_HUURDER" }
                 });
         }
 
@@ -56,38 +56,38 @@ namespace backend.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "410cc187-b6dd-49bc-8023-144a00e05d58");
+                keyValue: "3554fdae-fe29-4c35-b63b-b895b9e858c6");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a40ea996-32b7-4cdc-ab08-ba561d372814");
+                keyValue: "3c11627a-4d3a-4534-8bd8-68f896bfeb97");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a90a301e-585d-455e-9447-3e04a016fe57");
+                keyValue: "d25297b6-193d-4a48-ac58-5afafd86b534");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e277a8e7-db76-41ca-969f-cadc77a8a181");
+                keyValue: "e4620d6d-0936-4b01-8c85-313e5e6f3edb");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fc49af1a-1f3e-4baa-b536-ef2ea9f1c65e");
+                keyValue: "f98b57b5-9812-48b2-8636-d1677d9ee707");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5eab4cab-b84a-4a14-b95c-7920d8354aa9", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "83d40d7c-db62-4acd-ae4d-3c939240cfb2", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
-                    { "c815ec6e-8e75-4f68-87dd-4aa874e7d871", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
-                    { "e69a863b-26e9-49e7-b7b7-c71c69247115", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
-                    { "e8e922ed-6e1c-4228-beeb-484c0b9e089a", null, "admin", "ADMIN" }
+                    { "130dab9e-f9ca-496b-a65f-174bb31a7723", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
+                    { "2533523c-359c-4240-acff-2160d78c434d", null, "admin", "ADMIN" },
+                    { "3c5a66fe-ef6f-4f48-8b71-e8153aa57507", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "a0d96e1a-d36a-4824-8339-2849da0854b2", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
+                    { "cd225630-c191-40cf-85ce-4919de78cd3d", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" }
                 });
         }
     }

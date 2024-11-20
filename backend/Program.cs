@@ -102,7 +102,7 @@ public class Program
     /// </summary>
     private static async Task SeedUsers(WebApplication app)
     {
-        // The usage of 'scope' originates from: https://learn.microsoft.com/en-us/dotnet/api/system.guid.newguid?view=net-8.0
+        // The usage of 'scope' originates from: https://stackoverflow.com/questions/71882183/net-6-inject-service-into-program-cs
         using (var scope = app.Services.CreateScope())
         {
             var serviceProvider = scope.ServiceProvider;
