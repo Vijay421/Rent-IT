@@ -3,7 +3,7 @@
     background-color: #c8d8e4;
     display: flex;
     align-items: center;
-    height: clamp(20px, 4vw, 150px);
+    height: 10vh;
     min-height: 70px;
     padding: 0 20px 0 15px;
 }
