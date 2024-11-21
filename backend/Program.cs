@@ -4,6 +4,7 @@ using backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.SpaServices.Extensions;
 
 namespace backend;
 
@@ -14,6 +15,12 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
         builder.Services.AddDbContext<RentalContext>();
+
+        // Serve react frontend static files.
+        builder.Services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "../frontend/Rent-IT/dist";
+        });
 
         // Adds CORS services
         builder.Services.AddCors(options =>
@@ -79,6 +86,23 @@ public class Program
         app.MapGroup("/auth").MapIdentityApi<User>();
 
         await SeedUsers(app);
+
+        // TODO: add the citation in the arch-doc.
+        // This code originates from: https://medium.com/@rewal34/how-to-serve-your-net-web-api-and-spa-at-same-port-4706b77a50ad
+        app.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = "../frontend/Rent-IT";
+
+            if (app.Environment.IsDevelopment())
+            {
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173"); // Vite dev server.
+            }
+
+            if (builder.Environment.IsProduction())
+            {
+                app.UseSpaStaticFiles();
+            }
+        });
 
         app.Run();
     }
