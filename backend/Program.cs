@@ -89,6 +89,7 @@ public class Program
 
         // TODO: add the citation in the arch-doc.
         // This code originates from: https://medium.com/@rewal34/how-to-serve-your-net-web-api-and-spa-at-same-port-4706b77a50ad
+        // Serve the frontend in both dev and prod environments.
         app.UseSpa(spa =>
         {
             spa.Options.SourcePath = "../frontend/Rent-IT";
@@ -99,7 +100,8 @@ public class Program
             }
             else
             {
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173"); // Vite dev server.
+                // Serve the Vite dev server from the backend.
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173");
             }
         });
 
