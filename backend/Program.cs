@@ -93,14 +93,13 @@ public class Program
         {
             spa.Options.SourcePath = "../frontend/Rent-IT";
 
-            if (app.Environment.IsDevelopment())
-            {
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173"); // Vite dev server.
-            }
-
             if (builder.Environment.IsProduction())
             {
                 app.UseSpaStaticFiles();
+            }
+            else
+            {
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173"); // Vite dev server.
             }
         });
 
