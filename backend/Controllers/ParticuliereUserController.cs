@@ -57,5 +57,24 @@ namespace backend.Controllers
 
             return Ok();
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(LoginParticuliereHuurderDTO huurderDto)
+        {
+            var user = await _userManager.FindByEmailAsync(huurderDto.Email);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid email");
+            }
+            
+            var result = await _userManager.CheckPasswordAsync(user, huurderDto.Password);
+
+            if (!result)
+            {
+                return Unauthorized("Invalid Password");
+            }
+            return Ok("Success");
+        }
     }
 }
