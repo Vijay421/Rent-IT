@@ -36,9 +36,10 @@ namespace backend.Controllers
             {
                 await _userManager.AddToRoleAsync(user, "particuliere_huurder");
 
+                // When the user has been created: make a ParticuliereHuurder.
                 var particuliereHuurder = new ParticuliereHuurder
                 {
-                    Id = 0,
+                    Id = 0, // The orm will define the id for us.
                     Address = huuder.Address,
                 };
                 await _context.ParticuliereHuurders.AddAsync(particuliereHuurder);
