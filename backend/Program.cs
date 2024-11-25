@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.SpaServices.Extensions;
+using Microsoft.Extensions.Configuration;
 
 namespace backend;
 
@@ -87,23 +88,7 @@ public class Program
 
         await SeedUsers(app);
 
-        // TODO: add the citation in the arch-doc.
-        // This code originates from: https://medium.com/@rewal34/how-to-serve-your-net-web-api-and-spa-at-same-port-4706b77a50ad
-        // Serve the frontend in both dev and prod environments.
-        app.UseSpa(spa =>
-        {
-            spa.Options.SourcePath = "../frontend/Rent-IT";
-
-            if (builder.Environment.IsProduction())
-            {
-                app.UseSpaStaticFiles();
-            }
-            else
-            {
-                // Serve the Vite dev server from the backend.
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173");
-            }
-        });
+        ServeSpa(app, builder);
 
         app.Run();
     }
@@ -139,5 +124,41 @@ public class Program
             var userSeeder = new UserSeeder();
             await userSeeder.Seed(userManager, config);
         }
+    }
+
+    private static void ServeSpa(WebApplication app, WebApplicationBuilder builder)
+    {
+        // TODO: add the citation in the arch-doc.
+        // This code originates from: https://medium.com/@rewal34/how-to-serve-your-net-web-api-and-spa-at-same-port-4706b77a50ad
+        // Serve the frontend in both dev and prod environments.
+        app.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = "../frontend/Rent-IT";
+
+            bool shouldServeFrontend;
+            string? value = builder.Configuration.GetSection("serve_frontend").Value;
+            try
+            {
+                shouldServeFrontend = Convert.ToBoolean(value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Invalid value for 'serve_frontend' in local_config.json, expected a boolean value got: '{value}'.");
+                throw;
+            }
+
+            if (builder.Environment.IsProduction())
+            {
+                app.UseSpaStaticFiles();
+            }
+            else
+            {
+                if (shouldServeFrontend)
+                {
+                    // Serve the Vite dev server from the backend.
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:5173");
+                }
+            }
+        });
     }
 }
