@@ -3,7 +3,7 @@
     "url": "data source={insert user name};initial catalog=Rent-IT;trusted_connection=true;TrustServerCertificate=True"
     //                                                     ^ Db name
   },
-  "serve_frontend": true,
+  "serve_frontend": false,
   "accounts": {
     "admin": {
       "userName": "",
