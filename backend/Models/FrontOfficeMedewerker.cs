@@ -2,6 +2,6 @@
 {
     public class FrontOfficeMedewerker
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }
