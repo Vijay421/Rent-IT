@@ -58,5 +58,11 @@ namespace backend.Controllers
 
             return Ok();
         }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> Update(UpdateParticuliereHuurderDTO huuder)
+        {
+            return Ok();
+        }
     }
 }
