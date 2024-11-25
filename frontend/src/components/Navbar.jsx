@@ -6,13 +6,11 @@ import {Link} from "react-router-dom";
 function Navbar() {
     return(
         <nav className='navbar'>
-            <Link to="/">
-                <a href="#"><img src={TempImage} width="70" alt="CarAndAll logo"/></a>
-            </Link>
+            <Link to="/"><img src={TempImage} width="70" alt="CarAndAll logo"/></Link>
 
             <ul className='navbar__navigation-buttons'>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
-                <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
+                <NavButton className="navbar_n  avigation-buttons-nagivation" title="button" link="/"></NavButton>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
             </ul>
             <ul className='navbar__login-box__button'>
