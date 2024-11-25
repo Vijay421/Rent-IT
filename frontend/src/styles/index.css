@@ -7,7 +7,7 @@ body {
   height: 100%;
   width: 100%;
   align-items: center;
-  overflow: hidden;
+  overflow: auto;
   background-image: url("../assets/backgroundblurred.png");
   background-size: cover;
   background-repeat: no-repeat;

@@ -1,0 +1,112 @@
+.Content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+}
+
+.MainDivLeft {
+    background-image: url("../assets/Car1.webp");
+    margin-right: 0;
+    width: 20em;
+    aspect-ratio: 0.5;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5em;
+    position: relative;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.MainDivRight {
+    background-image: url("../assets/Car2.webp");
+    margin-left: 0;
+    width: 20em;
+    aspect-ratio: 0.5;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5em;
+    position: relative;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.MainDivCenter {
+    width: 20em;
+}
+
+.ParticulierDiv {
+    background-color: #52ab98;
+    border-radius: 0.5em;
+    margin-top: -0.1em;
+    height: 3em;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.ZakelijkDiv {
+    background-color: #52ab98;
+    border-radius: 0.5em;
+    margin-top: -0.1em;
+    height: 3em;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.ParticulierH1 {
+    text-align: center;
+    position: absolute;
+    top: 3.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ZakelijkH1 {
+    text-align: center;
+    position: absolute;
+    top: 3.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ButtonDivLeft{
+    background-color: #52ab98;
+    margin-bottom: 1em;
+    margin-right: 2em;
+    margin-left: 2em;
+    height: 3em;
+    border-radius: 0.5em;
+    border: 3px solid rgba(0, 0, 0, 1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.ButtonDivRight {
+    background-color: #52ab98;
+    margin-bottom: 1em;
+    margin-right: 2em;
+    margin-left: 2em;
+    height: 3em;
+    border-radius: 0.5em;
+    border: 3px solid rgba(0, 0, 0, 1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.BottomDivLeftHuren {
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.BottomDivRightHuren {
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -21,8 +21,8 @@
 .navbar__navigation-buttons button {
     background-color: #2b6777;
     color: white;
-    height: 50%;
-    min-width: 50px;
+    min-height: 5vh;
+    min-width: max(7vw, 50px);
     width: 10%;
     font-size: clamp(10px, 1.3vw, 3vw);
     border-radius: 0.5vw;
@@ -50,8 +50,8 @@
 .navbar__login-box__button button {
     background-color: #2b6777;
     color: white;
-    height: 50%;
-    min-width: 60px;
+    min-height: 5vh;
+    min-width: max(7vw, 50px);
     width: 6vw;
     font-size: clamp(10px, 1.3vw, 3vw);
     border-radius: 1vw;
