@@ -46,7 +46,7 @@ function Login() {
                         />
                     </div>
 
-                    <button className='login-box__button' type='submit' onClick={fetchAndCheckLoginFields}>Login</button>
+                    <button className='login-box__button' type='submit'>Login</button>
 
                     <nav className="login-box__hyperlinks">
                         <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
