@@ -143,7 +143,7 @@ public class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Invalid value for 'serve_frontend' in local_config.json, expected a boolean value got: '{value}'.");
+                Console.Error.WriteLine($"Invalid value for 'serve_frontend' in local_config.json, expected a boolean value got: '{value}'.");
                 throw;
             }
 
