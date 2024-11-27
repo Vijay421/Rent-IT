@@ -24,6 +24,9 @@ namespace backend.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Creates a new user with a relation to the ParticuliereHuurders table and the particuliere_huurder role.
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult> Register(RegisterParticuliereHuurderDTO huurderDTO)
         {
@@ -64,6 +67,37 @@ namespace backend.Controllers
         }
 
         /// <summary>
+        /// Will delete the user and related data.
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+
+            if (user.ParticuliereHuurder != null)
+            {
+                _context.ParticuliereHuurders.Remove(user.ParticuliereHuurder);
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                await _context.SaveChangesAsync(); // Remove related data.
+                return NoContent();
+            }
+
+            return BadRequest();
+        }
+
+        /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
         [HttpPut("{id}")]
@@ -92,7 +126,7 @@ namespace backend.Controllers
 
             if (huurderDTO.Address != null)
             {
-                _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+                await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
                 if (user.ParticuliereHuurder != null)
                 {
                     user.ParticuliereHuurder.Address = huurderDTO.Address;
