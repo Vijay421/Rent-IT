@@ -17,7 +17,7 @@ public class VoertuigController : ControllerBase
         _rentalContext = context;
     }
 
-    [HttpGet("getAll")]
+    [HttpGet]
     public async Task<List<Voertuig>> GetAllCars()
     {
         return await _rentalContext.Voertuigen.ToListAsync();
