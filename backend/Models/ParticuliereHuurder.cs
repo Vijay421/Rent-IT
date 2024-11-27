@@ -9,6 +9,7 @@ namespace backend.Models
         [Required]
         [MinLength(5)]
         [MaxLength(255)]
+        // TODO: change Address to Dutch: 'adres'.
         public string Address { get; set; }
     }
 }
