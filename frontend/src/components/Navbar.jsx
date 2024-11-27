@@ -1,11 +1,11 @@
-import TempImage from '../assets/temp.jpg';
+import Logo from '../assets/Logo.png';
 import NavButton from './NavButton.jsx';
 import '../styles/Navbar.css';
 
 function Navbar() {
     return(
         <nav className='navbar'>
-            <a href="#"><img src={TempImage} width="70" alt="CarAndAll logo"/></a>
+            <a href="#"><img src={Logo} width="130" alt="CarAndAll logo"/></a>
 
             <ul className='navbar__navigation-buttons'>
                 <NavButton title="button"></NavButton>
