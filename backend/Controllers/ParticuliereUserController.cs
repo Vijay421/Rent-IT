@@ -24,6 +24,9 @@ namespace backend.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Create a new user with a relation to the ParticuliereHuurders table and the particuliere_huurder role.
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult> Register(RegisterParticuliereHuurderDTO huurderDTO)
         {
@@ -63,6 +66,9 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(Register), new { id = user.Id }, new ParticuliereHuurderDTO(user.Id, huurderDTO));
         }
 
+        /// <summary>
+        /// Will delete the user and related data.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
