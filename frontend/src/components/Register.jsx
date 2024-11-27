@@ -1,5 +1,6 @@
 import '../styles/Register.css';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
     const [email, setEmail] = useState("");
@@ -91,7 +92,7 @@ export default function Register() {
                 </form>
 
                 <nav className="register-box__hyperlinks">
-                    <a href="#">Heb je al een account? Klik hier om in te loggen</a>
+                    <Link to="/login">Heb je al een account? Klik hier om in te loggen</Link>
                 </nav>
             </div>
         </main>

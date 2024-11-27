@@ -1,19 +1,15 @@
 import {useState} from 'react';
 import '../styles/Login.css';
-
+import { Link } from 'react-router-dom';
 
 function Login() {
-
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // // Handles action when typing in email field
     function handleEmail(e) {
         setEmail(e.target.value);
     }
 
-    // Handles action when typing in password field
     function handlePassword(e) {
         setPassword(e.target.value);
     }
@@ -54,10 +50,9 @@ function Login() {
 
                     <nav className="login-box__hyperlinks">
                         <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
-                        <a href="#">Geen account? Maak hier een account aan</a>
+                        <Link to="/register">Geen account? Maak hier een account aan</Link>
                     </nav>
                 </form>
-
             </div>
         </main>
     );

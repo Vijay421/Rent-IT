@@ -17,11 +17,11 @@ public class RentController : ControllerBase
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
     
-    [HttpGet("get/all")]
-    public async Task<ActionResult<IEnumerable<Bedrijf>>> GetAllBedrijven()
-    {
-        return await _context.Bedrijven.ToListAsync();
-    }
+    //[HttpGet("get/all")]
+    //public async Task<ActionResult<IEnumerable<Bedrijf>>> GetAllBedrijven()
+    //{
+    //    return await _context.Bedrijven.ToListAsync();
+    //}
 
     [HttpGet("get/all2")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
