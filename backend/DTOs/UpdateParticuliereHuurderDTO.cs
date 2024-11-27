@@ -24,5 +24,10 @@ namespace backend.DTOs
         [MinLength(8)]
         [MaxLength(50)]
         public string Password { get; set; }
+
+        public bool HasData()
+        {
+            return Name != null && Email != null && Address != null && PhoneNumber != null && Password != null;
+        }
     }
 }

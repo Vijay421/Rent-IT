@@ -62,6 +62,11 @@ namespace backend.Controllers
         [HttpPost("update")]
         public async Task<ActionResult> Update(UpdateParticuliereHuurderDTO huuder)
         {
+            if (huuder.HasData())
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
     }
