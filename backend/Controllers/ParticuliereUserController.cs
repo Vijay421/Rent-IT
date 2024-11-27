@@ -63,6 +63,9 @@ namespace backend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Will update the given user fields including the address and password fields, when the current password is provided.
+        /// </summary>
         [HttpPut("update/{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
         {
@@ -76,7 +79,6 @@ namespace backend.Controllers
                 return BadRequest();
             }
 
-            //var user = await _userManager.GenerateUserTokenAsync();
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
