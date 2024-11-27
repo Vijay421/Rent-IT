@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
         public DbSet<User> Users { get; set; }
         //public DbSet<Bedrijf> Bedrijven { get; set; }
         public DbSet<ParticuliereHuurder> ParticuliereHuurders { get; set; }
+        public DbSet<Voertuig> Voertuigen { get; set; }
 
         public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
         {
@@ -28,32 +29,12 @@ using Microsoft.Extensions.Options;
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
 
-            //modelBuilder.Entity<User>().HasData(
-            //    new User()
-            //    {
-            //        Id = "1",
-            //        UserName = "user1",
-            //        NormalizedUserName = "USER1",
-            //        Email = "test@email.com",
-            //        NormalizedEmail = "TEST@EMAIL.COM",
-            //        EmailConfirmed = true,
-            //        PasswordHash = "AQAAAAEAACcQAAAAEJ9Z",
-            //        SecurityStamp = "QJ9Z",
-            //        ConcurrencyStamp = "QJ9Z",
-            //        PhoneNumber = "1234567890",
-            //        PhoneNumberConfirmed = true,
-            //        TwoFactorEnabled = false,
-            //        LockoutEnd = null,
-            //        LockoutEnabled = true,
-            //        AccessFailedCount = 0,
-            //    }
-            //);
-
-            //modelBuilder.Entity<Bedrijf>().HasData(
-            //    new Bedrijf(1, "Bedrijf1", "1234567890"),
-            //    new Bedrijf(2, "Bedrijf2", "1234567891"),
-            //    new Bedrijf(3, "Bedrijf3", "1234567892")
-            //);
+            modelBuilder.Entity<Voertuig>().HasData(
+                new Voertuig(1,"Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar")
+            );
+            modelBuilder.Entity<Voertuig>().HasData(
+                new Voertuig(2,"Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar")
+            );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
