@@ -51,31 +51,31 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c993550f-9a1f-4c18-8c80-98ace06abf18",
+                            Id = "6508ba78-e379-415a-b825-987c4a67e975",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e54b5a49-73f1-466a-b6f1-bbaca6a62b3b",
+                            Id = "4faad857-a597-49a0-ab6f-829fbeb27555",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "50e651aa-fbe0-4e34-9677-511d8d0788d3",
+                            Id = "c9c9d26c-a2e1-4e47-a136-6948fd00d428",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "72127a9e-7d62-4bb8-8f53-c61226e6ee3b",
+                            Id = "2725e32e-8592-42cf-a706-58b3412c0d33",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "2de163ac-d38e-4bdd-9a65-8f34810dd084",
+                            Id = "79d41905-e844-407e-84b3-276aa89004f8",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -200,46 +200,6 @@ namespace backend.Migrations
                     b.ToTable("BackOfficeMedewerker");
                 });
 
-            modelBuilder.Entity("backend.Models.Bedrijf", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bedrijven");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Bedrijf1",
-                            PhoneNumber = "1234567890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bedrijf2",
-                            PhoneNumber = "1234567891"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Bedrijf3",
-                            PhoneNumber = "1234567892"
-                        });
-                });
-
             modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
                 {
                     b.Property<int>("Id")
@@ -261,7 +221,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Adres")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -354,25 +314,6 @@ namespace backend.Migrations
                     b.HasIndex("ZakelijkeHuurderId");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "QJ9Z",
-                            Email = "test@email.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "TEST@EMAIL.COM",
-                            NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ9Z",
-                            PhoneNumber = "1234567890",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "QJ9Z",
-                            TwoFactorEnabled = false,
-                            UserName = "user1"
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
