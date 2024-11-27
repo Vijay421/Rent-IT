@@ -11,6 +11,8 @@ using Microsoft.Extensions.Options;
         private readonly IServiceProvider _serviceProvider;
         private readonly UserSeeder _userSeeder;
         public DbSet<User> Users { get; set; }
+        public DbSet<Abonnement> Abonnementen { get; set; }
+        public DbSet<Huuraanvraag> Huuraanvragen{ get; set; }
         //public DbSet<Bedrijf> Bedrijven { get; set; }
         public DbSet<ParticuliereHuurder> ParticuliereHuurders { get; set; }
 

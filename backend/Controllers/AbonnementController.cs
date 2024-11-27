@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.DTOs;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,11 @@ namespace backend.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class RentController : ControllerBase
+public class AbonnementController : ControllerBase
 {
     private readonly RentalContext _context;
     
-    public RentController(RentalContext context)
+    public AbonnementController(RentalContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
@@ -23,28 +24,25 @@ public class RentController : ControllerBase
     //    return await _context.Bedrijven.ToListAsync();
     //}
 
-    // [Authorize(Roles = "admin")]
-    [HttpGet("get/users")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+    [HttpGet("get/abonnementen")]
+    public async Task<ActionResult<IEnumerable<Abonnement>>> GetAllAbonnementen()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Abonnementen.ToListAsync();
     }
 
-    // [Authorize(Roles = "backoffice, admin")]
-    [HttpGet("get/huuraanvragen")]
-    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetAllHuuraanvragen()
+    [HttpGet("get/abonnement/{id}")]
+    public async Task<ActionResult<AbonnementDTO>> GetAbonnement(int id)
     {
-        return await _context.Huuraanvragen.ToListAsync();
-    }
+        var abonnement = await _context.Abonnementen.FindAsync(id);
+        if (abonnement == null) return NotFound();
 
-        // [Authorize(Roles = "backoffice, admin")]
-    [HttpGet("get/huuraanvraag/{id}")]
-    public async Task<ActionResult<Huuraanvraag>> GetHuuraanvraag(int id)
-    {
-        var Huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
-        if (Huuraanvraag == null) return NotFound();
-
-        return Huuraanvraag;
+        return new AbonnementDTO{
+            Id = abonnement.Id,
+            naam = abonnement.naam,
+            prijs_per_maand = abonnement.prijs_per_maand,
+            max_huurders = abonnement.max_huurders,
+            soort = abonnement.soort
+        };
     }
 
     [HttpGet("everyone")]
