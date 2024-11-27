@@ -24,7 +24,7 @@ namespace backend.Controllers
             _logger = logger;
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<ActionResult> Register(RegisterParticuliereHuurderDTO huurderDTO)
         {
             var user = new User
@@ -66,7 +66,7 @@ namespace backend.Controllers
         /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
         {
             if (!huurderDTO.HasData())
