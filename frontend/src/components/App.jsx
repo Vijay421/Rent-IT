@@ -6,7 +6,6 @@ import RentingPage from "../pages/RentingPage.jsx";
 
 function App() {
 
-
     return (
         <>
             <RentingPage/>
