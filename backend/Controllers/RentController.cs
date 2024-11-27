@@ -37,7 +37,7 @@ public class RentController : ControllerBase
         return await _context.Huuraanvragen.ToListAsync();
     }
 
-        // [Authorize(Roles = "backoffice, admin")]
+        // [Authorize(Roles = "backoffice_medewerker", "admin")]
     [HttpGet("get/huuraanvraag/{id}")]
     public async Task<ActionResult<Huuraanvraag>> GetHuuraanvraag(int id)
     {
