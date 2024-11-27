@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241120144833_added_roles")]
-    partial class added_roles
+    [Migration("20241125135431_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,31 +54,31 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3554fdae-fe29-4c35-b63b-b895b9e858c6",
+                            Id = "c993550f-9a1f-4c18-8c80-98ace06abf18",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d25297b6-193d-4a48-ac58-5afafd86b534",
+                            Id = "e54b5a49-73f1-466a-b6f1-bbaca6a62b3b",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "3c11627a-4d3a-4534-8bd8-68f896bfeb97",
+                            Id = "50e651aa-fbe0-4e34-9677-511d8d0788d3",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "e4620d6d-0936-4b01-8c85-313e5e6f3edb",
+                            Id = "72127a9e-7d62-4bb8-8f53-c61226e6ee3b",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "f98b57b5-9812-48b2-8636-d1677d9ee707",
+                            Id = "2de163ac-d38e-4bdd-9a65-8f34810dd084",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -192,8 +192,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -242,8 +245,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -252,12 +258,20 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ParticuliereHuurder");
+                    b.ToTable("ParticuliereHuurders");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -268,8 +282,8 @@ namespace backend.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("BackOfficeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("BackOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -282,8 +296,8 @@ namespace backend.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FrontOfficeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("FrontOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -299,8 +313,8 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("ParticuliereHuurderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ParticuliereHuurderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -321,8 +335,8 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("ZakelijkeHuurderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ZakelijkeHuurderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -366,8 +380,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 

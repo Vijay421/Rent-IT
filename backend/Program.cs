@@ -128,7 +128,6 @@ public class Program
 
     private static void ServeSpa(WebApplication app, WebApplicationBuilder builder)
     {
-        // TODO: add the citation in the arch-doc.
         // This code originates from: https://medium.com/@rewal34/how-to-serve-your-net-web-api-and-spa-at-same-port-4706b77a50ad
         // Serve the frontend in both dev and prod environments.
         app.UseSpa(spa =>
@@ -143,7 +142,7 @@ public class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Invalid value for 'serve_frontend' in local_config.json, expected a boolean value got: '{value}'.");
+                Console.Error.WriteLine($"Invalid value for 'serve_frontend' in local_config.json, expected a boolean value got: '{value}'.");
                 throw;
             }
 

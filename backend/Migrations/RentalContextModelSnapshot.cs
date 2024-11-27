@@ -51,31 +51,31 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3554fdae-fe29-4c35-b63b-b895b9e858c6",
+                            Id = "9862ee43-a40b-48b6-acf2-aef39e4775de",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d25297b6-193d-4a48-ac58-5afafd86b534",
+                            Id = "ca45e2b3-891b-4a99-a5c4-a7e862b4d2a0",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "3c11627a-4d3a-4534-8bd8-68f896bfeb97",
+                            Id = "ae9e3d91-59a2-4e6c-8a41-9acace7ad820",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "e4620d6d-0936-4b01-8c85-313e5e6f3edb",
+                            Id = "6e8e4617-13f3-4d5a-9dba-b627bf7f6bde",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "f98b57b5-9812-48b2-8636-d1677d9ee707",
+                            Id = "3bd528a1-17a1-47cc-afe8-463def6bf1f7",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -189,58 +189,24 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BackOfficeMedewerker");
-                });
-
-            modelBuilder.Entity("backend.Models.Bedrijf", b =>
-                {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Bedrijven");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Bedrijf1",
-                            PhoneNumber = "1234567890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bedrijf2",
-                            PhoneNumber = "1234567891"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Bedrijf3",
-                            PhoneNumber = "1234567892"
-                        });
+                    b.ToTable("BackOfficeMedewerker");
                 });
 
             modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -249,12 +215,20 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Adres")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ParticuliereHuurder");
+                    b.ToTable("ParticuliereHuurders");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -265,8 +239,8 @@ namespace backend.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("BackOfficeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("BackOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -279,8 +253,8 @@ namespace backend.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FrontOfficeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("FrontOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -296,8 +270,8 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("ParticuliereHuurderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ParticuliereHuurderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -318,8 +292,8 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("ZakelijkeHuurderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ZakelijkeHuurderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -340,31 +314,93 @@ namespace backend.Migrations
                     b.HasIndex("ZakelijkeHuurderId");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("backend.Models.Voertuig", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Aanschafjaar")
+                        .HasMaxLength(4)
+                        .HasColumnType("int");
+
+                    b.Property<string>("Kenteken")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<string>("Kleur")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Merk")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Opmerking")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Soort")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Voertuigen");
 
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "QJ9Z",
-                            Email = "test@email.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "TEST@EMAIL.COM",
-                            NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ9Z",
-                            PhoneNumber = "1234567890",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "QJ9Z",
-                            TwoFactorEnabled = false,
-                            UserName = "user1"
+                            Id = 1,
+                            Aanschafjaar = 2018,
+                            Kenteken = "AB-123-CD",
+                            Kleur = "Red",
+                            Merk = "Toyota",
+                            Opmerking = "",
+                            Soort = "Auto",
+                            Status = "Verhuurbaar",
+                            Type = "Corolla"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Aanschafjaar = 2019,
+                            Kenteken = "EF-456-GH",
+                            Kleur = "Blue",
+                            Merk = "Ford",
+                            Opmerking = "",
+                            Soort = "Auto",
+                            Status = "Verhuurbaar",
+                            Type = "Focus"
                         });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
