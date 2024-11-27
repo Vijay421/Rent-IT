@@ -63,6 +63,34 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(Register), new { id = user.Id }, new ParticuliereHuurderDTO(user.Id, huurderDTO));
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+
+            if (user.ParticuliereHuurder != null)
+            {
+                _context.ParticuliereHuurders.Remove(user.ParticuliereHuurder);
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                await _context.SaveChangesAsync(); // Remove related data.
+                return NoContent();
+            }
+
+            return BadRequest();
+        }
+
         /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
