@@ -25,16 +25,16 @@ namespace backend.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterParticuliereHuurderDTO huuder)
+        public async Task<ActionResult> Register(RegisterParticuliereHuurderDTO huurderDTO)
         {
             var user = new User
             {
-                UserName = huuder.Name.Trim(),
-                Email = huuder.Email.ToLower().Trim(),
-                PhoneNumber = huuder.PhoneNumber.Trim(),
+                UserName = huurderDTO.Name.Trim(),
+                Email = huurderDTO.Email.ToLower().Trim(),
+                PhoneNumber = huurderDTO.PhoneNumber.Trim(),
             };
 
-            var result = await _userManager.CreateAsync(user, huuder.Password.Trim());
+            var result = await _userManager.CreateAsync(user, huurderDTO.Password.Trim());
 
             if (result.Succeeded)
             {
@@ -44,7 +44,7 @@ namespace backend.Controllers
                 var particuliereHuurder = new ParticuliereHuurder
                 {
                     Id = 0, // The orm will define the id for us.
-                    Address = huuder.Address,
+                    Address = huurderDTO.Address,
                 };
                 await _context.ParticuliereHuurders.AddAsync(particuliereHuurder);
                 await _context.SaveChangesAsync();
@@ -60,7 +60,7 @@ namespace backend.Controllers
                 return BadRequest("Unable to create user");
             }
 
-            return Ok();
+            return CreatedAtAction(nameof(Register), new { id = user.Id }, new ParticuliereHuurderDTO(user.Id, huurderDTO));
         }
 
         /// <summary>
