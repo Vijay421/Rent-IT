@@ -102,3 +102,13 @@
 .login-box form {
     width: 100%;
 }
+
+#login-box__loginstatus {
+    width: 66%;
+    font-size: 1.1em;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
