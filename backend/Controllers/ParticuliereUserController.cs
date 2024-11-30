@@ -57,10 +57,21 @@ namespace backend.Controllers
             }
             else
             {
-                var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
-                Console.Error.WriteLine($"error: {errorText}");
+                if (result.Errors.Any(e => e.Code == "DuplicateUserName"))
+                {
+                    return BadRequest($"Naam '{huurderDTO.Name}' is al in gebruikt");
+                }
 
-                return BadRequest("Unable to create user");
+                var passwordErrors = result.Errors.Where(e => e.Code.StartsWith("Password"));
+                if (passwordErrors.Any())
+                {
+                    return BadRequest($"Ongeldig wachtwoord: het moet minimaal 1 hoofdletter, een getal en een niet alfanumeriek character bevatten");
+                }
+
+                var errorMsg = string.Join(", ", result.Errors.Select(e => e.Description));
+                Console.Error.WriteLine($"error: {errorMsg}");
+
+                return BadRequest("Kan de gebruikern niet aanmaken");
             }
 
             return CreatedAtAction(nameof(Register), new { id = user.Id }, new ParticuliereHuurderDTO(user.Id, huurderDTO));

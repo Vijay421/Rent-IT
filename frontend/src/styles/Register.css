@@ -26,6 +26,28 @@
     font-size: clamp(2.5rem, 3vw, 3rem);
 }
 
+.register-box__response-text {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.register-box__response-text::first-letter {
+    text-transform: capitalize;
+}
+
+.register-box__response-text:after {
+    content: ".";
+ }
+
+.register-box__response-text--success {
+    color: green;
+}
+
+.register-box__response-text--error {
+    color: red;
+}
+
 /*Input fields inside the register box*/
 .register-box__input-field {
     display: flex;
