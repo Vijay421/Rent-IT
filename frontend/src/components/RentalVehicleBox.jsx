@@ -52,7 +52,7 @@ RentalAutoBox.propTypes = {
         type: PropTypes.string.isRequired,
         kenteken: PropTypes.string.isRequired,
         kleur: PropTypes.string.isRequired,
-        aanschafjaar: PropTypes.string.isRequired,
+        aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
     }).isRequired,
 };
@@ -60,10 +60,10 @@ RentalAutoBox.propTypes = {
 RentalCaravanBox.propTypes = {
     data: PropTypes.shape({
         merk: PropTypes.string.isRequired,
-        model: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         kenteken: PropTypes.string.isRequired,
         kleur: PropTypes.string.isRequired,
-        aanschafjaar: PropTypes.string.isRequired,
+        aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
     }).isRequired,
 };
@@ -71,10 +71,10 @@ RentalCaravanBox.propTypes = {
 RentalCamperBox.propTypes = {
     data: PropTypes.shape({
         merk: PropTypes.string.isRequired,
-        model: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         kenteken: PropTypes.string.isRequired,
         kleur: PropTypes.string.isRequired,
-        aanschafjaar: PropTypes.string.isRequired,
+        aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
     }).isRequired,
 };
