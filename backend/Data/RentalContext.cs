@@ -32,9 +32,7 @@ using Microsoft.Extensions.Options;
             modelBuilder.ApplyConfiguration(roleConfig);
 
             modelBuilder.Entity<Voertuig>().HasData(
-                new Voertuig(1,"Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar")
-            );
-            modelBuilder.Entity<Voertuig>().HasData(
+                new Voertuig(1,"Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar"),
                 new Voertuig(2,"Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar")
             );
         }
