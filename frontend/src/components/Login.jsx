@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
 
 function Login() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
 
     const statusRef = useRef(null);
 
-    function handleEmail(e) {
-        setEmail(e.target.value);
+    function handleUsername(e) {
+        setUsername(e.target.value);
     }
 
     function handlePassword(e) {
@@ -22,7 +22,7 @@ function Login() {
         const status = statusRef;
 
         const userData = {
-            "email": email,
+            "email": username,
             "password": password,
             "twoFactorCode": "",
             "twoFactorRecoveryCode": ""
@@ -56,7 +56,7 @@ function Login() {
                 const responseData = await response.json();
                 console.error('Error: ', responseData);
 
-                status.current.textContent = 'E-mailadres of wachtwoord is onjuist';
+                status.current.textContent = 'Gebruikersnaam of wachtwoord is onjuist';
                 status.current.style.color = 'red';
             }
         } catch (error) {
@@ -71,14 +71,14 @@ function Login() {
 
                 <form onSubmit={(e) => e.preventDefault()}>
                     <div className="form-group">
-                        <label htmlFor="login-email" className='login-box__input-text'>E-mail adres:</label>
+                        <label htmlFor="login-gebruikersnaam" className='login-box__input-text'>Gebruikersnaam:</label>
                         <input
-                            id="login-email"
+                            id="login-gebruikersnaam"
                             className='login-box__input-field'
                             type="text"
-                            placeholder="Vul hier uw e-mailadres in"
-                            value={email}
-                            onChange={handleEmail}
+                            placeholder="Vul hier uw gebruikersnaam in"
+                            value={username}
+                            onChange={handleUsername}
                         />
                     </div>
 
