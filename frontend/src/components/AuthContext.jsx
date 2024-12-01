@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 
-//ChatGPT code
+
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        setIsLoggedIn(!!token);
+        setIsLoggedIn(!!token); // !! casts a variable to boolean https://shorturl.at/W8BMj
     }, []);
 
     const login = () => {
@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
     );
 }
 
+// Ensures that the prop passed to AuthProvider is a prop
 AuthProvider.propTypes = {
     children: PropTypes.node,
 };
