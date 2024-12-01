@@ -1,5 +1,5 @@
 import '../styles/Register.css';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 export default function Register() {
@@ -7,6 +7,12 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [address, setAddress] = useState("");
+    const [response, setResponse] = useState({
+        msg: "",
+        isError: null,
+    });
+    const form = useRef(null);
 
     function handleEmail(e) {
         setEmail(e.target.value);
@@ -24,12 +30,36 @@ export default function Register() {
         setPhoneNumber(e.target.value);
     }
 
+    function handleAddress(e) {
+        setAddress(e.target.value);
+    }
+
+    async function submitForm() {
+        // Don't submit when the form is invalid.
+        if (!form.current.checkValidity()) {
+            return;
+        }
+
+        const payload = {
+            name: username,
+            email,
+            phoneNumber,
+            password,
+            address,
+        };
+        await register(payload, setResponse);
+    }
+
+    let responseClass = getResponseClass(response);
+
     return (
         <main className='register-page'>
             <div className='register-box'>
                 <h1 className='register-box__text'>Registeren</h1>
 
-                <form onSubmit={(e) => {
+                { response.isError === null ? <></> : <p className={'register-box__response-text ' + responseClass}>{ response.msg }</p> }
+
+                <form ref={form} onSubmit={(e) => {
                     e.preventDefault();
                 }}>
                     <div className="form-group">
@@ -39,6 +69,9 @@ export default function Register() {
                             className='register-box__input-field'
                             type="text"
                             placeholder='Vul hier je naam in'
+                            minLength='2'
+                            maxLength='50'
+                            required
                             value={username}
                             onChange={handleUsername}
                         />
@@ -51,6 +84,9 @@ export default function Register() {
                             className='register-box__input-field'
                             type="email"
                             placeholder='Vul hier uw e-mailadres in'
+                            minLength='5'
+                            maxLength='255'
+                            required
                             value={email}
                             onChange={handleEmail}
                         />
@@ -63,6 +99,9 @@ export default function Register() {
                             className='register-box__input-field'
                             type="password"
                             placeholder='Vul hier uw wachtwoord in'
+                            minLength='8'
+                            maxLength='50'
+                            required
                             value={password}
                             onChange={handlePassword}
                         />
@@ -77,7 +116,9 @@ export default function Register() {
                             placeholder='Vul hier uw telefoonnummer in'
                             value={phoneNumber}
                             onChange={handlePhoneNumber}
-                            maxLength="15"
+                            minLength='5'
+                            maxLength='15'
+                            required
                             pattern="[0-9]*"
                             inputMode="numeric"
                             onKeyDown={(e) => {
@@ -88,7 +129,22 @@ export default function Register() {
                         />
                     </div>
 
-                    <button className='register-box__button' type='submit'>Submit</button>
+                    <div className="form-group">
+                        <label htmlFor="adres" className='register-box__input-text'>Adres:</label>
+                        <input
+                            id="adres"
+                            className='register-box__input-field'
+                            type="text"
+                            placeholder='Vul hier je adres in'
+                            minLength='5'
+                            maxLength='255'
+                            required
+                            value={address}
+                            onChange={handleAddress}
+                        />
+                    </div>
+
+                    <button className='register-box__button' type='submit' onClick={submitForm} >Submit</button>
                 </form>
 
                 <nav className="register-box__hyperlinks">
@@ -97,4 +153,77 @@ export default function Register() {
             </div>
         </main>
     );
+}
+
+/**
+ * Will try to register the user by calling the api.
+ * When it fails an error message will be displayed in the ui.
+ * Otherwise a success message will be shown instead.
+ * @param {Object} payload 
+ * @param {string} payload.name
+ * @param {string} payload.email
+ * @param {number} payload.phoneNumber
+ * @param {string} payload.password
+ * @param {string} payload.address
+ * @param {Function} setResponse 
+ */
+async function register(payload, setResponse) {
+    const request = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    };
+
+    try {
+        const response = await fetch('https://localhost:53085/api/ParticuliereUser', request);
+
+        switch (response.status) {
+            case 201:
+                const user = await response.json();
+                setResponse({
+                    msg: 'de gebruiker is aangemaakt',
+                    isError: false,
+                });
+                console.log(user);
+            break;
+
+            case 400:
+                const errorMsg = await response.text();
+                setResponse({
+                    msg: errorMsg,
+                    isError: true,
+                });
+            break;
+
+            default:
+                setResponse({
+                    msg: 'er is een serverfout opgetreden',
+                    isError: true,
+                });
+            break;
+        }
+    } catch (error) {
+        setResponse({
+            msg: 'er is een serverfout opgetreden',
+            isError: true,
+        });
+        console.error('error when sending register request or parsing the response', error);
+    }
+}
+
+/**
+ * Gets the correct css class name of the response text.
+ * @param {Object} response
+ * @param {string} response.msg
+ * @param {bool} response.isError
+ * @returns string
+ */
+function getResponseClass(response) {
+    if (response.isError === null) {
+        return '';
+    } else {
+        return 'register-box__response-text--' + (response.isError ? 'error' : 'success');
+    }
 }
