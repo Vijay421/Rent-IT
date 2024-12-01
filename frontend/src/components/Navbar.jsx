@@ -13,8 +13,8 @@ function Navbar() {
             <Link to="/"><img src={Logo} width="70" alt="CarAndAll logo"/></Link>
 
             <ul className='navbar__navigation-buttons'>
-                <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
-                <NavButton className="navbar_n  avigation-buttons-nagivation" title="button" link="/"></NavButton>
+                <NavButton className="navbar_navigation-buttons-nagivation" title="Home" link="/"></NavButton>
+                <NavButton className="navbar_n  avigation-buttons-nagivation" title="Huur" link="/renting"></NavButton>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
             </ul>
 
