@@ -40,7 +40,7 @@ export function RentalAutoBox( {data} ) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>$3000</p>
+                <p className='rental-vehicle-huurprijs__p'>€2.000</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>

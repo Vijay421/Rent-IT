@@ -1,12 +1,16 @@
 .rental-vehicle-box__div {
     display: flex;
     margin: 1.5vh auto;
+    padding: 1dvh;
     width: 97%;
-    height: 20dvh;
+    height: auto;
     flex-direction: row;
     font-size: 1.5rem;
     border-radius: 5px;
     background-color: #f1f1f1;
+    border: 2px solid black;
+    /*background-color: red;*/
+    flex-wrap: wrap;
 }
 
 .rental-vehicle-image__div {
@@ -15,21 +19,24 @@
     height: 95%;
     justify-content: center;
     align-self: center;
+    /*background-color: green;*/
 }
 
 .rental-vehicle-image__div {
-    height: 80%;
+    height: max(100px, 9vw);
 }
 
 .rental-vehicle-data__div {
     display: flex;
     width: 50%;
     flex-direction: column;
+    /*background-color: blue;*/
 }
 
 .rental-vehicle-auto__h3 {
     margin: 1% 0 0 2%;
     font-size: 1.2em;
+    /*background-color: darkmagenta;*/
     width: 96%;
 }
 
@@ -48,10 +55,12 @@
 }
 
 .rental-vehicle-data-column1__div {
+    /*background-color: dodgerblue;*/
     margin-left: 2%;
 }
 
 .rental-vehicle-data-column2__div {
+    /*background-color: lightpink;*/
     margin-right: 2%;
 }
 
@@ -71,25 +80,27 @@
     flex-direction: column;
     width: 20%;
     margin-left: auto;
+    /*background-color: blueviolet;*/
     justify-content: center;
     text-align: center;
 }
 
 .rental-vehicle-huurprijs__p {
     font-weight: bold;
-    font-size: 1.6em;
+    font-size: 3vw;
 }
 
 .rental-vehicle-kosten__p {
-    font-size: 0.7em;
+    font-size: 1vw;
 }
 
 #rental-vehicle-huur-box__button {
     display: flex;
     margin: 10% auto 0 auto;
     justify-content: center;
+    align-items: center;
     width: 50%;
     height: 20%;
-    font-size: 1.25em;
+    font-size: 1.5vw;
     font-weight: bold;
 }
