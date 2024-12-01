@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 function Navbar() {
     return(
         <nav className='navbar'>
-            <Link to="/"><img src={TempImage} width="70" alt="CarAndAll logo"/></Link>
+            <Link to="/"><img src={Logo} width="70" alt="CarAndAll logo"/></Link>
 
             <ul className='navbar__navigation-buttons'>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>

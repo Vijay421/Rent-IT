@@ -9,7 +9,7 @@
     grid-template-columns: 20% 75%; /* Adjust widths as needed */
     column-gap: 5%; /* Space between grid items */
     width: 85%;
-    margin: 5%;
+    margin: 3dvh 5%;
 }
 
 .divLeft {
@@ -42,7 +42,9 @@
     background-color: #c8d8e4;
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    height: 30em;
+    min-height: 35em;
+    height: auto;
+
 }
 
 /*________________________________________________________________________________________________________________*/
@@ -60,7 +62,6 @@
 
 .divTop-header {
     text-align: center;
-    padding: 10px;
 }
 
 .divTop-header-Text-Huren {
@@ -68,6 +69,7 @@
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 0.5em;
+    padding: 1dvh;
 }
 
 .rowDivs {
@@ -80,20 +82,17 @@
     height: 2em;
     flex: 1; /* Make divs equal width */
     text-align: center;
-    padding: 10px;
 }
 
 .divTop-divSelect-ophaalDatum {
     flex: 1; /* Make divs equal width */
     text-align: center;
-    padding: 10px;
     height: 2em;
 }
 
 .divTop-divSelect-inleverDatum {
     flex: 1; /* Make divs equal width */
     text-align: center;
-    padding: 10px;
     height: 2em;
 }
 

@@ -1,0 +1,10 @@
+.rental-vehicle-box__div {
+    display: flex;
+    margin: 1.5vh auto;
+    width: 97%;
+    height: 20dvh;
+    flex-direction: column;
+    font-size: 1.5rem;
+    border: 3px solid black;
+    background-color: white;
+}
