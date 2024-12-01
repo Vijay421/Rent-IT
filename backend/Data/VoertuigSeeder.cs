@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Data
 {
-    public class VoertuigConfiguration : IEntityTypeConfiguration<Voertuig>
+    public class VoertuigConfiguration
     {
-        public void Configure(EntityTypeBuilder<Voertuig> builder)
+        public void Seed(EntityTypeBuilder<Voertuig> builder)
         {
             builder.HasData
             (
