@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-
-    namespace backend.Data
+using System.Collections;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+namespace backend.Data
 {
     public class RentalContext : IdentityDbContext<User>
     {
@@ -30,10 +32,27 @@ using Microsoft.Extensions.Options;
 
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
+            var jsonString = File.ReadAllText("Voertuigen.json");
+            var voertuigen = JsonSerializer.Deserialize<List<Voertuig>>(jsonString);
+            if (voertuigen != null){
+                modelBuilder.Entity<Voertuig>().HasData(voertuigen);
 
-            modelBuilder.Entity<Voertuig>().HasData(
-                
-            );
+                //     x => {
+                //     for(int i = 0; i <= voertuigen.Count; i++){
+                //         new Voertuig(
+                //             voertuigen[i].Id,
+                //             voertuigen[i].Merk,
+                //             voertuigen[i].Type,
+                //             voertuigen[i].Kenteken,
+                //             voertuigen[i].Kleur,
+                //             voertuigen[i].Aanschafjaar,
+                //             voertuigen[i].Soort,
+                //             voertuigen[i].Opmerking,
+                //             voertuigen[i].Status);
+                //     }
+                //     return 
+                // } 
+            }
 
         }
 
