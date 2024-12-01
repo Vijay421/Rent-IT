@@ -7,7 +7,7 @@ export function RentalAutoBox( {data} ) {
     return (
         <div className='rental-vehicle-box__div'>
             <p className='rental-vehicle-merk__p'>Merk: {data.merk}</p>
-            <p className='rental-vehicle-model__p'>Model: {data.model} </p>
+            <p className='rental-vehicle-model__p'>Model: {data.type} </p>
             <p className='rental-vehicle-kenteken__p'>Kenteken: {data.kenteken}</p>
             <p className='rental-vehicle-kleur__p'>Kleur: {data.kleur}</p>
             <p className='rental-vehicle-aanschafjaar__p'>Aanschafjaar: {data.aanschafjaar}</p>
@@ -22,7 +22,7 @@ export function RentalCaravanBox( {data} ) {
     return (
         <div className='rental-vehicle-box__div'>
             <p className='rental-vehicle-merk__p'>Merk: {data.merk}</p>
-            <p className='rental-vehicle-model__p'>Model: {data.model} </p>
+            <p className='rental-vehicle-model__p'>Model: {data.type} </p>
             <p className='rental-vehicle-kenteken__p'>Kenteken: {data.kenteken}</p>
             <p className='rental-vehicle-kleur__p'>Kleur: {data.kleur}</p>
             <p className='rental-vehicle-aanschafjaar__p'>Aanschafjaar: {data.aanschafjaar}</p>
@@ -37,7 +37,7 @@ export function RentalCamperBox( {data} ) {
     return (
         <div className='rental-vehicle-box__div'>
             <p className='rental-vehicle-merk__p'>Merk: {data.merk}</p>
-            <p className='rental-vehicle-model__p'>Model: {data.model} </p>
+            <p className='rental-vehicle-model__p'>Model: {data.type} </p>
             <p className='rental-vehicle-kenteken__p'>Kenteken: {data.kenteken}</p>
             <p className='rental-vehicle-kleur__p'>Kleur: {data.kleur}</p>
             <p className='rental-vehicle-aanschafjaar__p'>Aanschafjaar: {data.aanschafjaar}</p>
@@ -49,7 +49,7 @@ export function RentalCamperBox( {data} ) {
 RentalAutoBox.propTypes = {
     data: PropTypes.shape({
         merk: PropTypes.string.isRequired,
-        model: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         kenteken: PropTypes.string.isRequired,
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.string.isRequired,
