@@ -7,21 +7,21 @@ namespace backend.Models
         public int Id { get; set; }
         
         [Required]
-        public Voertuig voertuig {get;set;}
+        public required Voertuig Voertuig {get;set;}
         [Required]
-        public DateTime startdatum { get; set; }
+        public DateTime Startdatum { get; set; }
         [Required]
-        public DateTime einddatum { get; set; }
+        public DateTime Einddatum { get; set; }
         [Required]
-        public string wettelijke_naam { get; set; }
+        public string Wettelijke_naam { get; set; }
         [Required]
-        public string adresgegevens { get; set; }
+        public string Adresgegevens { get; set; }
         [Required]
-        public string rijbewijsnummer{ get; set; }
-        public string reisaard { get; set; }
-        public string vereiste_bestemming{ get; set; }
-        public int verwachte_km{ get; set; }
-        public bool geaccepteerd { get; set; }
+        public string Rijbewijsnummer{ get; set; }
+        public string Reisaard { get; set; }
+        public string Vereiste_bestemming{ get; set; }
+        public int Verwachte_km{ get; set; }
+        public bool Geaccepteerd { get; set; }
 
     }
 }

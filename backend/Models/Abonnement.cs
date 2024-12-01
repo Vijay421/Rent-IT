@@ -4,10 +4,10 @@
     {
         public int Id { get; set; }
 
-        public string naam { get; set; }
-        public float prijs_per_maand { get; set; }
-        public int max_huurders { get; set; }
-        public TimeOnly duur { get; set; }
-        public string soort { get; set; } // pay as you go / maandabonnement
+        public string Naam { get; set; }
+        public float Prijs_per_maand { get; set; }
+        public int Max_huurders { get; set; }
+        public TimeOnly Duur { get; set; }
+        public string Soort { get; set; } // pay as you go / maandabonnement
     }
 }
