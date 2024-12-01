@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useRef} from 'react';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
@@ -7,6 +7,8 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
+
+    const statusRef = useRef(null);
 
     function handleEmail(e) {
         setEmail(e.target.value);
@@ -17,7 +19,7 @@ function Login() {
     }
 
     async function handleLoginButtonClick() {
-        const status = document.getElementById('login-box__loginstatus');
+        const status = statusRef;
 
         const userData = {
             "email": email,
@@ -37,21 +39,25 @@ function Login() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                console.log('Login successful', responseData);
 
                 localStorage.setItem('accessToken', responseData.accessToken);
                 localStorage.setItem('refreshToken', responseData.refreshToken);
 
-                status.textContent = 'Inloggen is succesvol';
-                status.style.color = 'green';
+                status.current.textContent = 'Inloggen is succesvol';
+                status.current.style.color = 'green';
 
                 login();
+
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+
             } else {
                 const responseData = await response.json();
-                console.log('Error: ', responseData);
+                console.error('Error: ', responseData);
 
-                status.textContent = 'E-mailadres of wachtwoord is onjuist';
-                status.style.color = 'red';
+                status.current.textContent = 'E-mailadres of wachtwoord is onjuist';
+                status.current.style.color = 'red';
             }
         } catch (error) {
             console.error('Error: ', error);
@@ -88,7 +94,7 @@ function Login() {
                         />
                     </div>
 
-                    <p id='login-box__loginstatus'></p>
+                    <p id='login-box__loginstatus' ref={statusRef}></p>
 
                     <button className='login-box__button' type='submit' onClick={handleLoginButtonClick}>Login</button>
 
