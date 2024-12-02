@@ -14,6 +14,7 @@ function App() {
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/retrievepassword" element={<RetrievePasswordPage/>} />
                 <Route path="/renting" element={<RentingPage/>} />
+                <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
             </Routes>
         </Router>
     );

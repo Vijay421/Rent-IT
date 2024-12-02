@@ -51,16 +51,14 @@ function Renting() {
 
     return (
         <div className="content">
-            <div className="divLeft">
-                <p className="divLeft-Text-Filter">Filter auto&#39;s:</p>
-            </div>
+
 
             <div className="divTop">
                 <div className="divTop-header">
-                    <p className="divTop-header-Text-Huren">Auto huren:</p>
+                    <p className="divTop-header-Text-Huren">Auto huren</p>
                 </div>
-                <div className="rowDivs">
 
+                <div className="rowDivs">
                     <div className="divTop-divSelect-Voertuig">
                         <div className="divTop-divSelect-Voertuig-dropdown-container">
                             <label htmlFor="options" className="dropdown-label">Voertuig: </label>

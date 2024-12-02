@@ -12,11 +12,10 @@ function Navbar() {
         <nav className='navbar'>
             <Link to="/"><img src={Logo} width="70" alt="CarAndAll logo"/></Link>
 
-            <ul className='navbar__navigation-buttons'>
+            <div className='navbar__navigation-buttons'>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="Home" link="/"></NavButton>
-                <NavButton className="navbar_n  avigation-buttons-nagivation" title="Huur" link="/renting"></NavButton>
-                <NavButton className="navbar_navigation-buttons-nagivation" title="button" link="/"></NavButton>
-            </ul>
+                <NavButton className="navbar_navigation-buttons-nagivation" title="Huren" link="/renting"></NavButton>
+            </div>
 
             {isLoggedIn ? (
                 <ul className='navbar__login-box__button'>

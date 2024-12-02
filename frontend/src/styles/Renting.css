@@ -7,9 +7,8 @@
         "divLeft divMargin"
         "divLeft divMain";
     grid-template-columns: 20% 75%; /* Adjust widths as needed */
-    column-gap: 5%; /* Space between grid items */
     width: 85%;
-    margin: 3dvh 5%;
+    margin: 3dvh 0;
 }
 
 .divLeft {
@@ -25,17 +24,16 @@
     background-color: #c8d8e4;
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    height: 6em;
+    padding: 5px;
+    height: auto;
 
     display: flex;
     flex-direction: column; /* Stack children vertically */
     gap: 10px; /* Space between topDiv and rowDivs */
+    margin-bottom: 2vh;
 }
 
-.divMargin {
-    grid-area: divMargin;
-    height: 3em;
-}
+
 
 .divMain {
     grid-area: divMain;
@@ -63,20 +61,20 @@
 
 .divTop-header {
     text-align: center;
+    padding: 5px;
 }
 
 .divTop-header-Text-Huren {
-    text-align: left;
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 0.5em;
-    padding: 1dvh;
 }
 
 .rowDivs {
     display: flex; /* Align child divs horizontally */
     justify-content: space-between; /* Spread divs evenly */
-    /* gap: 0px; /* Optional: space between divs */
+    gap: 2px; /* Optional: space between divs*/
+    height: 40px;
 }
 
 .divTop-divSelect-Voertuig {
@@ -156,4 +154,31 @@
     margin-top: 10px;
     font-size: 14px;
     color: #555;
+}
+
+@media only screen and (max-width: 1111px) {
+    .content {
+        margin: 3dvh 0;
+    }
+
+    .divLeft {
+        display: none;
+    }
+
+    .divTop {
+    }
+
+    .rowDivs {
+        flex-direction: row;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .divTop-header-Text-Huren {
+        text-align: center;
+    }
+    .rowDivs {
+        flex-direction: column;
+        height: auto;
+    }
 }
