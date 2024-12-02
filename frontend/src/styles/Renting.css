@@ -1,0 +1,159 @@
+/*________________________________________________________________________________________________________________*/
+/* Main Div Layout (Content, divLeft, divTop, divMargin, divMain) */
+.content {
+    display: grid;
+    grid-template-areas:
+        "divLeft divTop"
+        "divLeft divMargin"
+        "divLeft divMain";
+    grid-template-columns: 20% 75%; /* Adjust widths as needed */
+    column-gap: 5%; /* Space between grid items */
+    width: 85%;
+    margin: 3dvh 5%;
+}
+
+.divLeft {
+    grid-area: divLeft;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: 25em;
+}
+
+.divTop {
+    grid-area: divTop;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: 6em;
+
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    gap: 10px; /* Space between topDiv and rowDivs */
+}
+
+.divMargin {
+    grid-area: divMargin;
+    height: 3em;
+}
+
+.divMain {
+    grid-area: divMain;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    width: 63.5vw;
+
+}
+
+/*________________________________________________________________________________________________________________*/
+/* DivLeft consists of a textfield (DivLeft-Text-Filter) */
+
+.divLeft-Text-Filter {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 0.5em;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* DivTop consists of a topDiv (divTop-header) and 3 rowDivs (divTop-divSelect-Voertuig/ophaalDatum/inleverDatum) */
+
+.divTop-header {
+    text-align: center;
+}
+
+.divTop-header-Text-Huren {
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 0.5em;
+    padding: 1dvh;
+}
+
+.rowDivs {
+    display: flex; /* Align child divs horizontally */
+    justify-content: space-between; /* Spread divs evenly */
+    /* gap: 0px; /* Optional: space between divs */
+}
+
+.divTop-divSelect-Voertuig {
+    height: 2em;
+    flex: 1; /* Make divs equal width */
+    text-align: center;
+}
+
+.divTop-divSelect-ophaalDatum {
+    flex: 1; /* Make divs equal width */
+    text-align: center;
+    height: 2em;
+}
+
+.divTop-divSelect-inleverDatum {
+    flex: 1; /* Make divs equal width */
+    text-align: center;
+    height: 2em;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* Next are all dropdown styles from divTop-divSelect-Voertuig */
+
+.divTop-divSelect-Voertuig-dropdown-container {
+}
+
+.dropdown-label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Dropdown styling */
+.divTop-divSelect-Voertuig-dropdown {
+    background-color: #f9f9f9;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover and focus effects */
+.divTop-divSelect-Voertuig-dropdown:hover, .divTop-divSelect-Voertuig-dropdown:focus {
+    border-color: #0056b3; /* Darker blue on hover/focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow */
+}
+
+/* Style for the options */
+.divTop-divSelect-Voertuig-dropdown option {
+    padding: 10px;
+    font-size: 12px;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* Next are all DateSelector styles from divTop-divSelect-ophaalDatum en divTop-divSelect-inleverDatum */
+
+.divTop-divSelect-ophaalDatum-datePicker-container, .divTop-divSelect-inleverDatum-datePicker-container {
+}
+
+.date-label-ophaalDatum, .date-label-inleverDatum {
+    color: #333;
+}
+
+.date-input {
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.date-input:hover, .date-input:focus {
+    border-color: #0056b3; /* Darker blue on hover/focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow */
+}
+
+.selected-date {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
