@@ -4,7 +4,6 @@
     height: 90vh;
     justify-content: center;
     align-items: center;
-    background-color: green;
 }
 
 .settings-title {
@@ -16,15 +15,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: blue;
+    background-color: white;
     width: 350px;
-    padding: 20px 10px;
+    padding: 25px 10px;
+    border-radius: 2px;
 }
 
 .settings__input-box {
     display: flex;
     flex-direction: column;
-    width: 235px;
+    width: 300px;
 }
 
 .settings__input-field {
@@ -40,20 +40,29 @@
 .settings__nav {
     display: flex;
     justify-content: flex-end;
-    width: 235px;
+    width: 300px;
 }
 
-/* TODO: remove empty class */
 .settings__upload-button {
-
+    background-color: black;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 8px;
 }
 
-/* TODO: remove empty class */
-.settings__name-box {
-
+.settings__upload-button:hover {
+    background-color: dimgray;
+    transition: background-color 0.1s;
+    cursor: pointer;
 }
 
-/* TODO: remove empty class */
-.settings__email-box {
+.settings__upload-button:active {
+    background-color: #52ab98;
+}
 
+@media only screen and (max-width: 600px) {
+    .settings__form {
+        width: 320px;
+    }
 }
