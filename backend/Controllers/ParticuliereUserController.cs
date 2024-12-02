@@ -1,11 +1,13 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -109,8 +111,33 @@ namespace backend.Controllers
         }
 
         /// <summary>
+        /// Attempts to return the user data of the current logged in user.
+        /// </summary>
+        [Authorize]
+        [HttpGet("user")]
+        public async Task<ActionResult> GetUserInfo()
+        {
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId == null)
+            {
+                return Unauthorized("User id not found.");
+            }
+
+            var CurrentUserName = User.FindFirstValue(ClaimTypes.Name);
+            var CurrentUserRole= User.FindFirstValue(ClaimTypes.Role);
+
+            return Ok(new
+            {
+                UserId = CurrentUserId,
+                UserName = CurrentUserName,
+                Role = CurrentUserRole,
+            });
+        }
+
+        /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
         {
@@ -125,7 +152,6 @@ namespace backend.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(id);
-
             if (user == null)
             {
                 return NotFound();
@@ -151,6 +177,7 @@ namespace backend.Controllers
                     return BadRequest();
                 }
 
+                // TODO: return password mismatch error and other errors.
                 await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
             }
 

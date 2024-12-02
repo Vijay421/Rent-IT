@@ -61,7 +61,7 @@
     background-color: #52ab98;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 660px) {
     .settings__form {
         width: 320px;
     }
