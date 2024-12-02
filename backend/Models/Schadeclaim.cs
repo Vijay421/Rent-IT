@@ -10,6 +10,7 @@ namespace backend.Models
         [Required]
         public DateTime Datum {get;set;}
         [Required]
+        [MinLength(5)]
         public required string Beschrijving {get;set;}
         public string? Foto {get;set;}
     }

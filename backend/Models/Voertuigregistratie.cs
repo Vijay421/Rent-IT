@@ -1,10 +1,12 @@
-﻿namespace backend.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace backend.Models
 {
     public class Voertuigregistratie
     {
         public int Id { get; set; }
-
-        public required Voertuig voertuig { get; set; }
+        [Required]
+        public required Voertuig Voertuig { get; set; }
         public DateTime Inname {get;set;}
     }
 }
