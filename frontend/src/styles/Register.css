@@ -91,7 +91,7 @@
 
 /*Action for when the register button is active (clicking)*/
 .register-box__button:active {
-    background-color: #52ab98;
+    background-color: var(--Tertiary-color);
 }
 
 /*Hyperlink div under the register button*/
@@ -110,7 +110,7 @@
 
 /*Action for when hyperlinks inside hyperlink div is active (clicking)*/
 .register-box__hyperlinks a:active {
-    color: #2b6777;
+    color: var(--secondary-color);
 }
 
 .form-group {

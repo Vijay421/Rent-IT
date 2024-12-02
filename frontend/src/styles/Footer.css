@@ -3,15 +3,22 @@ footer {
     justify-content: space-between;
     font-size: 1vw;
     padding: 0 1vw;
+    background-color: var(--main-color);
+    height: 2em;
 }
 
-/*Hyperlinks inside footer*/
-footer a {
-    text-decoration: none;
-    color: blue;
+.info {
+    color: black;
+    text-decoration: underline;
+    margin-top: 0.5em;
+}
+
+.copyright {
+    color: black;
+    margin-top: 0.5em;
 }
 
 /*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
-footer a:active, footer a:hover, footer a:visited {
+footer a:active, footer a:hover{
     color: blue;
 }

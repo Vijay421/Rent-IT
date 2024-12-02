@@ -6,6 +6,7 @@ export default function RegisterPage() {
         <>
             <Navbar/>
             <Register/>
+            <footer/>
         </>
     );
 }

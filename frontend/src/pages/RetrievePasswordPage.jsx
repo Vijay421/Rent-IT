@@ -6,6 +6,7 @@ export default function RetrievePasswordPage() {
         <>
             <Navbar/>
             <RetrievePassword/>
+            <footer/>
         </>
     );
 }

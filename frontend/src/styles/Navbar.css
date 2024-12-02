@@ -1,6 +1,6 @@
 /*Entire navigation bar*/
 .navbar {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     height: 10vh;
@@ -10,7 +10,7 @@
 
 /*Div for buttons in nagivation bar*/
 .navbar__navigation-buttons {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -19,7 +19,7 @@
 }
 /*The buttons inside the said div above*/
 .navbar__navigation-buttons button {
-    background-color: #2b6777;
+    background-color: var(--secondary-color);
     color: white;
     min-height: 5vh;
     min-width: max(7vw, 50px);
@@ -32,13 +32,13 @@
 
 /*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
 .navbar__navigation-buttons button:hover, .navbar__login-box__button button:hover {
-    background-color: #52ab98;
+    background-color: var(--Tertiary-color);
     cursor: pointer;
 }
 
 /*Div for the login buttons in navigation bar*/
 .navbar__login-box__button {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -48,7 +48,7 @@
 
 /*Buttons inside said div above*/
 .navbar__login-box__button button {
-    background-color: #2b6777;
+    background-color: var(--secondary-color);
     color: white;
     min-height: 5vh;
     min-width: max(7vw, 50px);

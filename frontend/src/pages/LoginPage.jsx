@@ -6,6 +6,7 @@ export default function LoginPage() {
         <>
             <Navbar/>
             <Login/>
+            <footer/>
         </>
     );
 }
