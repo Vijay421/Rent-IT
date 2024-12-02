@@ -32,7 +32,7 @@ namespace backend.Data
 
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
-            var jsonString = File.ReadAllText("Voertuigen.json");
+            var jsonString = File.ReadAllText("Data/Voertuigen.json");
             var voertuigen = JsonSerializer.Deserialize<List<Voertuig>>(jsonString);
             if (voertuigen != null){
                 modelBuilder.Entity<Voertuig>().HasData(voertuigen);
