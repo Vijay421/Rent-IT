@@ -37,7 +37,7 @@ export default function AccountSettings() {
         await updateSettings(payload, setResponse, accessToken);
     }
 
-    // TODO: allow all fields to be optional, but at least one fields should be changed (unless the password has been changed, then current password needs to be defined as well).
+    // TODO: allow all fields to be optional, but at least one fields should be defined (unless the password has been changed, then current password needs to be defined as well).
     return (
         <>
             <Navbar/>

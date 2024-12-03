@@ -110,6 +110,7 @@ namespace backend.Controllers
             return BadRequest();
         }
 
+        // TODO: replace this endpoint to a user controller, for all users.
         /// <summary>
         /// Attempts to return the user data of the current logged in user.
         /// </summary>

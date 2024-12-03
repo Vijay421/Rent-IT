@@ -29,6 +29,7 @@ function Login() {
         };
 
         try {
+            // TODO: use the useCookie query parameter.
             const response = await fetch('https://localhost:53085/auth/login', {
                 method: 'POST',
                 headers: {
@@ -49,7 +50,10 @@ function Login() {
 
                 login();
 
+                // TODO: fail the login if GetUserClaims throws an error. 
                 const userClaims = await GetUserClaims(null, responseData.accessToken);
+
+                // TODO: store the user claims in the session store, so they are deleted when the window closes.
                 localStorage.setItem('userClaims', JSON.stringify(userClaims));
 
                 // TODO: go to profile page, instead of refreshing the page.
@@ -113,7 +117,7 @@ function Login() {
     );
 }
 
-// TODO: the the errors correctly.
+// TODO: handle the the errors correctly.
 /**
  * Will try to get the user claims of the current logged in user. 
  * @param {Function} setResponse
