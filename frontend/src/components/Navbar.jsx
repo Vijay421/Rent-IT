@@ -30,7 +30,7 @@ function Navbar() {
                     </Link>
 
                     <Link to="/register">
-                        <button>Register</button>
+                        <button id='register-button__button'>Register</button>
                     </Link>
                 </ul>
             )}

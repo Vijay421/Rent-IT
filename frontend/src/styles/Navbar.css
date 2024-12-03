@@ -20,8 +20,8 @@
 .navbar__navigation-buttons button {
     background-color: #2b6777;
     color: white;
-    min-height: 5vh;
     width: 100px;
+    height: 40px;
     font-size: 1.3rem;
     border-radius: 0.5vw;
     border: transparent;
@@ -48,8 +48,8 @@
 .navbar__login-box__button button {
     background-color: #2b6777;
     color: white;
-    min-height: 5vh;
     width: 100px;
+    height: 40px;
     font-size: 1.3rem;
     border-radius: 1vw;
     border: transparent;
@@ -60,13 +60,21 @@
     .navbar {
         padding: 0;
     }
+
     .navbar__navigation-buttons button {
-        width: 60px;
+        width: 50px;
+        height: 35px;
         font-size: 0.8rem;
     }
 
     .navbar__login-box__button button {
-        width: 60px;
+        width: auto;
+        height: 35px;
         font-size: 0.8rem;
+    }
+
+    #register-button__button {
+        width: 60px;
+        margin-right: 10px;
     }
 }

@@ -70,9 +70,9 @@ function Renting() {
                                 onChange={handleSelectChange} // Event handler
                             >
                                 <option value="Option0">Alle soorten voertuigen</option>
-                                <option value="option1">Auto</option>
-                                <option value="option2">Camper</option>
-                                <option value="option3">Caravan</option>
+                                <option value="auto">Auto</option>
+                                <option value="camper">Camper</option>
+                                <option value="caravan">Caravan</option>
                             </select>
                         </div>
                     </div>
@@ -92,18 +92,18 @@ function Renting() {
                     </div>
 
                     <div className="divTop-divSelect-inleverDatum">
-                        <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
-                            <input
-                                type="date"
-                                id="date-picker"
-                                className="date-input"
-                                value={selectedDateInleverDatum}
-                                onChange={handleDateChangeInleverDatum}
-                            />
-                            {selectedDateInleverDatum && <p className="divTop-divSelect-inleverDatum-datePicker"></p>}
-                        </div>
+                    <div className="divTop-divSelect-inleverDatum-datePicker-container">
+                        <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
+                        <input
+                            type="date"
+                            id="date-picker"
+                            className="date-input"
+                            value={selectedDateInleverDatum}
+                            onChange={handleDateChangeInleverDatum}
+                        />
+                        {selectedDateInleverDatum && <p className="divTop-divSelect-inleverDatum-datePicker"></p>}
                     </div>
+                </div>
                 </div>
             </div>
 

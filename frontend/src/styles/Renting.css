@@ -7,7 +7,7 @@
         "divLeft divMargin"
         "divLeft divMain";
     grid-template-columns: 20% 75%; /* Adjust widths as needed */
-    width: 85%;
+    width: 90%;
     margin: 3dvh 0;
 }
 
@@ -42,7 +42,7 @@
     border: 2px solid black;
     min-height: 35em;
     height: auto;
-    width: 63.5vw;
+    width: 66.5vw;
 
 }
 
