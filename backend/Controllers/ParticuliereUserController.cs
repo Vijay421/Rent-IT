@@ -121,7 +121,7 @@ namespace backend.Controllers
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId == null)
             {
-                return Unauthorized("User id not found.");
+                return Unauthorized("Kan gebruiker niet vinden");
             }
 
             var CurrentUserName = User.FindFirstValue(ClaimTypes.Name);
@@ -144,25 +144,50 @@ namespace backend.Controllers
         {
             if (!huurderDTO.HasData())
             {
-                return BadRequest();
+                return BadRequest("Geen data ontvangen");
             }
 
             if (huurderDTO.Id != id)
             {
-                return BadRequest();
+                return BadRequest("Incorrecte id");
             }
 
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("Kan gebruiker niet vinden");
             }
 
-            // TODO: throw duplicate username error.
-            // TODO: throw duplicate email error.
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId == null)
+            {
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            if (CurrentUserId != id)
+            {
+                return Unauthorized("Kan gebruiker niet vinden");
+            }
+
             user.UserName = huurderDTO.UserName ?? user.UserName;
             user.Email = huurderDTO.Email ?? user.Email;
             user.PhoneNumber = huurderDTO.PhoneNumber ?? user.PhoneNumber;
+
+            if (huurderDTO.UserName != null)
+            {
+                if (await _userManager.FindByNameAsync(huurderDTO.UserName) != null)
+                {
+                    return UnprocessableEntity($"Naam: '{huurderDTO.UserName}' is al in gebruik");
+                }
+            }
+
+            if (huurderDTO.Email != null)
+            {
+                if (await _userManager.FindByNameAsync(huurderDTO.Email) != null)
+                {
+                    return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
+                }
+            }
 
             if (huurderDTO.Address != null)
             {
