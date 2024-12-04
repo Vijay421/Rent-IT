@@ -99,7 +99,7 @@ function Login() {
                     <button className='login-box__button' type='submit' onClick={handleLoginButtonClick}>Login</button>
 
                     <nav className="login-box__hyperlinks">
-                        <a href="#">Wachtwoord vergeten? Account hier herstellen</a>
+                        <Link to="/wachtwoord-vergeten">Wachtwoord vergeten? Account hier herstellen</Link>
                         <Link to="/register">Geen account? Maak hier een account aan</Link>
                     </nav>
                 </form>
