@@ -214,18 +214,3 @@ async function register(payload, setResponse) {
         console.error('error when sending register request or parsing the response', error);
     }
 }
-
-// /**
-//  * Gets the correct css class name of the response text.
-//  * @param {Object} response
-//  * @param {string} response.msg
-//  * @param {bool} response.isError
-//  * @returns string
-//  */
-// function getResponseClass(response) {
-//     if (response.isError === null) {
-//         return '';
-//     } else {
-//         return 'register-box__response-text--' + (response.isError ? 'error' : 'success');
-//     }
-// }
