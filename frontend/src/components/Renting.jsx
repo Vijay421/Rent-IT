@@ -11,7 +11,7 @@ function Renting() {
     useEffect(() => {
         async function fetchVehicles() {
             try {
-                const response = await fetch('https://localhost:53085/api/Voertuig/get');
+                const response = await fetch('https://localhost:53085/api/Voertuig');
                 const data = await response.json();
                 setVehicles(data);
             }
@@ -121,6 +121,12 @@ function Renting() {
                                 onChange={handleDateChangeInleverDatum}
                             />
                         </div>
+                    </div>
+                    <div     className="divTop-search-bar-container">
+                        <input type="search" placeholder='Search bar'/>
+                    </div>
+                    <div className="divTop-search-button-container">
+                        <button>sadsd</button>
                     </div>
                 </div>
             </div>

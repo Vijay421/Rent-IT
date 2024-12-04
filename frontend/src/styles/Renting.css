@@ -6,8 +6,7 @@
         "divLeft divTop"
         "divLeft divMargin"
         "divLeft divMain";
-    grid-template-columns: 20% 75%; /* Adjust widths as needed */
-    width: 90%;
+    width: 100%;
     margin: 3dvh 0;
 }
 
@@ -24,14 +23,15 @@
     background-color: #c8d8e4;
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    padding: 5px;
     height: auto;
+    width: 66.5vw;
 
     display: flex;
     flex-direction: column; /* Stack children vertically */
     gap: 10px; /* Space between topDiv and rowDivs */
     margin-bottom: 2vh;
 }
+
 
 
 
