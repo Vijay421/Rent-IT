@@ -1,16 +1,15 @@
 /*Entire navigation bar*/
 .navbar {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     height: 10vh;
-    min-height: 70px;
     padding: 0 20px 0 15px;
 }
 
 /*Div for buttons in nagivation bar*/
 .navbar__navigation-buttons {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -19,12 +18,11 @@
 }
 /*The buttons inside the said div above*/
 .navbar__navigation-buttons button {
-    background-color: #2b6777;
+    background-color: var(--secondary-color);
     color: white;
-    min-height: 5vh;
-    min-width: max(7vw, 50px);
-    width: 10%;
-    font-size: clamp(10px, 1.3vw, 3vw);
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
     border-radius: 0.5vw;
     border: transparent;
     margin-left: 1vw;
@@ -32,13 +30,13 @@
 
 /*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
 .navbar__navigation-buttons button:hover, .navbar__login-box__button button:hover {
-    background-color: #52ab98;
+    background-color: var(--tertiary-color);
     cursor: pointer;
 }
 
 /*Div for the login buttons in navigation bar*/
 .navbar__login-box__button {
-    background-color: #c8d8e4;
+    background-color: var(--main-color);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -48,13 +46,35 @@
 
 /*Buttons inside said div above*/
 .navbar__login-box__button button {
-    background-color: #2b6777;
+    background-color: var(--secondary-color);
     color: white;
-    min-height: 5vh;
-    min-width: max(7vw, 50px);
-    width: 6vw;
-    font-size: clamp(10px, 1.3vw, 3vw);
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
     border-radius: 1vw;
     border: transparent;
     margin-left: 1vw;
+}
+
+@media only screen and (max-width: 660px) {
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar__navigation-buttons button {
+        width: 50px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .navbar__login-box__button button {
+        width: auto;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    #register-button__button {
+        width: 60px;
+        margin-right: 10px;
+    }
 }
