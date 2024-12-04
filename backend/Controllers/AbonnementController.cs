@@ -32,10 +32,10 @@ public class AbonnementController : ControllerBase
 
         return new AbonnementDTO{
             Id = abonnement.Id,
-            naam = abonnement.Naam,
-            prijs_per_maand = abonnement.Prijs_per_maand,
-            max_huurders = abonnement.Max_huurders,
-            soort = abonnement.Soort
+            Naam = abonnement.Naam,
+            Prijs_per_maand = abonnement.Prijs_per_maand,
+            Max_huurders = abonnement.Max_huurders,
+            Soort = abonnement.Soort
         };
     }
 }
