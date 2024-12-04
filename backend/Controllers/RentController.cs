@@ -47,23 +47,23 @@ public class RentController : ControllerBase
         return Huuraanvraag;
     }
 
-    [HttpGet("everyone")]
-    public string EveryoneCouldAccesthis()
-    {
-        return "hello everyone";
-    }
+    // [HttpGet("everyone")]
+    // public string EveryoneCouldAccesthis()
+    // {
+    //     return "hello everyone";
+    // }
 
-    [Authorize]
-    [HttpGet("users-only")]
-    public string OnlyUsersCanAccessThis()
-    {
-        return "hello user";
-    }
+    // [Authorize]
+    // [HttpGet("users-only")]
+    // public string OnlyUsersCanAccessThis()
+    // {
+    //     return "hello user";
+    // }
 
-    [Authorize(Roles = "admin")]
-    [HttpGet("admins-only")]
-    public string OnlyAdminsCanAccessThis()
-    {
-        return "hello admin";
-    }
+    // [Authorize(Roles = "admin")]
+    // [HttpGet("admins-only")]
+    // public string OnlyAdminsCanAccessThis()
+    // {
+    //     return "hello admin";
+    // }
 }

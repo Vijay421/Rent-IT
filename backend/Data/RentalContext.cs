@@ -32,27 +32,6 @@ namespace backend.Data
 
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
-            var jsonString = File.ReadAllText("Data/Voertuigen.json");
-            // var voertuigen = JsonSerializer.Deserialize<List<Voertuig>>(jsonString);
-            // if (voertuigen != null){
-            //     modelBuilder.Entity<Voertuig>().HasData(voertuigen);
-
-            //     //     x => {
-            //     //     for(int i = 0; i <= voertuigen.Count; i++){
-            //     //         new Voertuig(
-            //     //             voertuigen[i].Id,
-            //     //             voertuigen[i].Merk,
-            //     //             voertuigen[i].Type,
-            //     //             voertuigen[i].Kenteken,
-            //     //             voertuigen[i].Kleur,
-            //     //             voertuigen[i].Aanschafjaar,
-            //     //             voertuigen[i].Soort,
-            //     //             voertuigen[i].Opmerking,
-            //     //             voertuigen[i].Status);
-            //     //     }
-            //     //     return 
-            //     // } 
-            // }
 
         }
 

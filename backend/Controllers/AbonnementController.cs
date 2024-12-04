@@ -18,6 +18,7 @@ public class AbonnementController : ControllerBase
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    [HttpGet("get/")]
     public async Task<ActionResult<IEnumerable<Abonnement>>> GetAllAbonnementen()
     {
         return await _context.Abonnementen.ToListAsync();

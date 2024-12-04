@@ -17,13 +17,13 @@ public class VoertuigController : ControllerBase
         _rentalContext = context;
     }
 
-    [HttpGet]
+    [HttpGet("get/")]
     public async Task<List<Voertuig>> GetAllCars()
     {
         return await _rentalContext.Voertuigen.ToListAsync();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<Voertuig>> GetOneCar(int id)
     {
         var car = await _rentalContext.Voertuigen.FindAsync(id);
