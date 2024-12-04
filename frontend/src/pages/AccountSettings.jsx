@@ -1,6 +1,7 @@
 import {useState, useRef} from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
+import getResponseClass from '../scripts/getResponseClass';
 
 export default function AccountSettings() {
     const [email, setEmail] = useState(null);
@@ -10,7 +11,7 @@ export default function AccountSettings() {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [address, setAddress] = useState(null);
     const [response, setResponse] = useState({
-        msg: "",
+        msg: null,
         isError: null,
     });
     const form = useRef(null);
@@ -21,6 +22,7 @@ export default function AccountSettings() {
             return;
         }
 
+        // TODO: get the claims from the sessionStorage.
         const userClaims = JSON.parse(localStorage.getItem('userClaims'));
         const accessToken = localStorage.getItem('accessToken');
         console.log(userClaims);
@@ -62,7 +64,8 @@ export default function AccountSettings() {
         await updateSettings(payload, setResponse, accessToken);
     }
 
-    // TODO: allow all fields to be optional, but at least one fields should be defined (unless the password has been changed, then current password needs to be defined as well).
+    const responseClass = getResponseClass(response, 'settings__response-text');
+
     return (
         <>
             <Navbar/>
@@ -72,7 +75,7 @@ export default function AccountSettings() {
 
                     <h1 className='settings-title'>Accountinstellingen</h1>
 
-                    { response.msg != null ? <p>{response.msg}</p> : <></> }
+                    { response.msg != null ? <p className={'settings__response-text ' + responseClass}>{response.msg}</p> : <></> }
 
                     <div className='settings__input-box settings__name-box'>
                         <label htmlFor="username">Naam:</label>
@@ -191,14 +194,13 @@ async function updateSettings(payload, setResponse, accessToken) {
 
         switch (response.status) {
             case 204:
-                // const user = await response.json();
                 setResponse({
                     msg: 'de instellingen zijn geüpdated',
                     isError: false,
                 });
-                // console.log(user);
             break;
 
+            case 422:
             case 400:
                 const errorMsg = await response.text();
                 setResponse({
@@ -212,6 +214,7 @@ async function updateSettings(payload, setResponse, accessToken) {
                     msg: 'er is een serverfout opgetreden',
                     isError: true,
                 });
+                console.error('server error:', await response.text());
             break;
         }
     } catch (error) {

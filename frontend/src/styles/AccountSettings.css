@@ -8,7 +8,30 @@
 
 .settings-title {
     justify-self: flex-start;
+    margin-bottom: 10px;
+}
+
+.settings__response-text {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
     margin-bottom: 40px;
+}
+
+.settings__response-text::first-letter {
+    text-transform: capitalize;
+}
+
+.settings__response-text:after {
+    content: ".";
+ }
+
+.settings__response-text--success {
+    color: green;
+}
+
+.settings__response-text--error {
+    color: red;
 }
 
 .settings__form {

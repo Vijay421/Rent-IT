@@ -39,6 +39,17 @@ namespace backend.Controllers
                 PhoneNumber = huurderDTO.PhoneNumber.Trim(),
             };
 
+            if (await _userManager.FindByNameAsync(huurderDTO.Name) != null)
+            {
+                return UnprocessableEntity($"Naam: '{huurderDTO.Name}' is al in gebruik");
+            }
+
+            var userWithEmail = await _userManager.FindByEmailAsync(huurderDTO.Email);
+            if (userWithEmail != null)
+            {
+                return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
+            }
+
             var result = await _userManager.CreateAsync(user, huurderDTO.Password.Trim());
 
             if (result.Succeeded)
@@ -183,7 +194,7 @@ namespace backend.Controllers
 
             if (huurderDTO.Email != null)
             {
-                if (await _userManager.FindByNameAsync(huurderDTO.Email) != null)
+                if (await _userManager.FindByEmailAsync(huurderDTO.Email) != null)
                 {
                     return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
                 }
@@ -202,15 +213,17 @@ namespace backend.Controllers
             {
                 if (huurderDTO.CurrentPassword == null)
                 {
-                    return BadRequest("Vul het huidige wachtwoord in");
+                    return UnprocessableEntity("Vul het huidige wachtwoord in");
                 }
 
-                // TODO: return password mismatch error and other errors.
-                await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
+                var pasChangeResult = await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
+                
+                if (!pasChangeResult.Succeeded)
+                {
+                    return UnprocessableEntity("Incorrect wachtwoord");
+                }
             }
 
-            // TODO: figure out if this should be replaced with the _userManager.
-            //_context.Entry(user).State = EntityState.Modified;
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
@@ -219,26 +232,21 @@ namespace backend.Controllers
                 await _userManager.UpdateNormalizedUserNameAsync(user);
             } else
             {
-                var errorMsg = string.Join(", ", result.Errors.Select(e => e.Description));
+                var errorSet = new HashSet<string>();
+                var errorMsg = string.Join(", ", result.Errors.Select(e =>
+                {
+                    errorSet.Add(e.Code);
+                    return e.Description;
+                }));
                 Console.Error.WriteLine($"error: {errorMsg}");
 
-                return BadRequest("Kan de gebruiker niet updaten");
-            }
+                if (errorSet.Contains("InvalidUserName"))
+                {
+                    return UnprocessableEntity("De naam kan alleen letters of getallen bevatten");
+                }
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!_context.Users.Any(u => u.Id == id))
-            //    {
-            //        return NotFound();
-            //    } else
-            //    {
-            //        throw;
-            //    }
-            //}
+                return UnprocessableEntity("Kan de gebruiker niet updaten");
+            }
 
             return NoContent();
         }

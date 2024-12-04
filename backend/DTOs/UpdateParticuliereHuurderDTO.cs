@@ -7,36 +7,23 @@ namespace backend.DTOs
         [Required]
         public string Id { get; set; }
 
-        // TODO: figure out if MinLength still works when its null.
-        //[MinLength(2)]
-        [MaxLength(50)]
-        //[Required(AllowEmptyStrings = true)]
+        [StringLength(50, MinimumLength = 2)]
         public string? UserName { get; set; }
 
-        //[MinLength(5)]
-        [MaxLength(255)]
+        [StringLength(255, MinimumLength = 5)]
         [EmailAddress]
-        //[Required(AllowEmptyStrings = true)]
         public string? Email { get; set; }
 
-        //[MinLength(5)]
-        [MaxLength(255)]
-        //[Required(AllowEmptyStrings = true)]
+        [StringLength(255, MinimumLength = 5)]
         public string? Address { get; set; }
 
-        //[MinLength(5)]
-        [MaxLength(15)]
-        //[Required(AllowEmptyStrings = true)]
+        [StringLength(15, MinimumLength = 5)]
         public string? PhoneNumber { get; set; }
 
-        //[MinLength(8)]
-        [MaxLength(50)]
-        //[Required(AllowEmptyStrings = true)]
+        [StringLength(50, MinimumLength = 8)]
         public string? Password { get; set; }
 
-        //[MinLength(8)]
-        [MaxLength(50)]
-        //[Required(AllowEmptyStrings = true)]
+        [StringLength(50, MinimumLength = 8)]
         public string? CurrentPassword { get; set; }
 
         public bool HasData()
