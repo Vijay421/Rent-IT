@@ -1,4 +1,5 @@
-import '../styles/IndexPage.css';
+import '../styles/IndexPageButton.css';
+import {Link} from "react-router-dom";
 
 function IndexPageButton() {
     return (
@@ -7,18 +8,22 @@ function IndexPageButton() {
                 <div className="ParticulierDiv">
                     <h1 className="ParticulierH1">Particulier</h1>
                 </div>
-                <div className="ButtonDivLeft">
-                    <h1 className="BottomDivLeftHuren">huren</h1>
-                </div>
+                <Link to='/renting'>
+                    <div className="ButtonDivLeft">
+                        <h1 className="BottomDivLeftHuren">Huren</h1>
+                    </div>
+                </Link>
             </div>
-            <div className="MainDivCenter"></div>
             <div className="MainDivRight">
                 <div className="ZakelijkDiv">
                     <h1 className="ZakelijkH1">Zakelijk</h1>
                 </div>
-                <div className="ButtonDivRight">
-                    <h1 className="BottomDivRightHuren">huren</h1>
-                </div>
+
+                <Link to='/renting'>
+                    <div className="ButtonDivRight">
+                        <h1 className="BottomDivRightHuren">Huren</h1>
+                    </div>
+                </Link>
             </div>
         </div>
     );
