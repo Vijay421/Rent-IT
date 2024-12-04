@@ -4,6 +4,7 @@ import RegisterPage from "../pages/RegisterPage.jsx";
 import IndexPage from "../pages/IndexPage.jsx";
 import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
+import AccountSettings from "../pages/AccountSettings.jsx";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/retrievepassword" element={<RetrievePasswordPage/>} />
                 <Route path="/renting" element={<RentingPage/>} />
+                <Route path="/account-settings" element={<AccountSettings/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
             </Routes>
         </Router>
