@@ -1,6 +1,7 @@
 import '../styles/Register.css';
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import getResponseClass from '../scripts/getResponseClass';
 
 export default function Register() {
     const [email, setEmail] = useState("");
@@ -50,7 +51,7 @@ export default function Register() {
         await register(payload, setResponse);
     }
 
-    let responseClass = getResponseClass(response);
+    const responseClass = getResponseClass(response, 'register-box__response-text');
 
     return (
         <main className='register-page'>
@@ -190,6 +191,7 @@ async function register(payload, setResponse) {
             break;
 
             case 400:
+            case 422:
                 const errorMsg = await response.text();
                 setResponse({
                     msg: errorMsg,
@@ -210,20 +212,5 @@ async function register(payload, setResponse) {
             isError: true,
         });
         console.error('error when sending register request or parsing the response', error);
-    }
-}
-
-/**
- * Gets the correct css class name of the response text.
- * @param {Object} response
- * @param {string} response.msg
- * @param {bool} response.isError
- * @returns string
- */
-function getResponseClass(response) {
-    if (response.isError === null) {
-        return '';
-    } else {
-        return 'register-box__response-text--' + (response.isError ? 'error' : 'success');
     }
 }

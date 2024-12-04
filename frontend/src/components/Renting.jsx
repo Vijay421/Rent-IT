@@ -1,11 +1,11 @@
 import '../styles/Renting.css';
 import { useState, useEffect } from "react";
-import {RentalAutoBox, RentalCaravanBox, RentalCamperBox} from './RentalVehicleBox.jsx';
+import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicleBox.jsx';
 
 function Renting() {
-    const [selectedOptionVoertuigSoort, setSelectedOptionVoertuigSoort] = useState("Option0"); //Selecteer Voertuig soort
-    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(""); //Selecteer OphaalDatum
-    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(""); //Selecteer InleverDatum
+    const [selectedOptionVoertuigSoort, setSelectedOptionVoertuigSoort] = useState("alles"); // Selecteer Voertuig soort
+    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(""); // Selecteer OphaalDatum
+    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(""); // Selecteer InleverDatum
     const [vehicles, setVehicles] = useState([]);
 
     useEffect(() => {
@@ -22,37 +22,57 @@ function Renting() {
         fetchVehicles();
     }, []);
 
-    // Event handler for Selecteer Soort Voertuig Dropdown:
     const handleSelectChange = (event) => {
-        const value = event.target.value;
-        setSelectedOptionVoertuigSoort(value);
-
-        // Handles output from Selected Soort Voertuig.. !!Change This!!:
-        console.log("Selected value:", value);
+        setSelectedOptionVoertuigSoort(event.target.value);
+        console.log("Selected value:", event.target.value);
     };
 
-    // Event handler for Selecteer Ophaal Datum DateSelecter:
     const handleDateChangeOphaalDatum = (event) => {
-        const date = event.target.value;
-        setSelectedDateOphaalDatum(date);
-
-        // Handles output from Selected Ophaal Datum.. !!Change This!!:
-        console.log("Selected date:", date);
+        setSelectedDateOphaalDatum(event.target.value);
+        console.log("Selected date:", event.target.value);
     };
 
-    // Event handler for Selecteer Inlever Datum DateSelecter:
     const handleDateChangeInleverDatum = (event) => {
-        const date = event.target.value;
-        setSelectedDateInleverDatum(date);
+        setSelectedDateInleverDatum(event.target.value);
+        console.log("Selected date:", event.target.value);
+    };
 
-        // Handles output from Selected Inlever Datum.. !!Change This!!:
-        console.log("Selected date:", date);
+    const renderVehicleBoxes = () => {
+        return vehicles.map((vehicle) => {
+            if (selectedOptionVoertuigSoort === "alles") {
+                if (vehicle.soort === "Auto") {
+                    return <RentalAutoBox key={vehicle.id} data={vehicle} />;
+                }
+                else if (vehicle.soort === "Caravan") {
+                    return <RentalCaravanBox key={vehicle.id} data={vehicle} />;
+                }
+                else if (vehicle.soort === "Camper") {
+                    return <RentalCamperBox key={vehicle.id} data={vehicle} />;
+                }
+            }
+
+            else if (selectedOptionVoertuigSoort === "auto") {
+                if (vehicle.soort === "Auto") {
+                    return <RentalAutoBox key={vehicle.id} data={vehicle} />;
+                }
+            }
+
+            else if (selectedOptionVoertuigSoort === "caravan") {
+                if (vehicle.soort === "Caravan") {
+                    return <RentalCaravanBox key={vehicle.id} data={vehicle} />;
+                }
+            }
+
+            else if (selectedOptionVoertuigSoort === "camper") {
+                if (vehicle.soort === "Camper") {
+                    return <RentalCamperBox key={vehicle.id} data={vehicle} />;
+                }
+            }
+        });
     };
 
     return (
         <div className="content">
-
-
             <div className="divTop">
                 <div className="divTop-header">
                     <p className="divTop-header-Text-Huren">Auto huren</p>
@@ -69,7 +89,7 @@ function Renting() {
                                 value={selectedOptionVoertuigSoort} // Controlled component
                                 onChange={handleSelectChange} // Event handler
                             >
-                                <option value="Option0">Alle soorten voertuigen</option>
+                                <option value="alles">Alle soorten voertuigen</option>
                                 <option value="auto">Auto</option>
                                 <option value="camper">Camper</option>
                                 <option value="caravan">Caravan</option>
@@ -87,31 +107,33 @@ function Renting() {
                                 value={selectedDateOphaalDatum}
                                 onChange={handleDateChangeOphaalDatum}
                             />
-                            {selectedDateOphaalDatum && <p className="divTop-divSelect-ophaalDatum-datePicker"></p>}
                         </div>
                     </div>
 
                     <div className="divTop-divSelect-inleverDatum">
-                    <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                        <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
-                        <input
-                            type="date"
-                            id="date-picker"
-                            className="date-input"
-                            value={selectedDateInleverDatum}
-                            onChange={handleDateChangeInleverDatum}
-                        />
-                        {selectedDateInleverDatum && <p className="divTop-divSelect-inleverDatum-datePicker"></p>}
+                        <div className="divTop-divSelect-inleverDatum-datePicker-container">
+                            <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
+                            <input
+                                type="date"
+                                id="date-picker"
+                                className="date-input"
+                                value={selectedDateInleverDatum}
+                                onChange={handleDateChangeInleverDatum}
+                            />
+                        </div>
                     </div>
-                </div>
+                    <div     className="divTop-search-bar-container">
+                        <input type="search" placeholder='Search bar'/>
+                    </div>
+                    <div className="divTop-search-button-container">
+                        <button>sadsd</button>
+                    </div>
                 </div>
             </div>
 
             <div className="divMargin"></div>
             <div className="divMain">
-                {vehicles.map((vehicle, index) => {
-                    return <RentalAutoBox key={index} data={vehicle}/>;
-                })}
+                {renderVehicleBoxes()}
             </div>
         </div>
     );
