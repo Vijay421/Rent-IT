@@ -126,7 +126,7 @@
 }
 
 .ButtonDivLeft:hover {
-    background-color: var(--Tertiary-color);
+    background-color: var(--tertiary-color);
 }
 
 .BottomDivRightHuren:visited {
@@ -140,5 +140,5 @@
 }
 
 .ButtonDivRight:hover {
-    background-color: var(--Tertiary-color);
+    background-color: var(--tertiary-color);
 }

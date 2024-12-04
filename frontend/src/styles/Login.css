@@ -69,7 +69,7 @@
 
 /*Action for when the login button is active (clicking)*/
 .login-box__button:active {
-    background-color: var(--Tertiary-color);
+    background-color: var(--tertiary-color);
 }
 
 /*Hyperlink div under the login button*/

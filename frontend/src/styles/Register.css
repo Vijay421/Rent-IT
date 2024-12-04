@@ -91,7 +91,7 @@
 
 /*Action for when the register button is active (clicking)*/
 .register-box__button:active {
-    background-color: var(--Tertiary-color);
+    background-color: var(--tertiary-color);
 }
 
 /*Hyperlink div under the register button*/

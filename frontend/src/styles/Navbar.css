@@ -32,7 +32,7 @@
 
 /*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
 .navbar__navigation-buttons button:hover, .navbar__login-box__button button:hover {
-    background-color: var(--Tertiary-color);
+    background-color: var(--tertiary-color);
     cursor: pointer;
 }
 
