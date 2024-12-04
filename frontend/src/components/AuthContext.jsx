@@ -17,8 +17,10 @@ export function AuthProvider({ children }) {
     };
 
     const logout = () => {
+        // TODO: actually log out on the backend too.
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userClaims');
         setIsLoggedIn(false);
     };
 
