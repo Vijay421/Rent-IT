@@ -29,7 +29,9 @@ public class Program
             options.AddPolicy("AllowAllOrigins",
                 builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder
+                        .WithOrigins("http://localhost:5173")
+                        .AllowCredentials() // Allow identity cookie.
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });

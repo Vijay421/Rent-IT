@@ -22,10 +22,7 @@ export default function AccountSettings() {
             return;
         }
 
-        // TODO: get the claims from the sessionStorage.
-        const userClaims = JSON.parse(localStorage.getItem('userClaims'));
-        const accessToken = localStorage.getItem('accessToken');
-        console.log(userClaims);
+        const userClaims = JSON.parse(sessionStorage.getItem('userClaims'));
         const payload = {
             email: email === "" ? null : email,
             password: password === "" ? null: password,
@@ -61,7 +58,7 @@ export default function AccountSettings() {
             return;
         }
 
-        await updateSettings(payload, setResponse, accessToken);
+        await updateSettings(payload, setResponse);
     }
 
     const responseClass = getResponseClass(response, 'settings__response-text');
@@ -176,15 +173,14 @@ export default function AccountSettings() {
  * @param {number} payload.phoneNumber
  * @param {string} payload.password
  * @param {string} payload.address
- * @param {string} accessToken
  * @param {Function} setResponse
  */
-async function updateSettings(payload, setResponse, accessToken) {
+async function updateSettings(payload, setResponse) {
     const request = {
         method: 'PUT',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify(payload),
     };
