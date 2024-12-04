@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-
-    namespace backend.Data
+using System.Collections;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+namespace backend.Data
 {
     public class RentalContext : IdentityDbContext<User>
     {
@@ -11,6 +13,8 @@ using Microsoft.Extensions.Options;
         private readonly IServiceProvider _serviceProvider;
         private readonly UserSeeder _userSeeder;
         public DbSet<User> Users { get; set; }
+        public DbSet<Abonnement> Abonnementen { get; set; }
+        public DbSet<Huuraanvraag> Huuraanvragen{ get; set; }
         //public DbSet<Bedrijf> Bedrijven { get; set; }
         public DbSet<ParticuliereHuurder> ParticuliereHuurders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
@@ -29,12 +33,6 @@ using Microsoft.Extensions.Options;
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
 
-            modelBuilder.Entity<Voertuig>().HasData(
-                new Voertuig(1,"Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar")
-            );
-            modelBuilder.Entity<Voertuig>().HasData(
-                new Voertuig(2,"Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar")
-            );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

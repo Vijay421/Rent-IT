@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     height: 10vh;
-    min-height: 70px;
     padding: 0 20px 0 15px;
 }
 
@@ -21,10 +20,9 @@
 .navbar__navigation-buttons button {
     background-color: var(--secondary-color);
     color: white;
-    min-height: 5vh;
-    min-width: max(7vw, 50px);
-    width: 10%;
-    font-size: clamp(10px, 1.3vw, 3vw);
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
     border-radius: 0.5vw;
     border: transparent;
     margin-left: 1vw;
@@ -50,11 +48,33 @@
 .navbar__login-box__button button {
     background-color: var(--secondary-color);
     color: white;
-    min-height: 5vh;
-    min-width: max(7vw, 50px);
-    width: 6vw;
-    font-size: clamp(10px, 1.3vw, 3vw);
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
     border-radius: 1vw;
     border: transparent;
     margin-left: 1vw;
+}
+
+@media only screen and (max-width: 660px) {
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar__navigation-buttons button {
+        width: 50px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .navbar__login-box__button button {
+        width: auto;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    #register-button__button {
+        width: 60px;
+        margin-right: 10px;
+    }
 }

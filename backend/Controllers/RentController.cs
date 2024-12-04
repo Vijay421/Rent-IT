@@ -23,29 +23,47 @@ public class RentController : ControllerBase
     //    return await _context.Bedrijven.ToListAsync();
     //}
 
-    [HttpGet("get/all2")]
+    // [Authorize(Roles = "admin")]
+    [HttpGet("get/users")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
     {
         return await _context.Users.ToListAsync();
     }
 
-    [HttpGet("everyone")]
-    public string EveryoneCouldAccesthis()
+    // [Authorize(Roles = "backoffice, admin")]
+    [HttpGet("get/huuraanvragen")]
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetAllHuuraanvragen()
     {
-        return "hello everyone";
+        return await _context.Huuraanvragen.ToListAsync();
     }
 
-    [Authorize]
-    [HttpGet("users-only")]
-    public string OnlyUsersCanAccessThis()
+        // [Authorize(Roles = "backoffice_medewerker", "admin")]
+    [HttpGet("get/huuraanvraag/{id}")]
+    public async Task<ActionResult<Huuraanvraag>> GetHuuraanvraag(int id)
     {
-        return "hello user";
+        var Huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
+        if (Huuraanvraag == null) return NotFound();
+
+        return Huuraanvraag;
     }
 
-    [Authorize(Roles = "admin")]
-    [HttpGet("admins-only")]
-    public string OnlyAdminsCanAccessThis()
-    {
-        return "hello admin";
-    }
+    // [HttpGet("everyone")]
+    // public string EveryoneCouldAccesthis()
+    // {
+    //     return "hello everyone";
+    // }
+
+    // [Authorize]
+    // [HttpGet("users-only")]
+    // public string OnlyUsersCanAccessThis()
+    // {
+    //     return "hello user";
+    // }
+
+    // [Authorize(Roles = "admin")]
+    // [HttpGet("admins-only")]
+    // public string OnlyAdminsCanAccessThis()
+    // {
+    //     return "hello admin";
+    // }
 }
