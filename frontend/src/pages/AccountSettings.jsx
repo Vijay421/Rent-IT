@@ -3,12 +3,12 @@ import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
 
 export default function AccountSettings() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [username, setUsername] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [currentPassword, setCurrentPassword] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [address, setAddress] = useState(null);
     const [response, setResponse] = useState({
         msg: "",
         isError: null,
@@ -25,14 +25,39 @@ export default function AccountSettings() {
         const accessToken = localStorage.getItem('accessToken');
         console.log(userClaims);
         const payload = {
-            id: userClaims.userId,
-            email,
-            password,
-            currentPassword,
-            username,
-            phoneNumber,
-            address,
+            email: email === "" ? null : email,
+            password: password === "" ? null: password,
+            currentPassword: currentPassword === "" ? null : currentPassword,
+            username: username === "" ? null : username,
+            phoneNumber: phoneNumber === "" ? null : phoneNumber,
+            address: address === "" ? null : address,
         };
+
+        let payloadHasValues = false;
+        for (const [_key, value] of  Object.entries(payload)) {
+            if (value !== null) {
+                payloadHasValues = true;
+                break;
+            }
+        }
+
+        payload.id = userClaims.userId;
+
+        if (!payloadHasValues) {
+            setResponse({
+                msg: 'Vul minimaal 1 waarde in',
+                isError: true,
+            });
+            return;
+        }
+
+        if (payload.password !== null && payload.currentPassword === null) {
+            setResponse({
+                msg: 'Vul het huidige wachtwoord in',
+                isError: true,
+            });
+            return;
+        }
 
         await updateSettings(payload, setResponse, accessToken);
     }
@@ -41,6 +66,7 @@ export default function AccountSettings() {
     return (
         <>
             <Navbar/>
+
             <main className='settings__main'>
                 <form ref={form} className='settings__form' onSubmit={(e) => e.preventDefault()}>
 
@@ -57,7 +83,6 @@ export default function AccountSettings() {
                             placeholder='Vul hier je naam in'
                             minLength='2'
                             maxLength='50'
-                            required
                             onChange={e => setUsername(e.target.value)}
                         />
                     </div>
@@ -71,7 +96,6 @@ export default function AccountSettings() {
                             placeholder='Vul hier je e-mail in'
                             minLength='5'
                             maxLength='255'
-                            required
                             onChange={e => setEmail(e.target.value)}
                         />
                     </div>
@@ -83,7 +107,6 @@ export default function AccountSettings() {
                             className='settings__input-field'
                             type="password"
                             placeholder='Vul hier je huidige wachtwoord in'
-                            required
                             minLength='8'
                             maxLength='50'
                             onChange={e => setCurrentPassword(e.target.value)}
@@ -97,7 +120,6 @@ export default function AccountSettings() {
                             className='settings__input-field'
                             type="password"
                             placeholder='Vul hier je wachtwoord in'
-                            required
                             minLength='8'
                             maxLength='50'
                             onChange={e => setPassword(e.target.value)}
@@ -114,7 +136,6 @@ export default function AccountSettings() {
                             placeholder='Vul hier je telefoonnummer in'
                             minLength='5'
                             maxLength='15'
-                            required
                             onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
@@ -128,7 +149,6 @@ export default function AccountSettings() {
                             placeholder='Vul hier je adres in'
                             minLength='5'
                             maxLength='255'
-                            required
                             onChange={e => setAddress(e.target.value)}
                         />
                     </div>
@@ -171,12 +191,12 @@ async function updateSettings(payload, setResponse, accessToken) {
 
         switch (response.status) {
             case 204:
-                const user = await response.json();
+                // const user = await response.json();
                 setResponse({
                     msg: 'de instellingen zijn geüpdated',
                     isError: false,
                 });
-                console.log(user);
+                // console.log(user);
             break;
 
             case 400:

@@ -158,6 +158,8 @@ namespace backend.Controllers
                 return NotFound();
             }
 
+            // TODO: throw duplicate username error.
+            // TODO: throw duplicate email error.
             user.UserName = huurderDTO.UserName ?? user.UserName;
             user.Email = huurderDTO.Email ?? user.Email;
             user.PhoneNumber = huurderDTO.PhoneNumber ?? user.PhoneNumber;
@@ -175,29 +177,43 @@ namespace backend.Controllers
             {
                 if (huurderDTO.CurrentPassword == null)
                 {
-                    return BadRequest();
+                    return BadRequest("Vul het huidige wachtwoord in");
                 }
 
                 // TODO: return password mismatch error and other errors.
                 await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            // TODO: figure out if this should be replaced with the _userManager.
+            //_context.Entry(user).State = EntityState.Modified;
+            var result = await _userManager.UpdateAsync(user);
 
-            try
+            if (result.Succeeded)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+                await _userManager.UpdateNormalizedEmailAsync(user);
+                await _userManager.UpdateNormalizedUserNameAsync(user);
+            } else
             {
-                if (!_context.Users.Any(u => u.Id == id))
-                {
-                    return NotFound();
-                } else
-                {
-                    throw;
-                }
+                var errorMsg = string.Join(", ", result.Errors.Select(e => e.Description));
+                Console.Error.WriteLine($"error: {errorMsg}");
+
+                return BadRequest("Kan de gebruiker niet updaten");
             }
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!_context.Users.Any(u => u.Id == id))
+            //    {
+            //        return NotFound();
+            //    } else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return NoContent();
         }
