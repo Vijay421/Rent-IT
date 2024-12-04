@@ -51,31 +51,31 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9862ee43-a40b-48b6-acf2-aef39e4775de",
+                            Id = "d44e3078-e25d-46cc-99e8-2edca2fce604",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ca45e2b3-891b-4a99-a5c4-a7e862b4d2a0",
+                            Id = "52b6383d-ecd4-47a4-87c9-09743fe2413f",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "ae9e3d91-59a2-4e6c-8a41-9acace7ad820",
+                            Id = "b087fd89-ac14-45db-83ff-e267342fa02d",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "6e8e4617-13f3-4d5a-9dba-b627bf7f6bde",
+                            Id = "cf0707e4-b354-4ff6-a4ac-eed0604d9d29",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "3bd528a1-17a1-47cc-afe8-463def6bf1f7",
+                            Id = "c1e489ea-73db-45d7-b7d6-7a15358984cb",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -221,7 +221,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Adres")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -383,6 +383,30 @@ namespace backend.Migrations
                         new
                         {
                             Id = 2,
+                            Aanschafjaar = 2019,
+                            Kenteken = "EF-456-GH",
+                            Kleur = "Blue",
+                            Merk = "Ford",
+                            Opmerking = "",
+                            Soort = "Auto",
+                            Status = "Verhuurbaar",
+                            Type = "Focus"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Aanschafjaar = 2018,
+                            Kenteken = "AB-123-CD",
+                            Kleur = "Red",
+                            Merk = "Toyota",
+                            Opmerking = "",
+                            Soort = "Auto",
+                            Status = "Verhuurbaar",
+                            Type = "Corolla"
+                        },
+                        new
+                        {
+                            Id = 4,
                             Aanschafjaar = 2019,
                             Kenteken = "EF-456-GH",
                             Kleur = "Blue",

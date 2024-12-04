@@ -79,7 +79,7 @@ namespace backend.Migrations
 
             migrationBuilder.InsertData(
                 table: "Voertuigen",
-                columns: new[] { "Id", "Merk", "Type", "Kenteken", "Kleur", "Aanschafjaar", "Opmerking", "Soort", "Status" },
+                columns: new[] { "Id", "Merk", "Type", "Kenteken", "Kleur", "Aanschafjaar", "Soort", "Opmerking" , "Status" },
                 values: new object[,]
                 {
                     {1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar"},
@@ -339,7 +339,7 @@ namespace backend.Migrations
                 values: new object[,]
                 {
                     { 1, "Bedrijf1", "1234567890" },
-                    { 2, "Bedrijf2", "1234567891" },
+                    { 2, "Bedrijf2", "12a34567891" },
                     { 3, "Bedrijf3", "1234567892" }
                 });
         }
