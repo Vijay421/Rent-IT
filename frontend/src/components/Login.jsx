@@ -29,6 +29,7 @@ function Login() {
         };
 
         try {
+            debugger;
             const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
                 method: 'POST',
                 headers: {
@@ -38,23 +39,26 @@ function Login() {
             });
 
             if (response.ok) {
-                status.current.textContent = 'Inloggen is succesvol';
-                status.current.style.color = 'green';
-
                 login();
 
                 try {
-                    const userClaims = await GetUserClaims();
+                    const userClaims = await getUserClaims();
                     sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
 
                     // TODO: go to profile page, instead of refreshing the page.
                     setTimeout(() => {
                         window.location.href = '/';
                     }, 1500);
-                } catch {
+                } catch (error) {
                     status.current.textContent = 'Fout tijdens het inloggen';
                     status.current.style.color = 'red';
+                    console.error('error when fetching the user claims.');
+
+                    return;
                 }
+
+                status.current.textContent = 'Inloggen is succesvol';
+                status.current.style.color = 'green';
 
             } else {
                 const responseData = await response.json();
@@ -119,7 +123,7 @@ function Login() {
  * Will try to get the user claims of the current logged in user. 
  * @returns {Object}
  */
-async function GetUserClaims() {
+async function getUserClaims() {
     const request = {
         method: 'GET',
         credentials: 'include', // TODO: change to 'same-origin' when in production.
@@ -129,10 +133,11 @@ async function GetUserClaims() {
     };
 
     try {
-        const response = await fetch('https://localhost:53085/api/ParticuliereUser/user', request);
+        debugger;
+        const response = await fetch('https://localhost:53085/api/User/claims', request);
         return await response.json();
     } catch (error) {
-        console.error('error when sending get user data request, or parsing the response:', error);
+        console.error('error when sending user claims request, or parsing the response:', error);
         throw error;
     }
 }
