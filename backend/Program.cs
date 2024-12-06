@@ -20,25 +20,6 @@ public class Program
 
         // TODO: add identity settings from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-9.0
 
-        // Add Authentication with Identity and configure Cookie options
-        builder.Services.ConfigureApplicationCookie(options =>
-        {
-            // Set SameSite to None (necessary for cross-origin authentication)
-            options.Cookie.SameSite = SameSiteMode.None;
-
-            // Ensure the cookie is sent only over HTTPS
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-
-            // Make the cookie HttpOnly to prevent client-side access (security measure)
-            options.Cookie.HttpOnly = true;
-
-            // Optionally, set other properties (Path, Expiration, etc.)
-            options.Cookie.Path = "/";
-
-            // Adjust login path or other settings if needed
-            options.LoginPath = "/auth/login";
-        });
-
         // Serve react frontend static files.
         builder.Services.AddSpaStaticFiles(configuration =>
         {
@@ -52,7 +33,7 @@ public class Program
                 builder =>
                 {
                     builder
-                        .WithOrigins("http://localhost:5173", "https://localhost:53085")
+                        .WithOrigins("http://localhost:5173")
                         .AllowCredentials() // Allow identity cookie.
                         .AllowAnyMethod()
                         .AllowAnyHeader();
