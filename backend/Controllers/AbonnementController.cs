@@ -54,6 +54,15 @@ public class AbonnementController : ControllerBase
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
 
+        //if (!abonnementDTO.HasData())
+        //     {
+        //         return BadRequest();
+        //     }
+
+        //     if (abonnementDTO.Id != id)
+        //     {
+        //         return BadRequest();
+        //     } 
         // abonnement.Naam = abonnement.Naam;
         // abonnement.Max_huurders = abonnement.Max_huurders;
         // abonnement.Prijs_per_maand = abonnement.Prijs_per_maand;
