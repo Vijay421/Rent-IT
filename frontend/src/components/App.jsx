@@ -5,11 +5,9 @@ import IndexPage from "../pages/IndexPage.jsx";
 import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
-import {UserProvider} from "./UserContext.jsx";
 
 function App() {
     return (
-        <UserProvider>
             <Router>
                 <Routes>
                     <Route path="/" element={<IndexPage />} />
@@ -21,7 +19,6 @@ function App() {
                     <Route path="/profile" element={<ProfilePage/>}/>
                 </Routes>
             </Router>
-        </UserProvider>
     );
 }
 
