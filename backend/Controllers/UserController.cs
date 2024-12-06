@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,7 +21,6 @@ namespace backend.Controllers
         /// <summary>
         /// Allows signed in user to logout.
         /// </summary>
-        [Authorize]
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
         {
@@ -31,7 +31,6 @@ namespace backend.Controllers
         /// <summary>
         /// Attempts to return the claims of the current logged in user.
         /// </summary>
-        [Authorize]
         [HttpGet("claims")]
         public async Task<ActionResult> GetClaims()
         {
@@ -70,7 +69,6 @@ namespace backend.Controllers
         /// <summary>
         /// Endpoint to test all users.
         /// </summary>
-        [Authorize]
         [HttpGet("users-only")]
         public ActionResult UsersOnly()
         {
