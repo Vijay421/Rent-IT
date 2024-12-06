@@ -18,6 +18,7 @@ public class AbonnementController : ControllerBase
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    
     [HttpGet("get/")]
     public async Task<ActionResult<IEnumerable<Abonnement>>> GetAllAbonnementen()
     {
@@ -37,5 +38,57 @@ public class AbonnementController : ControllerBase
             MaxHuurders = abonnement.Max_huurders,
             Soort = abonnement.Soort
         };
+    }
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult<AbonnementDTO>> CreateAbonnement(Abonnement Abonnement)
+    {
+        _context.Abonnementen.Add(Abonnement);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("CreatedAbonnement", new {id = Abonnement.Id}, Abonnement);
+    }
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> UpdateAbonnement(int id){
+        var abonnement = await _context.Abonnementen.FindAsync(id);
+        if (abonnement == null) return NotFound();
+
+        // abonnement.Naam = abonnement.Naam;
+        // abonnement.Max_huurders = abonnement.Max_huurders;
+        // abonnement.Prijs_per_maand = abonnement.Prijs_per_maand;
+        // abonnement.Soort = abonnement.Soort;
+
+        // _context.Entry(abonnement).State = EntityState.Modified;
+
+        try
+        {
+            _context.Update(abonnement);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Abonnementen.Any(u => u.Id == id))
+            {
+                return NotFound();
+            } else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteAbonnement(int id)
+    {
+        var abonnement = await _context.Abonnementen.FindAsync(id);
+        if (abonnement == null) return NotFound();
+
+        _context.Remove(abonnement);
+
+        await _context.SaveChangesAsync();
+        return NoContent();
     }
 }
