@@ -42,9 +42,6 @@ function Login() {
             });
 
             if (response.ok) {
-                status.current.textContent = 'Inloggen is succesvol';
-                status.current.style.color = 'green';
-
                 login();
 
                 try {
@@ -55,10 +52,16 @@ function Login() {
                     setTimeout(() => {
                         window.location.href = '/';
                     }, 1500);
-                } catch {
+                } catch (error) {
                     status.current.textContent = 'Fout tijdens het inloggen';
                     status.current.style.color = 'red';
+                    console.error('error when fetching the user claims.');
+
+                    return;
                 }
+
+                status.current.textContent = 'Inloggen is succesvol';
+                status.current.style.color = 'green';
 
             } else {
                 const responseData = await response.json();
@@ -133,10 +136,11 @@ async function getUserClaims() {
     };
 
     try {
-        const response = await fetch('https://localhost:53085/api/ParticuliereUser/user', request);
+        debugger;
+        const response = await fetch('https://localhost:53085/api/User/claims', request);
         return await response.json();
     } catch (error) {
-        console.error('error when sending get user data request, or parsing the response:', error);
+        console.error('error when sending user claims request, or parsing the response:', error);
         throw error;
     }
 }
