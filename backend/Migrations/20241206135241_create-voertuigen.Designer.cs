@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241206132447_added-prijs-colom")]
-    partial class addedprijscolom
+    [Migration("20241206135241_create-voertuigen")]
+    partial class createvoertuigen
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

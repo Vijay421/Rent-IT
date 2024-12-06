@@ -3,16 +3,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class createvoertuigen : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Abonnementen",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prijs_per_maand = table.Column<float>(type: "real", nullable: false),
+                    Max_huurders = table.Column<int>(type: "int", nullable: false),
+                    Duur = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Abonnementen", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -37,20 +52,6 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BackOfficeMedewerker", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Bedrijven",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bedrijven", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,11 +80,33 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Voertuigen",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Merk = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Kenteken = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    Kleur = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Aanschafjaar = table.Column<int>(type: "int", maxLength: 4, nullable: false),
+                    Soort = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Opmerking = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Prijs = table.Column<double>(type: "float", maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Voertuigen", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ZakelijkeHuurder",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Factuuradres = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,6 +130,34 @@ namespace backend.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Huuraanvragen",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    Startdatum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Einddatum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Wettelijke_naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adresgegevens = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rijbewijsnummer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Reisaard = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Vereiste_bestemming = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Verwachte_km = table.Column<int>(type: "int", nullable: false),
+                    Geaccepteerd = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Huuraanvragen", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Huuraanvragen_Voertuigen_VoertuigId",
+                        column: x => x.VoertuigId,
+                        principalTable: "Voertuigen",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -245,33 +296,6 @@ namespace backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "2de163ac-d38e-4bdd-9a65-8f34810dd084", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
-                    { "50e651aa-fbe0-4e34-9677-511d8d0788d3", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
-                    { "72127a9e-7d62-4bb8-8f53-c61226e6ee3b", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "c993550f-9a1f-4c18-8c80-98ace06abf18", null, "admin", "ADMIN" },
-                    { "e54b5a49-73f1-466a-b6f1-bbaca6a62b3b", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BackOfficeId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FrontOfficeId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "ParticuliereHuurderId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "ZakelijkeHuurderId" },
-                values: new object[] { "1", 0, null, "QJ9Z", "test@email.com", true, null, true, null, "TEST@EMAIL.COM", "USER1", null, "AQAAAAEAACcQAAAAEJ9Z", "1234567890", true, "QJ9Z", false, "user1", null });
-
-            migrationBuilder.InsertData(
-                table: "Bedrijven",
-                columns: new[] { "Id", "Name", "PhoneNumber" },
-                values: new object[,]
-                {
-                    { 1, "Bedrijf1", "1234567890" },
-                    { 2, "Bedrijf2", "1234567891" },
-                    { 3, "Bedrijf3", "1234567892" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -330,11 +354,19 @@ namespace backend.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Huuraanvragen_VoertuigId",
+                table: "Huuraanvragen",
+                column: "VoertuigId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Abonnementen");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -351,13 +383,16 @@ namespace backend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Bedrijven");
+                name: "Huuraanvragen");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Voertuigen");
 
             migrationBuilder.DropTable(
                 name: "BackOfficeMedewerker");

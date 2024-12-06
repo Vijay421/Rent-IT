@@ -6,10 +6,9 @@ namespace backend.Data
 {
     public class VoertuigConfiguration
     {
-        public void Seed(EntityTypeBuilder<Voertuig> builder)
+        public void Seed(ModelBuilder builder)
         {
-            builder.HasData
-            (
+            builder.Entity<Voertuig>().HasData(
                 new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00),
                 new Voertuig(2, "Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar", 51.39),
                 new Voertuig(3, "Volkswagen", "Golf", "IJ-789-KL", "Black", 2020, "Auto", "", "Verhuurbaar", 40.00),
