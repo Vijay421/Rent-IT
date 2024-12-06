@@ -10,9 +10,10 @@ namespace backend.Data
     {
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
+            // Only uncomment the roles when added, removing or changing a role. Otherwise duplicate roles will when creating a migration.
             builder.HasData
             (
-                new IdentityRole
+                /*new IdentityRole
                 {
                     Name = "admin",
                     NormalizedName = "ADMIN",
@@ -29,6 +30,11 @@ namespace backend.Data
                 },
                 new IdentityRole
                 {
+                    Name = "zakelijke_beheerder",
+                    NormalizedName = "ZAKELIJKE_BEHEERDER",
+                },
+                new IdentityRole
+                {
                     Name = "zakelijke_huurder",
                     NormalizedName = "ZAKELIJKE_HUURDER",
                 },
@@ -36,7 +42,7 @@ namespace backend.Data
                 {
                     Name = "particuliere_huurder",
                     NormalizedName = "PARTICULIERE_HUURDER",
-                }
+                }*/
             );
         }
     }
