@@ -7,12 +7,7 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // TODO: figure out if this hook is necessary.
     useEffect(() => {
-        // TODO: remove this comment.
-        // const token = localStorage.getItem('accessToken');
-        // setIsLoggedIn(!!token); // !! casts a variable to boolean https://shorturl.at/W8BMj
-
         const hasClaims = sessionStorage.getItem('userClaims') !== null;
         setIsLoggedIn(hasClaims);
     }, []);

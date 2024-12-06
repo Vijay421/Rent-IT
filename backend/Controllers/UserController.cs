@@ -19,7 +19,7 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Allows signed in user to logout.
+        /// Allows signed in users to logout.
         /// </summary>
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
@@ -60,7 +60,7 @@ namespace backend.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                Console.WriteLine("huh?");
+                Console.WriteLine("is logged in");
             }
 
             return Ok("Everyone");

@@ -1,5 +1,6 @@
 /**
  * Gets the corresponding 'error' or 'success' css class name.
+ * 
  * @param {Object} response
  * @param {string} response.msg
  * @param {bool} response.isError
