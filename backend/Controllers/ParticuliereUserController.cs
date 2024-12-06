@@ -2,11 +2,8 @@
 using backend.DTOs;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
 using System.Security.Claims;
 
 namespace backend.Controllers
@@ -119,31 +116,6 @@ namespace backend.Controllers
             }
 
             return BadRequest();
-        }
-
-        // TODO: replace this endpoint to a user controller, for all users.
-        /// <summary>
-        /// Attempts to return the user data of the current logged in user.
-        /// </summary>
-        [Authorize]
-        [HttpGet("user")]
-        public async Task<ActionResult> GetUserInfo()
-        {
-            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (CurrentUserId == null)
-            {
-                return Unauthorized("Kan gebruiker niet vinden");
-            }
-
-            var CurrentUserName = User.FindFirstValue(ClaimTypes.Name);
-            var CurrentUserRole= User.FindFirstValue(ClaimTypes.Role);
-
-            return Ok(new
-            {
-                UserId = CurrentUserId,
-                UserName = CurrentUserName,
-                Role = CurrentUserRole,
-            });
         }
 
         /// <summary>
