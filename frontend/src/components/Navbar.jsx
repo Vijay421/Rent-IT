@@ -10,7 +10,7 @@ function Navbar() {
 
     return(
         <nav className='navbar'>
-            <Link to="/"><img src={Logo} width="70" alt="CarAndAll logo"/></Link>
+            <Link to="/"><img className='navbar-logo__img' src={Logo} alt="CarAndAll logo"/></Link>
 
             <div className='navbar__navigation-buttons'>
                 <NavButton className="navbar_navigation-buttons-nagivation" title="Home" link="/"></NavButton>

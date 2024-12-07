@@ -40,7 +40,7 @@ export function RentalAutoBox( {data} ) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€2.000</p>
+                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>
@@ -86,7 +86,7 @@ export function RentalCaravanBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€2.000</p>
+                <p className='rental-vehicle-huurprijs__p'>€{data.prijs}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>
@@ -132,7 +132,7 @@ export function RentalCamperBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€2.000</p>
+                <p className='rental-vehicle-huurprijs__p'>€{data.prijs}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>
@@ -148,6 +148,7 @@ RentalAutoBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
+        prijs: PropTypes.number.isRequired
     }).isRequired,
 };
 
@@ -159,6 +160,7 @@ RentalCaravanBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
+        prijs: PropTypes.number.isRequired
     }).isRequired,
 };
 
@@ -170,5 +172,6 @@ RentalCamperBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
+        prijs: PropTypes.number.isRequired
     }).isRequired,
 };
