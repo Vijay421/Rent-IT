@@ -4,8 +4,8 @@ import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicl
 
 function Renting() {
     const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles"); // Selecteer Voertuig soort
-    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(""); // Selecteer OphaalDatum
-    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(""); // Selecteer InleverDatum
+    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(Date.now); // Selecteer OphaalDatum
+    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(Date.now); // Selecteer InleverDatum
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
@@ -68,6 +68,8 @@ function Renting() {
                 if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
 
                 if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
+
+                if (selectedDateOphaalDatum < vehicle.startDatum || selectedDateInleverDatum > vehicle.eindDatum) return false;
 
                 return true;
             })

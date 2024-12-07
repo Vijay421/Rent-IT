@@ -28,10 +28,10 @@ export function RentalAutoBox( {data} ) {
 
                     <div className="rental-vehicle-data-column2__div">
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
 
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
 
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
@@ -74,10 +74,10 @@ export function RentalCaravanBox({data}) {
 
                     <div className="rental-vehicle-data-column2__div">
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
 
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
 
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
@@ -86,7 +86,7 @@ export function RentalCaravanBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€{data.prijs}</p>
+                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>
@@ -120,10 +120,10 @@ export function RentalCamperBox({data}) {
 
                     <div className="rental-vehicle-data-column2__div">
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
 
                         <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>temp</p>
+                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
 
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
@@ -132,7 +132,7 @@ export function RentalCamperBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€{data.prijs}</p>
+                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button'>Huur</button>
             </div>
@@ -148,7 +148,9 @@ RentalAutoBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
-        prijs: PropTypes.number.isRequired
+        prijs: PropTypes.number.isRequired,
+        startDatum: PropTypes.string.isRequired,
+        eindDatum: PropTypes.string.isRequired
     }).isRequired,
 };
 
@@ -160,7 +162,9 @@ RentalCaravanBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
-        prijs: PropTypes.number.isRequired
+        prijs: PropTypes.number.isRequired,
+        startDatum: PropTypes.string.isRequired,
+        eindDatum: PropTypes.string.isRequired
     }).isRequired,
 };
 
@@ -172,6 +176,8 @@ RentalCamperBox.propTypes = {
         kleur: PropTypes.string.isRequired,
         aanschafjaar: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
-        prijs: PropTypes.number.isRequired
+        prijs: PropTypes.number.isRequired,
+        startDatum: PropTypes.string.isRequired,
+        eindDatum: PropTypes.string.isRequired
     }).isRequired,
 };

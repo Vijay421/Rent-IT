@@ -25,6 +25,7 @@
     border: 2px solid black;
     height: auto;
     width: 66.5vw;
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column; /* Stack children vertically */
@@ -43,6 +44,7 @@ select, input {
     min-height: 35em;
     height: auto;
     width: 66.5vw;
+    border-radius: 8px;
 
 }
 
