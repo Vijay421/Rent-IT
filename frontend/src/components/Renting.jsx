@@ -10,6 +10,7 @@ function Renting() {
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
     const [vehicles, setVehicles] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
         async function fetchVehicles() {
@@ -50,8 +51,12 @@ function Renting() {
         setSelectedBeschikbaarheidSoort(event.target.value);
     };
 
+    const handleSearchFieldChange = (event) => {
+        setSearchText(event.target.value);
+    };
+
     function handleSearchButtonClick() {
-        console.log("search button click");
+        console.log("search button clicked");
     }
 
     const renderVehicleBoxes = () => {
@@ -70,6 +75,9 @@ function Renting() {
                 if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
 
                 if (selectedDateOphaalDatum < vehicle.startDatum || selectedDateInleverDatum > vehicle.eindDatum) return false;
+
+                if ( (!vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
+                    !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase()))) return false;
 
                 return true;
             })
@@ -202,8 +210,7 @@ function Renting() {
 
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
-                        <input className="divTop-search-bar__input" type="search" placeholder='Search bar'/>
-                        <button className="divTop-search-button__button" onClick={handleSearchButtonClick}>Search</button>
+                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
                     </div>
                 </div>
             </div>
