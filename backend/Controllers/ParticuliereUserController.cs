@@ -1,11 +1,10 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -36,6 +35,17 @@ namespace backend.Controllers
                 Email = huurderDTO.Email.ToLower().Trim(),
                 PhoneNumber = huurderDTO.PhoneNumber.Trim(),
             };
+
+            if (await _userManager.FindByNameAsync(huurderDTO.Name) != null)
+            {
+                return UnprocessableEntity($"Naam: '{huurderDTO.Name}' is al in gebruik");
+            }
+
+            var userWithEmail = await _userManager.FindByEmailAsync(huurderDTO.Email);
+            if (userWithEmail != null)
+            {
+                return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
+            }
 
             var result = await _userManager.CreateAsync(user, huurderDTO.Password.Trim());
 
@@ -78,62 +88,58 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Will delete the user and related data.
-        /// </summary>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
-
-            if (user.ParticuliereHuurder != null)
-            {
-                _context.ParticuliereHuurders.Remove(user.ParticuliereHuurder);
-            }
-
-            var result = await _userManager.DeleteAsync(user);
-
-            if (result.Succeeded)
-            {
-                await _context.SaveChangesAsync(); // Remove related data.
-                return NoContent();
-            }
-
-            return BadRequest();
-        }
-
-        /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
         {
             if (!huurderDTO.HasData())
             {
-                return BadRequest();
+                return BadRequest("Geen data ontvangen");
             }
 
             if (huurderDTO.Id != id)
             {
-                return BadRequest();
+                return BadRequest("Incorrecte id");
             }
 
             var user = await _userManager.FindByIdAsync(id);
-
             if (user == null)
             {
-                return NotFound();
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId == null)
+            {
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            if (CurrentUserId != id)
+            {
+                return Unauthorized("Kan gebruiker niet vinden");
             }
 
             user.UserName = huurderDTO.UserName ?? user.UserName;
             user.Email = huurderDTO.Email ?? user.Email;
             user.PhoneNumber = huurderDTO.PhoneNumber ?? user.PhoneNumber;
+
+            if (huurderDTO.UserName != null)
+            {
+                if (await _userManager.FindByNameAsync(huurderDTO.UserName) != null)
+                {
+                    return UnprocessableEntity($"Naam: '{huurderDTO.UserName}' is al in gebruik");
+                }
+            }
+
+            if (huurderDTO.Email != null)
+            {
+                if (await _userManager.FindByEmailAsync(huurderDTO.Email) != null)
+                {
+                    return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
+                }
+            }
 
             if (huurderDTO.Address != null)
             {
@@ -148,27 +154,39 @@ namespace backend.Controllers
             {
                 if (huurderDTO.CurrentPassword == null)
                 {
-                    return BadRequest();
+                    return UnprocessableEntity("Vul het huidige wachtwoord in");
                 }
 
-                await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Users.Any(u => u.Id == id))
+                var pasChangeResult = await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
+                
+                if (!pasChangeResult.Succeeded)
                 {
-                    return NotFound();
-                } else
-                {
-                    throw;
+                    return UnprocessableEntity("Incorrect wachtwoord");
                 }
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await _userManager.UpdateNormalizedEmailAsync(user);
+                await _userManager.UpdateNormalizedUserNameAsync(user);
+            } else
+            {
+                var errorSet = new HashSet<string>();
+                var errorMsg = string.Join(", ", result.Errors.Select(e =>
+                {
+                    errorSet.Add(e.Code);
+                    return e.Description;
+                }));
+                Console.Error.WriteLine($"error: {errorMsg}");
+
+                if (errorSet.Contains("InvalidUserName"))
+                {
+                    return UnprocessableEntity("De naam kan alleen letters of getallen bevatten");
+                }
+
+                return UnprocessableEntity("Kan de gebruiker niet updaten");
             }
 
             return NoContent();

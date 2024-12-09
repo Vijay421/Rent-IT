@@ -4,8 +4,8 @@ function Footer() {
 
 
     return (
-        <footer>
-            <p className="made-by-text">footer<a href="#" target="_blank"></a></p>
+        <footer className="page__footer">
+            <a href="#"><p className="footer__info">Over Car-Rent-All</p></a>
             <p className="copyright">© 2024 CarsAndAll. All rights reserved. </p>
         </footer>
     );

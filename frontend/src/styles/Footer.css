@@ -1,17 +1,30 @@
-footer {
+.page__footer {
     display: flex;
     justify-content: space-between;
     font-size: 1vw;
     padding: 0 1vw;
-}
-
-/*Hyperlinks inside footer*/
-footer a {
-    text-decoration: none;
-    color: blue;
+    background-color: var(--main-color);
+    height: 2em;
 }
 
 /*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
-footer a:active, footer a:hover, footer a:visited {
+.page__footer a:active, .page__footer a:hover{
     color: blue;
+}
+
+.footer__info {
+    color: black;
+    text-decoration: underline;
+    margin-top: 0.5em;
+}
+
+.copyright {
+    color: black;
+    margin-top: 0.5em;
+}
+
+@media only screen and (max-width: 700px) {
+    .page__footer {
+        display: none;
+    }
 }

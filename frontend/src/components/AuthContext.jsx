@@ -8,8 +8,8 @@ export function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        setIsLoggedIn(!!token); // !! casts a variable to boolean https://shorturl.at/W8BMj
+        const hasClaims = sessionStorage.getItem('userClaims') !== null;
+        setIsLoggedIn(hasClaims);
     }, []);
 
     const login = () => {
@@ -17,9 +17,10 @@ export function AuthProvider({ children }) {
     };
 
     const logout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        sessionStorage.removeItem('userClaims');
         setIsLoggedIn(false);
+
+        callLogoutEndpoint();
     };
 
     return (
@@ -33,3 +34,30 @@ export function AuthProvider({ children }) {
 AuthProvider.propTypes = {
     children: PropTypes.node,
 };
+
+/**
+ * Call the server to preform a logout.
+ * @returns {Object}
+ */
+async function callLogoutEndpoint() {
+    const request = {
+        method: 'POST',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const response = await fetch('https://localhost:53085/api/User/logout', request);
+
+        if (!response.ok) {
+            console.error('server error when logging out');
+            const serverError = await response.text();
+            console.error(serverError);
+        }
+    } catch (error) {
+        console.error('error when logging out, or parsing the response:', error);
+        throw error;
+    }
+}
