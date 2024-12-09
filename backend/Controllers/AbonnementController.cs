@@ -19,7 +19,7 @@ public class AbonnementController : ControllerBase
     }
 
     
-    [HttpGet("get/")]
+    [HttpGet("get")]
     public async Task<ActionResult<IEnumerable<Abonnement>>> GetAllAbonnementen()
     {
         return await _context.Abonnementen.ToListAsync();
@@ -40,7 +40,7 @@ public class AbonnementController : ControllerBase
         };
     }
     [Authorize]
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<ActionResult<AbonnementDTO>> CreateAbonnement(Abonnement Abonnement)
     {
         _context.Abonnementen.Add(Abonnement);
@@ -113,7 +113,7 @@ public class AbonnementController : ControllerBase
 //     };
 
 //     try {
-//         const response = await fetch(`https://localhost:53085/api/Abonnement/{id}/delete`, request);
+//         const response = await fetch(`https://localhost:53085/api/Abonnement/create`, request);
 
 //         if (response.ok) {
 //             setResponse({
