@@ -105,7 +105,7 @@ public class AbonnementController : ControllerBase
 //async function callBedrijfAbonnementAanmaken(setResponse) {
 //     debugger;
 //     const request = {
-//         method: 'CREATE',
+//         method: 'POST',
 //         credentials: 'include', // TODO: change to 'same-origin' when in production.
 //         headers: {
 //             'Content-Type': 'application/json',
