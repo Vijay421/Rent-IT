@@ -101,3 +101,47 @@ public class AbonnementController : ControllerBase
         return NoContent();
     }
 }
+
+//async function callBedrijfAbonnementAanmaken(setResponse) {
+//     debugger;
+//     const request = {
+//         method: 'CREATE',
+//         credentials: 'include', // TODO: change to 'same-origin' when in production.
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     };
+
+//     try {
+//         const claimsData = sessionStorage.getItem('userClaims');
+//         if (claimsData === null) {
+//             setResponse({ msg: 'U bent niet ingelogd', isError: true});
+//             return false;
+//         }
+
+//         const claims = JSON.parse(claimsData);
+
+//         const response = await fetch(`https://localhost:53085/api/Abonnement/CreateAbonnement`, request);
+
+//         if (response.ok) {
+//             setResponse({
+//                 msg: 'Abonnement aangemaakt',
+//                 isError: false,
+//             });
+
+//             return true;
+//         } else {
+//             setResponse({
+//                 msg: await response.text(),
+//                 isError: true,
+//             });
+//         }
+//     } catch {
+//         setResponse({
+//             msg: 'Er is een servererror opgetreden',
+//             isError: true,
+//         });
+//     }
+
+//     return false;
+// }
