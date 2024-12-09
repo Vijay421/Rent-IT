@@ -89,7 +89,7 @@ public class AbonnementController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost]
+    [HttpDelete]
     public async Task<IActionResult> DeleteAbonnement(int id)
     {
         var abonnement = await _context.Abonnementen.FindAsync(id);
