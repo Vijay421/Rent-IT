@@ -6,7 +6,7 @@ function NavButton(props) {
     return (
         <Link to={props.link}>
             <button>
-            {props.title}
+                {props.title}
             </button>
         </Link>
     );

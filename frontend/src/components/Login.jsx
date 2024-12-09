@@ -2,11 +2,13 @@ import {useState, useContext, useRef} from 'react';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
+import {UserContext} from "./UserContext.jsx";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
+    const { setUserName } = useContext(UserContext);
 
     const statusRef = useRef(null);
 
@@ -28,7 +30,7 @@ function Login() {
             "twoFactorRecoveryCode": ""
         };
 
-        await callLoginEndpoint(userData, status, login);
+        await callLoginEndpoint(userData, status, login, setUserName);
     }
 
     return (
@@ -77,15 +79,16 @@ function Login() {
 
 /**
  *  Will try to perform a login with the given user credentials.
- * 
+ *
  * @param {Object} userData
  * @param {string} userData.email
  * @param {string} userData.password
  * @param {React.MutableRefObject<null>} status
  * @param {Function} login
+ * @param setUserName
  * @returns
  */
-async function callLoginEndpoint(userData, status, login) {
+async function callLoginEndpoint(userData, status, login, setUserName) {
     try {
         const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
             method: 'POST',
@@ -104,6 +107,7 @@ async function callLoginEndpoint(userData, status, login) {
             try {
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
+                setUserName(userClaims.userName);
 
                 // TODO: go to profile page, instead of refreshing the page.
                 setTimeout(() => {
@@ -137,7 +141,7 @@ async function callLoginEndpoint(userData, status, login) {
 
 /**
  * Will try to get the user claims of the current logged in user.
- * 
+ *
  * @returns {Object}
  */
 async function getUserClaims() {

@@ -166,7 +166,7 @@ export default function AccountSettings() {
  * Will try to update the user settings by calling the api.
  * When it fails an error message will be displayed in the ui.
  * Otherwise a success message will be shown instead.
- * @param {Object} payload 
+ * @param {Object} payload
  * @param {number} payload.id
  * @param {string} payload.name
  * @param {string} payload.email
@@ -194,7 +194,7 @@ async function updateSettings(payload, setResponse) {
                     msg: 'de instellingen zijn geüpdated',
                     isError: false,
                 });
-            break;
+                break;
 
             case 422:
             case 400:
@@ -203,7 +203,7 @@ async function updateSettings(payload, setResponse) {
                     msg: errorMsg,
                     isError: true,
                 });
-            break;
+                break;
 
             default:
                 setResponse({
@@ -211,7 +211,7 @@ async function updateSettings(payload, setResponse) {
                     isError: true,
                 });
                 console.error('server error:', await response.text());
-            break;
+                break;
         }
     } catch (error) {
         setResponse({

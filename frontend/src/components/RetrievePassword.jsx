@@ -33,7 +33,7 @@ function RetrievePassword() {
 
             </div>
         </main>
-    )
+    );
 }
 
 export default RetrievePassword;

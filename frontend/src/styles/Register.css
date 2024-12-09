@@ -38,7 +38,7 @@
 
 .register-box__response-text:after {
     content: ".";
- }
+}
 
 .register-box__response-text--success {
     color: green;

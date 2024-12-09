@@ -1,3 +1,4 @@
+
 import '../styles/RentalVehicleBox.css';
 import PropTypes from "prop-types";
 import Temp from '../assets/toyota-corolla.png';

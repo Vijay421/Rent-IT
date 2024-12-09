@@ -160,13 +160,13 @@ export default function Register() {
  * Will try to register the user by calling the api.
  * When it fails an error message will be displayed in the ui.
  * Otherwise a success message will be shown instead.
- * @param {Object} payload 
+ * @param {Object} payload
  * @param {string} payload.name
  * @param {string} payload.email
  * @param {number} payload.phoneNumber
  * @param {string} payload.password
  * @param {string} payload.address
- * @param {Function} setResponse 
+ * @param {Function} setResponse
  */
 async function register(payload, setResponse) {
     const request = {
@@ -188,7 +188,7 @@ async function register(payload, setResponse) {
                     isError: false,
                 });
                 console.log(user);
-            break;
+                break;
 
             case 400:
             case 422:
@@ -197,14 +197,14 @@ async function register(payload, setResponse) {
                     msg: errorMsg,
                     isError: true,
                 });
-            break;
+                break;
 
             default:
                 setResponse({
                     msg: 'er is een serverfout opgetreden',
                     isError: true,
                 });
-            break;
+                break;
         }
     } catch (error) {
         setResponse({

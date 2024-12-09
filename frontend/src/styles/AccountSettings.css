@@ -24,7 +24,7 @@
 
 .settings__response-text:after {
     content: ".";
- }
+}
 
 .settings__response-text--success {
     color: green;
