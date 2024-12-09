@@ -49,7 +49,7 @@ public class AbonnementController : ControllerBase
         return CreatedAtAction("CreatedAbonnement", new {id = Abonnement.Id}, Abonnement);
     }
     [Authorize]
-    [HttpPost]
+    [HttpPost("{id}/update")]
     public async Task<IActionResult> UpdateAbonnement(int id){
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
@@ -89,7 +89,7 @@ public class AbonnementController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}/delete")]
     public async Task<IActionResult> DeleteAbonnement(int id)
     {
         var abonnement = await _context.Abonnementen.FindAsync(id);
@@ -113,15 +113,7 @@ public class AbonnementController : ControllerBase
 //     };
 
 //     try {
-//         const claimsData = sessionStorage.getItem('userClaims');
-//         if (claimsData === null) {
-//             setResponse({ msg: 'U bent niet ingelogd', isError: true});
-//             return false;
-//         }
-
-//         const claims = JSON.parse(claimsData);
-
-//         const response = await fetch(`https://localhost:53085/api/Abonnement/CreateAbonnement`, request);
+//         const response = await fetch(`https://localhost:53085/api/Abonnement/{id}/delete`, request);
 
 //         if (response.ok) {
 //             setResponse({
