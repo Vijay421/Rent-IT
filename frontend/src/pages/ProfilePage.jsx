@@ -11,6 +11,11 @@ import { UserContext } from "../components/UserContext.jsx";
 
 export default function ProfilePage() {
     const { userRole } = useContext(UserContext);
+    console.log(userRole);
+
+    if (userRole === null) {
+        // TODO: redirect to index page, because user is not logged in.
+    }
 
     return (
         <>

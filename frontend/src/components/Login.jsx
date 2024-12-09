@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
+import {UserContext} from "./UserContext.jsx";
 
 function Login() {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
+    const { setUserRole, setUserName } = useContext(UserContext);
 
     const statusRef = useRef(null);
 
@@ -31,7 +33,7 @@ function Login() {
             "twoFactorRecoveryCode": ""
         };
 
-        await callLoginEndpoint(userData, status, login, navigate);
+        await callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName);
     }
 
     return (
@@ -86,10 +88,12 @@ function Login() {
  * @param {string} userData.password
  * @param {React.MutableRefObject<null>} status
  * @param {Function} login
- * @param {NavigateFunction} navigate
+ * @param {Navigate} navigate
+ * @param {Function} setUserRole
+ * @param {Function} setUserName
  * @returns
  */
-async function callLoginEndpoint(userData, status, login, navigate) {
+async function callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName) {
     try {
         const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
             method: 'POST',
@@ -108,6 +112,8 @@ async function callLoginEndpoint(userData, status, login, navigate) {
             try {
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
+                setUserRole(userClaims.role);
+                setUserName(userClaims.userName);
 
                 // TODO: go to profile page, instead of index page.
                 setTimeout(() => {
