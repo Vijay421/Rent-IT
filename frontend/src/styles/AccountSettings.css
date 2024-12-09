@@ -40,7 +40,7 @@
     align-items: center;
     background-color: white;
     width: 350px;
-    padding: 25px 10px;
+    padding: 25px 10px 10px 10px;
     border-radius: 2px;
 }
 
@@ -62,16 +62,18 @@
 
 .settings__nav {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
     width: 300px;
 }
 
-.settings__upload-button {
+.settings__button {
     background-color: black;
     padding: 10px;
     color: white;
     border: none;
     border-radius: 8px;
+    flex: none; /* Do not stretch. */
 }
 
 .settings__upload-button:hover {
@@ -82,6 +84,20 @@
 
 .settings__upload-button:active {
     background-color: #52ab98;
+}
+
+.settings_delete-buttons {
+    display: flex;
+    margin-top: 20px;
+}
+
+.settings__button--delete {
+    background-color: rgb(224, 0, 0);
+    font-weight: bold;
+}
+
+.settings__button--dont-delete {
+    margin-left: 10px;
 }
 
 @media only screen and (max-width: 660px) {

@@ -1,9 +1,12 @@
 import {useState, useContext, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
 
 function Login() {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
@@ -28,7 +31,7 @@ function Login() {
             "twoFactorRecoveryCode": ""
         };
 
-        await callLoginEndpoint(userData, status, login);
+        await callLoginEndpoint(userData, status, login, navigate);
     }
 
     return (
@@ -83,9 +86,10 @@ function Login() {
  * @param {string} userData.password
  * @param {React.MutableRefObject<null>} status
  * @param {Function} login
+ * @param {NavigateFunction} navigate
  * @returns
  */
-async function callLoginEndpoint(userData, status, login) {
+async function callLoginEndpoint(userData, status, login, navigate) {
     try {
         const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
             method: 'POST',
@@ -105,9 +109,9 @@ async function callLoginEndpoint(userData, status, login) {
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
 
-                // TODO: go to profile page, instead of refreshing the page.
+                // TODO: go to profile page, instead of index page.
                 setTimeout(() => {
-                    window.location.href = '/';
+                    navigate('/');
                 }, 1500);
             } catch (error) {
                 status.current.textContent = 'Fout tijdens het inloggen';

@@ -2,14 +2,21 @@ import {useState, useRef} from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
 import getResponseClass from '../scripts/getResponseClass';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountSettings() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [currentPassword, setCurrentPassword] = useState(null);
     const [username, setUsername] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [address, setAddress] = useState(null);
+    const [deleteConfig, setDeleteConfig] = useState({
+        clickedDelete: false,
+        text: "Verwijder account",
+    });
     const [response, setResponse] = useState({
         msg: null,
         isError: null,
@@ -59,6 +66,28 @@ export default function AccountSettings() {
         }
 
         await updateSettings(payload, setResponse);
+    }
+
+    async function handleDeleteAccount() {
+        if (!deleteConfig.clickedDelete) {
+            setDeleteConfig({
+                clickedDelete: true,
+                text: "Daadwerkelijk verwijderen"
+            });
+        } else {
+            if (await callDeleteUserEndpoint(setResponse)) {
+                setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+            }
+        }
+    }
+
+    function handleWontDelete() {
+        setDeleteConfig({
+            clickedDelete: false,
+            text: "Verwijder account",
+        });
     }
 
     const responseClass = getResponseClass(response, 'settings__response-text');
@@ -154,7 +183,13 @@ export default function AccountSettings() {
                     </div>
 
                     <nav className='settings__nav'>
-                        <button onClick={submit} className='settings__upload-button'>Update</button>
+                        <button onClick={submit} className='settings__button'>Update</button>
+
+                        <div className='settings_delete-buttons'>
+                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete'>{deleteConfig.text}</button>
+
+                            { deleteConfig.clickedDelete && <button onClick={handleWontDelete} className='settings__button settings__button--dont-delete'>Niet verwijderen</button> }
+                        </div>
                     </nav>
                 </form>
             </main>
@@ -166,6 +201,7 @@ export default function AccountSettings() {
  * Will try to update the user settings by calling the api.
  * When it fails an error message will be displayed in the ui.
  * Otherwise a success message will be shown instead.
+ * 
  * @param {Object} payload 
  * @param {number} payload.id
  * @param {string} payload.name
@@ -220,4 +256,54 @@ async function updateSettings(payload, setResponse) {
         });
         console.error('error when sending register request or parsing the response', error);
     }
+}
+
+/**
+ * Will attempt to delete the user account.
+ * 
+ * @param {Function} setResponse
+ * @returns {boolean}
+ */
+async function callDeleteUserEndpoint(setResponse) {
+    debugger;
+    const request = {
+        method: 'DELETE',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const claimsData = sessionStorage.getItem('userClaims');
+        if (claimsData === null) {
+            setResponse({ msg: 'U bent niet ingelogd', isError: true});
+            return false;
+        }
+
+        const claims = JSON.parse(claimsData);
+
+        const response = await fetch(`https://localhost:53085/api/User/${claims.userId}`, request);
+
+        if (response.ok) {
+            setResponse({
+                msg: 'Account verwijderd',
+                isError: false,
+            });
+
+            return true;
+        } else {
+            setResponse({
+                msg: await response.text(),
+                isError: true,
+            });
+        }
+    } catch {
+        setResponse({
+            msg: 'Er is een servererror opgetreden',
+            isError: true,
+        });
+    }
+
+    return false;
 }
