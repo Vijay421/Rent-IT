@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class createvoertuigen : Migration
+    public partial class addeddatecolumns : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,7 +95,9 @@ namespace backend.Migrations
                     Soort = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Opmerking = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Prijs = table.Column<double>(type: "float", maxLength: 10, nullable: false)
+                    Prijs = table.Column<double>(type: "float", maxLength: 10, nullable: false),
+                    StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,6 +298,29 @@ namespace backend.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "00de5de1-07c5-493e-9f64-15e5aa234008", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
+                    { "16ae8bfb-716a-4c98-951b-01657d92860e", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" },
+                    { "788d65d1-5317-4b4d-92dd-dfbf9c3c64a0", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
+                    { "8dad7cd7-9c39-4c64-9e0a-2b785b36d2da", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "d0920690-4007-4c40-a4c1-938aff6cadd2", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
+                    { "e6eeecbd-9c53-4308-90a8-a33ba961338b", null, "admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Voertuigen",
+                columns: new[] { "Id", "Aanschafjaar", "EindDatum", "Kenteken", "Kleur", "Merk", "Opmerking", "Prijs", "Soort", "StartDatum", "Status", "Type" },
+                values: new object[,]
+                {
+                    { 1, 2018, new DateOnly(2016, 4, 12), "AB-123-CD", "Red", "Toyota", "", 50.0, "Auto", new DateOnly(2012, 2, 24), "Verhuurbaar", "Corolla" },
+                    { 2, 2019, new DateOnly(2020, 8, 12), "EF-456-GH", "Blue", "Ford", "", 51.390000000000001, "Auto", new DateOnly(2017, 4, 3), "Verhuurbaar", "Focus" },
+                    { 3, 2020, new DateOnly(2024, 11, 9), "IJ-789-KL", "Black", "Volkswagen", "", 40.0, "Auto", new DateOnly(2019, 10, 12), "Verhuurbaar", "Golf" }
                 });
 
             migrationBuilder.CreateIndex(
