@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241209133830_added-date-columns")]
-    partial class addeddatecolumns
+    [Migration("20241210092318_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,44 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "e6eeecbd-9c53-4308-90a8-a33ba961338b",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "00de5de1-07c5-493e-9f64-15e5aa234008",
-                            Name = "backoffice_medewerker",
-                            NormalizedName = "BACKOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "788d65d1-5317-4b4d-92dd-dfbf9c3c64a0",
-                            Name = "frontoffice_medewerker",
-                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "16ae8bfb-716a-4c98-951b-01657d92860e",
-                            Name = "zakelijke_beheerder",
-                            NormalizedName = "ZAKELIJKE_BEHEERDER"
-                        },
-                        new
-                        {
-                            Id = "8dad7cd7-9c39-4c64-9e0a-2b785b36d2da",
-                            Name = "zakelijke_huurder",
-                            NormalizedName = "ZAKELIJKE_HUURDER"
-                        },
-                        new
-                        {
-                            Id = "d0920690-4007-4c40-a4c1-938aff6cadd2",
-                            Name = "particuliere_huurder",
-                            NormalizedName = "PARTICULIERE_HUURDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -465,53 +427,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Aanschafjaar = 2018,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "AB-123-CD",
-                            Kleur = "Red",
-                            Merk = "Toyota",
-                            Opmerking = "",
-                            Prijs = 50.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Corolla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Aanschafjaar = 2019,
-                            EindDatum = new DateOnly(2020, 8, 12),
-                            Kenteken = "EF-456-GH",
-                            Kleur = "Blue",
-                            Merk = "Ford",
-                            Opmerking = "",
-                            Prijs = 51.390000000000001,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2017, 4, 3),
-                            Status = "Verhuurbaar",
-                            Type = "Focus"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2024, 11, 9),
-                            Kenteken = "IJ-789-KL",
-                            Kleur = "Black",
-                            Merk = "Volkswagen",
-                            Opmerking = "",
-                            Prijs = 40.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2019, 10, 12),
-                            Status = "Verhuurbaar",
-                            Type = "Golf"
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
