@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.SpaServices.Extensions;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace backend;
 
@@ -17,6 +18,8 @@ public class Program
         builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
         builder.Services.AddDbContext<RentalContext>();
 
+        // TODO: add identity settings from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-9.0
+
         // Serve react frontend static files.
         builder.Services.AddSpaStaticFiles(configuration =>
         {
@@ -26,10 +29,12 @@ public class Program
         // Adds CORS services
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowAllOrigins",
+            options.AddPolicy("AllowFrontend",
                 builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder
+                        .WithOrigins("http://localhost:5173")
+                        .AllowCredentials() // Allow identity cookie.
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
@@ -74,9 +79,11 @@ public class Program
         }
 
         // Use the CORS policy.
-        app.UseCors("AllowAllOrigins");
+        app.UseCors("AllowFrontend");
 
         app.UseHttpsRedirection();
+
+        //app.UseCookiePolicy();
 
         app.UseAuthentication();
         app.UseAuthorization();

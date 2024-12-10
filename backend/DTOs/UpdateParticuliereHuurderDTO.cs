@@ -4,31 +4,26 @@ namespace backend.DTOs
 {
     public class UpdateParticuliereHuurderDTO
     {
+        [Required]
         public string Id { get; set; }
 
-        [MinLength(2)]
-        [MaxLength(50)]
+        [StringLength(50, MinimumLength = 2)]
         public string? UserName { get; set; }
 
-        [MinLength(5)]
-        [MaxLength(255)]
+        [StringLength(255, MinimumLength = 5)]
         [EmailAddress]
         public string? Email { get; set; }
 
-        [MinLength(5)]
-        [MaxLength(255)]
+        [StringLength(255, MinimumLength = 5)]
         public string? Address { get; set; }
 
-        [MinLength(5)]
-        [MaxLength(15)]
+        [StringLength(15, MinimumLength = 5)]
         public string? PhoneNumber { get; set; }
 
-        [MinLength(8)]
-        [MaxLength(50)]
+        [StringLength(50, MinimumLength = 8)]
         public string? Password { get; set; }
 
-        [MinLength(8)]
-        [MaxLength(50)]
+        [StringLength(50, MinimumLength = 8)]
         public string? CurrentPassword { get; set; }
 
         public bool HasData()

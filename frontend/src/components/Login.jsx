@@ -1,9 +1,12 @@
 import {useState, useContext, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
 
 function Login() {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
@@ -28,40 +31,7 @@ function Login() {
             "twoFactorRecoveryCode": ""
         };
 
-        try {
-            const response = await fetch('https://localhost:53085/auth/login', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/problem+json'
-                },
-                body: JSON.stringify(userData)
-            });
-
-            if (response.ok) {
-                const responseData = await response.json();
-
-                localStorage.setItem('accessToken', responseData.accessToken);
-                localStorage.setItem('refreshToken', responseData.refreshToken);
-
-                status.current.textContent = 'Inloggen is succesvol';
-                status.current.style.color = 'green';
-
-                login();
-
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 1500);
-
-            } else {
-                const responseData = await response.json();
-                console.error('Error: ', responseData);
-
-                status.current.textContent = 'Gebruikersnaam of wachtwoord is onjuist';
-                status.current.style.color = 'red';
-            }
-        } catch (error) {
-            console.error('Error: ', error);
-        }
+        await callLoginEndpoint(userData, status, login, navigate);
     }
 
     return (
@@ -106,6 +76,90 @@ function Login() {
             </div>
         </main>
     );
+}
+
+/**
+ *  Will try to perform a login with the given user credentials.
+ * 
+ * @param {Object} userData
+ * @param {string} userData.email
+ * @param {string} userData.password
+ * @param {React.MutableRefObject<null>} status
+ * @param {Function} login
+ * @param {NavigateFunction} navigate
+ * @returns
+ */
+async function callLoginEndpoint(userData, status, login, navigate) {
+    try {
+        const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
+            method: 'POST',
+
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/problem+json'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (response.ok) {
+            login();
+
+            try {
+                const userClaims = await getUserClaims();
+                sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
+
+                // TODO: go to profile page, instead of index page.
+                setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+            } catch (error) {
+                status.current.textContent = 'Fout tijdens het inloggen';
+                status.current.style.color = 'red';
+                console.error('error when fetching the user claims.');
+
+                return;
+            }
+
+            status.current.textContent = 'Inloggen is succesvol';
+            status.current.style.color = 'green';
+
+        } else {
+            const responseData = await response.json();
+            console.error('Error: ', responseData);
+
+            status.current.textContent = 'Gebruikersnaam of wachtwoord is onjuist';
+            status.current.style.color = 'red';
+        }
+    } catch (error) {
+        console.error('Error: ', error);
+
+        status.current.textContent = 'Kan niet inloggen wegens een servererror';
+        status.current.style.color = 'red';
+    }
+}
+
+/**
+ * Will try to get the user claims of the current logged in user.
+ * 
+ * @returns {Object}
+ */
+async function getUserClaims() {
+    const request = {
+        method: 'GET',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const response = await fetch('https://localhost:53085/api/User/claims', request);
+        return await response.json();
+    } catch (error) {
+        console.error('error when sending user claims request, or parsing the response:', error);
+        throw error;
+    }
 }
 
 export default Login;
