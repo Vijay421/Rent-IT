@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241206131032_added_zakelijke_beheerder")]
-    partial class added_zakelijke_beheerder
+    [Migration("20241210092318_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,14 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6d8807a6-02b5-4410-9a13-5d35ca12c469",
-                            Name = "zakelijke_beheerder",
-                            NormalizedName = "ZAKELIJKE_BEHEERDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,6 +379,9 @@ namespace backend.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("int");
 
+                    b.Property<DateOnly>("EindDatum")
+                        .HasColumnType("date");
+
                     b.Property<string>("Kenteken")
                         .IsRequired()
                         .HasMaxLength(9)
@@ -407,10 +402,17 @@ namespace backend.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<double>("Prijs")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
                     b.Property<string>("Soort")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateOnly>("StartDatum")
+                        .HasColumnType("date");
 
                     b.Property<string>("Status")
                         .IsRequired()
