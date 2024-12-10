@@ -7,6 +7,10 @@
     padding: 0 20px 0 15px;
 }
 
+.navbar-logo__img {
+    width: 80px;
+}
+
 /*Div for buttons in nagivation bar*/
 .navbar__navigation-buttons {
     background-color: var(--main-color);
@@ -59,6 +63,10 @@
 @media only screen and (max-width: 660px) {
     .navbar {
         padding: 0;
+    }
+
+    .navbar-logo__img {
+        width: 70px;
     }
 
     .navbar__navigation-buttons button {
