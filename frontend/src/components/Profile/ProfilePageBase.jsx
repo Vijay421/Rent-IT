@@ -1,6 +1,6 @@
 import styles from './ProfilePageBase.module.css'
 import {useContext} from "react";
-import {UserContext} from "./UserContext.jsx";
+import {UserContext} from "../UserContext.jsx";
 
 function ProfilePageBase({children}) {
 

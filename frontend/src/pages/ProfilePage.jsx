@@ -1,11 +1,11 @@
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
-import ProfilePageParticulier from "../components/ProfilePageParticulier.jsx";
-import ProfilePageZakelijk from "../components/ProfilePageZakelijk.jsx";
-import ProfilePageAdmin from "../components/ProfilePageAdmin.jsx";
-import ProfilePageZakelijkeBeheerder from "../components/ProfilePageZakelijkeBeheerder.jsx";
-import ProfilePageFrontOffice from "../components/ProfilePageFrontOffice.jsx";
-import ProfilePageBackOffice from "../components/ProfilePageBackOffice.jsx";
+import ProfilePageParticulier from "../components/Profile/ProfilePageParticulier.jsx";
+import ProfilePageZakelijk from "../components/Profile/ProfilePageZakelijk.jsx";
+import ProfilePageAdmin from "../components/Profile/ProfilePageAdmin.jsx";
+import ProfilePageZakelijkeBeheerder from "../components/Profile/ProfilePageZakelijkeBeheerder.jsx";
+import ProfilePageFrontOffice from "../components/Profile/ProfilePageFrontOffice.jsx";
+import ProfilePageBackOffice from "../components/Profile/ProfilePageBackOffice.jsx";
 import {useContext} from "react";
 import { UserContext } from "../components/UserContext.jsx";
 

@@ -112,12 +112,12 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
             try {
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
-                setUserRole(userClaims.role);
+                // TODO: eventually use setUserRole.
+                // setUserRole(userClaims.role);
                 setUserName(userClaims.userName);
 
-                // TODO: go to profile page, instead of index page.
                 setTimeout(() => {
-                    navigate('/');
+                    navigate('/profile');
                 }, 1500);
             } catch (error) {
                 status.current.textContent = 'Fout tijdens het inloggen';
