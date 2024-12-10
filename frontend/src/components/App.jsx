@@ -5,6 +5,7 @@ import IndexPage from "../pages/IndexPage.jsx";
 import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
+import AccountSettings from "../pages/AccountSettings.jsx";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/renting" element={<RentingPage/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
+                <Route path="/account-settings" element={<AccountSettings/>}/>
             </Routes>
         </Router>
     );

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace backend.Models;
 
@@ -45,9 +46,20 @@ public class Voertuig
     [MinLength(2)]
     [MaxLength(50)]
     public string Status { get; set; }
+    
+    [Required]
+    [MinLength(2)]
+    [MaxLength(10)]
+    public double Prijs { get; set; }
 
+    [Required]
+    public DateOnly StartDatum { get; set; }
+    
+    [Required]
+    public DateOnly EindDatum { get; set; }
+    
     public Voertuig (int id, string merk, string type, string kenteken, string kleur, int aanschafjaar, string soort, string opmerking,
-        string status)
+        string status, double prijs, DateOnly startDatum, DateOnly eindDatum)
     {
         Id = id;
         Merk = merk;
@@ -58,6 +70,9 @@ public class Voertuig
         Soort = soort;
         Opmerking = opmerking;
         Status = status;
+        Prijs = prijs;
+        StartDatum = startDatum;
+        EindDatum = eindDatum;
     }
     
     public Voertuig() {}
