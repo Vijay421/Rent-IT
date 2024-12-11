@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import RentHistoryItem from "../components/RentHistoryItem.jsx";
@@ -6,20 +6,48 @@ import "../styles/RentHistory.css";
 
 export default function RentHistory() {
     const vehicleData = getFakeVehicle();
-    const [vehicleType, setVehicleType] = useState(null);
-    const [retrieveDate, setRetrieveDate] = useState(null);
-    const [handInDate, setHandInDate] = useState(null);
+    const [vehicleType, setVehicleType] = useState("");
+    const [retrieveDate, setRetrieveDate] = useState("");
+    const [handInDate, setHandInDate] = useState("");
+    const selectvehicleType = useRef(null);
+
+    const vehicles = vehicleData
+        .filter((data) => filterVehicle(data, vehicleType, retrieveDate, handInDate))
+        .map((data, key) => (
+            <RentHistoryItem data={data} key={key} />
+        ));
 
     function handleVehicleType(e) {
         setVehicleType(e.target.value);
     }
 
     function handleRetrieveDate(e) {
-        setRetrieveDate(e.target.value);
+        const filterStart = new Date(e.target.value);
+        const filterEnd = new Date(handInDate);
+
+        if (filterStart > filterEnd) {
+            window.alert("De ophaaldatum moet eerder zijn dan de inleverdatum");
+        } else {
+            setRetrieveDate(e.target.value);
+        }
     }
 
     function handleHandInDate(e) {
-        setHandInDate(e.target.value);
+        const filterStart = new Date(retrieveDate);
+        const filterEnd = new Date(e.target.value);
+
+        if (filterStart > filterEnd) {
+            window.alert("De ophaaldatum moet eerder zijn dan de inleverdatum");
+        } else {
+            setHandInDate(e.target.value);
+        }
+    }
+
+    function resetFilters() {
+        setVehicleType("alles");
+        setRetrieveDate("");
+        setHandInDate("");
+        selectvehicleType.current.selectedIndex = 0;
     }
 
     return (
@@ -33,7 +61,7 @@ export default function RentHistory() {
 
                     <div className="rent-history__filter-vehicle rent-history__filter-item">
                         <label htmlFor="rent-history-vehicle-type" className="rent-history__filter-label">Voertuig</label>
-                        <select id="rent-history-vehicle-type" onChange={handleVehicleType}>
+                        <select ref={selectvehicleType} id="rent-history-vehicle-type" onChange={handleVehicleType}>
                             <option value="alles">Alle soorten voertuigen</option>
                             <option value="auto">Auto</option>
                             <option value="camper">Camper</option>
@@ -43,23 +71,20 @@ export default function RentHistory() {
 
                     <div className="rent-history__filter-retrieve rent-history__filter-item">
                         <label htmlFor="rent-history-retrieve-date" className="rent-history__filter-label">Ophalen</label>
-                        <input id="rent-history-retrieve-date" type="date" onChange={handleRetrieveDate}/>
+                        <input id="rent-history-retrieve-date" type="date" onChange={handleRetrieveDate} value={retrieveDate}/>
                     </div>
 
                     <div className="rent-history__filter-hand-in rent-history__filter-item">
                         <label htmlFor="rent-history-hand-in-data" className="rent-history__filter-label">Inleveren</label>
-                        <input id="rent-history-hand-in-data" type="date" onChange={handleHandInDate}/>
+                        <input id="rent-history-hand-in-data" type="date" onChange={handleHandInDate} value={handInDate}/>
                     </div>
+
+
+                    <button onClick={resetFilters}>Reset</button>
                 </div>
 
                 <div className="rent-history__items">
-                    {
-                        vehicleData
-                            .filter((data) => filterVehicle(data, vehicleType, retrieveDate, handInDate))
-                            .map((data, key) => (
-                                <RentHistoryItem data={data} key={key} />
-                            ))
-                    }
+                    { vehicles.length === 0 ? <p className="rent-history__empty">Geen voertuigen</p> : vehicles }
                 </div>
 
             </main>
@@ -74,19 +99,25 @@ export default function RentHistory() {
  * 
  * @param {Object} vehicle 
  * @param {string} vehicleType 
- * @param {Date} retrieveDate 
- * @param {Date} handInDate 
+ * @param {string} retrieveDate 
+ * @param {string} handInDate 
  * @returns {boolean}
  */
 function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
-    if (vehicleType !== null) {
+    if (vehicleType !== "") {
         if (vehicle.soort.toLowerCase() !== vehicleType && vehicleType !== "alles") {
             return false;
         }
     }
 
-    if (true) {
+    if (retrieveDate !== "" && handInDate !== "") {
+        const vehicleStartDate = new Date(vehicle.startdatum);
+        const vehicleEndDate = new Date(vehicle.einddatum);
 
+        const filterStart = new Date(retrieveDate);
+        const filterEnd = new Date(handInDate);
+
+        return filterStart <= vehicleStartDate && filterEnd >= vehicleEndDate;
     }
 
     return true;
@@ -115,7 +146,7 @@ function getFakeVehicle() {
             einddatum: "2016-04-12",
         },
         {
-            id: 1,
+            id: 2,
             merk: "Toyota",
             type: "Corolla",
             kenteken: "AB-123-CD",
@@ -125,11 +156,11 @@ function getFakeVehicle() {
             opmerking: "",
             status: "Verhuurbaar",
             prijs: 50,
-            startdatum: "2012-02-24",
-            einddatum: "2016-04-12",
+            startdatum: "2011-01-01",
+            einddatum: "2016-01-01",
         },
         {
-            id: 1,
+            id: 3,
             merk: "Toyota",
             type: "Corolla",
             kenteken: "AB-123-CD",
@@ -143,7 +174,7 @@ function getFakeVehicle() {
             einddatum: "2016-04-12",
         },
         {
-            id: 1,
+            id: 4,
             merk: "Toyota",
             type: "Corolla",
             kenteken: "AB-123-CD",
@@ -153,8 +184,8 @@ function getFakeVehicle() {
             opmerking: "",
             status: "Verhuurbaar",
             prijs: 50,
-            startdatum: "2012-02-24",
-            einddatum: "2016-04-12",
+            startdatum: "2022-01-01",
+            einddatum: "2024-01-01",
         },
     ];
 }

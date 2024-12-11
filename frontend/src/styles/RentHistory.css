@@ -24,6 +24,10 @@
     padding: 10px 0;
 }
 
+.rent-history__empty {
+    text-align: center;
+}
+
 .rent-history__filter-item {
     display: flex;
     justify-content: center;
