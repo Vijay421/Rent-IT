@@ -1,0 +1,10 @@
+.rent-history-item {
+    display: flex;
+    margin: 15px auto;
+    width: max(150px,62vw);
+    height: auto;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: 2px solid black;
+}

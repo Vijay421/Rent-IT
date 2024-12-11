@@ -1,0 +1,30 @@
+.rent-history__page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rent-history__items {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    width: 66.5vw;
+}
+
+.rent-history__filter {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: auto;
+    width: 66.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 2vh;
+}
+
+.rent-history__title {
+    text-align: center;
+}
