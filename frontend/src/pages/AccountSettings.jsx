@@ -265,7 +265,6 @@ async function updateSettings(payload, setResponse) {
  * @returns {boolean}
  */
 async function callDeleteUserEndpoint(setResponse) {
-    debugger;
     const request = {
         method: 'DELETE',
         credentials: 'include', // TODO: change to 'same-origin' when in production.

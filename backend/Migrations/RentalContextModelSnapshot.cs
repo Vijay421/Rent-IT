@@ -51,9 +51,39 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6d8807a6-02b5-4410-9a13-5d35ca12c469",
+                            Id = "be3ffd30-7d69-40a9-910f-64916a510b27",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "524013e6-0032-48e6-bda6-af79806dbf40",
+                            Name = "backoffice_medewerker",
+                            NormalizedName = "BACKOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "ca479615-3fa6-4e06-9bf7-14b0c9d9777d",
+                            Name = "frontoffice_medewerker",
+                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "c0d5d0fe-0c2c-4b5e-b39b-ea0786bbc02f",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
+                        },
+                        new
+                        {
+                            Id = "248e58c6-4755-4683-9ed3-0728c428eb57",
+                            Name = "zakelijke_huurder",
+                            NormalizedName = "ZAKELIJKE_HUURDER"
+                        },
+                        new
+                        {
+                            Id = "d791cb56-a507-47e1-842b-ddde5a5d3073",
+                            Name = "particuliere_huurder",
+                            NormalizedName = "PARTICULIERE_HUURDER"
                         });
                 });
 
@@ -384,6 +414,9 @@ namespace backend.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("int");
 
+                    b.Property<DateOnly>("EindDatum")
+                        .HasColumnType("date");
+
                     b.Property<string>("Kenteken")
                         .IsRequired()
                         .HasMaxLength(9)
@@ -404,10 +437,17 @@ namespace backend.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<double>("Prijs")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
                     b.Property<string>("Soort")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateOnly>("StartDatum")
+                        .HasColumnType("date");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -422,6 +462,113 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Aanschafjaar = 2018,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "AB-123-CD",
+                            Kleur = "Red",
+                            Merk = "Toyota",
+                            Opmerking = "",
+                            Prijs = 50.0,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Corolla"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Aanschafjaar = 2019,
+                            EindDatum = new DateOnly(2020, 8, 12),
+                            Kenteken = "EF-456-GH",
+                            Kleur = "Blue",
+                            Merk = "Ford",
+                            Opmerking = "",
+                            Prijs = 51.390000000000001,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2017, 4, 3),
+                            Status = "Verhuurbaar",
+                            Type = "Focus"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Aanschafjaar = 2020,
+                            EindDatum = new DateOnly(2024, 11, 9),
+                            Kenteken = "IJ-789-KL",
+                            Kleur = "Black",
+                            Merk = "Volkswagen",
+                            Opmerking = "",
+                            Prijs = 40.0,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2019, 10, 12),
+                            Status = "Verhuurbaar",
+                            Type = "Golf"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Aanschafjaar = 2021,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "QR-345-ST",
+                            Kleur = "Gray",
+                            Merk = "Citroën",
+                            Opmerking = "",
+                            Prijs = 65.0,
+                            Soort = "Camper",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Jumper"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Aanschafjaar = 2016,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "UV-678-WX",
+                            Kleur = "Black",
+                            Merk = "Peugeot",
+                            Opmerking = "",
+                            Prijs = 68.0,
+                            Soort = "Camper",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Boxer"
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Aanschafjaar = 2020,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "GH-456-IJ",
+                            Kleur = "Blue",
+                            Merk = "Dethle-s",
+                            Opmerking = "",
+                            Prijs = 52.5,
+                            Soort = "Caravan",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "C'go"
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Aanschafjaar = 2017,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "KL-789-MN",
+                            Kleur = "Red",
+                            Merk = "Burstner",
+                            Opmerking = "",
+                            Prijs = 48.0,
+                            Soort = "Caravan",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Premio Life"
+                        });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
