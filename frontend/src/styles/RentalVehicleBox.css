@@ -91,7 +91,7 @@
 
 .rental-vehicle-huurprijs-popup__span {
     position: absolute;
-    font-size: 16px;
+    font-size: max(12px, 1vw);
     font-weight: lighter;
     text-align: left;
     width: auto;
@@ -164,6 +164,10 @@
     #rental-vehicle-huur-box__button {
         width: 80%;
     }
+
+    .rental-vehicle-huurprijs-popup__span {
+        transform: translateX(-75%) translateY(-100%);
+    }
 }
 
 @media only screen and (max-width: 660px) {
@@ -229,5 +233,9 @@
         height: 5%;
         font-size: 2rem;
         margin: 10px auto;
+    }
+
+    .rental-vehicle-huurprijs-popup__span {
+        transform: translateX(-75%) translateY(50%);
     }
 }
