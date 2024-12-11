@@ -28,12 +28,6 @@
 .confirmation-main-renter-box__div,
 .confirmation-main-voertuig-box__div {
     width: 50%;
-    height: 500px;
-}
-
-.confirmation-main-renter-box__div {
-    background-color: darkmagenta;
-    font-size: 1em;
 }
 
 .renter-box-title__h2,
@@ -43,34 +37,116 @@
     margin: 5px;
 }
 
-.confirmation-main-voertuig-box__div {
+.confirmation-main-voertuig-box__div,
+.confirmation-main-renter-box__div {
     background-color: mediumpurple;
     font-size: 1em;
+    height: 100%;
 }
 
-.confirmation-main-voertuig-box__div p {
-    margin-left: 30px;
+.voertuig-box-column1__div p,
+.voertuig-box-column2__div p {
+    margin-left: 15px;
+    font-size: max(16px, 1.15vw);
 }
 
-.voertuig-box-columns__div {
+.voertuig-box-columns__div,
+.renter-box-column__div {
     background-color: darkslategrey;
     display: flex;
     flex-direction: column;
     padding: 5px;
-    gap: 15px;
+    gap: 5px;
     font-size: 1.05em;
     font-weight: bold;
 }
 
-.voertuig-box-column1__div {
-    background-color: dodgerblue;
+.renter-box-column__div {
+    height: 38.2vh;
+    background-color: lightsalmon;
 }
 
+.voertuig-box-column1__div,
 .voertuig-box-column2__div {
-    background-color: darkred;
+    background-color: dodgerblue;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.voertuig-box-column3__div {
+.voertuig-box-column3__div,
+.voertuig-box-column4__div {
     display: flex;
-    background-color: chocolate;
+    width: 100%;
+    text-align: center;
+    background-color: darkkhaki;
+}
+
+.voertuig-box-column3-title1-paragraph__p {
+    width: 66%;
+    background-color: coral;
+    font-size: 1.5vw;
+}
+
+.voertuig-box-column3-title2-paragraph__p {
+    width: 33%;
+    font-size: 1.5vw;
+}
+
+.voertuig-box-column3-answer1-paragraph__p {
+    width: 66%;
+    font-size: 1.8vw;
+    background-color: coral;
+}
+
+.voertuig-box-column3-answer2-paragraph__p {
+    width: 33%;
+    font-size: 2vw;
+}
+
+@media only screen and (max-width: 770px) {
+    .confirmation-page-main__div {
+        width: 80vw;
+    }
+    .confirmation-main-boxes__div {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .confirmation-main-renter-box__div,
+    .confirmation-main-voertuig-box__div {
+        width: 100%;
+    }
+
+    .voertuig-box-title__h2,
+    .renter-box-title__h2 {
+        font-size: 1em;
+    }
+
+    .voertuig-box-column1__div,
+    .voertuig-box-column2__div {
+        display: grid;
+        grid-template-columns: repeat(2, 140px);
+    }
+
+    .voertuig-box-column1__div p,
+    .voertuig-box-column2__div p {
+        font-size: max(16px, 1.15vw);
+        display: grid;
+        margin-left: 5px;
+    }
+
+    .voertuig-box-column3-title1-paragraph__p,
+    .voertuig-box-column3-title2-paragraph__p {
+        display: none;
+    }
+
+    .voertuig-box-column3-answer1-paragraph__p {
+        font-size: 4.2vw;
+        display: flex;
+        align-items: center;
+        background-color: mediumseagreen;
+    }
+    .voertuig-box-column3-answer2-paragraph__p {
+        font-size: 6vw;
+    }
 }
