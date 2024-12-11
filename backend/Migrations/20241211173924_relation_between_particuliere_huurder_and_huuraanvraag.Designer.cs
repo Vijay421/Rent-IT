@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20241211173924_relation_between_particuliere_huurder_and_huuraanvraag")]
+    partial class relation_between_particuliere_huurder_and_huuraanvraag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,44 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cb0b93f3-84d6-400e-b72e-ef54b94f428d",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "185b783f-4e9f-400a-8c3f-8501589d8fa7",
-                            Name = "backoffice_medewerker",
-                            NormalizedName = "BACKOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "c727c320-a02c-45c4-a6d4-b8341600ca5c",
-                            Name = "frontoffice_medewerker",
-                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "e1c6e606-39c5-47de-84d2-bc4cbc08560e",
-                            Name = "zakelijke_beheerder",
-                            NormalizedName = "ZAKELIJKE_BEHEERDER"
-                        },
-                        new
-                        {
-                            Id = "337fabf3-9474-4ac5-93d9-2d4b1aed7249",
-                            Name = "zakelijke_huurder",
-                            NormalizedName = "ZAKELIJKE_HUURDER"
-                        },
-                        new
-                        {
-                            Id = "c1feef33-37b4-4cde-a157-1516448d86f0",
-                            Name = "particuliere_huurder",
-                            NormalizedName = "PARTICULIERE_HUURDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -467,113 +432,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Aanschafjaar = 2018,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "AB-123-CD",
-                            Kleur = "Red",
-                            Merk = "Toyota",
-                            Opmerking = "",
-                            Prijs = 50.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Corolla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Aanschafjaar = 2019,
-                            EindDatum = new DateOnly(2020, 8, 12),
-                            Kenteken = "EF-456-GH",
-                            Kleur = "Blue",
-                            Merk = "Ford",
-                            Opmerking = "",
-                            Prijs = 51.390000000000001,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2017, 4, 3),
-                            Status = "Verhuurbaar",
-                            Type = "Focus"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2024, 11, 9),
-                            Kenteken = "IJ-789-KL",
-                            Kleur = "Black",
-                            Merk = "Volkswagen",
-                            Opmerking = "",
-                            Prijs = 40.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2019, 10, 12),
-                            Status = "Verhuurbaar",
-                            Type = "Golf"
-                        },
-                        new
-                        {
-                            Id = 105,
-                            Aanschafjaar = 2021,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "QR-345-ST",
-                            Kleur = "Gray",
-                            Merk = "Citroën",
-                            Opmerking = "",
-                            Prijs = 65.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Jumper"
-                        },
-                        new
-                        {
-                            Id = 106,
-                            Aanschafjaar = 2016,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "UV-678-WX",
-                            Kleur = "Black",
-                            Merk = "Peugeot",
-                            Opmerking = "",
-                            Prijs = 68.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Boxer"
-                        },
-                        new
-                        {
-                            Id = 185,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "GH-456-IJ",
-                            Kleur = "Blue",
-                            Merk = "Dethle-s",
-                            Opmerking = "",
-                            Prijs = 52.5,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "C'go"
-                        },
-                        new
-                        {
-                            Id = 186,
-                            Aanschafjaar = 2017,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "KL-789-MN",
-                            Kleur = "Red",
-                            Merk = "Burstner",
-                            Opmerking = "",
-                            Prijs = 48.0,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Premio Life"
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>

@@ -31,6 +31,8 @@ export default function RentHistoryItem({ data }) {
                 <p className="rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Huurperiode</p>
                 <p>Van: {data.startdatum}</p>
                 <p>Tot: {data.einddatum}</p>
+                <p className="rent-history-item__vehicle-title">Reisaard</p>
+                <p>{data.reisaard}</p>
             </div>
 
             <div className="rent-history-item__vehicle-costs">

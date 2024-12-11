@@ -93,7 +93,7 @@ public class Program
         // Add identity endpoints.
         app.MapGroup("/auth").MapIdentityApi<User>();
 
-        await SeedUsers(app);
+        await SeedUsers(app, app.Environment.IsDevelopment());
 
         ServeSpa(app, builder);
 
@@ -117,7 +117,7 @@ public class Program
     /// <summary>
     /// Creates default user accounts.
     /// </summary>
-    private static async Task SeedUsers(WebApplication app)
+    private static async Task SeedUsers(WebApplication app, bool isDev)
     {
         // The usage of 'scope' originates from: https://stackoverflow.com/questions/71882183/net-6-inject-service-into-program-cs
         using (var scope = app.Services.CreateScope())
@@ -126,10 +126,11 @@ public class Program
 
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             var signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
+            var context = serviceProvider.GetRequiredService<RentalContext>();
             var config = serviceProvider.GetRequiredService<IConfiguration>();
 
             var userSeeder = new UserSeeder();
-            await userSeeder.Seed(userManager, config);
+            await userSeeder.Seed(userManager, config, context, isDev);
         }
     }
 

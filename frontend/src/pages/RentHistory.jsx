@@ -1,17 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import RentHistoryItem from "../components/RentHistoryItem.jsx";
 import "../styles/RentHistory.css";
 
 export default function RentHistory() {
-    const vehicleData = getFakeVehicle();
     const [vehicleType, setVehicleType] = useState("");
     const [retrieveDate, setRetrieveDate] = useState("");
     const [handInDate, setHandInDate] = useState("");
     const selectvehicleType = useRef(null);
+    const [vehicles, setVehicles] = useState([]);
 
-    const filteredVehicles = vehicleData
+    useEffect(() => {
+        const getData = async () => {
+            const vehicles = await getRentHistory();
+            setVehicles(vehicles);
+        };
+        getData();
+    }, []);
+
+    const filteredVehicles = vehicles
         .filter((data) => filterVehicle(data, vehicleType, retrieveDate, handInDate));
 
     function handleVehicleType(e) {
@@ -47,9 +55,8 @@ export default function RentHistory() {
         selectvehicleType.current.selectedIndex = 0;
     }
 
-    // TODO: put this in the arch-doc.
     // The folloing code got inspired by: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-    // The stackoverflow anwser: An example for IE 10+, Firefox and Chrome (and without jQuery or any other library)
+    // The stackoverflow answer: An example for IE 10+, Firefox and Chrome (and without jQuery or any other library)
     /**
      * Allow the user to download a json export of the filtered vehicles.
      */
@@ -146,69 +153,26 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
     return true;
 }
 
-// TODO: remove this function when the backend endpoints are finished.
 /**
- * Return an array of fake vehicle objects with predefined attributes.
- *
- * @returns {Array<Object>}
+ * Will attempts to get the rent history from the server.
+ * 
+ * @returns {Object}
  */
-function getFakeVehicle() {
-    return [
-        {
-            id: 1,
-            merk: "Toyota",
-            type: "Corolla",
-            kenteken: "AB-123-CD",
-            kleur: "Red",
-            aanschafjaar: "2018",
-            soort: "Auto",
-            opmerking: "",
-            status: "Verhuurbaar",
-            prijs: 50,
-            startdatum: "2012-02-24",
-            einddatum: "2016-04-12",
-        },
-        {
-            id: 2,
-            merk: "Toyota",
-            type: "Corolla",
-            kenteken: "AB-123-CD",
-            kleur: "Red",
-            aanschafjaar: "2018",
-            soort: "Camper",
-            opmerking: "",
-            status: "Verhuurbaar",
-            prijs: 50,
-            startdatum: "2011-01-01",
-            einddatum: "2016-01-01",
-        },
-        {
-            id: 3,
-            merk: "Toyota",
-            type: "Corolla",
-            kenteken: "AB-123-CD",
-            kleur: "Red",
-            aanschafjaar: "2018",
-            soort: "Caravan",
-            opmerking: "",
-            status: "Verhuurbaar",
-            prijs: 50,
-            startdatum: "2012-02-24",
-            einddatum: "2016-04-12",
-        },
-        {
-            id: 4,
-            merk: "Toyota",
-            type: "Corolla",
-            kenteken: "AB-123-CD",
-            kleur: "Red",
-            aanschafjaar: "2018",
-            soort: "Auto",
-            opmerking: "",
-            status: "Verhuurbaar",
-            prijs: 50,
-            startdatum: "2022-01-01",
-            einddatum: "2024-01-01",
-        },
-    ];
+async function getRentHistory() {
+    try {
+        const response = await fetch('https://localhost:53085/api/ParticuliereUser/rent-history', {
+            method: 'GET',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('error when requesting the rent history request, or parsing the response:', error);
+        throw error;
+    }
 }
