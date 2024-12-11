@@ -4,8 +4,8 @@ import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicl
 
 function Renting() {
     const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles"); // Selecteer Voertuig soort
-    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(Date.now); // Selecteer OphaalDatum
-    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(Date.now); // Selecteer InleverDatum
+    const [selectedDateStartDatum, setSelectedDateStartDatum] = useState(Date.now); // Selecteer OphaalDatum
+    const [selectedDateEindDatum, setSelectedDateEindDatum] = useState(Date.now); // Selecteer InleverDatum
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
@@ -30,12 +30,22 @@ function Renting() {
         setSelectedVoertuigSoort(event.target.value);
     };
 
-    const handleDateChangeOphaalDatum = (event) => {
-        setSelectedDateOphaalDatum(event.target.value);
+    const handleDateChangeStartDatum = (event) => {
+        const newStartDatum = event.target.value;
+        if (newStartDatum > selectedDateEindDatum) {
+            alert("De startdatum kan niet later zijn dan uw einddatum.");
+        } else {
+            setSelectedDateStartDatum(newStartDatum);
+        }
     };
 
-    const handleDateChangeInleverDatum = (event) => {
-        setSelectedDateInleverDatum(event.target.value);
+    const handleDateChangeEindDatum = (event) => {
+        const newEindDatum = event.target.value;
+        if (newEindDatum < selectedDateStartDatum) {
+            alert("De einddatum kan niet eerder zijn dan uw startdatum.");
+        } else {
+            setSelectedDateEindDatum(newEindDatum);
+        }
     };
 
     const handleMerkChange = (event) => {
@@ -55,8 +65,13 @@ function Renting() {
         setSearchText(event.target.value);
     };
 
-    function handleSearchButtonClick() {
-        console.log("search button clicked");
+    function onResetFiltersButtonClick() {
+        setSelectedVoertuigSoort("alles");
+        setSelectedMerkSoort("alles");
+        setSelectedPrijsSoort("alles");
+        setSelectedBeschikbaarheidSoort("alles");
+        setSelectedDateStartDatum(Date.now);
+        setSelectedDateEindDatum(Date.now);
     }
 
     const renderVehicleBoxes = () => {
@@ -74,7 +89,7 @@ function Renting() {
 
                 if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
 
-                if (selectedDateOphaalDatum < vehicle.startDatum || selectedDateInleverDatum > vehicle.eindDatum) return false;
+                if (selectedDateStartDatum < vehicle.startDatum || selectedDateEindDatum > vehicle.eindDatum) return false;
 
                 if ( (!vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
                     !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase()))) return false;
@@ -121,26 +136,26 @@ function Renting() {
 
                     <div className="divTop-divSelect-ophaalDatum">
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Ophaal datum: </label>
+                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
                                 type="date"
                                 id="date-picker"
                                 className="date-input"
-                                value={selectedDateOphaalDatum}
-                                onChange={handleDateChangeOphaalDatum}
+                                value={selectedDateStartDatum}
+                                onChange={handleDateChangeStartDatum}
                             />
                         </div>
                     </div>
 
                     <div className="divTop-divSelect-inleverDatum">
                         <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
+                            <label htmlFor="date-picker" className="date-label-inleverDatum">Einddatum: </label>
                             <input
                                 type="date"
                                 id="date-picker"
                                 className="date-input"
-                                value={selectedDateInleverDatum}
-                                onChange={handleDateChangeInleverDatum}
+                                value={selectedDateEindDatum}
+                                onChange={handleDateChangeEindDatum}
                             />
                         </div>
                     </div>
@@ -211,6 +226,7 @@ function Renting() {
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
                         <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
+                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset filters</button>
                     </div>
                 </div>
             </div>

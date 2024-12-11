@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import Temp from '../assets/toyota-corolla.png';
 
 export function RentalAutoBox( {data} ) {
-
+    function onHuurButtonClick() {
+        alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
+    }
 
     return (
         <div className='rental-vehicle-box__div'>
@@ -27,12 +29,6 @@ export function RentalAutoBox( {data} ) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
@@ -42,14 +38,16 @@ export function RentalAutoBox( {data} ) {
             <div className='rental-vehicle-huur-box__div'>
                 <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                <button id='rental-vehicle-huur-box__button'>Huur</button>
+                <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>
         </div>
     );
 }
 
 export function RentalCaravanBox({data}) {
-
+    function onHuurButtonClick() {
+        alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
+    }
 
     return (
         <div className='rental-vehicle-box__div'>
@@ -73,12 +71,6 @@ export function RentalCaravanBox({data}) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
@@ -88,14 +80,16 @@ export function RentalCaravanBox({data}) {
             <div className='rental-vehicle-huur-box__div'>
                 <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                <button id='rental-vehicle-huur-box__button'>Huur</button>
+                <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>
         </div>
     );
 }
 
 export function RentalCamperBox({data}) {
-
+    function onHuurButtonClick() {
+        alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
+    }
 
     return (
         <div className='rental-vehicle-box__div'>
@@ -119,12 +113,6 @@ export function RentalCamperBox({data}) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
@@ -134,7 +122,7 @@ export function RentalCamperBox({data}) {
             <div className='rental-vehicle-huur-box__div'>
                 <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                <button id='rental-vehicle-huur-box__button'>Huur</button>
+                <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>
         </div>
     );
