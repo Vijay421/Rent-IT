@@ -212,7 +212,7 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Prijs_per_maand")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<string>("Soort")
                         .IsRequired()

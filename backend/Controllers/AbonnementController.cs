@@ -32,7 +32,6 @@ public class AbonnementController : ControllerBase
         if (abonnement == null) return NotFound();
 
         return new AbonnementDTO{
-            Id = abonnement.Id,
             Naam = abonnement.Naam,
             PrijsPerMaand = abonnement.Prijs_per_maand,
             MaxHuurders = abonnement.Max_huurders,
@@ -46,7 +45,7 @@ public class AbonnementController : ControllerBase
         _context.Abonnementen.Add(Abonnement);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("CreatedAbonnement", new {id = Abonnement.Id}, Abonnement);
+        return CreatedAtAction("CreateAbonnement", new {id = Abonnement.Id}, Abonnement);
     }
     [Authorize]
     [HttpPost("{id}/update")]

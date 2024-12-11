@@ -8,7 +8,6 @@ namespace backend.Models
 
         [MinLength(2)]
         public string Naam { get; set; }
-        [MinLength(2)]
         public double Prijs_per_maand { get; set; }
         public int Max_huurders { get; set; }
         public TimeOnly Duur { get; set; }
