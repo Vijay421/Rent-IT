@@ -55,6 +55,15 @@ function Renting() {
         setSearchText(event.target.value);
     };
 
+    function onResetFiltersButtonClick() {
+        setSelectedVoertuigSoort("alles");
+        setSelectedMerkSoort("alles");
+        setSelectedPrijsSoort("alles");
+        setSelectedBeschikbaarheidSoort("alles");
+        setSelectedDateStartDatum(Date.now);
+        setSelectedDateEindDatum(Date.now);
+    }
+
     const renderVehicleBoxes = () => {
         return vehicles
             .filter((vehicle) => {
@@ -207,6 +216,7 @@ function Renting() {
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
                         <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
+                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset filters</button>
                     </div>
                 </div>
             </div>
