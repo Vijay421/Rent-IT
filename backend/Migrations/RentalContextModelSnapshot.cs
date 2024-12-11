@@ -220,7 +220,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Abonnementen");
+                    b.ToTable("Abonnementen", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
@@ -233,7 +233,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BackOfficeMedewerker");
+                    b.ToTable("BackOfficeMedewerker", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
@@ -246,7 +246,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FrontOfficeMedewerker");
+                    b.ToTable("FrontOfficeMedewerker", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -296,7 +296,7 @@ namespace backend.Migrations
 
                     b.HasIndex("VoertuigId");
 
-                    b.ToTable("Huuraanvragen");
+                    b.ToTable("Huuraanvragen", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
@@ -314,7 +314,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ParticuliereHuurders");
+                    b.ToTable("ParticuliereHuurders", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -585,7 +585,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ZakelijkeHuurder");
+                    b.ToTable("ZakelijkeHuurder", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
