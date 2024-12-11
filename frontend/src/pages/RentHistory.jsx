@@ -4,6 +4,65 @@ import RentHistoryItem from "../components/RentHistoryItem.jsx";
 import "../styles/RentHistory.css";
 
 export default function RentHistory() {
+    const fakeVehicleData = [
+        {
+            id: 1,
+            merk: "Toyota",
+            type: "Corolla",
+            kenteken: "AB-123-CD",
+            kleur: "Red",
+            aanschafjaar: "2018",
+            soort: "Auto",
+            opmerking: "",
+            status: "Verhuurbaar",
+            prijs: 50,
+            startdatum: "2012-02-24",
+            einddatum: "2016-04-12",
+        },
+        {
+            id: 1,
+            merk: "Toyota",
+            type: "Corolla",
+            kenteken: "AB-123-CD",
+            kleur: "Red",
+            aanschafjaar: "2018",
+            soort: "Auto",
+            opmerking: "",
+            status: "Verhuurbaar",
+            prijs: 50,
+            startdatum: "2012-02-24",
+            einddatum: "2016-04-12",
+        },
+        {
+            id: 1,
+            merk: "Toyota",
+            type: "Corolla",
+            kenteken: "AB-123-CD",
+            kleur: "Red",
+            aanschafjaar: "2018",
+            soort: "Auto",
+            opmerking: "",
+            status: "Verhuurbaar",
+            prijs: 50,
+            startdatum: "2012-02-24",
+            einddatum: "2016-04-12",
+        },
+        {
+            id: 1,
+            merk: "Toyota",
+            type: "Corolla",
+            kenteken: "AB-123-CD",
+            kleur: "Red",
+            aanschafjaar: "2018",
+            soort: "Auto",
+            opmerking: "",
+            status: "Verhuurbaar",
+            prijs: 50,
+            startdatum: "2012-02-24",
+            einddatum: "2016-04-12",
+        },
+    ];
+
     return (
         <>
             <Navbar/>
@@ -14,7 +73,11 @@ export default function RentHistory() {
                 </div>
 
                 <div className="rent-history__items">
-                    <RentHistoryItem />
+                    {
+                        fakeVehicleData.map((data, key) => (
+                            <RentHistoryItem data={data} key={key} />
+                        ))
+                    }
                 </div>
             </main>
 
