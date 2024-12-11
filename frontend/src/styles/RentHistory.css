@@ -5,19 +5,49 @@
 }
 
 .rent-history__filter {
+    display: grid;
+    grid-template-areas:
+        "title title title"
+        "vehicle-filter retrieve-filter hand-in-filter"
+    ;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    justify-content: center;
+
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
     height: auto;
     width: 66.5vw;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     margin-top: 30px;
     margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.rent-history__filter-item {
+    display: flex;
+    justify-content: center;
+}
+
+.rent-history__filter-label {
+    margin-right: 5px;
+}
+
+.rent-history__filter-vehicle {
+    grid-area: vehicle-filter;
+}
+
+.rent-history__filter-retrieve {
+    grid-area: retrieve-filter;
+}
+
+.rent-history__filter-hand-in {
+    grid-area: hand-in-filter;
 }
 
 .rent-history__title {
+    grid-area: title;
+
     text-align: center;
 }
 
@@ -31,8 +61,30 @@
     margin-bottom: 30px;
 }
 
+@media only screen and (max-width: 1100px) {
+    .rent-history__filter {
+        grid-template-areas:
+            "title title"
+            "vehicle-filter vehicle-filter"
+            "retrieve-filter hand-in-filter"
+        ;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+}
+
 @media only screen and (max-width: 660px) {
     .rent-history__title {
         font-size: 25px;
+    }
+
+    .rent-history__filter {
+        grid-template-areas:
+            "title"
+            "vehicle-filter"
+            "retrieve-filter"
+            "hand-in-filter"
+        ;
+        grid-template-columns: 1fr;
     }
 }

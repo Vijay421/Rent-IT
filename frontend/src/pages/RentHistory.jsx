@@ -13,6 +13,26 @@ export default function RentHistory() {
             <main className="rent-history__page">
                 <div className="rent-history__filter">
                     <h1 className="rent-history__title">Huurgeschiedenis</h1>
+
+                    <div className="rent-history__filter-vehicle rent-history__filter-item">
+                        <label htmlFor="rent-history-vehicle-type" className="rent-history__filter-label">Voertuig</label>
+                        <select id="rent-history-vehicle-type">
+                            <option value="alles">Alle soorten voertuigen</option>
+                            <option value="auto">Auto</option>
+                            <option value="camper">Camper</option>
+                            <option value="caravan">Caraven</option>
+                        </select>
+                    </div>
+
+                    <div className="rent-history__filter-retrieve rent-history__filter-item">
+                        <label htmlFor="rent-history-retrieve-date" className="rent-history__filter-label">Ophalen</label>
+                        <input id="rent-history-retrieve-date" type="date" />
+                    </div>
+
+                    <div className="rent-history__filter-hand-in rent-history__filter-item">
+                        <label htmlFor="rent-history-hand-in-data" className="rent-history__filter-label">Inleveren</label>
+                        <input id="rent-history-hand-in-data" type="date" />
+                    </div>
                 </div>
 
                 <div className="rent-history__items">
