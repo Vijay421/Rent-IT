@@ -55,10 +55,6 @@ function Renting() {
         setSearchText(event.target.value);
     };
 
-    function handleSearchButtonClick() {
-        console.log("search button clicked");
-    }
-
     const renderVehicleBoxes = () => {
         return vehicles
             .filter((vehicle) => {
