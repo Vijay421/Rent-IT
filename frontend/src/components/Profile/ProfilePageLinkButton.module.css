@@ -1,0 +1,28 @@
+.Link {
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+}
+
+.LinkDiv {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 20em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.LinkDivText {
+    color: #FFFFFF;
+    font-size: 1em;
+}
+
+.LinkDiv:hover {
+    background-color: var(--tertiary-color);
+}
+
+.LinkDivText:visited {
+    color: #FFFFFF;
+}

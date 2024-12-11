@@ -1,30 +1,43 @@
 import Navbar from "../components/Navbar.jsx";
-import Profile from "../components/Profile.jsx";
 import Footer from "../components/Footer.jsx";
-import { UserContext } from "../components/UserContext.jsx";
+import ProfilePageParticulier from "../components/Profile/ProfilePageParticulier.jsx";
+import ProfilePageZakelijk from "../components/Profile/ProfilePageZakelijk.jsx";
+import ProfilePageAdmin from "../components/Profile/ProfilePageAdmin.jsx";
+import ProfilePageZakelijkeBeheerder from "../components/Profile/ProfilePageZakelijkeBeheerder.jsx";
+import ProfilePageFrontOffice from "../components/Profile/ProfilePageFrontOffice.jsx";
+import ProfilePageBackOffice from "../components/Profile/ProfilePageBackOffice.jsx";
 import {useContext} from "react";
+import { UserContext } from "../components/UserContext.jsx";
 
 export default function ProfilePage() {
     const { userRole } = useContext(UserContext);
+    console.log(userRole);
+
+    if (userRole === null) {
+        // TODO: redirect to index page, because user is not logged in.
+    }
 
     return (
         <>
             <Navbar />
-            {/* Conditional rendering based on userRole */}
             {userRole === "particuliere_huurder" && (
-                <Profile role="Particuliere Huurder" />
+                <ProfilePageParticulier role="Particuliere Huurder" />
             )}
             {userRole === "zakelijke_huurder" && (
-                <Profile role="Zakelijke Huurder" />
+                <ProfilePageZakelijk role="Zakelijke Huurder" />
             )}
-            {userRole === "admin" && <Profile role="Admin" />}
+            {userRole === "zakelijke_beheerder" && (
+                <ProfilePageZakelijkeBeheerder role="Zakelijke Beheerder" />
+            )}
+            {userRole === "admin" && (
+                <ProfilePageAdmin role="Admin" />
+            )}
             {userRole === "frontoffice_medewerker" && (
-                <Profile role="Frontoffice Medewerker" />
+                <ProfilePageFrontOffice role="Frontoffice Medewerker" />
             )}
             {userRole === "backoffice_medewerker" && (
-                <Profile role="Backoffice Medewerker" />
+                <ProfilePageBackOffice role="Backoffice Medewerker" />
             )}
-            {/* Fallback for undefined role */}
             {!userRole && <p>Loading user role...</p>}
             <Footer />
         </>
