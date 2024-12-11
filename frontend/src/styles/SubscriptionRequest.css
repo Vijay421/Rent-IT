@@ -1,0 +1,32 @@
+.submit-button {
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+}
+
+.submit-button__div {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 20em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button__text {
+    color: #FFFFFF;
+    font-size: 1em;
+}
+
+.submit-button__div:hover {
+    background-color: var(--tertiary-color);
+}
+
+.submit-button__text:visited {
+    color: #FFFFFF;
+}
+
+.confirmation-message {
+    color: red;
+}
