@@ -7,10 +7,10 @@
 .rent-history__filter {
     display: grid;
     grid-template-areas:
-        "title title title title"
-        "vehicle-filter retrieve-filter hand-in-filter reset"
+        "title title title title title"
+        "vehicle-filter retrieve-filter hand-in-filter reset download"
     ;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     justify-content: center;
 
@@ -35,6 +35,11 @@
 
 .rent-history__filter-reset {
     grid-area: reset;
+    max-width: 200px;
+}
+
+.rent-history__filter-download {
+    grid-area: download;
     max-width: 200px;
 }
 
@@ -76,13 +81,17 @@
             "title title"
             "vehicle-filter vehicle-filter"
             "retrieve-filter hand-in-filter"
-            "reset reset"
+            "reset download"
         ;
         grid-template-columns: 1fr 1fr;
         gap: 5px;
     }
 
     .rent-history__filter-reset {
+        justify-self: center;
+    }
+
+    .rent-history__filter-download {
         justify-self: center;
     }
 }
@@ -99,6 +108,7 @@
             "retrieve-filter"
             "hand-in-filter"
             "reset"
+            "download"
         ;
         grid-template-columns: 1fr;
     }

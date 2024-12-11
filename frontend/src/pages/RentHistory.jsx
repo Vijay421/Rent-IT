@@ -11,11 +11,8 @@ export default function RentHistory() {
     const [handInDate, setHandInDate] = useState("");
     const selectvehicleType = useRef(null);
 
-    const vehicles = vehicleData
-        .filter((data) => filterVehicle(data, vehicleType, retrieveDate, handInDate))
-        .map((data, key) => (
-            <RentHistoryItem data={data} key={key} />
-        ));
+    const filteredVehicles = vehicleData
+        .filter((data) => filterVehicle(data, vehicleType, retrieveDate, handInDate));
 
     function handleVehicleType(e) {
         setVehicleType(e.target.value);
@@ -50,6 +47,27 @@ export default function RentHistory() {
         selectvehicleType.current.selectedIndex = 0;
     }
 
+    // TODO: put this in the arch-doc.
+    // The folloing code got inspired by: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+    // The stackoverflow anwser: An example for IE 10+, Firefox and Chrome (and without jQuery or any other library)
+    /**
+     * Allow the user to download a json export of the filtered vehicles.
+     */
+    function download() {
+        if (filteredVehicles.length === 0) {
+            window.alert("Geen voertuigen om te downloaden!");
+            return;
+        }
+
+        const contents = JSON.stringify(filteredVehicles);
+        const blob = new Blob([contents], { type: "text/json" });
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "voertuigen.json";
+        link.click();
+    }
+
     return (
         <>
             <Navbar/>
@@ -81,10 +99,15 @@ export default function RentHistory() {
 
 
                     <button className="rent-history__filter-reset" onClick={resetFilters}>Reset</button>
+                    <button className="rent-history__filter-download" onClick={download}>Download</button>
                 </div>
 
                 <div className="rent-history__items">
-                    { vehicles.length === 0 ? <p className="rent-history__empty">Geen voertuigen</p> : vehicles }
+                    { filteredVehicles.length === 0 ? <p className="rent-history__empty">Geen voertuigen</p> : (
+                        filteredVehicles.map((data, key) => (
+                            <RentHistoryItem data={data} key={key} />
+                        ))
+                    ) }
                 </div>
 
             </main>
