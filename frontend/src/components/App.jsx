@@ -6,6 +6,7 @@ import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
+import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/account-settings" element={<AccountSettings/>}/>
+                <Route path="/confirmation" element={<ConfirmationPage/>}/>
             </Routes>
         </Router>
     );

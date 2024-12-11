@@ -5,6 +5,10 @@
     padding: 0 1vw;
     background-color: var(--main-color);
     height: 2em;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 /*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
