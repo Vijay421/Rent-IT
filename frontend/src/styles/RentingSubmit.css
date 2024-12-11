@@ -1,0 +1,55 @@
+.label {
+    margin-top: 20px;
+}
+
+.FormWrapper {
+    display: flex;                /* Makes the wrapper a flex container */
+    flex-direction: column;       /* Aligns children vertically */
+    align-items: center;          /* Centers the form horizontally */
+    width: 100%;                  /* Makes the wrapper take the full width of the parent */
+    max-width: 600px;             /* Optional: Limits the max width of the input form */
+    margin: 0 auto;               /* Centers the wrapper horizontally within the parent */
+}
+
+.form {
+    width: 100%;                  /* Makes the input take the full width of its container */
+}
+
+.price__text {
+    margin-top: 20px;
+}
+
+.submit-button {
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+    margin-top: 20px;
+}
+
+.submit-button__div {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 20em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button__text {
+    color: #FFFFFF;
+    font-size: 1em;
+}
+
+.submit-button__div:hover {
+    background-color: var(--tertiary-color);
+}
+
+.submit-button__text:visited {
+    color: #FFFFFF;
+}
+
+.confirmation-message {
+    color: red;
+    margin-top: 20px;
+}
