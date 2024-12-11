@@ -33,7 +33,7 @@ public class Program
                 builder =>
                 {
                     builder
-                        .WithOrigins("http://localhost:5173")
+                        .WithOrigins("http://localhost:5173", "http://localhost:5176")
                         .AllowCredentials() // Allow identity cookie.
                         .AllowAnyMethod()
                         .AllowAnyHeader();
