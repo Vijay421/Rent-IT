@@ -29,12 +29,6 @@ export function RentalAutoBox( {data} ) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
@@ -77,12 +71,6 @@ export function RentalCaravanBox({data}) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
@@ -125,12 +113,6 @@ export function RentalCamperBox({data}) {
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.startDatum}</p>
-
-                        <p className='rental-vehicle-title__p'>temp</p>
-                        <p className='rental-vehicle-info__p'>{data.eindDatum}</p>
-
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
                     </div>
