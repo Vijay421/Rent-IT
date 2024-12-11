@@ -4,8 +4,8 @@ import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicl
 
 function Renting() {
     const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles"); // Selecteer Voertuig soort
-    const [selectedDateOphaalDatum, setSelectedDateOphaalDatum] = useState(Date.now); // Selecteer OphaalDatum
-    const [selectedDateInleverDatum, setSelectedDateInleverDatum] = useState(Date.now); // Selecteer InleverDatum
+    const [selectedDateStartDatum, setSelectedDateStartDatum] = useState(Date.now); // Selecteer OphaalDatum
+    const [selectedDateEindDatum, setSelectedDateEindDatum] = useState(Date.now); // Selecteer InleverDatum
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
@@ -30,12 +30,12 @@ function Renting() {
         setSelectedVoertuigSoort(event.target.value);
     };
 
-    const handleDateChangeOphaalDatum = (event) => {
-        setSelectedDateOphaalDatum(event.target.value);
+    const handleDateChangeStartDatum = (event) => {
+        setSelectedDateStartDatum(event.target.value);
     };
 
-    const handleDateChangeInleverDatum = (event) => {
-        setSelectedDateInleverDatum(event.target.value);
+    const handleDateChangeEindDatum = (event) => {
+        setSelectedDateEindDatum(event.target.value);
     };
 
     const handleMerkChange = (event) => {
@@ -70,7 +70,7 @@ function Renting() {
 
                 if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
 
-                if (selectedDateOphaalDatum < vehicle.startDatum || selectedDateInleverDatum > vehicle.eindDatum) return false;
+                if (selectedDateStartDatum < vehicle.startDatum || selectedDateEindDatum > vehicle.eindDatum) return false;
 
                 if ( (!vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
                     !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase()))) return false;
@@ -117,26 +117,26 @@ function Renting() {
 
                     <div className="divTop-divSelect-ophaalDatum">
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Ophaal datum: </label>
+                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
                                 type="date"
                                 id="date-picker"
                                 className="date-input"
-                                value={selectedDateOphaalDatum}
-                                onChange={handleDateChangeOphaalDatum}
+                                value={selectedDateStartDatum}
+                                onChange={handleDateChangeStartDatum}
                             />
                         </div>
                     </div>
 
                     <div className="divTop-divSelect-inleverDatum">
                         <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-inleverDatum">Inlever datum: </label>
+                            <label htmlFor="date-picker" className="date-label-inleverDatum">Einddatum: </label>
                             <input
                                 type="date"
                                 id="date-picker"
                                 className="date-input"
-                                value={selectedDateInleverDatum}
-                                onChange={handleDateChangeInleverDatum}
+                                value={selectedDateEindDatum}
+                                onChange={handleDateChangeEindDatum}
                             />
                         </div>
                     </div>
