@@ -80,7 +80,7 @@ export default function RentHistory() {
                     </div>
 
 
-                    <button onClick={resetFilters}>Reset</button>
+                    <button className="rent-history__filter-reset" onClick={resetFilters}>Reset</button>
                 </div>
 
                 <div className="rent-history__items">
