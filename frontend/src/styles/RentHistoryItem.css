@@ -11,6 +11,7 @@
     border-radius: 5px;
     background-color: #f1f1f1;
     border: 2px solid black;
+    padding: 10px 0;
 }
 
 .rent-history-item__vehicle-image-box {
@@ -56,4 +57,64 @@
 .rent-history-item__vehicle-cost {
     font-weight: bold;
     font-size: 25px;
+}
+
+@media only screen and (max-width: 980px) {
+    .rent-history-item {
+        grid-template-areas:
+            "title title title"
+            "image image image"
+            "details period costs"
+        ;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 10px;
+    }
+
+    .rent-history-item__vehicle-details {
+        justify-self: center;
+        max-width: 300px;
+    }
+
+    .rent-history-item__vehicle-period {
+        justify-self: center;
+        max-width: 300px;
+    }
+
+    .rent-history-item__vehicle-costs {
+        justify-self: center;
+        max-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .rent-history-item {
+        grid-template-areas:
+            "title"
+            "image"
+            "details"
+            "period"
+            "costs"
+        ;
+        grid-template-columns: 1fr;
+        row-gap: 15px;
+    }
+
+    .rent-history-item__vehicle-details {
+        justify-self: center;
+        max-width: max-content;
+    }
+
+    .rent-history-item__vehicle-period {
+        justify-self: center;
+        max-width: 300px;
+    }
+
+    .rent-history-item__vehicle-costs {
+        justify-self: center;
+        max-width: 300px;
+    }
+
+    .rent-history-item__vehicle-image-box--image {
+        width: 200px;
+    }
 }
