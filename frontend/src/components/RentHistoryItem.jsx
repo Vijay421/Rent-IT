@@ -17,11 +17,14 @@ export default function RentHistoryItem({ data }) {
                 <p className="rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Kenteken</p>
                 <p>{data.kenteken}</p>
 
-                <p className="rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Kleur</p>
+                <p className="rent-history-item__vehicle-title">Kleur</p>
                 <p>{data.kleur}</p>
 
-                <p className="rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Aanschafjaar</p>
+                <p className="rent-history-item__vehicle-title">Aanschafjaar</p>
                 <p>{data.aanschafjaar}</p>
+
+                <p className="rent-history-item__vehicle-title">Soort</p>
+                <p>{data.soort}</p>
             </div>
 
             <div className="rent-history-item__vehicle-period">
