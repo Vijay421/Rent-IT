@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Data
 {
-    public class VoertuigConfiguration
+    public class VoertuigSeeder
     {
         public void Seed(ModelBuilder builder)
         {
