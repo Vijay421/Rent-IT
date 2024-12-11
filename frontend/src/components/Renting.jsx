@@ -31,11 +31,21 @@ function Renting() {
     };
 
     const handleDateChangeStartDatum = (event) => {
-        setSelectedDateStartDatum(event.target.value);
+        const newStartDatum = event.target.value;
+        if (newStartDatum > selectedDateEindDatum) {
+            alert("De startdatum kan niet later zijn dan uw einddatum.");
+        } else {
+            setSelectedDateStartDatum(newStartDatum);
+        }
     };
 
     const handleDateChangeEindDatum = (event) => {
-        setSelectedDateEindDatum(event.target.value);
+        const newEindDatum = event.target.value;
+        if (newEindDatum < selectedDateStartDatum) {
+            alert("De einddatum kan niet eerder zijn dan uw startdatum.");
+        } else {
+            setSelectedDateEindDatum(newEindDatum);
+        }
     };
 
     const handleMerkChange = (event) => {
