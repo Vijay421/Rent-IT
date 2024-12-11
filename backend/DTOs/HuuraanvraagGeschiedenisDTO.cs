@@ -4,8 +4,8 @@ namespace backend.DTOs
 {
     public class HuuraanvraagGeschiedenisDTO
     {
-        public DateTime Startdatum { get; set; }
-        public DateTime Einddatum { get; set; }
+        public string Startdatum { get; set; }
+        public string Einddatum { get; set; }
         public string Reisaard { get; set; }
         public string Merk { get; set; }
         public string Type { get; set; }
