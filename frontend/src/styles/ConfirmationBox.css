@@ -53,7 +53,8 @@
 }
 
 .voertuig-box-column1__div p,
-.voertuig-box-column2__div p {
+.voertuig-box-column2__div p,
+.renter-box-column__div p {
     margin-left: 15px;
     font-size: max(16px, 1.15vw);
 }
@@ -63,14 +64,13 @@
     background-color: darkslategrey;
     display: flex;
     flex-direction: column;
-    padding: 5px;
     gap: 5px;
     font-size: 1.05em;
     font-weight: bold;
 }
 
 .renter-box-column__div {
-    height: 38.2vh;
+    height: auto;
     background-color: lightsalmon;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -117,10 +117,19 @@
     font-size: 2vw;
 }
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 1111px) {
     .confirmation-page-main__div {
         width: 80vw;
     }
+
+    .confirmation-main-title__h1 {
+        font-size: min(7.5vw, 40px);
+    }
+
+    .confirmation-main-title__h2 {
+        font-size: min(4vw, 25px);
+    }
+
     .confirmation-main-boxes__div {
         flex-direction: column;
         width: 100%;
@@ -139,12 +148,13 @@
     .voertuig-box-column1__div,
     .voertuig-box-column2__div {
         display: grid;
-        grid-template-columns: repeat(2, 140px);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .voertuig-box-column1__div p,
-    .voertuig-box-column2__div p {
-        font-size: max(16px, 1.15vw);
+    .voertuig-box-column2__div p,
+    .renter-box-column__div p {
+        font-size: min(3.5vw, 20px);
         display: grid;
         margin-left: 5px;
     }
@@ -159,6 +169,7 @@
         display: flex;
         align-items: center;
         background-color: mediumseagreen;
+        margin: 0 auto;
     }
     .voertuig-box-column3-answer2-paragraph__p {
         font-size: 6vw;
