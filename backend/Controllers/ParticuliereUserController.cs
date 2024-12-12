@@ -171,8 +171,8 @@ namespace backend.Controllers
                 {
                     return new NotificatieDTO
                     {
-                        Titel = "Omtrent status veranding in huuraavraag",
-                        Melding = $"De huuraavraag over {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld. Uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
+                        Titel = "Omtrent: beoordeling over huuraavraag",
+                        Melding = $"De huuraavraag over de {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld: uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
                     };
                 })
                 .ToList();
