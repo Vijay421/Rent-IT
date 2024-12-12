@@ -6,30 +6,60 @@ export default function ConfirmationBox() {
     return (
         <div className='confirmation-page-box__div'>
             <div className='confirmation-page-main__div'>
-                <h1 className='confirmation-main-title__h1'>Gegevens</h1>
+                <h1 className='confirmation-main-title__h1'>Bevestigingspagina</h1>
+                <h2 className='confirmation-main-title__h2'>Controleer of alle onderstaande informatie correct is</h2>
 
                 <div className="confirmation-main-boxes__div">
                     <div className='confirmation-main-renter-box__div'>
-                        <h2 className='renter-box-title__h2'>Huurder</h2>
+                        <h3 className='renter-box-title__h2'>Huurder</h3>
 
                         <div className="renter-box-column__div">
+                            <p>Klant naam: </p>
+                            <p>John Doe </p>
 
+                            <p>Huisadres:</p>
+                            <p>Johanna Westerdijkplein 75</p>
+
+                            <p>Stad:</p>
+                            <p>Den Haag</p>
+
+                            <p>Postcode:</p>
+                            <p>2521 EP</p>
+
+                            <p>Rijbewijsnummer: </p>
+                            <p>0000000000</p>
+
+                            <p>Email: </p>
+                            <p>johndoe@hotmail.com </p>
+
+                            <p>Reisaard: </p>
+                            <p>example </p>
+
+                            <p>Verste bestemming: </p>
+                            <p>Hamburg </p>
+
+                            <p>Verwachte gereden km: </p>
+                            <p>1875 </p>
                         </div>
                     </div>
 
                     <div className='confirmation-main-voertuig-box__div'>
-                        <h2 className='voertuig-box-title__h2'>Voertuig</h2>
+                        <h3 className='voertuig-box-title__h2'>Voertuig</h3>
 
                         <div className='voertuig-box-columns__div'>
                             <div className='voertuig-box-column1__div'>
                                 <p>Merk:</p>
                                 <p>Toyota</p>
+
                                 <p>Model:</p>
                                 <p>Corolla</p>
+
                                 <p>Kenteken:</p>
                                 <p>AB-CDEF-12</p>
+
                                 <p>Kleur:</p>
                                 <p>Rood</p>
+
                                 <p>Aanschafjaar:</p>
                                 <p>2012</p>
                             </div>
