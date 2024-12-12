@@ -20,13 +20,11 @@ export default function IndexPage() {
             <Navbar/>
 
             <main className="rent-requests__page">
-                <div className="rent-requests__filter">
-                    filter
-                </div>
+                <h1 className="rent-requests__title">Huuraanvragen beoordelen</h1>
 
                 <div className="rent-requests__requests">
                     {
-                        requests.map((data, key) => <RentRequest key={key} data={data} />)
+                        requests.map((data, key) => <RentRequest key={key} data={data} setRequests={setRequests} index={key} />)
                     }
                 </div>
             </main>
@@ -36,7 +34,6 @@ export default function IndexPage() {
     );
 }
 
-// TODO: handle server errors.
 /**
  * Will attempt to get the rent requests from the server.
  * 

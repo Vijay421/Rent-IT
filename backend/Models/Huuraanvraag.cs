@@ -28,7 +28,8 @@ namespace backend.Models
         public string Vereiste_bestemming{ get; set; }
         [MinLength(2)]
         public int Verwachte_km{ get; set; }
-        public bool Geaccepteerd { get; set; }
+        public bool? Geaccepteerd { get; set; }
+        public string? Reden {  get; set; }
 
         public Huuraanvraag()
         {
