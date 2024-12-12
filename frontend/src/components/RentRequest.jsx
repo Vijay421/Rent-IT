@@ -162,7 +162,7 @@ export default function RentRequest({ data, setRequests, index }) {
                             <button className="rent-request__review--back" onClick={handleBackButton}>Terug</button>
                             <button className="rent-request__review--correct" onClick={handleBackCorrect}>Goedkeuren</button>
                             <button className="rent-request__review--wrong" onClick={handleBackWrong}>Afkeuren</button>
-                            <textarea className="rent-request__review--text" onInput={handleReason} placeholder="Reden..." maxLength="500"></textarea>
+                            <textarea className="rent-request__review--text" onInput={handleReason} placeholder="Reden..." minLength="2" maxLength="500"></textarea>
                         </div>
                     )
                 }
