@@ -137,9 +137,30 @@ namespace backend.Controllers
             return Ok(huuraanvragenDTOs);
         }
 
+        [Authorize(Roles = "particuliere_huurder")]
+        [HttpGet]
+        public async Task<ActionResult> GetNotifications()
+        {
+            // TODO: finsish this endpoint.
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            return Ok();
+        }
+
         /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
+        // TODO: should be: [Authorize(Roles = "particuliere_huurder")]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
