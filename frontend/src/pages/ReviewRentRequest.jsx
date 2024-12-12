@@ -10,9 +10,7 @@ export default function IndexPage() {
     useEffect(() => {
         const getData = async () => {
             const receivedRequests = await getRentRequests();
-            setRequests([receivedRequests[0]]);
-            // setRequests(receivedRequests); // TODO: show all data.
-            console.log(requests);
+            setRequests(receivedRequests);
         };
         getData();
     }, []);

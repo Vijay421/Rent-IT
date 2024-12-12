@@ -27,6 +27,19 @@ export default function RentRequest({ data }) {
                 <p>{data.rijbewijsnummer}</p>
             </div>
 
+            <div className="rent-request__trip rent-request__box">
+                <h3>Reis</h3>
+
+                <p className="rent-request__label">Reisaard</p>
+                <p>{data.reisaard}</p>
+
+                <p className="rent-request__label">Verste bestemming</p>
+                <p>{data.vereiste_bestemming}</p>
+
+                <p className="rent-request__label">Verwachte kilometers</p>
+                <p>{data.verwachte_km}km</p>
+            </div>
+
             <div className="rent-request__vehicle rent-request__box">
                 <h3>Voertuig</h3>
 
@@ -64,12 +77,12 @@ export default function RentRequest({ data }) {
                     shouldReview === false ? (
                         <button onClick={handleShouldReview}>Beoordelen</button>
                     ) : (
-                        <>
-                            <button onClick={handleBackButton}>Terug</button>
-                            <button>Goedkeuren</button>
-                            <button>Afkeuren</button>
-                            <textarea placeholder="Reden..."></textarea>
-                        </>
+                        <div className="rent-request__review--buttons">
+                            <button className="rent-request__review--back" onClick={handleBackButton}>Terug</button>
+                            <button className="rent-request__review--correct">Goedkeuren</button>
+                            <button className="rent-request__review--wrong">Afkeuren</button>
+                            <textarea className="rent-request__review--text" placeholder="Reden..."></textarea>
+                        </div>
                     )
                 }
             </div>

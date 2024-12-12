@@ -1,10 +1,10 @@
 .rent-request {
     display: grid;
     grid-template-areas:
-        "renter vehicle period status"
-        "review review review review"
+        "renter trip vehicle period status"
+        "review review review review review"
     ;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     row-gap: 10px;
     justify-items: center;
 
@@ -22,6 +22,10 @@
 
 .rent-request__period {
     grid-area: period;
+}
+
+.rent-request__trip {
+    grid-area: trip;
 }
 
 .rent-request__renter {
@@ -45,17 +49,43 @@
     justify-content: space-evenly;
 }
 
+.rent-request__review--buttons {
+    display: grid;
+    grid-template-areas:
+        "back correct wrong"
+        "text text text"
+    ;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.rent-request__review--back {
+    grid-area: back;
+}
+
+.rent-request__review--correct {
+    grid-area: correct;
+}
+
+.rent-request__review--wrong {
+    grid-area: wrong;
+}
+
+.rent-request__review--text {
+    grid-area: text;
+}
+
 .rent-request__label {
     color: dimgray;
     margin-top: 5px;
     margin-bottom: 2px;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1110px) {
     .rent-request {
         grid-template-areas:
-            "renter vehicle"
-            "period status"
+            "renter trip"
+            "vehicle period"
+            "status ."
             "review review"
         ;
         grid-template-columns: repeat(2, 1fr);
@@ -66,6 +96,7 @@
     .rent-request {
         grid-template-areas:
             "renter"
+            "trip"
             "vehicle"
             "period"
             "status"
