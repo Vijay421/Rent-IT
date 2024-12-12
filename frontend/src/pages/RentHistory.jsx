@@ -153,8 +153,9 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
     return true;
 }
 
+// TODO: handle server errors.
 /**
- * Will attempts to get the rent history from the server.
+ * Will attempt to get the rent history from the server.
  * 
  * @returns {Object}
  */

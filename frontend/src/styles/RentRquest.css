@@ -1,0 +1,79 @@
+.rent-request {
+    display: grid;
+    grid-template-areas:
+        "renter vehicle period status"
+        "review review review review"
+    ;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    justify-items: center;
+
+    margin: 15px auto;
+    width: max(150px,62vw);
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: 2px solid black;
+    padding: 10px;
+}
+
+.rent-request__box {
+    width: 150px;
+}
+
+.rent-request__period {
+    grid-area: period;
+}
+
+.rent-request__renter {
+    grid-area: renter;
+}
+
+.rent-request__vehicle {
+    grid-area: vehicle;
+}
+
+.rent-request__status {
+    grid-area: status;
+}
+
+.rent-request__review {
+    grid-area: review;
+
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.rent-request__label {
+    color: dimgray;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+@media only screen and (max-width: 900px) {
+    .rent-request {
+        grid-template-areas:
+            "renter vehicle"
+            "period status"
+            "review review"
+        ;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .rent-request {
+        grid-template-areas:
+            "renter"
+            "vehicle"
+            "period"
+            "status"
+            "review"
+        ;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+
+        padding: 5px;
+    }
+}

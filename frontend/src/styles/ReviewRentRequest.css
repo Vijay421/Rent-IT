@@ -1,0 +1,26 @@
+.rent-requests__page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rent-requests__filter {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: auto;
+    width: 66.5vw;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.rent-requests__requests {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    width: 66.5vw;
+    margin-bottom: 30px;
+}

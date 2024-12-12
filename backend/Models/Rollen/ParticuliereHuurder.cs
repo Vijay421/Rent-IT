@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using backend.Models;
 
-namespace backend.Models
+namespace backend.Rollen
 {
     public class ParticuliereHuurder
     {
