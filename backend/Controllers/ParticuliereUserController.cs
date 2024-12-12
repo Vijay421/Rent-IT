@@ -138,10 +138,9 @@ namespace backend.Controllers
         }
 
         [Authorize(Roles = "particuliere_huurder")]
-        [HttpGet]
-        public async Task<ActionResult> GetNotifications()
+        [HttpGet("notifications")]
+        public async Task<ActionResult<List<NotificatieDTO>>> GetNotifications()
         {
-            // TODO: finsish this endpoint.
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUserId == null)
             {
@@ -154,7 +153,31 @@ namespace backend.Controllers
                 return NotFound("Kan de gebruiker niet vinden");
             }
 
-            return Ok();
+            _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Unauthorized("Verwacht particuliere gebruiker");
+            }
+
+            var aanvragen = await _context
+                .Huuraanvragen
+                // Only get the aanvragen from the current user if the user has not seen them yet.
+                .Where(h => h.ParticuliereHuurderId == user.ParticuliereHuurder.Id && !h.Gezien)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var notificaties = aanvragen
+                .Select(h =>
+                {
+                    return new NotificatieDTO
+                    {
+                        Titel = "Omtrent status veranding in huuraavraag",
+                        Melding = $"De huuraavraag over {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld. Uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
+                    };
+                })
+                .ToList();
+
+            return Ok(notificaties);
         }
 
         /// <summary>

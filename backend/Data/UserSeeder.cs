@@ -125,6 +125,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Groningen",
                 Verwachte_km = 500,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2012, 2, 24),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag1);
             await context.SaveChangesAsync();
@@ -148,6 +150,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Utrecht",
                 Verwachte_km = 220,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2014, 1, 1),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag2);
             await context.SaveChangesAsync();
@@ -171,6 +175,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Den Haag",
                 Verwachte_km = 110,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2018, 1, 1),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag3);
             await context.SaveChangesAsync();

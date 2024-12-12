@@ -53,7 +53,10 @@ namespace backend.Controllers
                 // Remove the reason when it has been accepted.
                 huuraanvraag.Reden = null;
             }
+
             huuraanvraag.Geaccepteerd = beoordeling.Beoordeling;
+            huuraanvraag.VeranderDatum = DateTime.Now;
+            huuraanvraag.Gezien = false;
 
             _context.Entry(huuraanvraag).State = EntityState.Modified;
             await _context.SaveChangesAsync();
