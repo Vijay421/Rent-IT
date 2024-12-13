@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241212120129_added_reden_in_huuraanvraag")]
-    partial class added_reden_in_huuraanvraag
+    [Migration("20241213112958_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,18 +166,19 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeOnly>("Duur")
-                        .HasColumnType("time");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date");
 
                     b.Property<int>("Max_huurders")
                         .HasColumnType("int");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("Prijs_per_maand")
-                        .HasColumnType("real");
+                    b.Property<double>("Prijs_per_maand")
+                        .HasColumnType("float");
 
                     b.Property<string>("Soort")
                         .IsRequired()
@@ -206,6 +207,9 @@ namespace backend.Migrations
                     b.Property<bool?>("Geaccepteerd")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Gezien")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ParticuliereHuurderId")
                         .HasColumnType("int");
 
@@ -221,6 +225,9 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Startdatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
@@ -427,11 +434,17 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AbonnementId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Bedrijfsrol")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AbonnementId");
 
                     b.ToTable("Huurbeheerders");
                 });
@@ -562,6 +575,15 @@ namespace backend.Migrations
                     b.Navigation("ParticuliereHuurder");
 
                     b.Navigation("ZakelijkeHuurder");
+                });
+
+            modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
+                {
+                    b.HasOne("backend.Models.Abonnement", "Abonnement")
+                        .WithMany()
+                        .HasForeignKey("AbonnementId");
+
+                    b.Navigation("Abonnement");
                 });
 
             modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
