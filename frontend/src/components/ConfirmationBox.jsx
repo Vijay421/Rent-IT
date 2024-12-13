@@ -3,7 +3,7 @@ import {useLocation} from "react-router-dom";
 
 export default function ConfirmationBox() {
     const location = useLocation();
-    const { vehicleData, userData } = location.state;
+    const { vehicleData, userData, startDatum, eindDatum } = location.state;
 
     const basePrice = vehicleData.prijs * 4;
     const insurance = vehicleData.soort === "Auto" ? 25.50 * 4 : vehicleData.soort === "Caravan" ? 20 * 4 : 30 * 4;
@@ -16,7 +16,60 @@ export default function ConfirmationBox() {
     const totalCost = basePrice + insurance + tax + fuel + kmCharge + deposit;
 
     function handleAkkoordButtonClick() {
-        console.log("click");
+        const formatDate = (date) => {
+            return new Date(date).toISOString().split("T")[0];
+        };
+
+        const payload = {
+            id: 2,
+            particuliereHuurderId: 1,
+            voertuig: {
+                id: 1,
+                merk: "Toyota",
+                type: "Corolla",
+                kenteken: "AB-123-CD",
+                kleur: "Red",
+                aanschafjaar: 2018,
+                soort: "Auto",
+                opmerking: "",
+                status: "Verhuurbaar",
+                prijs: 50,
+                startDatum: formatDate("2012-02-24"),
+                eindDatum: formatDate("2016-04-12"),
+            },
+            startdatum: startDatum,
+            einddatum: eindDatum,
+            wettelijke_naam: "testnaam",
+            adresgegevens: "testadres",
+            rijbewijsnummer: "1234567890",
+            reisaard: "testreis",
+            vereiste_bestemming: "Hamburg",
+            verwachte_km: 152,
+            geaccepteerd: false,
+            reden: "",
+            veranderdatum: formatDate("2023-01-01"),
+            gezien: false,
+        };
+
+        fetch("https://localhost:53085/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Success:", data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     }
 
     return (
@@ -110,7 +163,7 @@ export default function ConfirmationBox() {
                                 <p className='voertuig-box-column3-title2-paragraph__p'>Totale kosten</p>
                             </div>
                             <div className="voertuig-box-column4__div">
-                                <p className='voertuig-box-column3-answer1-paragraph__p'>00-00-0000 – 00-00-0000</p>
+                                <p className='voertuig-box-column3-answer1-paragraph__p'>{startDatum} – {eindDatum}</p>
                                 <p className='voertuig-box-column3-answer2-paragraph__p'>
                                     €{totalCost.toFixed(2)}
                                 </p>

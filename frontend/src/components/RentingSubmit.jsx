@@ -1,5 +1,5 @@
 import styles from "./profile/ProfilePageBase.module.css";
-import { useState } from "react";
+import {useState} from "react";
 import "../styles/RentingSubmit.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RentalAutoBox } from "./RentalVehicleBox.jsx";
@@ -8,6 +8,8 @@ function RentingSubmit() {
     const location = useLocation();
     const navigate = useNavigate();
     const vehicleData = location.state?.vehicleData;
+    const startDatum = location.state?.startDatum;
+    const eindDatum = location.state?.eindDatum;
 
     const [wettelijkenaam, setWettelijkenaam] = useState("");
     const [adresgegevens, setAdresgegevens] = useState("");
@@ -47,7 +49,7 @@ function RentingSubmit() {
         ) {
             setConfirmationMessage("");
 
-            navigate('/bevestiging', { state: { vehicleData, userData } });
+            navigate('/bevestiging', { state: { vehicleData, userData, startDatum, eindDatum } });
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
         }
@@ -56,9 +58,9 @@ function RentingSubmit() {
     return (
         <main>
             <div className={styles.TopDiv} id='top-div__div'>
-                {vehicleData.soort === "Auto" && <RentalAutoBox data={vehicleData} />}
-                {vehicleData.soort === "Caravan" && <RentalAutoBox data={vehicleData} />}
-                {vehicleData.soort === "Camper" && <RentalAutoBox data={vehicleData} />}
+                {vehicleData.soort === "Auto" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
+                {vehicleData.soort === "Caravan" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
+                {vehicleData.soort === "Camper" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
             </div>
 
             <div className={styles.MainDiv}>

@@ -99,13 +99,13 @@ function Renting() {
 
             .map((vehicle) => {
                 if (vehicle.soort === "Auto") {
-                    return <RentalAutoBox key={vehicle.id} data={vehicle} />;
+                    return <RentalAutoBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
                 }
                 else if (vehicle.soort === "Caravan") {
-                    return <RentalCaravanBox key={vehicle.id} data={vehicle} />;
+                    return <RentalCaravanBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
                 }
                 else if (vehicle.soort === "Camper") {
-                    return <RentalCamperBox key={vehicle.id} data={vehicle} />;
+                    return <RentalCamperBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
                 }
             });
     };
