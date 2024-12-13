@@ -5,7 +5,8 @@ namespace backend.Models
     public class Huuraanvraag
     {
         public int Id { get; set; }
-        
+        public int? ParticuliereHuurderId { get; set; }
+
         [Required]
         public required Voertuig Voertuig {get;set;}
         [Required]
@@ -29,5 +30,9 @@ namespace backend.Models
         public int Verwachte_km{ get; set; }
         public bool Geaccepteerd { get; set; }
 
+        public Huuraanvraag()
+        {
+
+        }
     }
 }
