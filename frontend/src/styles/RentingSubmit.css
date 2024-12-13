@@ -3,16 +3,16 @@
 }
 
 .FormWrapper {
-    display: flex;                /* Makes the wrapper a flex container */
-    flex-direction: column;       /* Aligns children vertically */
-    align-items: center;          /* Centers the form horizontally */
-    width: 100%;                  /* Makes the wrapper take the full width of the parent */
-    max-width: 600px;             /* Optional: Limits the max width of the input form */
-    margin: 0 auto;               /* Centers the wrapper horizontally within the parent */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .form {
-    width: 100%;                  /* Makes the input take the full width of its container */
+    width: 100%;
 }
 
 .price__text {
@@ -50,6 +50,13 @@
 }
 
 .confirmation-message {
-    color: red;
     margin-top: 20px;
+}
+
+.confirmation-message.success {
+    color: darkgreen;
+}
+
+.confirmation-message.error {
+    color: darkred;
 }
