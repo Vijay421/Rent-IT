@@ -3,7 +3,7 @@ import '../styles/ConfirmationBox.css';
 export default function ConfirmationBox() {
 
 
-    function handleAkkordButtonClick() {
+    function handleAkkoordButtonClick() {
         console.log('clicked');
     }
 
@@ -98,7 +98,7 @@ export default function ConfirmationBox() {
 
             <div className="confirmation-page-button-box__div">
                 <h3 className='confirmation-button-box__h3'>Ik (huurder) bevestig hierbij dat alle hierboven weergegeven gegevens correct zijn en ga akkoord met het verzenden van dit verzoek en het openen van de betaalpagina.</h3>
-                <button onClick={handleAkkordButtonClick} className='confirmation-button-box__button'>Akkord</button>
+                <button onClick={handleAkkoordButtonClick} className='confirmation-button-box__button'>Akkoord</button>
             </div>
         </div>
     );
