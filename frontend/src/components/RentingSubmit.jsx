@@ -11,6 +11,8 @@ function RentingSubmit() {
 
     const [wettelijkenaam, setWettelijkenaam] = useState("");
     const [adresgegevens, setAdresgegevens] = useState("");
+    const [stadgegevens, setStadgegevens] = useState("");
+    const [postcodegegevens, setPostcodegegevens] = useState("");
     const [rijbewijsnummer, setRijbewijsnummer] = useState("");
     const [reisaard, setReisaard] = useState("");
     const [verwachteKm, setVerwachteKm] = useState("");
@@ -20,14 +22,16 @@ function RentingSubmit() {
     const [confirmationMessage, setConfirmationMessage] = useState("");
 
     const userData = {
-        wettelijkenaam,
-        adresgegevens,
-        rijbewijsnummer,
-        reisaard,
-        verwachteKm,
-        verstePunt,
-        startPunt,
-        eindPunt,
+        naam: wettelijkenaam,
+        adres: adresgegevens,
+        stad: stadgegevens,
+        postcode: postcodegegevens,
+        rbwnr: rijbewijsnummer,
+        reisaard: reisaard,
+        verwkm: verwachteKm,
+        verstePunt: verstePunt,
+        startPunt: startPunt,
+        eindPunt: eindPunt,
     };
 
     function handleSubmit() {
@@ -43,7 +47,7 @@ function RentingSubmit() {
         ) {
             setConfirmationMessage("");
 
-            navigate('/confirmation', { state: { vehicleData, userData } });
+            navigate('/bevestiging', { state: { vehicleData, userData } });
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
         }
@@ -73,8 +77,9 @@ function RentingSubmit() {
                         value={wettelijkenaam}
                         onChange={(e) => setWettelijkenaam(e.target.value)}
                     />
+
                     <label htmlFor="form__adres-gegevens" className="label">
-                        Adres gegevens
+                        Adres
                     </label>
                     <input
                         id="form__adres-gegevens"
@@ -84,6 +89,31 @@ function RentingSubmit() {
                         value={adresgegevens}
                         onChange={(e) => setAdresgegevens(e.target.value)}
                     />
+
+                    <label htmlFor="form__stad-gegevens" className="label">
+                        Stad
+                    </label>
+                    <input
+                        id="form__stad-gegevens"
+                        className="renting-submit-form"
+                        type="text"
+                        placeholder="Vul hier uw stad in voor het huren van dit voertuig."
+                        value={stadgegevens}
+                        onChange={(e) => setStadgegevens(e.target.value)}
+                    />
+
+                    <label htmlFor="form__postcode-gegevens" className="label">
+                        Postcode
+                    </label>
+                    <input
+                        id="form__postcode-gegevens"
+                        className="renting-submit-form"
+                        type="text"
+                        placeholder="Vul hier uw postcode in voor het huren van dit voertuig."
+                        value={postcodegegevens}
+                        onChange={(e) => setPostcodegegevens(e.target.value)}
+                    />
+
                     <label htmlFor="form__rijbewijs-nummer" className="label">
                         Rijbewijs nummer
                     </label>
@@ -95,6 +125,7 @@ function RentingSubmit() {
                         value={rijbewijsnummer}
                         onChange={(e) => setRijbewijsnummer(e.target.value)}
                     />
+
                     <label htmlFor="form__reisaard" className="label">
                         Soort reis
                     </label>
@@ -106,6 +137,7 @@ function RentingSubmit() {
                         value={reisaard}
                         onChange={(e) => setReisaard(e.target.value)}
                     />
+
                     <label htmlFor="form__verwachte-km" className="label">
                         Verwachte gereden kilometers
                     </label>
@@ -117,6 +149,7 @@ function RentingSubmit() {
                         value={verwachteKm}
                         onChange={(e) => setVerwachteKm(e.target.value)}
                     />
+
                     <label htmlFor="form__verste-punt" className="label">
                         Verwachte verste punt van de reis
                     </label>
@@ -128,6 +161,7 @@ function RentingSubmit() {
                         value={verstePunt}
                         onChange={(e) => setVerstePunt(e.target.value)}
                     />
+
                     <label htmlFor="form__start-punt" className="label">
                         Start punt van de reis
                     </label>
@@ -139,6 +173,7 @@ function RentingSubmit() {
                         value={startPunt}
                         onChange={(e) => setStartPunt(e.target.value)}
                     />
+
                     <label htmlFor="form__eind-punt" className="label">
                         Eind punt van de reis
                     </label>

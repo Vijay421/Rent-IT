@@ -1,10 +1,22 @@
 import '../styles/ConfirmationBox.css';
+import {useLocation} from "react-router-dom";
 
 export default function ConfirmationBox() {
+    const location = useLocation();
+    const { vehicleData, userData } = location.state;
 
+    const basePrice = vehicleData.prijs * 4;
+    const insurance = vehicleData.soort === "Auto" ? 25.50 * 4 : vehicleData.soort === "Caravan" ? 20 * 4 : 30 * 4;
+    const tax = (basePrice) * 0.21;
+    const fuel = vehicleData.soort === "Auto" ? 30 : vehicleData.soort === "Caravan" ? 0 : 50;
+    const kmCharge = 0.30 * userData.verwkm;
+    const deposit = vehicleData.soort === "Auto" ? 400 : vehicleData.soort === "Caravan" ? 750 : 1500;
+
+    // Calculate the total cost
+    const totalCost = basePrice + insurance + tax + fuel + kmCharge + deposit;
 
     function handleAkkoordButtonClick() {
-        console.log('clicked');
+        console.log("click");
     }
 
     return (
@@ -19,31 +31,31 @@ export default function ConfirmationBox() {
 
                         <div className="renter-box-column__div">
                             <p>Klant naam: </p>
-                            <p>John Doe </p>
+                            <p>{userData.naam}</p>
 
                             <p>Huisadres:</p>
-                            <p>Johanna Westerdijkplein 75</p>
+                            <p>{userData.adres}</p>
 
                             <p>Stad:</p>
-                            <p>Den Haag</p>
+                            <p>{userData.stad}</p>
 
                             <p>Postcode:</p>
-                            <p>2521 EP</p>
+                            <p>{userData.postcode}</p>
 
-                            <p>Rijbewijsnummer: </p>
-                            <p>0000000000</p>
+                            <p>Rijbewijsnummer:</p>
+                            <p>{userData.rbwnr}</p>
 
-                            <p>Email: </p>
-                            <p>johndoe@hotmail.com </p>
+                            {/*<p>Email:</p>*/}
+                            {/*<p>?</p>*/}
 
-                            <p>Reisaard: </p>
-                            <p>example </p>
+                            <p>Reisaard:</p>
+                            <p>{userData.reisaard}</p>
 
-                            <p>Verste bestemming: </p>
-                            <p>Hamburg </p>
+                            <p>Verste bestemming:</p>
+                            <p>{userData.verstePunt}</p>
 
-                            <p>Verwachte gereden km: </p>
-                            <p>1875 </p>
+                            <p>Verwachte gereden km:</p>
+                            <p>{userData.verwkm}</p>
                         </div>
                     </div>
 
@@ -53,34 +65,44 @@ export default function ConfirmationBox() {
                         <div className='voertuig-box-columns__div'>
                             <div className='voertuig-box-column1__div'>
                                 <p>Merk:</p>
-                                <p>Toyota</p>
+                                <p>{vehicleData.merk}</p>
 
                                 <p>Model:</p>
-                                <p>Corolla</p>
+                                <p>{vehicleData.type}</p>
+
 
                                 <p>Kenteken:</p>
-                                <p>AB-CDEF-12</p>
+                                <p>{vehicleData.kenteken}</p>
+
 
                                 <p>Kleur:</p>
-                                <p>Rood</p>
+                                <p>{vehicleData.kleur}</p>
+
 
                                 <p>Aanschafjaar:</p>
-                                <p>2012</p>
+                                <p>{vehicleData.aanschafjaar}</p>
+
                             </div>
 
                             <div className='voertuig-box-column2__div'>
                                 <p>Huurprijs:</p>
-                                <p>€50</p>
+                                <p>€{vehicleData.prijs}</p>
                                 <p>Verzekering:</p>
-                                <p>€40</p>
+                                {vehicleData.soort === "Auto" && <p>€25,50/dag</p>}
+                                {vehicleData.soort === "Caravan" && <p>€20/dag</p>}
+                                {vehicleData.soort === "Camper" && <p>€30/dag</p>}
                                 <p>Belasting:</p>
-                                <p>€26</p>
+                                <p>€{((vehicleData.prijs * 4) * 0.21).toFixed(2)}</p>
                                 <p>Benzine:</p>
-                                <p>€20</p>
+                                {vehicleData.soort === "Auto" && <p>€30</p>}
+                                {vehicleData.soort === "Caravan" && <p>€0</p>}
+                                {vehicleData.soort === "Camper" && <p>€50</p>}
                                 <p>Km vergoeding:</p>
-                                <p>€0.36/km</p>
+                                <p>€0.30/km</p>
                                 <p>Borg:</p>
-                                <p>€400</p>
+                                {vehicleData.soort === "Auto" && <p>€400</p>}
+                                {vehicleData.soort === "Caravan" && <p>€750</p>}
+                                {vehicleData.soort === "Camper" && <p>€1500</p>}
                             </div>
 
                             <div className="voertuig-box-column3__div">
@@ -89,7 +111,9 @@ export default function ConfirmationBox() {
                             </div>
                             <div className="voertuig-box-column4__div">
                                 <p className='voertuig-box-column3-answer1-paragraph__p'>00-00-0000 – 00-00-0000</p>
-                                <p className='voertuig-box-column3-answer2-paragraph__p'>€526.78</p>
+                                <p className='voertuig-box-column3-answer2-paragraph__p'>
+                                    €{totalCost.toFixed(2)}
+                                </p>
                             </div>
                         </div>
                     </div>

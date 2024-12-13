@@ -11,6 +11,7 @@ import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
 import ReviewRentRequest from "../pages/ReviewRentRequest.jsx";
 import NotificationsPage from "../pages/NotificationsPage.jsx";
+import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
                 <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
                 <Route path="/notificaties" element={<NotificationsPage/>}/>
+                <Route path='/bevestiging' element={<ConfirmationPage/>}/>
             </Routes>
         </Router>
     );
