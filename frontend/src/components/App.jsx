@@ -6,6 +6,7 @@ import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
+import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
 import ReviewRentRequest from "../pages/ReviewRentRequest.jsx";
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/account-settings" element={<AccountSettings/>}/>
+                <Route path="/abonnement" element={<SubscriptionRequestPage/>}/>
                 <Route path="/renting-submit" element={<RentingSubmitPage/>}/>
                 <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
                 <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
