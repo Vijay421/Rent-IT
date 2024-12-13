@@ -158,7 +158,7 @@ function RentingSubmit() {
                 )}
 
                 <div className="submit-button">
-                    <button onClick={handleSubmit} className="submit-button__button">Volgend pagina</button>
+                    <button onClick={handleSubmit} className="submit-button__button">Volgende pagina</button>
                 </div>
             </div>
         </main>
