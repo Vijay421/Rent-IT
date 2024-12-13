@@ -19,30 +19,51 @@ public class AbonnementController : ControllerBase
     }
 
     
-    [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<Abonnement>>> GetAllAbonnementen()
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AbonnementDTO>>> GetAllAbonnementen()
     {
-        return await _context.Abonnementen.ToListAsync();
+        return await _context
+            .Abonnementen
+            .Select(a => new AbonnementDTO
+            {
+                Id = a.Id,
+                Naam = a.Naam,
+                PrijsPerMaand = a.Prijs_per_maand,
+                MaxHuurders = a.Max_huurders,
+                Einddatum = a.Einddatum,
+                Soort = a.Soort
+            })
+            .ToListAsync();
     }
 
-    [HttpGet("get/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<AbonnementDTO>> GetAbonnement(int id)
     {
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
 
-        return new AbonnementDTO{
+        return new AbonnementDTO
+        {
+            Id = abonnement.Id,
             Naam = abonnement.Naam,
             PrijsPerMaand = abonnement.Prijs_per_maand,
             MaxHuurders = abonnement.Max_huurders,
+            Einddatum = abonnement.Einddatum,
             Soort = abonnement.Soort
         };
     }
-    [Authorize]
-    [HttpPost("create")]
+
+    //TODO add: [Authorize(Roles = "zakelijke_beheerder")]
+    [HttpPost]
     public async Task<ActionResult<AbonnementDTO>> CreateAbonnement(CreateAbonnementDTO abonnementDTO)
     {
-        if (abonnementDTO.Soort != "prepaid" || abonnementDTO.Soort != "pay_as_you_go")
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        if (abonnementDTO.Einddatum < today)
+        {
+            return BadRequest("Kan geen abonnement instellen in het verleden");
+        }
+
+        if (abonnementDTO.Soort != "prepaid" && abonnementDTO.Soort != "pay_as_you_go")
         {
             return BadRequest("Soort moet gelijk zijn aan 'prepaid' of 'pay as you go'");
         }
@@ -62,27 +83,36 @@ public class AbonnementController : ControllerBase
 
         return CreatedAtAction(nameof(CreateAbonnement), new {id = abonnement.Id}, abonnement);
     }
-    [Authorize]
-    [HttpPost("{id}/update")]
-    public async Task<IActionResult> UpdateAbonnement(int id){
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateAbonnement(int id, UpdateAbonnement abonnementDTO)
+    {
+        if (abonnementDTO.Einddatum != null)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            if (abonnementDTO.Einddatum < today)
+            {
+                return BadRequest("Kan geen abonnement instellen in het verleden");
+            }
+        }
+
+        if (abonnementDTO.Soort != null)
+        {
+            if (abonnementDTO.Soort != "prepaid" && abonnementDTO.Soort != "pay_as_you_go")
+            {
+                return BadRequest("Soort moet gelijk zijn aan 'prepaid' of 'pay as you go'");
+            }
+        }
+
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
 
-        //if (!abonnementDTO.HasData())
-        //     {
-        //         return BadRequest();
-        //     }
+        abonnement.Naam = abonnementDTO.Naam ?? abonnement.Naam;
+        abonnement.Prijs_per_maand = abonnementDTO.Prijs_per_maand ?? abonnement.Prijs_per_maand;
+        abonnement.Einddatum = abonnementDTO.Einddatum ?? abonnement.Einddatum;
+        abonnement.Soort = abonnementDTO.Soort ?? abonnement.Soort;
 
-        //     if (abonnementDTO.Id != id)
-        //     {
-        //         return BadRequest();
-        //     } 
-        // abonnement.Naam = abonnement.Naam;
-        // abonnement.Max_huurders = abonnement.Max_huurders;
-        // abonnement.Prijs_per_maand = abonnement.Prijs_per_maand;
-        // abonnement.Soort = abonnement.Soort;
-
-        // _context.Entry(abonnement).State = EntityState.Modified;
+        _context.Entry(abonnement).State = EntityState.Modified;
 
         try
         {
@@ -103,7 +133,7 @@ public class AbonnementController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}/delete")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAbonnement(int id)
     {
         var abonnement = await _context.Abonnementen.FindAsync(id);
@@ -115,39 +145,3 @@ public class AbonnementController : ControllerBase
         return NoContent();
     }
 }
-
-//async function callBedrijfAbonnementAanmaken(setResponse) {
-//     debugger;
-//     const request = {
-//         method: 'POST',
-//         credentials: 'include', // TODO: change to 'same-origin' when in production.
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     };
-
-//     try {
-//         const response = await fetch(`https://localhost:53085/api/Abonnement/create`, request);
-
-//         if (response.ok) {
-//             setResponse({
-//                 msg: 'Abonnement aangemaakt',
-//                 isError: false,
-//             });
-
-//             return true;
-//         } else {
-//             setResponse({
-//                 msg: await response.text(),
-//                 isError: true,
-//             });
-//         }
-//     } catch {
-//         setResponse({
-//             msg: 'Er is een servererror opgetreden',
-//             isError: true,
-//         });
-//     }
-
-//     return false;
-// }
