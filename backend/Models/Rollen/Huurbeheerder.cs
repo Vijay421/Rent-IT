@@ -10,6 +10,13 @@ namespace backend.Rollen
         [StringLength(50, MinimumLength = 2)]
         public required string Bedrijfsrol{ get;set; }
 
-        public Abonnement? Abonnement { get; set; }
+        public List<Abonnement> Abonnement { get; set; }
+        public List<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
+
+        public Huurbeheerder()
+        {
+            Abonnement = new List<Abonnement>();
+            ZakelijkeHuurders = new List<ZakelijkeHuurder>();
+        }
     }
 }

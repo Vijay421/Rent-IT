@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Rollen;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
     public class Abonnement
     {
         public required int Id { get; set; }
+        public int? HuurbeheerderId { get; set; }
+
+        public List<ZakelijkeHuurder> ZakelijkeHuurders {  get; set; }
+
 
         [StringLength(50, MinimumLength = 2)]
         public required string Naam { get; set; }
@@ -20,6 +25,9 @@ namespace backend.Models
         [MinLength(2)]
         public required string Soort { get; set; } // pay as you go / prepaid
 
-        public Abonnement() {}
+        public Abonnement()
+        {
+            ZakelijkeHuurders = new List<ZakelijkeHuurder>();
+        }
     }
 }

@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241213112958_added_models")]
-    partial class added_models
+    [Migration("20241213154105_added_seeding_data")]
+    partial class added_seeding_data
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,44 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e4087d18-dfe3-424e-8454-91773fcfec84",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ce8768a8-6ab3-45da-b4c4-a451e4a3faa5",
+                            Name = "backoffice_medewerker",
+                            NormalizedName = "BACKOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "3771d23d-b25d-4fb4-9ebe-6a15d49a6e84",
+                            Name = "frontoffice_medewerker",
+                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
+                        },
+                        new
+                        {
+                            Id = "470078bc-26e3-43e7-a5e8-e36a8c0cf8a5",
+                            Name = "zakelijke_beheerder",
+                            NormalizedName = "ZAKELIJKE_BEHEERDER"
+                        },
+                        new
+                        {
+                            Id = "03eb2ad7-a875-470d-b1a5-f6075518e2de",
+                            Name = "zakelijke_huurder",
+                            NormalizedName = "ZAKELIJKE_HUURDER"
+                        },
+                        new
+                        {
+                            Id = "0efcae26-e3eb-4a70-b46d-e3bee40c5421",
+                            Name = "particuliere_huurder",
+                            NormalizedName = "PARTICULIERE_HUURDER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -169,6 +207,9 @@ namespace backend.Migrations
                     b.Property<DateOnly>("Einddatum")
                         .HasColumnType("date");
 
+                    b.Property<int?>("HuurbeheerderId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Max_huurders")
                         .HasColumnType("int");
 
@@ -186,7 +227,48 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HuurbeheerderId");
+
                     b.ToTable("Abonnementen");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Einddatum = new DateOnly(2026, 1, 1),
+                            Max_huurders = 10,
+                            Naam = "abbo",
+                            Prijs_per_maand = 12.199999999999999,
+                            Soort = "prepaid"
+                        });
+                });
+
+            modelBuilder.Entity("backend.Models.Bedrijf", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KvK_nummer")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bedrijven");
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -278,6 +360,9 @@ namespace backend.Migrations
                     b.Property<int?>("FrontOfficeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HuurbeheerderId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -322,6 +407,8 @@ namespace backend.Migrations
                     b.HasIndex("BackOfficeId");
 
                     b.HasIndex("FrontOfficeId");
+
+                    b.HasIndex("HuurbeheerderId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -398,6 +485,113 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Aanschafjaar = 2018,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "AB-123-CD",
+                            Kleur = "Red",
+                            Merk = "Toyota",
+                            Opmerking = "",
+                            Prijs = 50.0,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Corolla"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Aanschafjaar = 2019,
+                            EindDatum = new DateOnly(2020, 8, 12),
+                            Kenteken = "EF-456-GH",
+                            Kleur = "Blue",
+                            Merk = "Ford",
+                            Opmerking = "",
+                            Prijs = 51.390000000000001,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2017, 4, 3),
+                            Status = "Verhuurbaar",
+                            Type = "Focus"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Aanschafjaar = 2020,
+                            EindDatum = new DateOnly(2024, 11, 9),
+                            Kenteken = "IJ-789-KL",
+                            Kleur = "Black",
+                            Merk = "Volkswagen",
+                            Opmerking = "",
+                            Prijs = 40.0,
+                            Soort = "Auto",
+                            StartDatum = new DateOnly(2019, 10, 12),
+                            Status = "Verhuurbaar",
+                            Type = "Golf"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Aanschafjaar = 2021,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "QR-345-ST",
+                            Kleur = "Gray",
+                            Merk = "Citroën",
+                            Opmerking = "",
+                            Prijs = 65.0,
+                            Soort = "Camper",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Jumper"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Aanschafjaar = 2016,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "UV-678-WX",
+                            Kleur = "Black",
+                            Merk = "Peugeot",
+                            Opmerking = "",
+                            Prijs = 68.0,
+                            Soort = "Camper",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Boxer"
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Aanschafjaar = 2020,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "GH-456-IJ",
+                            Kleur = "Blue",
+                            Merk = "Dethle-s",
+                            Opmerking = "",
+                            Prijs = 52.5,
+                            Soort = "Caravan",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "C'go"
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Aanschafjaar = 2017,
+                            EindDatum = new DateOnly(2016, 4, 12),
+                            Kenteken = "KL-789-MN",
+                            Kleur = "Red",
+                            Merk = "Burstner",
+                            Opmerking = "",
+                            Prijs = 48.0,
+                            Soort = "Caravan",
+                            StartDatum = new DateOnly(2012, 2, 24),
+                            Status = "Verhuurbaar",
+                            Type = "Premio Life"
+                        });
                 });
 
             modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
@@ -434,7 +628,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AbonnementId")
+                    b.Property<int?>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("Bedrijfsrol")
@@ -444,7 +638,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AbonnementId");
+                    b.HasIndex("BedrijfId");
 
                     b.ToTable("Huurbeheerders");
                 });
@@ -475,11 +669,21 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AbonnementId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Factuuradres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HuurbeheerderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AbonnementId");
+
+                    b.HasIndex("HuurbeheerderId");
 
                     b.ToTable("ZakelijkeHuurders");
                 });
@@ -535,6 +739,13 @@ namespace backend.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("backend.Models.Abonnement", b =>
+                {
+                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                        .WithMany("Abonnement")
+                        .HasForeignKey("HuurbeheerderId");
+                });
+
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
@@ -560,6 +771,10 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("FrontOfficeId");
 
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
+                        .WithMany()
+                        .HasForeignKey("HuurbeheerderId");
+
                     b.HasOne("backend.Rollen.ParticuliereHuurder", "ParticuliereHuurder")
                         .WithMany()
                         .HasForeignKey("ParticuliereHuurderId");
@@ -572,6 +787,8 @@ namespace backend.Migrations
 
                     b.Navigation("FrontOffice");
 
+                    b.Navigation("Huurbeheerder");
+
                     b.Navigation("ParticuliereHuurder");
 
                     b.Navigation("ZakelijkeHuurder");
@@ -579,11 +796,37 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Abonnement", "Abonnement")
-                        .WithMany()
+                    b.HasOne("backend.Models.Bedrijf", null)
+                        .WithMany("Huurbeheerders")
+                        .HasForeignKey("BedrijfId");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.HasOne("backend.Models.Abonnement", null)
+                        .WithMany("ZakelijkeHuurders")
                         .HasForeignKey("AbonnementId");
 
+                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                        .WithMany("ZakelijkeHuurders")
+                        .HasForeignKey("HuurbeheerderId");
+                });
+
+            modelBuilder.Entity("backend.Models.Abonnement", b =>
+                {
+                    b.Navigation("ZakelijkeHuurders");
+                });
+
+            modelBuilder.Entity("backend.Models.Bedrijf", b =>
+                {
+                    b.Navigation("Huurbeheerders");
+                });
+
+            modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
+                {
                     b.Navigation("Abonnement");
+
+                    b.Navigation("ZakelijkeHuurders");
                 });
 
             modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
