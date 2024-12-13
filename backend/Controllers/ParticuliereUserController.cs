@@ -1,9 +1,11 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace backend.Controllers
@@ -88,8 +90,100 @@ namespace backend.Controllers
         }
 
         /// <summary>
+        /// Returns the rent history of the current logged-in user.
+        /// </summary>
+        [Authorize(Roles = "particuliere_huurder")]
+        [HttpGet("rent-history")]
+        public async Task<ActionResult<IEnumerable<HuuraanvraagGeschiedenisDTO>>> GetRentHistory()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Ok(new Huuraanvraag[] { });
+            }
+
+            var huuraanvragen = await _context
+                .Huuraanvragen
+                .Where(h => h.ParticuliereHuurderId == user.ParticuliereHuurder.Id)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var huuraanvragenDTOs = huuraanvragen.Select(h => new HuuraanvraagGeschiedenisDTO
+            {
+                Startdatum = h.Startdatum.ToString("dd-MM-yyyy"),
+                Einddatum = h.Einddatum.ToString("dd-MM-yyyy"),
+                Reisaard = h.Reisaard,
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kenteken = h.Voertuig.Kenteken,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Soort = h.Voertuig.Soort,
+                Prijs = h.Voertuig.Prijs,
+            });
+
+            return Ok(huuraanvragenDTOs);
+        }
+
+        [Authorize(Roles = "particuliere_huurder")]
+        [HttpGet("notifications")]
+        public async Task<ActionResult<List<NotificatieDTO>>> GetNotifications()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Unauthorized("Verwacht particuliere gebruiker");
+            }
+
+            var aanvragen = await _context
+                .Huuraanvragen
+                // Only get the aanvragen from the current user if the user has not seen them yet.
+                .Where(h => h.ParticuliereHuurderId == user.ParticuliereHuurder.Id && !h.Gezien)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var notificaties = aanvragen
+                .Select(h =>
+                {
+                    return new NotificatieDTO
+                    {
+                        Titel = "Omtrent: beoordeling over huuraavraag",
+                        Melding = $"De huuraavraag over de {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld: uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
+                    };
+                })
+                .ToList();
+
+            return Ok(notificaties);
+        }
+
+        /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
+        // TODO: should be: [Authorize(Roles = "particuliere_huurder")]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
