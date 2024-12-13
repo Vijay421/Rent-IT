@@ -4,7 +4,7 @@ import Temp from '../assets/toyota-corolla.png';
 import {useState} from "react";
 
 export function RentalAutoBox( {data} ) {
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
 
     function onHuurButtonClick() {
         alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
