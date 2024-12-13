@@ -17,10 +17,10 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prijs_per_maand = table.Column<float>(type: "float", nullable: false),
+                    Naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Prijs_per_maand = table.Column<double>(type: "float", nullable: false),
                     Max_huurders = table.Column<int>(type: "int", nullable: false),
-                    Duur = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

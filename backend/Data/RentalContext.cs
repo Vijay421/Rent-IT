@@ -39,9 +39,10 @@ namespace backend.Data
             
             var voertuigSeeder = new VoertuigSeeder();
             voertuigSeeder.Seed(modelBuilder);
-            */
+
             var abonnementSeeder = new AbonnementSeeder();
             abonnementSeeder.Seed(modelBuilder);
+            */
             
         }
 

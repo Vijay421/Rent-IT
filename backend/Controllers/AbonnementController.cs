@@ -40,12 +40,27 @@ public class AbonnementController : ControllerBase
     }
     [Authorize]
     [HttpPost("create")]
-    public async Task<ActionResult<AbonnementDTO>> CreateAbonnement(Abonnement Abonnement)
+    public async Task<ActionResult<AbonnementDTO>> CreateAbonnement(CreateAbonnementDTO abonnementDTO)
     {
-        _context.Abonnementen.Add(Abonnement);
+        if (abonnementDTO.Soort != "prepaid" || abonnementDTO.Soort != "pay_as_you_go")
+        {
+            return BadRequest("Soort moet gelijk zijn aan 'prepaid' of 'pay as you go'");
+        }
+
+        var abonnement = new Abonnement
+        {
+            Id = 0,
+            Naam = abonnementDTO.Naam,
+            Prijs_per_maand = abonnementDTO.Prijs_per_maand,
+            Max_huurders = abonnementDTO.Max_huurders,
+            Einddatum = abonnementDTO.Einddatum,
+            Soort = abonnementDTO.Soort,
+        };
+
+        _context.Abonnementen.Add(abonnement);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("CreateAbonnement", new {id = Abonnement.Id}, Abonnement);
+        return CreatedAtAction(nameof(CreateAbonnement), new {id = abonnement.Id}, abonnement);
     }
     [Authorize]
     [HttpPost("{id}/update")]

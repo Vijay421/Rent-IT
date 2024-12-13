@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.DTOs
 {
-    public class Abonnement
+    public class CreateAbonnementDTO
     {
-        public required int Id { get; set; }
-
         [StringLength(50, MinimumLength = 2)]
         public required string Naam { get; set; }
 
@@ -14,12 +12,7 @@ namespace backend.Models
 
         [Range(1, 1000)]
         public required int Max_huurders { get; set; }
-
         public required DateOnly Einddatum { get; set; }
-
-        [MinLength(2)]
         public required string Soort { get; set; } // pay as you go / prepaid
-
-        public Abonnement() {}
     }
 }

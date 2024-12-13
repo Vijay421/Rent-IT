@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241210092318_added_models")]
+    [Migration("20241213111939_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -166,17 +166,18 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeOnly>("Duur")
-                        .HasColumnType("time");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date");
 
                     b.Property<int>("Max_huurders")
                         .HasColumnType("int");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("Prijs_per_maand")
+                    b.Property<double>("Prijs_per_maand")
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
