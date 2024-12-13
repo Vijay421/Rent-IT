@@ -8,6 +8,8 @@ function ProfilePageParticulier() {
             <ProfilePageLinkButton link="/*" text="Account instellingen aanpassen"/>
             <ProfilePageLinkButton link="/*" text="Neem zakelijk abonnement"/>
             <ProfilePageLinkButton link="/renting" text="Voertuig huren"/>
+            <ProfilePageLinkButton link="/huur-geschiedenis" text="Huurgeschiedenis"/>
+            <ProfilePageLinkButton link="/notificaties" text="Notificaties"/>
         </ProfilePageBase>
     );
 }

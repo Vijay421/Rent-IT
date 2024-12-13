@@ -1,0 +1,62 @@
+.label {
+    margin-top: 20px;
+}
+
+.FormWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.renting-submit-form {
+    width: 100%;
+}
+
+.price__text {
+    margin-top: 20px;
+}
+
+.submit-button {
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+    margin-top: 20px;
+}
+
+.submit-button__div {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 20em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button__text {
+    color: #FFFFFF;
+    font-size: 1em;
+}
+
+.submit-button__div:hover {
+    background-color: var(--tertiary-color);
+}
+
+.submit-button__text:visited {
+    color: #FFFFFF;
+}
+
+.confirmation-message {
+    margin-top: 20px;
+}
+
+.confirmation-message.success {
+    color: darkgreen;
+}
+
+.confirmation-message.error {
+    color: darkred;
+}

@@ -9,6 +9,7 @@ namespace backend.Data
     {
         public void Seed(ModelBuilder builder)
         {
+            // DO NOT change the Voertuig ids, they are used in the user seeder!
             builder.Entity<Voertuig>().HasData(
                 
             new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00, new DateOnly(2012,2,24), new DateOnly(2016,4,12)),
