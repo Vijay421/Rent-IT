@@ -43,7 +43,7 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BackOfficeMedewerker",
+                name: "BackOfficeMedewerkers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,11 +51,11 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BackOfficeMedewerker", x => x.Id);
+                    table.PrimaryKey("PK_BackOfficeMedewerkers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FrontOfficeMedewerker",
+                name: "FrontOfficeMedewerkers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -63,7 +63,20 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FrontOfficeMedewerker", x => x.Id);
+                    table.PrimaryKey("PK_FrontOfficeMedewerkers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Huurbeheerders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Bedrijfsrol = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Huurbeheerders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,7 +116,7 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZakelijkeHuurder",
+                name: "ZakelijkeHuurders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -112,7 +125,7 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZakelijkeHuurder", x => x.Id);
+                    table.PrimaryKey("PK_ZakelijkeHuurders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,6 +155,7 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     VoertuigId = table.Column<int>(type: "int", nullable: false),
                     Startdatum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Einddatum = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -156,6 +170,11 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Huuraanvragen", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Huuraanvragen_ParticuliereHuurders_ParticuliereHuurderId",
+                        column: x => x.ParticuliereHuurderId,
+                        principalTable: "ParticuliereHuurders",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Huuraanvragen_Voertuigen_VoertuigId",
                         column: x => x.VoertuigId,
@@ -192,14 +211,14 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_BackOfficeMedewerker_BackOfficeId",
+                        name: "FK_AspNetUsers_BackOfficeMedewerkers_BackOfficeId",
                         column: x => x.BackOfficeId,
-                        principalTable: "BackOfficeMedewerker",
+                        principalTable: "BackOfficeMedewerkers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_FrontOfficeMedewerker_FrontOfficeId",
+                        name: "FK_AspNetUsers_FrontOfficeMedewerkers_FrontOfficeId",
                         column: x => x.FrontOfficeId,
-                        principalTable: "FrontOfficeMedewerker",
+                        principalTable: "FrontOfficeMedewerkers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_ParticuliereHuurders_ParticuliereHuurderId",
@@ -207,9 +226,9 @@ namespace backend.Migrations
                         principalTable: "ParticuliereHuurders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_ZakelijkeHuurder_ZakelijkeHuurderId",
+                        name: "FK_AspNetUsers_ZakelijkeHuurders_ZakelijkeHuurderId",
                         column: x => x.ZakelijkeHuurderId,
-                        principalTable: "ZakelijkeHuurder",
+                        principalTable: "ZakelijkeHuurders",
                         principalColumn: "Id");
                 });
 
@@ -358,6 +377,11 @@ namespace backend.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Huuraanvragen_ParticuliereHuurderId",
+                table: "Huuraanvragen",
+                column: "ParticuliereHuurderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Huuraanvragen_VoertuigId",
                 table: "Huuraanvragen",
                 column: "VoertuigId");
@@ -388,6 +412,9 @@ namespace backend.Migrations
                 name: "Huuraanvragen");
 
             migrationBuilder.DropTable(
+                name: "Huurbeheerders");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -397,16 +424,16 @@ namespace backend.Migrations
                 name: "Voertuigen");
 
             migrationBuilder.DropTable(
-                name: "BackOfficeMedewerker");
+                name: "BackOfficeMedewerkers");
 
             migrationBuilder.DropTable(
-                name: "FrontOfficeMedewerker");
+                name: "FrontOfficeMedewerkers");
 
             migrationBuilder.DropTable(
                 name: "ParticuliereHuurders");
 
             migrationBuilder.DropTable(
-                name: "ZakelijkeHuurder");
+                name: "ZakelijkeHuurders");
         }
     }
 }

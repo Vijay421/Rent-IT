@@ -21,16 +21,8 @@ function RentingSubmit() {
         setAdresgegevens(e.target.value);
     }
 
-    function handleRijbewijsnummer(e) {
-        setRijbewijsnummer(e.target.value);
-    }
-
     function handleReisaard(e) {
         setReisaard(e.target.value);
-    }
-
-    function handleVerwachteKm(e) {
-        setVerwachteKm(e.target.value);
     }
 
     function handleVerstePunt(e) {
@@ -78,7 +70,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__wettelijke-naam"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier uw volledige naam in voor het huren van dit voertuig."
                         value={wettelijkenaam}
@@ -91,7 +83,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__adres-gegevens"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier uw adres gegevens in voor het huren van dit voertuig."
                         value={adresgegevens}
@@ -104,10 +96,12 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__rijbewijs-nummer"
-                        className="form"
+                        className="renting-submit-form"
                         type="number"
                         placeholder="Vul hier uw rijbewijs nummer in voor het huren van dit voertuig."
                         value={rijbewijsnummer}
+                        min="10"
+                        max="10"
                         onChange={(e) => {
                             const value = e.target.value;
                             if (/^\d*$/.test(value)) {
@@ -116,11 +110,11 @@ function RentingSubmit() {
                         }}
                     />
                     <label htmlFor="form__reisaard" className="label">
-                        Soort reis (??):
+                        Soort reis:
                     </label>
                     <input
                         id="form__reisaard"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier uw reis aard in voor het huren van dit voertuig."
                         value={reisaard}
@@ -133,7 +127,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__verwachte-km"
-                        className="form"
+                        className="renting-submit-form"
                         type="number"
                         placeholder="Vul hier in hoeveel kilometer afstand u veracht af te leggen."
                         value={verwachteKm}
@@ -142,7 +136,7 @@ function RentingSubmit() {
                         onChange={(e) => {
                             const value = e.target.value;
                             if (/^\d*$/.test(value)) {
-                                setRijbewijsnummer(value);
+                                setVerwachteKm(value);
                             }
                         }}
                     />
@@ -151,7 +145,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__verste-punt"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier het verste punt in wat u veracht af te leggen."
                         value={verstePunt}
@@ -164,7 +158,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__start-punt"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier het start punt in van uw reis."
                         value={startPunt}
@@ -177,7 +171,7 @@ function RentingSubmit() {
                     </label>
                     <input
                         id="form__eind-punt"
-                        className="form"
+                        className="renting-submit-form"
                         type="text"
                         placeholder="Vul hier het eind punt in van uw reis."
                         value={eindPunt}
@@ -190,7 +184,7 @@ function RentingSubmit() {
                 {confirmationMessage && (
                     <p
                         className={`confirmation-message ${
-                            confirmationMessage === "Uw huur aanvraag is verzonden!"
+                            confirmationMessage === "Uw huuraanvraag is verzonden!"
                                 ? "success"
                                 : "error"
                         }`}

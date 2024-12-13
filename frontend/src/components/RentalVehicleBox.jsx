@@ -1,8 +1,11 @@
 import '../styles/RentalVehicleBox.css';
 import PropTypes from "prop-types";
 import Temp from '../assets/toyota-corolla.png';
+import {useState} from "react";
 
 export function RentalAutoBox( {data} ) {
+    const [showPopup, setShowPopup] = useState(false);
+
     function onHuurButtonClick() {
         alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
     }
@@ -36,7 +39,23 @@ export function RentalAutoBox( {data} ) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
+                <p
+                    className='rental-vehicle-huurprijs__p'
+                    onMouseEnter={() => {setShowPopup(true);}}
+                    onMouseLeave={() => {setShowPopup(false);}}>
+                    €{data.prijs.toFixed(2)}
+
+                    {showPopup && (
+                        <span className='rental-vehicle-huurprijs-popup__span'>
+                            Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
+                            Verzekering: €50<br/>
+                            Belasting: €20<br/>
+                            Benzine: €36<br/>
+                            Kilometervergoeding: €0.36/km<br/>
+                            Borg: €250
+                        </span>
+                    )}
+                </p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>
@@ -45,6 +64,8 @@ export function RentalAutoBox( {data} ) {
 }
 
 export function RentalCaravanBox({data}) {
+    const [showPopup, setShowPopup] = useState(false);
+
     function onHuurButtonClick() {
         alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
     }
@@ -78,7 +99,27 @@ export function RentalCaravanBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
+                <p
+                    className='rental-vehicle-huurprijs__p'
+                    onMouseEnter={() => {
+                        setShowPopup(true);
+                    }}
+                    onMouseLeave={() => {
+                        setShowPopup(false);
+                    }}>
+                    €{data.prijs.toFixed(2)}
+
+                    {showPopup && (
+                        <span className='rental-vehicle-huurprijs-popup__span'>
+                            Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
+                            Verzekering: €80<br/>
+                            Belasting: €35<br/>
+                            Benzine: €41<br/>
+                            Kilometervergoeding: €0.58/km<br/>
+                            Borg: €400
+                        </span>
+                    )}
+                </p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>
@@ -87,6 +128,8 @@ export function RentalCaravanBox({data}) {
 }
 
 export function RentalCamperBox({data}) {
+    const [showPopup, setShowPopup] = useState(false);
+
     function onHuurButtonClick() {
         alert(`De gebruiker heeft de ${data.merk} ${data.type} als voertuig geselecteerd`);
     }
@@ -120,7 +163,27 @@ export function RentalCamperBox({data}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p className='rental-vehicle-huurprijs__p'>€{data.prijs.toFixed(2)}</p>
+                <p
+                    className='rental-vehicle-huurprijs__p'
+                    onMouseEnter={() => {
+                        setShowPopup(true);
+                    }}
+                    onMouseLeave={() => {
+                        setShowPopup(false);
+                    }}>
+                    €{data.prijs.toFixed(2)}
+
+                    {showPopup && (
+                        <span className='rental-vehicle-huurprijs-popup__span'>
+                            Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
+                            Verzekering: €75<br/>
+                            Belasting: €37<br/>
+                            Benzine: €43<br/>
+                            Kilometervergoeding: €0.61/km<br/>
+                            Borg: €500
+                        </span>
+                    )}
+                </p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
                 <button id='rental-vehicle-huur-box__button' onClick={onHuurButtonClick}>Huur</button>
             </div>

@@ -101,7 +101,7 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
             // TODO: change to 'same-origin' when in production.
             credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
             headers: {
-                'content-type': 'application/problem+json'
+                'content-type': 'application/json'
             },
             body: JSON.stringify(userData)
         });
