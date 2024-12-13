@@ -86,6 +86,25 @@
 .rental-vehicle-huurprijs__p {
     font-weight: bold;
     font-size: 3vw;
+    cursor: help;
+}
+
+.rental-vehicle-huurprijs-popup__span {
+    position: absolute;
+    font-size: max(12px, 1vw);
+    font-weight: lighter;
+    text-align: left;
+    width: auto;
+    height: auto;
+    transform: translateY(30px);
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    white-space: nowrap;
 }
 
 .rental-vehicle-kosten__p {
@@ -104,6 +123,8 @@
     font-size: 1.5vw;
     font-weight: bold;
     border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
 #rental-vehicle-huur-box__button:hover {
@@ -144,6 +165,10 @@
 
     #rental-vehicle-huur-box__button {
         width: 80%;
+    }
+
+    .rental-vehicle-huurprijs-popup__span {
+        transform: translateX(-75%) translateY(-100%);
     }
 }
 
@@ -210,5 +235,9 @@
         height: 5%;
         font-size: 2rem;
         margin: 10px auto;
+    }
+
+    .rental-vehicle-huurprijs-popup__span {
+        transform: translateX(-75%) translateY(50%);
     }
 }

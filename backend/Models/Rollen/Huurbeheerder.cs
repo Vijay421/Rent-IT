@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.Rollen
 {
     public class Huurbeheerder
     {
         public int Id { get; set; }
         [MinLength(2)]
-        public required string Bedrijfsrol{get;set;}
+        public required string Bedrijfsrol { get; set; }
     }
 }

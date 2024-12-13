@@ -1,0 +1,96 @@
+.MainDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 2em auto;
+}
+
+.form-group label {
+    margin-bottom: 10px;
+}
+
+.bedrijfsnaam__text, .adress__text, .kvk-number__text {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form__text {
+    text-align: left;
+    width: 100%;
+    font-weight: bold;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.radio-group label {
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.submit-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+}
+
+.submit-button__div {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 20em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button__text {
+    color: #FFFFFF;
+    font-size: 1em;
+}
+
+.submit-button__div:hover {
+    background-color: var(--tertiary-color);
+}
+
+.submit-button__text:visited {
+    color: #FFFFFF;
+}
+
+.confirmation-message {
+    margin-top: 20px;
+}
+
+.confirmation-message.success {
+    color: darkgreen;
+}
+
+.confirmation-message.error {
+    color: darkred;
+}

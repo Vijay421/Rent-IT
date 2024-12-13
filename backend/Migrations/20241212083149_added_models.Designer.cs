@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20241212083149_added_models")]
+    partial class added_models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,17 +203,11 @@ namespace backend.Migrations
                     b.Property<DateTime>("Einddatum")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("Geaccepteerd")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Gezien")
+                    b.Property<bool>("Geaccepteerd")
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Reden")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
@@ -221,9 +218,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Startdatum")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
