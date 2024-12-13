@@ -6,6 +6,7 @@ function ProfilePageBackOffice() {
     return (
         <ProfilePageBase>
             <ProfilePageLinkButton link="/*" text="Account instellingen aanpassen"/>
+            <ProfilePageLinkButton link="/huuraanvraag-beoordelen" text="Huuraanvragen beoordelen"/>
         </ProfilePageBase>
     );
 }

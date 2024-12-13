@@ -7,6 +7,8 @@ import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
+import ReviewRentRequest from "../pages/ReviewRentRequest.jsx";
+import NotificationsPage from "../pages/NotificationsPage.jsx";
 
 function App() {
     return (
@@ -21,6 +23,8 @@ function App() {
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/account-settings" element={<AccountSettings/>}/>
                 <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
+                <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
+                <Route path="/notificaties" element={<NotificationsPage/>}/>
             </Routes>
         </Router>
     );

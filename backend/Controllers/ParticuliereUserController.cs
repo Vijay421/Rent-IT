@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -136,9 +137,53 @@ namespace backend.Controllers
             return Ok(huuraanvragenDTOs);
         }
 
+        [Authorize(Roles = "particuliere_huurder")]
+        [HttpGet("notifications")]
+        public async Task<ActionResult<List<NotificatieDTO>>> GetNotifications()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Unauthorized("Verwacht particuliere gebruiker");
+            }
+
+            var aanvragen = await _context
+                .Huuraanvragen
+                // Only get the aanvragen from the current user if the user has not seen them yet.
+                .Where(h => h.ParticuliereHuurderId == user.ParticuliereHuurder.Id && !h.Gezien)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var notificaties = aanvragen
+                .Select(h =>
+                {
+                    return new NotificatieDTO
+                    {
+                        Titel = "Omtrent: beoordeling over huuraavraag",
+                        Melding = $"De huuraavraag over de {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld: uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
+                    };
+                })
+                .ToList();
+
+            return Ok(notificaties);
+        }
+
         /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
+        // TODO: should be: [Authorize(Roles = "particuliere_huurder")]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)

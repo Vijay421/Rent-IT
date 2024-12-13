@@ -28,7 +28,18 @@ namespace backend.Models
         public string Vereiste_bestemming{ get; set; }
         [MinLength(2)]
         public int Verwachte_km{ get; set; }
-        public bool Geaccepteerd { get; set; }
+        public bool? Geaccepteerd { get; set; }
+        public string? Reden {  get; set; }
+
+        /// <summary>
+        /// Shows the datum when the row got updated.
+        /// </summary>
+        public DateTime VeranderDatum { get; set; }
+
+        /// <summary>
+        /// whether  the user has seen the notification.
+        /// </summary>
+        public bool Gezien { get; set; }
 
         public Huuraanvraag()
         {

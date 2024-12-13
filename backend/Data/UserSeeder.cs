@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 
@@ -16,6 +17,7 @@ namespace backend.Data
             if (isDev)
             {
                 await SeedParticuliereUser(userManager, config, context);
+                await SeedBackofficeUser(userManager, config, context);
             }
         }
 
@@ -45,6 +47,41 @@ namespace backend.Data
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(admin, "admin");
+            }
+            else
+            {
+                var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
+                Console.Error.WriteLine($"error: {errorText}");
+            }
+        }
+
+        private async Task SeedBackofficeUser(UserManager<User> userManager, IConfiguration config, RentalContext context)
+        {
+            // Create the backoffice user only when it does not exists already.
+            var user = await userManager.FindByNameAsync("b-user");
+            if (user != null)
+            {
+                return;
+            }
+
+            var backoffice = new BackOfficeMedewerker();
+            context.BackOfficeMedewerkers.Add(backoffice);
+            await context.SaveChangesAsync();
+
+            var bUser = new User
+            {
+                UserName = "b-user",
+                Email = "buser@user.com",
+                EmailConfirmed = true,
+                BackOffice = backoffice,
+            };
+            var result = await userManager.CreateAsync(bUser, "Qwerty123!");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(bUser, "backoffice_medewerker");
+                context.Entry(bUser).State = EntityState.Modified;
+                await context.SaveChangesAsync(); // Adds the relation to BackOfficeMedewerker.
             }
             else
             {
@@ -88,6 +125,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Groningen",
                 Verwachte_km = 500,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2012, 2, 24),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag1);
             await context.SaveChangesAsync();
@@ -111,6 +150,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Utrecht",
                 Verwachte_km = 220,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2014, 1, 1),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag2);
             await context.SaveChangesAsync();
@@ -134,6 +175,8 @@ namespace backend.Data
                 Vereiste_bestemming = "Den Haag",
                 Verwachte_km = 110,
                 Geaccepteerd = true,
+                VeranderDatum = new DateTime(2018, 1, 1),
+                Gezien = true,
             };
             context.Huuraanvragen.Add(huuraanvraag3);
             await context.SaveChangesAsync();
@@ -151,7 +194,7 @@ namespace backend.Data
             {
                 await userManager.AddToRoleAsync(user, "particuliere_huurder");
                 context.Entry(user).State = EntityState.Modified;
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync(); // Adds the ParticuliereHuurder relation.
             }
             else
             {
