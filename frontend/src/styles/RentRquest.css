@@ -72,6 +72,8 @@
 
 .rent-request__review--text {
     grid-area: text;
+
+    resize: none;
 }
 
 .rent-request__label {
