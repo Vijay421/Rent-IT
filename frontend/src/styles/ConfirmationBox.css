@@ -94,32 +94,37 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-.voertuig-box-column3__div,
-.voertuig-box-column4__div {
+.voertuig-box-column3__div p {
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.voertuig-box-column4__div,
+.voertuig-box-column5__div {
     display: flex;
     width: 100%;
     text-align: center;
     /*background-color: darkkhaki;*/
 }
 
-.voertuig-box-column3-title1-paragraph__p {
+.voertuig-box-column4-title1-paragraph__p {
     width: 66%;
     /*background-color: coral;*/
     font-size: 1.5vw;
 }
 
-.voertuig-box-column3-title2-paragraph__p {
+.voertuig-box-column4-title2-paragraph__p {
     width: 33%;
     font-size: 1.5vw;
 }
 
-.voertuig-box-column3-answer1-paragraph__p {
+.voertuig-box-column5-answer1-paragraph__p {
     width: 66%;
     font-size: 1.8vw;
     /*background-color: coral;*/
 }
 
-.voertuig-box-column3-answer2-paragraph__p {
+.voertuig-box-column5-answer2-paragraph__p {
     width: 33%;
     font-size: 2vw;
 }
@@ -206,6 +211,10 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .voertuig-box-column3__div p {
+        font-size: min(3vw ,14px);
+    }
+
     .voertuig-box-column1__div p,
     .voertuig-box-column2__div p,
     .renter-box-column__div p {
@@ -214,18 +223,18 @@
         margin-left: 5px;
     }
 
-    .voertuig-box-column3-title1-paragraph__p,
-    .voertuig-box-column3-title2-paragraph__p {
+    .voertuig-box-column4-title1-paragraph__p,
+    .voertuig-box-column4-title2-paragraph__p {
         display: none;
     }
 
-    .voertuig-box-column3-answer1-paragraph__p {
+    .voertuig-box-column5-answer1-paragraph__p {
         font-size: 4.2vw;
         display: flex;
         align-items: center;
         margin: 0 auto;
     }
-    .voertuig-box-column3-answer2-paragraph__p {
+    .voertuig-box-column5-answer2-paragraph__p {
         font-size: 5.5vw;
     }
 
