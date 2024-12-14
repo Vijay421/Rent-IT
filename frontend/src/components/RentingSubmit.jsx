@@ -2,11 +2,12 @@ import styles from "./profile/ProfilePageBase.module.css";
 import {useState} from "react";
 import "../styles/RentingSubmit.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { RentalAutoBox } from "./RentalVehicleBox.jsx";
+import {RentalAutoBox, RentalCamperBox, RentalCaravanBox} from "./RentalVehicleBox.jsx";
 
 function RentingSubmit() {
     const location = useLocation();
     const navigate = useNavigate();
+    const key = location.state?.key;
     const vehicleData = location.state?.vehicleData;
     const startDatum = location.state?.startDatum;
     const eindDatum = location.state?.eindDatum;
@@ -30,7 +31,7 @@ function RentingSubmit() {
         postcode: postcodegegevens,
         rbwnr: rijbewijsnummer,
         reisaard: reisaard,
-        verwkm: verwachteKm,
+        verwachtekm: verwachteKm,
         verstePunt: verstePunt,
         startPunt: startPunt,
         eindPunt: eindPunt,
@@ -59,8 +60,8 @@ function RentingSubmit() {
         <main>
             <div className={styles.TopDiv} id='top-div__div'>
                 {vehicleData.soort === "Auto" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
-                {vehicleData.soort === "Caravan" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
-                {vehicleData.soort === "Camper" && <RentalAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
+                {vehicleData.soort === "Caravan" && <RentalCaravanBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
+                {vehicleData.soort === "Camper" && <RentalCamperBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum}/>}
             </div>
 
             <div className={styles.MainDiv}>

@@ -3,7 +3,7 @@
     background-color: var(--main-color);
     display: flex;
     align-items: center;
-    height: 10vh;
+    height: 80px;
     padding: 0 20px 0 15px;
 }
 

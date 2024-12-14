@@ -9,49 +9,43 @@ export default function ConfirmationBox() {
     const insurance = vehicleData.soort === "Auto" ? 25.50 * 4 : vehicleData.soort === "Caravan" ? 20 * 4 : 30 * 4;
     const tax = (basePrice) * 0.21;
     const fuel = vehicleData.soort === "Auto" ? 30 : vehicleData.soort === "Caravan" ? 0 : 50;
-    const kmCharge = 0.30 * userData.verwkm;
+    const kmCharge = 0.30 * userData.verwachtekm;
     const deposit = vehicleData.soort === "Auto" ? 400 : vehicleData.soort === "Caravan" ? 750 : 1500;
-
-    // Calculate the total cost
     const totalCost = basePrice + insurance + tax + fuel + kmCharge + deposit;
 
     function handleAkkoordButtonClick() {
-        const formatDate = (date) => {
-            return new Date(date).toISOString().split("T")[0];
-        };
-
         const payload = {
-            id: 2,
+            id: 0,
             particuliereHuurderId: 1,
             voertuig: {
-                id: 1,
-                merk: "Toyota",
-                type: "Corolla",
-                kenteken: "AB-123-CD",
-                kleur: "Red",
-                aanschafjaar: 2018,
-                soort: "Auto",
-                opmerking: "",
-                status: "Verhuurbaar",
-                prijs: 50,
-                startDatum: formatDate("2012-02-24"),
-                eindDatum: formatDate("2016-04-12"),
+                id: vehicleData.Id,
+                merk: vehicleData.merk,
+                type: vehicleData.type,
+                kenteken: vehicleData.kenteken,
+                kleur: vehicleData.kleur,
+                aanschafjaar: vehicleData.aanschafjaar,
+                soort: vehicleData.soort,
+                opmerking: vehicleData.opmerking,
+                status: vehicleData.status,
+                prijs: vehicleData.prijs,
+                startDatum: vehicleData.startDatum,
+                eindDatum: vehicleData.eindDatum,
             },
             startdatum: startDatum,
             einddatum: eindDatum,
-            wettelijke_naam: "testnaam",
-            adresgegevens: "testadres",
-            rijbewijsnummer: "1234567890",
-            reisaard: "testreis",
-            vereiste_bestemming: "Hamburg",
-            verwachte_km: 152,
+            wettelijke_naam: userData.naam,
+            adresgegevens: `${userData.adres}, ${userData.postcode} ${userData.stad}`,
+            rijbewijsnummer: userData.rbwnr,
+            reisaard: userData.reisaard,
+            vereiste_bestemming: userData.verstePunt,
+            verwachte_km: userData.verwachtekm,
             geaccepteerd: false,
-            reden: "",
-            veranderdatum: formatDate("2023-01-01"),
+            reden: null,
+            veranderDatum: new Date().toJSON(),
             gezien: false,
         };
 
-        fetch("https://localhost:53085/create", {
+        fetch("https://localhost:53085/api/Huur", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -98,8 +92,11 @@ export default function ConfirmationBox() {
                             <p>Rijbewijsnummer:</p>
                             <p>{userData.rbwnr}</p>
 
-                            {/*<p>Email:</p>*/}
-                            {/*<p>?</p>*/}
+                            <p>Start punt:</p>
+                            <p>{userData.startPunt}</p>
+
+                            <p>Eind punt:</p>
+                            <p>{userData.eindPunt}</p>
 
                             <p>Reisaard:</p>
                             <p>{userData.reisaard}</p>
@@ -108,7 +105,7 @@ export default function ConfirmationBox() {
                             <p>{userData.verstePunt}</p>
 
                             <p>Verwachte gereden km:</p>
-                            <p>{userData.verwkm}</p>
+                            <p>{userData.verwachtekm} km</p>
                         </div>
                     </div>
 
@@ -139,23 +136,28 @@ export default function ConfirmationBox() {
 
                             <div className='voertuig-box-column2__div'>
                                 <p>Huurprijs:</p>
-                                <p>€{vehicleData.prijs}</p>
+                                <p>€ {vehicleData.prijs}</p>
+
                                 <p>Verzekering:</p>
-                                {vehicleData.soort === "Auto" && <p>€25,50/dag</p>}
-                                {vehicleData.soort === "Caravan" && <p>€20/dag</p>}
-                                {vehicleData.soort === "Camper" && <p>€30/dag</p>}
+                                {vehicleData.soort === "Auto" && <p>€ 25,50 / dag</p>}
+                                {vehicleData.soort === "Caravan" && <p>€ 20 / dag</p>}
+                                {vehicleData.soort === "Camper" && <p>€ 30 / dag</p>}
+
                                 <p>Belasting:</p>
-                                <p>€{((vehicleData.prijs * 4) * 0.21).toFixed(2)}</p>
+                                <p>€ {((vehicleData.prijs * 4) * 0.21).toFixed(2)}</p>
+
                                 <p>Benzine:</p>
-                                {vehicleData.soort === "Auto" && <p>€30</p>}
-                                {vehicleData.soort === "Caravan" && <p>€0</p>}
-                                {vehicleData.soort === "Camper" && <p>€50</p>}
+                                {vehicleData.soort === "Auto" && <p>€ 30</p>}
+                                {vehicleData.soort === "Caravan" && <p>€ 0</p>}
+                                {vehicleData.soort === "Camper" && <p>€ 50</p>}
+
                                 <p>Km vergoeding:</p>
-                                <p>€0.30/km</p>
+                                <p>€ 0.30 / km</p>
+
                                 <p>Borg:</p>
-                                {vehicleData.soort === "Auto" && <p>€400</p>}
-                                {vehicleData.soort === "Caravan" && <p>€750</p>}
-                                {vehicleData.soort === "Camper" && <p>€1500</p>}
+                                {vehicleData.soort === "Auto" && <p>€ 400</p>}
+                                {vehicleData.soort === "Caravan" && <p>€ 750</p>}
+                                {vehicleData.soort === "Camper" && <p>€ 1500</p>}
                             </div>
 
                             <div className="voertuig-box-column3__div">
@@ -165,7 +167,7 @@ export default function ConfirmationBox() {
                             <div className="voertuig-box-column4__div">
                                 <p className='voertuig-box-column3-answer1-paragraph__p'>{startDatum} – {eindDatum}</p>
                                 <p className='voertuig-box-column3-answer2-paragraph__p'>
-                                    €{totalCost.toFixed(2)}
+                                    € {totalCost.toFixed(2)}
                                 </p>
                             </div>
                         </div>
