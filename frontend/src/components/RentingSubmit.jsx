@@ -45,7 +45,10 @@ function RentingSubmit() {
             verwachteKm &&
             verstePunt &&
             startPunt &&
-            eindPunt
+            eindPunt &&
+
+            rijbewijsnummer.match(/^[0-9]+$/) &&
+            verwachteKm.match(/^[0-9]+$/)
         ) {
             setConfirmationMessage("");
 
@@ -78,6 +81,8 @@ function RentingSubmit() {
                         placeholder="Vul hier uw volledige naam in voor het huren van dit voertuig."
                         value={wettelijkenaam}
                         onChange={(e) => setWettelijkenaam(e.target.value)}
+                        minLength='2'
+                        maxLength='50'
                     />
 
                     <label htmlFor="form__adres-gegevens" className="label">
@@ -90,6 +95,7 @@ function RentingSubmit() {
                         placeholder="Vul hier uw adres gegevens in voor het huren van dit voertuig."
                         value={adresgegevens}
                         onChange={(e) => setAdresgegevens(e.target.value)}
+                        maxLength='28'
                     />
 
                     <label htmlFor="form__stad-gegevens" className="label">
@@ -102,6 +108,7 @@ function RentingSubmit() {
                         placeholder="Vul hier uw stad in voor het huren van dit voertuig."
                         value={stadgegevens}
                         onChange={(e) => setStadgegevens(e.target.value)}
+                        maxLength='16'
                     />
 
                     <label htmlFor="form__postcode-gegevens" className="label">
@@ -114,18 +121,25 @@ function RentingSubmit() {
                         placeholder="Vul hier uw postcode in voor het huren van dit voertuig."
                         value={postcodegegevens}
                         onChange={(e) => setPostcodegegevens(e.target.value)}
+                        maxLength='6'
                     />
 
                     <label htmlFor="form__rijbewijs-nummer" className="label">
-                        Rijbewijs nummer
+                        Rijbewijsnummer
                     </label>
                     <input
                         id="form__rijbewijs-nummer"
                         className="renting-submit-form"
-                        type="number"
+                        type="text"
                         placeholder="Vul hier uw rijbewijs nummer in voor het huren van dit voertuig."
                         value={rijbewijsnummer}
                         onChange={(e) => setRijbewijsnummer(e.target.value)}
+                        maxLength='10'
+                        onKeyDown={(e) => {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
 
                     <label htmlFor="form__reisaard" className="label">
@@ -138,6 +152,7 @@ function RentingSubmit() {
                         placeholder="Vul hier uw reis aard in voor het huren van dit voertuig."
                         value={reisaard}
                         onChange={(e) => setReisaard(e.target.value)}
+                        maxLength='100'
                     />
 
                     <label htmlFor="form__verwachte-km" className="label">
@@ -146,10 +161,17 @@ function RentingSubmit() {
                     <input
                         id="form__verwachte-km"
                         className="renting-submit-form"
-                        type="number"
+                        type="text"
                         placeholder="Vul hier in hoeveel kilometer afstand u verwacht af te leggen."
                         value={verwachteKm}
                         onChange={(e) => setVerwachteKm(e.target.value)}
+                        minLength='0'
+                        maxLength='5'
+                        onKeyDown={(e) => {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
 
                     <label htmlFor="form__verste-punt" className="label">
@@ -162,6 +184,7 @@ function RentingSubmit() {
                         placeholder="Vul hier het verste punt in wat u verwacht af te leggen."
                         value={verstePunt}
                         onChange={(e) => setVerstePunt(e.target.value)}
+                        maxLength='50'
                     />
 
                     <label htmlFor="form__start-punt" className="label">
@@ -174,6 +197,7 @@ function RentingSubmit() {
                         placeholder="Vul hier het start punt in van uw reis."
                         value={startPunt}
                         onChange={(e) => setStartPunt(e.target.value)}
+                        maxLength='50'
                     />
 
                     <label htmlFor="form__eind-punt" className="label">
@@ -186,6 +210,7 @@ function RentingSubmit() {
                         placeholder="Vul hier het eind punt in van uw reis."
                         value={eindPunt}
                         onChange={(e) => setEindPunt(e.target.value)}
+                        maxLength='50'
                     />
                 </div>
                 {confirmationMessage && (
