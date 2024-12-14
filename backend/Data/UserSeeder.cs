@@ -116,8 +116,8 @@ namespace backend.Data
             {
                 Voertuig = voertuig1,
                 ParticuliereHuurderId = pHuurder.Id,
-                Startdatum = new DateTime(2012, 2, 24),
-                Einddatum = new DateTime(2016, 4, 12),
+                Startdatum = new DateOnly(2012, 2, 24),
+                Einddatum = new DateOnly(2016, 4, 12),
                 Wettelijke_naam = "test particuliere huurder",
                 Adresgegevens = "Johanna Westerdijkplein 75, 2521 EP Den Haag",
                 Rijbewijsnummer = "5910738311",
@@ -141,8 +141,8 @@ namespace backend.Data
             {
                 Voertuig = voertuig2,
                 ParticuliereHuurderId = pHuurder.Id,
-                Startdatum = new DateTime(2014, 1, 1),
-                Einddatum = new DateTime(2018, 1, 1),
+                Startdatum = new DateOnly(2014, 1, 1),
+                Einddatum = new DateOnly(2018, 1, 1),
                 Wettelijke_naam = "test particuliere huurder",
                 Adresgegevens = "Johanna Westerdijkplein 75, 2521 EP Den Haag",
                 Rijbewijsnummer = "5910738311",
@@ -166,8 +166,8 @@ namespace backend.Data
             {
                 Voertuig = voertuig3,
                 ParticuliereHuurderId = pHuurder.Id,
-                Startdatum = new DateTime(2018, 1, 1),
-                Einddatum = new DateTime(2022, 1, 1),
+                Startdatum = new DateOnly(2018, 1, 1),
+                Einddatum = new DateOnly(2022, 1, 1),
                 Wettelijke_naam = "test particuliere huurder",
                 Adresgegevens = "Johanna Westerdijkplein 75, 2521 EP Den Haag",
                 Rijbewijsnummer = "5910738311",
