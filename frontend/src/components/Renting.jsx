@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicleBox.jsx';
 
 function Renting() {
-    const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles"); // Selecteer Voertuig soort
-    const [selectedDateStartDatum, setSelectedDateStartDatum] = useState(Date.now); // Selecteer OphaalDatum
-    const [selectedDateEindDatum, setSelectedDateEindDatum] = useState(Date.now); // Selecteer InleverDatum
+    const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles");
+    const [selectedDateStartDatum, setSelectedDateStartDatum] = useState("");
+    const [selectedDateEindDatum, setSelectedDateEindDatum] = useState("");
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
@@ -32,25 +32,34 @@ function Renting() {
 
     const handleDateChangeStartDatum = (event) => {
         const newStartDatum = event.target.value;
-        if (newStartDatum > selectedDateEindDatum) {
-            alert("De startdatum kan niet later zijn dan uw einddatum.");
-        } else {
+        if (selectedDateStartDatum !== "") {
+            if (newStartDatum > selectedDateEindDatum) {
+                alert("De startdatum kan niet later zijn dan uw einddatum.");
+            } else {
+                setSelectedDateStartDatum(newStartDatum);
+            }
+        }
+        else {
             setSelectedDateStartDatum(newStartDatum);
         }
     };
 
     const handleDateChangeEindDatum = (event) => {
         const newEindDatum = event.target.value;
-        if (newEindDatum < selectedDateStartDatum) {
-            alert("De einddatum kan niet eerder zijn dan uw startdatum.");
-        } else {
+        if (selectedDateStartDatum !== "") {
+            if (newEindDatum < selectedDateStartDatum) {
+                alert("De einddatum kan niet eerder zijn dan uw startdatum.");
+            } else {
+                setSelectedDateEindDatum(newEindDatum);
+            }
+        }
+        else {
             setSelectedDateEindDatum(newEindDatum);
         }
     };
 
     const handleMerkChange = (event) => {
         setSelectedMerkSoort(event.target.value);
-        console.log(selectedMerkSoort);
     };
 
     const handlePrijsChange = (event) => {
@@ -70,8 +79,8 @@ function Renting() {
         setSelectedMerkSoort("alles");
         setSelectedPrijsSoort("alles");
         setSelectedBeschikbaarheidSoort("alles");
-        setSelectedDateStartDatum(Date.now);
-        setSelectedDateEindDatum(Date.now);
+        setSelectedDateStartDatum("");
+        setSelectedDateEindDatum("");
     }
 
     const renderVehicleBoxes = () => {

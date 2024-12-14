@@ -2,18 +2,36 @@ import '../styles/RentalVehicleBox.css';
 import PropTypes from "prop-types";
 import Temp from '../assets/toyota-corolla.png';
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-export function RentalAutoBox( { data, nieuwStartDatum, nieuwEindDatum } ) {
+export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
     const [showPopup, setShowPopup] = useState(false);
-    const [StartDatum, setStartDatum] = useState(nieuwStartDatum);
-    const [EindDatum, setEindDatum] = useState(nieuwEindDatum);
+    const [StartDatum, setStartDatum] = useState("");
+    const [EindDatum, setEindDatum] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setStartDatum(nieuwStartDatum);
         setEindDatum(nieuwEindDatum);
     }, [nieuwStartDatum, nieuwEindDatum]);
 
+    const checkDatumFields = (e) => {
+        if (StartDatum === "" && EindDatum === "") {
+            e.preventDefault();
+            alert("Startdatum en Einddatum moeten beide ingevuld zijn voordat u kunt huren.");
+        } else if (StartDatum === "") {
+            e.preventDefault();
+            alert("Startdatum moet worden ingevuld.");
+        } else if (EindDatum === "" && StartDatum !== "") {
+            e.preventDefault();
+            alert("Einddatum moet worden ingevuld.");
+        } else {
+            navigate("/renting-submit", {
+                state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
+            });
+        }
+    };
 
     return (
         <div className='rental-vehicle-box__div'>
@@ -51,22 +69,21 @@ export function RentalAutoBox( { data, nieuwStartDatum, nieuwEindDatum } ) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
                             Verzekering: €75<br/>
                             Belasting: €37<br/>
                             Benzine: €43<br/>
-                            Kilometervergoeding: €0.61/km<br/>
+                            Kilometervergoeding: €0.31/km<br/>
                             Borg: €500
                         </span>
                     )}
                 </p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                <Link
-                    to="/renting-submit"
-                    state={{ vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }}
+                <button
+                    onClick={checkDatumFields}
                     id='rental-vehicle-huur-box__button'>
                     Huur
-                </Link>
+                </button>
             </div>
         </div>
     );
@@ -75,14 +92,32 @@ export function RentalAutoBox( { data, nieuwStartDatum, nieuwEindDatum } ) {
 
 export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
     const [showPopup, setShowPopup] = useState(false);
-    const [StartDatum, setStartDatum] = useState(nieuwStartDatum);
-    const [EindDatum, setEindDatum] = useState(nieuwEindDatum);
+    const [StartDatum, setStartDatum] = useState("");
+    const [EindDatum, setEindDatum] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setStartDatum(nieuwStartDatum);
         setEindDatum(nieuwEindDatum);
     }, [nieuwStartDatum, nieuwEindDatum]);
 
+    const checkDatumFields = (e) => {
+        if (StartDatum === "" && EindDatum === "") {
+            e.preventDefault();
+            alert("Startdatum en Einddatum moeten beide ingevuld zijn voordat u kunt huren.");
+        } else if (StartDatum === "") {
+            e.preventDefault();
+            alert("Startdatum moet worden ingevuld.");
+        } else if (EindDatum === "" && StartDatum !== "") {
+            e.preventDefault();
+            alert("Einddatum moet worden ingevuld.");
+        } else {
+            navigate("/renting-submit", {
+                state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
+            });
+        }
+    };
 
         return (
             <div className='rental-vehicle-box__div'>
@@ -125,22 +160,21 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                         {showPopup && (
                             <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
-                            Verzekering: €75<br/>
-                            Belasting: €37<br/>
-                            Benzine: €43<br/>
-                            Kilometervergoeding: €0.61/km<br/>
-                            Borg: €500
+                            Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
+                            Verzekering: €65<br/>
+                            Belasting: €62<br/> {/*21%*/}
+                            Benzine: €0<br/>
+                            Kilometervergoeding: €0.50/km<br/>
+                            Borg: €750
                         </span>
                         )}
                     </p>
                     <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                    <Link
-                        to="/renting-submit"
-                        state={{ vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum  }}
+                    <button
+                        onClick={checkDatumFields}
                         id='rental-vehicle-huur-box__button'>
                         Huur
-                    </Link>
+                    </button>
                 </div>
             </div>
         );
@@ -148,14 +182,32 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
 export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
     const [showPopup, setShowPopup] = useState(false);
-    const [StartDatum, setStartDatum] = useState(nieuwStartDatum);
-    const [EindDatum, setEindDatum] = useState(nieuwEindDatum);
+    const [StartDatum, setStartDatum] = useState("");
+    const [EindDatum, setEindDatum] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setStartDatum(nieuwStartDatum);
         setEindDatum(nieuwEindDatum);
     }, [nieuwStartDatum, nieuwEindDatum]);
 
+    const checkDatumFields = (e) => {
+        if (StartDatum === "" && EindDatum === "") {
+            e.preventDefault();
+            alert("Startdatum en Einddatum moeten beide ingevuld zijn voordat u kunt huren.");
+        } else if (StartDatum === "") {
+            e.preventDefault();
+            alert("Startdatum moet worden ingevuld.");
+        } else if (EindDatum === "" && StartDatum !== "") {
+            e.preventDefault();
+            alert("Einddatum moet worden ingevuld.");
+        } else {
+            navigate("/renting-submit", {
+                state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
+            });
+        }
+    };
 
     return (
         <div className='rental-vehicle-box__div'>
@@ -198,22 +250,21 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                        Huurprijs: €{data.prijs * 4} (4 x €{data.prijs})<br/>
+                        Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
                         Verzekering: €75<br/>
-                        Belasting: €37<br/>
-                        Benzine: €43<br/>
+                        Belasting: €37<br/> {/*21%*/}
+                        Benzine: €60<br/>
                         Kilometervergoeding: €0.61/km<br/>
-                        Borg: €500
+                        Borg: €1500
                     </span>
                     )}
                 </p>
                 <p className='rental-vehicle-kosten__p'>Totale huurkosten</p>
-                <Link
-                    to="/renting-submit"
-                    state={{ vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum  }}
+                <button
+                    onClick={checkDatumFields}
                     id='rental-vehicle-huur-box__button'>
                     Huur
-                </Link>
+                </button>
             </div>
         </div>
     );
@@ -231,8 +282,8 @@ RentalAutoBox.propTypes = {
         startDatum: PropTypes.string.isRequired,
         eindDatum: PropTypes.string.isRequired
     }).isRequired,
-    nieuwStartDatum: PropTypes.any.isRequired,
-    nieuwEindDatum: PropTypes.any.isRequired
+    nieuwStartDatum: PropTypes.any,
+    nieuwEindDatum: PropTypes.any
 };
 
 RentalCaravanBox.propTypes = {
@@ -247,8 +298,8 @@ RentalCaravanBox.propTypes = {
         startDatum: PropTypes.string.isRequired,
         eindDatum: PropTypes.string.isRequired
     }).isRequired,
-    nieuwStartDatum: PropTypes.any.isRequired,
-    nieuwEindDatum: PropTypes.any.isRequired
+    nieuwStartDatum: PropTypes.any,
+    nieuwEindDatum: PropTypes.any
 };
 
 RentalCamperBox.propTypes = {
@@ -263,6 +314,6 @@ RentalCamperBox.propTypes = {
         startDatum: PropTypes.string.isRequired,
         eindDatum: PropTypes.string.isRequired
     }).isRequired,
-    nieuwStartDatum: PropTypes.any.isRequired,
-    nieuwEindDatum: PropTypes.any.isRequired
+    nieuwStartDatum: PropTypes.any,
+    nieuwEindDatum: PropTypes.any
 };
