@@ -1,8 +1,14 @@
 import styles from "./profile/ProfilePageBase.module.css";
 import { useState } from "react";
 import "../styles/RentingSubmit.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import { RentalAutoBox } from "./RentalVehicleBox.jsx";
 
 function RentingSubmit() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const vehicleData = location.state?.vehicleData;
+
     const [wettelijkenaam, setWettelijkenaam] = useState("");
     const [adresgegevens, setAdresgegevens] = useState("");
     const [rijbewijsnummer, setRijbewijsnummer] = useState("");
@@ -13,29 +19,16 @@ function RentingSubmit() {
     const [eindPunt, setEindPunt] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
 
-    function handleWettelijkenaam(e) {
-        setWettelijkenaam(e.target.value);
-    }
-
-    function handleAdresgegevens(e) {
-        setAdresgegevens(e.target.value);
-    }
-
-    function handleReisaard(e) {
-        setReisaard(e.target.value);
-    }
-
-    function handleVerstePunt(e) {
-        setVerstePunt(e.target.value);
-    }
-
-    function handleStartPunt(e) {
-        setStartPunt(e.target.value);
-    }
-
-    function handleEindPunt(e) {
-        setEindPunt(e.target.value);
-    }
+    const userData = {
+        wettelijkenaam,
+        adresgegevens,
+        rijbewijsnummer,
+        reisaard,
+        verwachteKm,
+        verstePunt,
+        startPunt,
+        eindPunt,
+    };
 
     function handleSubmit() {
         if (
@@ -48,7 +41,9 @@ function RentingSubmit() {
             startPunt &&
             eindPunt
         ) {
-            setConfirmationMessage("Uw huuraanvraag is verzonden!");
+            setConfirmationMessage("");
+
+            navigate('/confirmation', { state: { vehicleData, userData } });
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
         }
@@ -56,17 +51,19 @@ function RentingSubmit() {
 
     return (
         <main>
-            <div className={styles.MainDiv}>
-                <p className="main-div-car">Hier komt de auto.</p>
+            <div className={styles.TopDiv} id='top-div__div'>
+                {vehicleData.soort === "Auto" && <RentalAutoBox data={vehicleData} />}
+                {vehicleData.soort === "Caravan" && <RentalAutoBox data={vehicleData} />}
+                {vehicleData.soort === "Camper" && <RentalAutoBox data={vehicleData} />}
             </div>
 
             <div className={styles.MainDiv}>
-                <p className="main-div-form__text">
+                <h1 className="main-div-form__text">
                     Vul hieronder de gegevens in om een abonnement aan te vragen.
-                </p>
+                </h1>
                 <div className="FormWrapper">
                     <label htmlFor="form__wettelijke-naam" className="label">
-                        Wettelijke naam:
+                        Wettelijke naam
                     </label>
                     <input
                         id="form__wettelijke-naam"
@@ -74,12 +71,10 @@ function RentingSubmit() {
                         type="text"
                         placeholder="Vul hier uw volledige naam in voor het huren van dit voertuig."
                         value={wettelijkenaam}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleWettelijkenaam}
+                        onChange={(e) => setWettelijkenaam(e.target.value)}
                     />
                     <label htmlFor="form__adres-gegevens" className="label">
-                        Adres gegevens:
+                        Adres gegevens
                     </label>
                     <input
                         id="form__adres-gegevens"
@@ -87,12 +82,10 @@ function RentingSubmit() {
                         type="text"
                         placeholder="Vul hier uw adres gegevens in voor het huren van dit voertuig."
                         value={adresgegevens}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleAdresgegevens}
+                        onChange={(e) => setAdresgegevens(e.target.value)}
                     />
                     <label htmlFor="form__rijbewijs-nummer" className="label">
-                        Rijbewijs nummer:
+                        Rijbewijs nummer
                     </label>
                     <input
                         id="form__rijbewijs-nummer"
@@ -100,17 +93,10 @@ function RentingSubmit() {
                         type="number"
                         placeholder="Vul hier uw rijbewijs nummer in voor het huren van dit voertuig."
                         value={rijbewijsnummer}
-                        min="10"
-                        max="10"
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            if (/^\d*$/.test(value)) {
-                                setRijbewijsnummer(value);
-                            }
-                        }}
+                        onChange={(e) => setRijbewijsnummer(e.target.value)}
                     />
                     <label htmlFor="form__reisaard" className="label">
-                        Soort reis:
+                        Soort reis
                     </label>
                     <input
                         id="form__reisaard"
@@ -118,43 +104,32 @@ function RentingSubmit() {
                         type="text"
                         placeholder="Vul hier uw reis aard in voor het huren van dit voertuig."
                         value={reisaard}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleReisaard}
+                        onChange={(e) => setReisaard(e.target.value)}
                     />
                     <label htmlFor="form__verwachte-km" className="label">
-                        Verwachte gereden kilometers:
+                        Verwachte gereden kilometers
                     </label>
                     <input
                         id="form__verwachte-km"
                         className="renting-submit-form"
                         type="number"
-                        placeholder="Vul hier in hoeveel kilometer afstand u veracht af te leggen."
+                        placeholder="Vul hier in hoeveel kilometer afstand u verwacht af te leggen."
                         value={verwachteKm}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            if (/^\d*$/.test(value)) {
-                                setVerwachteKm(value);
-                            }
-                        }}
+                        onChange={(e) => setVerwachteKm(e.target.value)}
                     />
                     <label htmlFor="form__verste-punt" className="label">
-                        Verwachte verste punt van de reis:
+                        Verwachte verste punt van de reis
                     </label>
                     <input
                         id="form__verste-punt"
                         className="renting-submit-form"
                         type="text"
-                        placeholder="Vul hier het verste punt in wat u veracht af te leggen."
+                        placeholder="Vul hier het verste punt in wat u verwacht af te leggen."
                         value={verstePunt}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleVerstePunt}
+                        onChange={(e) => setVerstePunt(e.target.value)}
                     />
                     <label htmlFor="form__start-punt" className="label">
-                        Start punt van de reis:
+                        Start punt van de reis
                     </label>
                     <input
                         id="form__start-punt"
@@ -162,12 +137,10 @@ function RentingSubmit() {
                         type="text"
                         placeholder="Vul hier het start punt in van uw reis."
                         value={startPunt}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleStartPunt}
+                        onChange={(e) => setStartPunt(e.target.value)}
                     />
                     <label htmlFor="form__eind-punt" className="label">
-                        Eind punt van de reis:
+                        Eind punt van de reis
                     </label>
                     <input
                         id="form__eind-punt"
@@ -175,28 +148,17 @@ function RentingSubmit() {
                         type="text"
                         placeholder="Vul hier het eind punt in van uw reis."
                         value={eindPunt}
-                        minLength="2"
-                        maxLength="50"
-                        onChange={handleEindPunt}
+                        onChange={(e) => setEindPunt(e.target.value)}
                     />
-                    <p className="price__text">prijs: (??)</p>
                 </div>
                 {confirmationMessage && (
-                    <p
-                        className={`confirmation-message ${
-                            confirmationMessage === "Uw huuraanvraag is verzonden!"
-                                ? "success"
-                                : "error"
-                        }`}
-                    >
+                    <p className={`confirmation-message ${confirmationMessage === "Uw huuraanvraag is verzonden!" ? "success" : "error"}`}>
                         {confirmationMessage}
                     </p>
                 )}
 
-                <div onClick={handleSubmit} className="submit-button">
-                    <div className="submit-button__div">
-                        <p className="submit-button__text">Conformeer huuraanvraag</p>
-                    </div>
+                <div className="submit-button">
+                    <button onClick={handleSubmit} className="submit-button__button">Volgende pagina</button>
                 </div>
             </div>
         </main>
