@@ -1,8 +1,9 @@
 import '../styles/ConfirmationBox.css';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function ConfirmationBox() {
     const location = useLocation();
+    const navigate = useNavigate();
     const { vehicleData, userData, startDatum, eindDatum } = location.state;
 
     const basePrice = vehicleData.prijs * 4;
@@ -13,7 +14,10 @@ export default function ConfirmationBox() {
     const deposit = vehicleData.soort === "Auto" ? 400 : vehicleData.soort === "Caravan" ? 750 : 1500;
     const totalCost = basePrice + insurance + tax + fuel + kmCharge + deposit;
 
+
     function handleAkkoordButtonClick() {
+        const statusText = document.getElementById('confirmation-button-box-status__span');
+
         const payload = {
             id: 0,
             particuliereHuurderId: 1,
@@ -59,10 +63,18 @@ export default function ConfirmationBox() {
                 return response.json();
             })
             .then(data => {
-                console.log("Success:", data);
+                statusText.style.color = 'green';
+                statusText.textContent = 'Uw verzoek is succesvol verzonden.\r\n U wordt nu doorgestuurd naar de betaalpagina.';
+                statusText.style.display = 'block';
+                setTimeout(() => {
+                    navigate("/payment", data);
+                },3000);
             })
             .catch(error => {
-                console.error("Error:", error);
+                console.error(error);
+                statusText.style.color = 'red';
+                statusText.textContent = 'Uw verzoek kon niet worden verzonden. Probeer het later opnieuw.';
+                statusText.style.display = 'block';
             });
     }
 
@@ -178,6 +190,7 @@ export default function ConfirmationBox() {
             <div className="confirmation-page-button-box__div">
                 <h3 className='confirmation-button-box__h3'>Ik (huurder) bevestig hierbij dat alle hierboven weergegeven gegevens correct zijn en ga akkoord met het verzenden van dit verzoek en het openen van de betaalpagina.</h3>
                 <button onClick={handleAkkoordButtonClick} className='confirmation-button-box__button'>Akkoord</button>
+                <span id='confirmation-button-box-status__span'></span>
             </div>
         </div>
     );

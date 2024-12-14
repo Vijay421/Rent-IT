@@ -132,6 +132,7 @@
     border: 2px solid black;
     padding: 10px 0;
     background-color: ghostwhite;
+    gap: 10px;
 }
 
 .confirmation-button-box__h3 {
@@ -140,7 +141,7 @@
 }
 
 .confirmation-button-box__button {
-    margin: 10px auto 0 auto;
+    margin: 0 auto;
     font-size: 2em;
     border-radius: 10px;
     border: 2px solid black;
@@ -152,6 +153,13 @@
 
 .confirmation-button-box__button:hover {
     background-color: #22cc22;
+}
+
+#confirmation-button-box-status__span {
+    display: none;
+    text-align: center;
+    font-size: 1.1em;
+    white-space: pre;
 }
 
 @media only screen and (max-width: 1111px) {
