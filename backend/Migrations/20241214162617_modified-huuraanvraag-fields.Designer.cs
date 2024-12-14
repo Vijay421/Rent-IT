@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241214122451_modified-huuraanvraag-fields")]
+    [Migration("20241214162617_modified-huuraanvraag-fields")]
     partial class modifiedhuuraanvraagfields
     {
         /// <inheritdoc />
@@ -198,7 +198,8 @@ namespace backend.Migrations
 
                     b.Property<string>("Adresgegevens")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasAnnotation("Relational:JsonPropertyName", "adresgegevens");
 
                     b.Property<DateOnly>("Einddatum")
@@ -206,25 +207,30 @@ namespace backend.Migrations
                         .HasAnnotation("Relational:JsonPropertyName", "einddatum");
 
                     b.Property<bool?>("Geaccepteerd")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<bool>("Gezien")
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasAnnotation("Relational:JsonPropertyName", "reisaard");
 
                     b.Property<string>("Rijbewijsnummer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
                         .HasAnnotation("Relational:JsonPropertyName", "rijbewijsnummer");
 
                     b.Property<DateOnly>("Startdatum")
@@ -236,19 +242,21 @@ namespace backend.Migrations
 
                     b.Property<string>("Vereiste_bestemming")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasAnnotation("Relational:JsonPropertyName", "vereiste_bestemming");
 
                     b.Property<int>("Verwachte_km")
                         .HasColumnType("int")
                         .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
 
-                    b.Property<int?>("VoertuigId")
+                    b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
 
                     b.HasKey("Id");
@@ -540,11 +548,15 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId");
+                        .HasForeignKey("ParticuliereHuurderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()
-                        .HasForeignKey("VoertuigId");
+                        .HasForeignKey("VoertuigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Voertuig");
                 });
