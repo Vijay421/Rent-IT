@@ -7,7 +7,6 @@ import {RentalAutoBox, RentalCamperBox, RentalCaravanBox} from "./RentalVehicleB
 function RentingSubmit() {
     const location = useLocation();
     const navigate = useNavigate();
-    const key = location.state?.key;
     const vehicleData = location.state?.vehicleData;
     const startDatum = location.state?.startDatum;
     const eindDatum = location.state?.eindDatum;
