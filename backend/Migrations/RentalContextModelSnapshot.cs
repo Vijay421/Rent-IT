@@ -408,8 +408,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasAnnotation("Relational:JsonPropertyName", "voertuig");
                 });
 
             modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>

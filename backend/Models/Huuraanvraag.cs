@@ -11,9 +11,11 @@ namespace backend.Models
         
         [Required]
         public int? ParticuliereHuurderId { get; set; }
-
+        
         [Required]
-        [JsonPropertyName("voertuig")]
+        public int VoertuigId { get; set; }
+
+        [JsonIgnore]
         public Voertuig? Voertuig { get; set; }
 
         [Required]

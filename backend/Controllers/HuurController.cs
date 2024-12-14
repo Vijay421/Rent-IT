@@ -67,6 +67,12 @@ public class HuurController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Huuraanvraag>> PostHuuraanvraag(Huuraanvraag huuraanvraag)
     {
+        if (huuraanvraag.VoertuigId > 0)
+        {
+            var vehicle = new Voertuig { Id = huuraanvraag.VoertuigId };
+            _context.Voertuigen.Attach(vehicle);
+            huuraanvraag.Voertuig = vehicle;
+        }
         _context.Huuraanvragen.Add(huuraanvraag);
         await _context.SaveChangesAsync();
 

@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241214162617_modified-huuraanvraag-fields")]
+    [Migration("20241214183534_modified-huuraanvraag-fields")]
     partial class modifiedhuuraanvraagfields
     {
         /// <inheritdoc />
@@ -411,8 +411,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasAnnotation("Relational:JsonPropertyName", "voertuig");
                 });
 
             modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
