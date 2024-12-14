@@ -31,7 +31,7 @@ function SubscriptionRequest() {
             const endDateObj = new Date(endDate);
 
             if (endDateObj < today) {
-                window.alert("Einddatum kan niet eerder zijn dag vandaag");
+                window.alert("Einddatum kan niet eerder zijn dan vandaag");
                 return;
             }
         }

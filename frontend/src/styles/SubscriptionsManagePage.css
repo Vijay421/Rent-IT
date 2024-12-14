@@ -40,6 +40,10 @@
     margin-top: 5px;
 }
 
+.subs__item-renter {
+    display: flex;
+}
+
 @media only screen and (max-width: 400px) {
     .subs__title {
         font-size: 25px

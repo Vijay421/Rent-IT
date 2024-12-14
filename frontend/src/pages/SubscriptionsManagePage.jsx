@@ -6,7 +6,6 @@ import "../styles/SubscriptionsManagePage.css";
 export default function SubscriptionsManagePage() {
     const [subs, setSubs] = useState([]);
     const [renters, setRenters] = useState([]);
-    const [selectedRenters, setSelectedRenters] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
@@ -15,7 +14,6 @@ export default function SubscriptionsManagePage() {
 
             const userRenters = await getRentersFromCurrentUser();
             setRenters(userRenters);
-            console.log(userRenters);
         };
 
         getData();
@@ -31,7 +29,7 @@ export default function SubscriptionsManagePage() {
                     <div className="subs__subs">
                         {
                             subs.map((data, key) => (
-                                <SubscriptionManage key={key} data={data} renters={renters} selectedRenters={selectedRenters} setSelectedRenters={setSelectedRenters} />
+                                <Subscription key={key} data={data} renters={renters} subId={data.id} initialRenters={data.zakelijkeHuurders} />
                             ))
                         }
                     </div>
@@ -43,10 +41,12 @@ export default function SubscriptionsManagePage() {
     );
 }
 
-function SubscriptionManage({ data, renters, selectedRenters, setSelectedRenters }) {
+function Subscription({ data, renters, subId, initialRenters }) {
+    const [selectedRenters, setSelectedRenters] = useState(initialRenters);
+
     function handleRentersSelect(e) {
         const id = e.target.value;
-        if (id === null) {
+        if (id === "Geen") {
             return;
         }
 
@@ -62,17 +62,31 @@ function SubscriptionManage({ data, renters, selectedRenters, setSelectedRenters
         });
     }
 
-    // TODO: show selectedRenters, and make it so they can be removed as well.
+    function RemoveSelectedRenter(id) {
+        setSelectedRenters((oldRenters) => {
+            const copy = [...oldRenters];
+            const filtered = copy.filter(renterId => renterId !== id);
+            return filtered;
+        });
+    }
+
+    async function handleSave() {
+        const didSucceed = updateRenters(selectedRenters, subId);
+        if (didSucceed) {
+            window.alert("De veranderingen zijn opgeslagen!");
+        }
+    }
+
     return (
         <div className="subs__item">
             <p className="subs__item-label">Naam</p>
             <p>{data.naam}</p>
 
             <p className="subs__item-label">Prijs per maand</p>
-            <p>{data.prijs_per_maand}</p>
+            <p>{data.prijsPerMaand}</p>
 
             <p className="subs__item-label">Maximaal aantal huurder</p>
-            <p>{data.max_huurders}</p>
+            <p>{data.maxHuurders}</p>
 
             <p className="subs__item-label">Einddatum</p>
             <p>{data.einddatum}</p>
@@ -89,6 +103,28 @@ function SubscriptionManage({ data, renters, selectedRenters, setSelectedRenters
                     ))
                 }
             </select>
+
+            {
+                selectedRenters.length === 0 ? <></> : (
+                    <>
+                        <p className="subs__item-label">Geselecteerd</p>
+                        <ul>
+                            {
+                                renters
+                                    .filter(renter => selectedRenters.includes(renter.id))
+                                    .map((data, key) => (
+                                        <li key={key} className="subs__item-renter">
+                                            <p>{ data.userName }</p>
+                                            <button onClick={() => RemoveSelectedRenter(data.id)}>Verwijder</button>
+                                        </li>
+                                    ))
+                            }
+                        </ul>
+                    </>
+                )
+            }
+
+            <button onClick={handleSave} >Opslaan</button>
         </div>
     );
 }
@@ -139,6 +175,32 @@ async function getRentersFromCurrentUser() {
         return await response.json();
     } catch (error) {
         console.error('error when requesting renters, or parsing the response:', error);
+        throw error;
+    }
+}
+
+/**
+ * Adds (or removes) renters to (or from) the subscription.
+ * 
+ * @param {Object} payload 
+ * @param {number} subId
+ * @returns {boolean}
+ */
+async function updateRenters(payload, subId) {
+    try {
+        const response = await fetch(`https://localhost:53085/api/Abonnement/renters/${subId}`, {
+            method: 'PUT',
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        return response.ok;
+    } catch (error) {
+        console.error('error when saving renters, or parsing the response:', error);
         throw error;
     }
 }

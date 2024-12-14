@@ -2,6 +2,7 @@
 using backend.DTOs;
 using backend.Models;
 using backend.Rollen;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Security.Claims;
 
 namespace backend.Controllers
 {
+    [Authorize(Roles = "zakelijke_beheerder")]
     [Route("api/[controller]")]
     [ApiController]
     public class HuurBeheerderController : ControllerBase
@@ -23,7 +25,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("zakelijke-huurders")]
-        public async Task<ActionResult<IEnumerable<User>>> GetZakelijkeHuurders()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetZakelijkeHuurders()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -47,6 +49,11 @@ namespace backend.Controllers
                 .Users
                 .Include(u => u.ZakelijkeHuurder)
                 .Where(u => u.ZakelijkeHuurder.HuurbeheerderId == user.Huurbeheerder.Id)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                })
                 .ToListAsync();
 
             return Ok(huurders);

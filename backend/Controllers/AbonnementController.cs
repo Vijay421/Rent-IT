@@ -76,7 +76,7 @@ public class AbonnementController : ControllerBase
         {
             Id = 0,
             Naam = abonnementDTO.Naam,
-            // TODO (before pr): figure out what Prijs_per_maand should be.
+            // TODO: figure out what Prijs_per_maand should be.
             //Prijs_per_maand = abonnementDTO.Prijs_per_maand,
             Prijs_per_maand = 100.0,
             Max_huurders = abonnementDTO.Max_huurders,
@@ -122,7 +122,7 @@ public class AbonnementController : ControllerBase
 
     [Authorize(Roles = "zakelijke_beheerder")]
     [HttpGet("company")]
-    public async Task<ActionResult<IEnumerable<Abonnement>>> GetCompanyAbonnementen()
+    public async Task<ActionResult<IEnumerable<AbonnementPerZakelijkeHuurderDTO>>> GetCompanyAbonnementen()
     {
         var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (id == null)
@@ -145,9 +145,89 @@ public class AbonnementController : ControllerBase
         var abonnementen = await _context
             .Abonnementen
             .Where(a => a.HuurbeheerderId == user.Huurbeheerder.Id)
+            .Include(a => a.ZakelijkeHuurders)
+            .Select(a => new AbonnementPerZakelijkeHuurderDTO
+                {
+                    Id = a.Id,
+                    Naam = a.Naam,
+                    PrijsPerMaand = a.Prijs_per_maand,
+                    MaxHuurders = a.Max_huurders,
+                    Einddatum = a.Einddatum,
+                    Soort = a.Soort,
+                    ZakelijkeHuurders = a.ZakelijkeHuurders.Select(z => z.UserId).ToList(),
+                }
+            )
             .ToListAsync();
 
         return Ok(abonnementen);
+    }
+
+    [Authorize(Roles = "zakelijke_beheerder")]
+    [HttpPut("renters/{abonnementId}")]
+    public async Task<ActionResult> UpdateRenters(int abonnementId, List<string> renters)
+    {
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (id == null)
+        {
+            return NotFound("Kan de gebruiker niet vinden");
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound("Kan de gebruiker niet vinden");
+        }
+
+        _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+        if (user.Huurbeheerder == null)
+        {
+            return Unauthorized("Incorrecte gebruiker");
+        }
+
+        var abonnement = await _context.Abonnementen.FindAsync(abonnementId);
+        if (abonnement == null)
+        {
+            return NotFound("Geen abonnement gevonden");
+        }
+        _context.Entry(abonnement).Collection(a => a.ZakelijkeHuurders).Load();
+
+        _context.Entry(user.Huurbeheerder).Collection(z => z.ZakelijkeHuurders).Load();
+
+        foreach (var renter in renters)
+        {
+            var isRenterOfUser = user
+                .Huurbeheerder
+                .ZakelijkeHuurders
+                .Any(z => z.UserId == renter);
+
+            if (!isRenterOfUser)
+            {
+                return BadRequest($"Zakelijke huurder met id '{renter}' hoort niet bij de huidige beheerder");
+            }
+        }
+
+        var huuders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.UserId)).ToListAsync();
+        abonnement.ZakelijkeHuurders = huuders;
+        _context.Entry(abonnement).State = EntityState.Modified;
+
+        try
+        {
+            _context.Update(abonnement);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Abonnementen.Any(a => a.Id == abonnementId))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
     }
 
     [HttpPut("{id}")]
@@ -187,7 +267,7 @@ public class AbonnementController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Abonnementen.Any(u => u.Id == id))
+            if (!_context.Abonnementen.Any(a => a.Id == id))
             {
                 return NotFound();
             } else

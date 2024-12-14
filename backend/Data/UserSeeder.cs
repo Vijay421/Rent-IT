@@ -100,35 +100,35 @@ namespace backend.Data
                 return;
             }
 
-            var zh1 = new ZakelijkeHuurder
-            {
-                Factuuradres = "Hierzo",
-            };
             var user1 = new User
             {
                 UserName = "z-user1",
                 Email = "zuser1@user.com",
                 EmailConfirmed = true,
-                ZakelijkeHuurder = zh1,
+            };
+            await userManager.CreateAsync(user1, "Qwerty123!");
+            var zh1 = new ZakelijkeHuurder
+            {
+                Factuuradres = "Hierzo",
+                UserId = user1.Id,
             };
             context.ZakelijkeHuurders.Add(zh1);
             await context.SaveChangesAsync();
-            await userManager.CreateAsync(user1, "Qwerty123!");
 
-            var zh2 = new ZakelijkeHuurder
-            {
-                Factuuradres = "Daarzo",
-            };
             var user2 = new User
             {
                 UserName = "z-user2",
                 Email = "zuser2@user.com",
                 EmailConfirmed = true,
-                ZakelijkeHuurder = zh2,
+            };
+            await userManager.CreateAsync(user2, "Qwerty123!");
+            var zh2 = new ZakelijkeHuurder
+            {
+                Factuuradres = "Daarzo",
+                UserId = user2.Id,
             };
             context.ZakelijkeHuurders.Add(zh2);
             await context.SaveChangesAsync();
-            await userManager.CreateAsync(user2, "Qwerty123!");
 
             var zhuurder = new Huurbeheerder
             {
