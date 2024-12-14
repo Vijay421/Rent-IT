@@ -2,7 +2,7 @@
 
 namespace backend.DTOs
 {
-    public class UpdateAbonnement
+    public class UpdateAbonnementDTO
     {
         [StringLength(50, MinimumLength = 2)]
         public string? Naam { get; set; }

@@ -231,7 +231,7 @@ public class AbonnementController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAbonnement(int id, UpdateAbonnement abonnementDTO)
+    public async Task<IActionResult> UpdateAbonnement(int id, UpdateAbonnementDTO abonnementDTO)
     {
         if (abonnementDTO.Einddatum != null)
         {
