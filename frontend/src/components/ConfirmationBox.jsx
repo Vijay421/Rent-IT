@@ -23,7 +23,7 @@ export default function ConfirmationBox() {
 
         const payload = {
             id: 0, /*huuraanvraag id*/
-            particuliereHuurderId: 1, /*has to be modified later so store the current users account Id*/
+            //particuliereHuurderId: 1, /*has to be modified later so store the current users account Id*/
             voertuigId: vehicleData.id, /*selected vehicles id*/
             startdatum: startDatum,
             einddatum: eindDatum,
@@ -33,7 +33,7 @@ export default function ConfirmationBox() {
             reisaard: userData.reisaard,
             vereiste_bestemming: userData.verstePunt,
             verwachte_km: userData.verwachtekm,
-            geaccepteerd: false,
+            geaccepteerd: null,
             reden: null,
             veranderDatum: new Date().toJSON(),
             gezien: false,
@@ -41,6 +41,8 @@ export default function ConfirmationBox() {
 
         fetch("https://localhost:53085/api/Huur", {
             method: "POST",
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
             headers: {
                 "Content-Type": "application/json"
             },
