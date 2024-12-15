@@ -147,7 +147,8 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
         const filterStart = new Date(retrieveDate);
         const filterEnd = new Date(handInDate);
 
-        return filterStart <= vehicleStartDate && filterEnd >= vehicleEndDate;
+        const shouldFilter = vehicleStartDate >= filterStart && vehicleEndDate <= filterEnd;
+        return shouldFilter;
     }
 
     return true;

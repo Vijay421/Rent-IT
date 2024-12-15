@@ -207,6 +207,11 @@ public class AbonnementController : ControllerBase
         }
 
         var huuders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.UserId)).ToListAsync();
+        if (huuders.Count() > abonnement.Max_huurders)
+        {
+            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huuders.Count()}");
+        }
+
         abonnement.ZakelijkeHuurders = huuders;
         _context.Entry(abonnement).State = EntityState.Modified;
 

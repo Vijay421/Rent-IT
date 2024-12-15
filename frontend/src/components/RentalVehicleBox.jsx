@@ -52,6 +52,9 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                     <div className="rental-vehicle-data-column2__div">
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
+
+                        <p className='rental-vehicle-title__p'>Soort</p>
+                        <p className='rental-vehicle-info__p'>{data.soort}</p>
                     </div>
                 </div>
             </div>
@@ -143,6 +146,9 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
                         <div className="rental-vehicle-data-column2__div">
                             <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                             <p className='rental-vehicle-info__p'>{data.status}</p>
+
+                            <p className='rental-vehicle-title__p'>Soort</p>
+                            <p className='rental-vehicle-info__p'>{data.soort}</p>
                         </div>
                     </div>
                 </div>
@@ -233,6 +239,9 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
                     <div className="rental-vehicle-data-column2__div">
                         <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
                         <p className='rental-vehicle-info__p'>{data.status}</p>
+
+                        <p className='rental-vehicle-title__p'>Soort</p>
+                        <p className='rental-vehicle-info__p'>{data.soort}</p>
                     </div>
                 </div>
             </div>
