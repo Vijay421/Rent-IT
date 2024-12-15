@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using backend.Data;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +71,7 @@ public class HuurController : ControllerBase
     //     return NoContent();
     // }
 
-    [Authorize(Roles = "particuliere_huurder")]
+    [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
     [HttpPost]
     public async Task<ActionResult<Huuraanvraag>> PostHuuraanvraag(HuuraanvraagDTO huuraanvraagDto)
     {
@@ -85,12 +86,32 @@ public class HuurController : ControllerBase
             return NotFound("Kan de gebruiker niet vinden");
         }
 
-        _context.Entry(user).Reference((u => u.ParticuliereHuurder)).Load();
-        if (user.ParticuliereHuurder == null)
+        var role = User.FindFirstValue(ClaimTypes.Role);
+        if (role == null)
         {
             return Unauthorized("Incorrecte gebruiker");
         }
-        
+        if (role == "zakelijke_huurder")
+        {
+            _context.Entry(user).Reference((u => u.ZakelijkeHuurder)).Load();
+            if (user.ZakelijkeHuurder == null)
+            {
+                return Unauthorized("Incorrecte gebruiker");
+            }
+
+            if (user.ZakelijkeHuurder.AbonnementId == null)
+            {
+                return Unauthorized("U bent niet gekoppeld aan een abonnementen. Bij problemen vraag, uw huurbeheerder om hulp.");
+            }
+        } else
+        {
+            _context.Entry(user).Reference((u => u.ParticuliereHuurder)).Load();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Unauthorized("Incorrecte gebruiker");
+            }
+        }
+
         if (huuraanvraagDto.VoertuigId > 0)
         {
             var vehicle = new Voertuig { Id = huuraanvraagDto.VoertuigId };
@@ -101,7 +122,8 @@ public class HuurController : ControllerBase
         var huuraanvraag = new Huuraanvraag
         {
             Id = huuraanvraagDto.Id,
-            ParticuliereHuurderId = user.ParticuliereHuurder.Id,
+            ParticuliereHuurderId = user.ParticuliereHuurder?.Id,
+            ZakelijkeHuurder = user.ZakelijkeHuurder?.Id,
             Voertuig = huuraanvraagDto.Voertuig,
             Startdatum = huuraanvraagDto.Startdatum,
             Einddatum = huuraanvraagDto.Einddatum,

@@ -122,8 +122,8 @@ namespace backend.Controllers
 
             var huuraanvragenDTOs = huuraanvragen.Select(h => new HuuraanvraagGeschiedenisDTO
             {
-                Startdatum = h.Startdatum.ToString("dd-MM-yyyy"),
-                Einddatum = h.Einddatum.ToString("dd-MM-yyyy"),
+                Startdatum = h.Startdatum,
+                Einddatum = h.Einddatum,
                 Reisaard = h.Reisaard,
                 Merk = h.Voertuig.Merk,
                 Type = h.Voertuig.Type,

@@ -107,6 +107,7 @@ namespace backend.Data
                 EmailConfirmed = true,
             };
             await userManager.CreateAsync(user1, "Qwerty123!");
+            await userManager.AddToRoleAsync(user1, "zakelijke_huurder");
             var zh1 = new ZakelijkeHuurder
             {
                 Factuuradres = "Hierzo",
@@ -122,6 +123,7 @@ namespace backend.Data
                 EmailConfirmed = true,
             };
             await userManager.CreateAsync(user2, "Qwerty123!");
+            await userManager.AddToRoleAsync(user2, "zakelijke_huurder");
             var zh2 = new ZakelijkeHuurder
             {
                 Factuuradres = "Daarzo",

@@ -112,8 +112,7 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
             try {
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
-                // TODO: eventually use setUserRole.
-                // setUserRole(userClaims.role);
+                setUserRole(userClaims.role);
                 setUserName(userClaims.userName);
 
                 setTimeout(() => {
