@@ -2,9 +2,12 @@
     display: flex;
     justify-content: space-between;
     font-size: 1vw;
-    padding: 0 1vw;
     background-color: var(--main-color);
     height: 2em;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 /*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
@@ -16,11 +19,13 @@
     color: black;
     text-decoration: underline;
     margin-top: 0.5em;
+    padding-left: 10px;
 }
 
 .copyright {
     color: black;
     margin-top: 0.5em;
+    padding-right: 10px;
 }
 
 @media only screen and (max-width: 700px) {
