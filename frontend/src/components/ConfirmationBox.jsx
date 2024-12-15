@@ -59,7 +59,8 @@ export default function ConfirmationBox() {
                 statusText.textContent = 'Uw verzoek is succesvol verzonden.\r\n U wordt nu doorgestuurd naar de betaalpagina.';
                 statusText.style.display = 'block';
                 setTimeout(() => {
-                    navigate("/payment", data);
+                    // TODO: redirect to the page with it exists.
+                    // navigate("/betaling", data);
                 },3000);
             })
             .catch(error => {
