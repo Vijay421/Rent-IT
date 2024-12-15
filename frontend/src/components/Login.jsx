@@ -1,5 +1,5 @@
 import {useState, useContext, useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "./AuthContext.jsx";
@@ -88,7 +88,7 @@ function Login() {
  * @param {string} userData.password
  * @param {React.MutableRefObject<null>} status
  * @param {Function} login
- * @param {Navigate} navigate
+ * @param {NavigateFunction} navigate
  * @param {Function} setUserRole
  * @param {Function} setUserName
  * @returns
