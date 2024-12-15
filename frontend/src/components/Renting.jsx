@@ -89,49 +89,28 @@ function Renting() {
         setSelectedSorterenSoort("geen");
     }
 
-    const renderVehicleBoxes = () => {
-        return vehicles
-            .filter((vehicle) => {
-                if (selectedVoertuigSoort !== "alles" && vehicle.soort.toLowerCase() !== selectedVoertuigSoort) return false;
+    const filteredVehicles = vehicles.filter((vehicle) => {
+        if (selectedVoertuigSoort !== "alles" && vehicle.soort.toLowerCase() !== selectedVoertuigSoort) return false;
+        if (selectedMerkSoort !== "alles" && vehicle.merk.toLowerCase() !== selectedMerkSoort) return false;
+        if (selectedPrijsSoort !== "alles" && vehicle.prijs > 50 && selectedPrijsSoort === "low") return false;
+        if (selectedPrijsSoort !== "alles" && (vehicle.prijs > 100 || vehicle.prijs < 51) && selectedPrijsSoort === "mid") return false;
+        if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
+        if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
+        if (selectedDateStartDatum && selectedDateStartDatum < vehicle.startDatum) return false;
+        if (selectedDateEindDatum && selectedDateEindDatum > vehicle.eindDatum) return false;
+        if (
+            !vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
+            !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase())
+        )
+            return false;
+        return true;
+    });
 
-                if (selectedMerkSoort !== "alles" && vehicle.merk.toLowerCase() !== selectedMerkSoort) return false;
-
-                if (selectedPrijsSoort !== "alles" && vehicle.prijs > 50 && selectedPrijsSoort === "low") return false;
-
-                if (selectedPrijsSoort !== "alles" && (vehicle.prijs > 100 || vehicle.prijs < 51) && selectedPrijsSoort === "mid") return false;
-
-                if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
-
-                if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
-
-                if (selectedDateStartDatum < vehicle.startDatum || selectedDateEindDatum > vehicle.eindDatum) return false;
-
-                if ( (!vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
-                    !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase()))) return false;
-
-                return true;
-            })
-            .sort((a, b) => {
-                if (selectedSorterenSoort === "oplopend") {
-                    return a.prijs - b.prijs;
-                } else if (selectedSorterenSoort === "aflopend") {
-                    return b.prijs - a.prijs;
-                } else {
-                    return 0;
-                }
-            })
-            .map((vehicle) => {
-                if (vehicle.soort === "Auto") {
-                    return <RentalAutoBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-                else if (vehicle.soort === "Caravan") {
-                    return <RentalCaravanBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-                else if (vehicle.soort === "Camper") {
-                    return <RentalCamperBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-            });
-    };
+    const sortedVehicles = filteredVehicles.sort((a, b) => {
+        if (selectedSorterenSoort === "oplopend") return a.prijs - b.prijs;
+        if (selectedSorterenSoort === "aflopend") return b.prijs - a.prijs;
+        return 0;
+    });
 
     return (
         <div className="content">
@@ -274,7 +253,42 @@ function Renting() {
 
             <div className="divMargin"></div>
             <div className="divMain">
-                {renderVehicleBoxes()}
+                {sortedVehicles.length === 0 ? (
+                    <span id="divMain-no-content__span">
+                Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
+            </span>
+                ) : (
+                    sortedVehicles.map((vehicle) => {
+                        if (vehicle.soort === "Auto") {
+                            return (
+                                <RentalAutoBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        } else if (vehicle.soort === "Caravan") {
+                            return (
+                                <RentalCaravanBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        } else if (vehicle.soort === "Camper") {
+                            return (
+                                <RentalCamperBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        }
+                    })
+                )}
             </div>
         </div>
     );
