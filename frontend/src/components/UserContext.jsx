@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    // const [userRole, setUserRole] = useState("particuliere_huurder");
     const [userRole, setUserRole] = useState(null);
     const [userName, setUserName] = useState(null);
 
