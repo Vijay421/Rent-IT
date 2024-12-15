@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241212120129_added_reden_in_huuraanvraag")]
-    partial class added_reden_in_huuraanvraag
+    [Migration("20241215101708_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,44 +198,65 @@ namespace backend.Migrations
 
                     b.Property<string>("Adresgegevens")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "adresgegevens");
 
-                    b.Property<DateTime>("Einddatum")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "einddatum");
 
                     b.Property<bool?>("Geaccepteerd")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Gezien")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ParticuliereHuurderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasAnnotation("Relational:JsonPropertyName", "reisaard");
 
                     b.Property<string>("Rijbewijsnummer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasAnnotation("Relational:JsonPropertyName", "rijbewijsnummer");
 
-                    b.Property<DateTime>("Startdatum")
+                    b.Property<DateOnly>("Startdatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "startdatum");
+
+                    b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "vereiste_bestemming");
 
                     b.Property<int>("Verwachte_km")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
 
                     b.HasKey("Id");
 
@@ -340,7 +361,6 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Aanschafjaar")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("EindDatum")
@@ -367,7 +387,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("Prijs")
-                        .HasMaxLength(10)
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
@@ -526,7 +545,9 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId");
+                        .HasForeignKey("ParticuliereHuurderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()

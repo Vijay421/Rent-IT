@@ -4,13 +4,10 @@ namespace backend.Models
 {
     using System.Text.Json.Serialization;
 
-    public class Huuraanvraag
+    public class HuuraanvraagDTO
     {
         [Key]
         public int Id { get; set; }
-        
-        [Required]
-        public int? ParticuliereHuurderId { get; set; }
         
         [Required]
         public int VoertuigId { get; set; }
@@ -55,7 +52,7 @@ namespace backend.Models
         [JsonPropertyName("verwachte_km")]
         [Range(1, int.MaxValue, ErrorMessage = "Verwachte_km must be greater than 0.")]
         public int Verwachte_km { get; set; }
-
+        
         public bool? Geaccepteerd { get; set; }
         
         [MaxLength(100)]
@@ -67,12 +64,11 @@ namespace backend.Models
         [Required]
         public bool Gezien { get; set; }
 
-        public Huuraanvraag() { }
+        public HuuraanvraagDTO() { }
 
-        public Huuraanvraag(int id, int? particuliereHuurderId, Voertuig? voertuig, DateOnly startdatum, DateOnly einddatum, string? wettelijke_naam, string? adresgegevens, string? rijbewijsnummer, string? reisaard, string? vereiste_bestemming, int verwachte_km, bool? geaccepteerd, string? reden, DateTime veranderDatum, bool gezien)
+        public HuuraanvraagDTO(int id, Voertuig? voertuig, DateOnly startdatum, DateOnly einddatum, string? wettelijke_naam, string? adresgegevens, string? rijbewijsnummer, string? reisaard, string? vereiste_bestemming, int verwachte_km, bool? geaccepteerd, string? reden, DateTime veranderDatum, bool gezien)
         {
             Id = id;
-            ParticuliereHuurderId = particuliereHuurderId;
             Voertuig = voertuig;
             Startdatum = startdatum;
             Einddatum = einddatum;
