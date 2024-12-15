@@ -1,8 +1,11 @@
 import '../styles/Renting.css';
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicleBox.jsx';
+import {UserContext} from "./UserContext.jsx";
 
 function Renting() {
+    const { userRole } = useContext(UserContext);
+
     const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles");
     const [selectedDateStartDatum, setSelectedDateStartDatum] = useState("");
     const [selectedDateEindDatum, setSelectedDateEindDatum] = useState("");
@@ -19,6 +22,7 @@ function Renting() {
                 const response = await fetch('https://localhost:53085/api/Voertuig');
                 const data = await response.json();
                 setVehicles(data);
+                console.log(userRole);
             }
             catch (e) {
                 console.error(e);
@@ -128,10 +132,18 @@ function Renting() {
                                 value={selectedVoertuigSoort} // Controlled component
                                 onChange={handleVoertuigChange} // Event handler
                             >
-                                <option value="alles">Alles</option>
-                                <option value="auto">Auto</option>
-                                <option value="camper">Camper</option>
-                                <option value="caravan">Caravan</option>
+                                {userRole !== "zakelijke_huurder" ? (
+                                    <>
+                                        <option value="alles">Alles</option>
+                                        <option value="auto">Auto</option>
+                                        <option value="caravan">Caravan</option>
+                                        <option value="camper">Camper</option>
+                                    </>
+                                ) : (
+                                    <>
+                                        <option value="auto">Auto</option>
+                                    </>
+                                )}
                             </select>
                         </div>
                     </div>
@@ -140,12 +152,12 @@ function Renting() {
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
                             <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
-                                type="date"
-                                id="date-picker"
-                                className="date-input"
-                                value={selectedDateStartDatum}
-                                onChange={handleDateChangeStartDatum}
-                            />
+                            type="date"
+                            id="date-picker"
+                            className="date-input"
+                            value={selectedDateStartDatum}
+                        onChange={handleDateChangeStartDatum}
+                        />
                         </div>
                     </div>
 
@@ -257,7 +269,7 @@ function Renting() {
                     <span id="divMain-no-content__span">
                 Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
             </span>
-                ) : (
+                ) : userRole !== "zakelijke_huurder" ? (
                     sortedVehicles.map((vehicle) => {
                         if (vehicle.soort === "Auto") {
                             return (
@@ -288,7 +300,19 @@ function Renting() {
                             );
                         }
                     })
-                )}
+                ) :
+                    sortedVehicles.map((vehicle) => {
+                        if (vehicle.soort === "Auto") {
+                            return (
+                                <RentalAutoBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        }
+                    })}
             </div>
         </div>
     );
