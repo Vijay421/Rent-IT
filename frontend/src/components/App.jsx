@@ -27,8 +27,9 @@ function App() {
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
                 <Route path="/huur-overzicht" element={<RentingPage/>} />
+
                 <Route path="/profiel" element={<ProfilePage/>}/>
-                <Route path="/profiel-instellingen" element={<AccountSettings/>}/>
+                <Route path="/account-instellingen" element={<AccountSettings/>}/>
 
                 <Route path="/abonnement" element={<SubscriptionRequestPage/>}/>
                 <Route path="/abonnementen" element={<SubscriptionsManagePage/>}/>
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
                 <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
                 <Route path="/notificaties" element={<NotificationsPage/>}/>
-                <Route path='/bevestiging' element={<ConfirmationPage/>}/>
+                <Route path="/bevestiging" element={<ConfirmationPage/>}/>
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
             </Routes>
         </Router>
