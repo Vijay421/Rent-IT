@@ -169,10 +169,22 @@ namespace backend.Controllers
             var notificaties = aanvragen
                 .Select(h =>
                 {
+                    string message;
+                    if (h.Geaccepteerd == null)
+                    {
+                        message = "in behandiling";
+                    } else if (h.Geaccepteerd == true)
+                    {
+                        message = "geaccepteerd";
+                    }
+                    else
+                    {
+                        message = "geweigerd";
+                    }
                     return new NotificatieDTO
                     {
                         Titel = "Omtrent: beoordeling over huuraavraag",
-                        Melding = $"De huuraavraag over de {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld: uw huuraanvraag is {(h.Geaccepteerd == true ? "geaccepteerd" : "geweigerd")}",
+                        Melding = $"De huuraavraag over de {h.Voertuig.Merk} {h.Voertuig.Type} is beoordeeld: uw huuraanvraag is {message}",
                     };
                 })
                 .ToList();

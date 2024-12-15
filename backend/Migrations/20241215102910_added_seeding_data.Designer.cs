@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241213223946_added_seeding_data")]
+    [Migration("20241215102910_added_seeding_data")]
     partial class added_seeding_data
     {
         /// <inheritdoc />
@@ -54,37 +54,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8f2d24a4-8b41-4b97-8e00-2e7aa7cf1060",
+                            Id = "a9b08693-ff60-4990-b1ff-b564d1743d8a",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2075d411-27e9-47a2-9101-1ff2eead446d",
+                            Id = "7bb2e607-db08-44c3-84c5-128d8502a354",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "5c0e7b34-6e4c-46a6-b1d1-9e0d857af0c5",
+                            Id = "0f1d9be6-e5d4-46c7-80a5-d8862d816033",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "87237a81-af2f-463a-b729-0e28470e4218",
+                            Id = "7a292194-c322-41c8-93c4-a6525048d698",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "54a81890-3aa3-4b92-bf0c-6bb1cba332e1",
+                            Id = "d91273b1-21bd-4d79-b719-c7e0805004d1",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "918b8332-bdb3-4db8-a675-c8eb5587f221",
+                            Id = "befd652e-857c-4484-a742-ff2921a0ede6",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -281,10 +281,13 @@ namespace backend.Migrations
 
                     b.Property<string>("Adresgegevens")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "adresgegevens");
 
-                    b.Property<DateTime>("Einddatum")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "einddatum");
 
                     b.Property<bool?>("Geaccepteerd")
                         .HasColumnType("bit");
@@ -293,38 +296,50 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasAnnotation("Relational:JsonPropertyName", "reisaard");
 
                     b.Property<string>("Rijbewijsnummer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasAnnotation("Relational:JsonPropertyName", "rijbewijsnummer");
 
-                    b.Property<DateTime>("Startdatum")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Startdatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "startdatum");
 
                     b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "vereiste_bestemming");
 
                     b.Property<int>("Verwachte_km")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
 
                     b.HasKey("Id");
 
@@ -429,7 +444,6 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Aanschafjaar")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("EindDatum")
@@ -456,7 +470,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("Prijs")
-                        .HasMaxLength(10)
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
@@ -752,7 +765,9 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId");
+                        .HasForeignKey("ParticuliereHuurderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()

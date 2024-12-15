@@ -88,11 +88,11 @@ namespace backend.Migrations
                     Type = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Kenteken = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     Kleur = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Aanschafjaar = table.Column<int>(type: "int", maxLength: 4, nullable: false),
+                    Aanschafjaar = table.Column<int>(type: "int", nullable: false),
                     Soort = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Opmerking = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Prijs = table.Column<double>(type: "float", maxLength: 10, nullable: false),
+                    Prijs = table.Column<double>(type: "float", nullable: false),
                     StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
                     EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -147,18 +147,18 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
+                    ParticuliereHuurderId = table.Column<int>(type: "int", nullable: false),
                     VoertuigId = table.Column<int>(type: "int", nullable: false),
-                    Startdatum = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Einddatum = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Wettelijke_naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adresgegevens = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rijbewijsnummer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reisaard = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Vereiste_bestemming = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    Wettelijke_naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Adresgegevens = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Rijbewijsnummer = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Reisaard = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Vereiste_bestemming = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Verwachte_km = table.Column<int>(type: "int", nullable: false),
                     Geaccepteerd = table.Column<bool>(type: "bit", nullable: true),
-                    Reden = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reden = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     VeranderDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gezien = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -169,7 +169,8 @@ namespace backend.Migrations
                         name: "FK_Huuraanvragen_ParticuliereHuurders_ParticuliereHuurderId",
                         column: x => x.ParticuliereHuurderId,
                         principalTable: "ParticuliereHuurders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Huuraanvragen_Voertuigen_VoertuigId",
                         column: x => x.VoertuigId,
