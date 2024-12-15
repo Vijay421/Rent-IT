@@ -16,8 +16,9 @@ namespace backend.Data
             // Should only be run in dev environments because the data is hard coded (no data from a config).
             if (isDev)
             {
-                await SeedParticuliereUser(userManager, config, context);
                 await SeedBackofficeUser(userManager, config, context);
+                await SeedParticuliereUser(userManager, config, context);
+                await SeedZakelijkeBeheerder(userManager, config, context);
             }
         }
 
@@ -88,6 +89,87 @@ namespace backend.Data
                 var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
                 Console.Error.WriteLine($"error: {errorText}");
             }
+        }
+
+        private async Task SeedZakelijkeBeheerder(UserManager<User> userManager, IConfiguration config, RentalContext context)
+        {
+            // Create the zakelijke beheerder user only when it does not exists already.
+            var user = await userManager.FindByNameAsync("zb-user");
+            if (user != null)
+            {
+                return;
+            }
+
+            var user1 = new User
+            {
+                UserName = "z-user1",
+                Email = "zuser1@user.com",
+                EmailConfirmed = true,
+            };
+            await userManager.CreateAsync(user1, "Qwerty123!");
+            var zh1 = new ZakelijkeHuurder
+            {
+                Factuuradres = "Hierzo",
+                UserId = user1.Id,
+            };
+            context.ZakelijkeHuurders.Add(zh1);
+            await context.SaveChangesAsync();
+
+            var user2 = new User
+            {
+                UserName = "z-user2",
+                Email = "zuser2@user.com",
+                EmailConfirmed = true,
+            };
+            await userManager.CreateAsync(user2, "Qwerty123!");
+            var zh2 = new ZakelijkeHuurder
+            {
+                Factuuradres = "Daarzo",
+                UserId = user2.Id,
+            };
+            context.ZakelijkeHuurders.Add(zh2);
+            await context.SaveChangesAsync();
+
+            var zhuurder = new Huurbeheerder
+            {
+                Id = 0,
+                Bedrijfsrol = "project-manager",
+                ZakelijkeHuurders = { zh1, zh2 },
+            };
+            context.Huurbeheerders.Add(zhuurder);
+            await context.SaveChangesAsync();
+
+            var zbUser = new User
+            {
+                UserName = "zb-user",
+                Email = "zbuser@user.com",
+                EmailConfirmed = true,
+                Huurbeheerder = zhuurder,
+            };
+            var result = await userManager.CreateAsync(zbUser, "Qwerty123!");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(zbUser, "zakelijke_beheerder");
+                context.Entry(zbUser).State = EntityState.Modified;
+                await context.SaveChangesAsync(); // Adds the relation to Huurbeheerder.
+            }
+            else
+            {
+                var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
+                Console.Error.WriteLine($"error: {errorText}");
+            }
+
+            var bedrijf = new Bedrijf
+            {
+                Name = "Google LLC",
+                Address = "Claude Debussylaan Etage, Md, Amsterdam 1082 15E 34",
+                KvK_nummer = 34198589,
+                PhoneNumber = "423432423",
+                Huurbeheerders = { zhuurder },
+            };
+            context.Bedrijven.Add(bedrijf);
+            await context.SaveChangesAsync();
         }
 
         private async Task SeedParticuliereUser(UserManager<User> userManager, IConfiguration config, RentalContext context)

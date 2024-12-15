@@ -22,6 +22,7 @@ namespace backend.Data
         public DbSet<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
         public DbSet<Huurbeheerder> Huurbeheerders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
+        public DbSet<Bedrijf> Bedrijven { get; set; }
 
         public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
         {
@@ -37,11 +38,17 @@ namespace backend.Data
             
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
             
-            // var roleConfig = new RoleConfiguration();
-            // modelBuilder.ApplyConfiguration(roleConfig);
-            //
-            // var voertuigSeeder = new VoertuigConfiguration();
-            // voertuigSeeder.Seed(modelBuilder);
+            /*
+            var roleConfig = new RoleConfiguration();
+            modelBuilder.ApplyConfiguration(roleConfig);
+            
+            var voertuigSeeder = new VoertuigSeeder();
+            voertuigSeeder.Seed(modelBuilder);
+
+            var abonnementSeeder = new AbonnementSeeder();
+            abonnementSeeder.Seed(modelBuilder);
+            */
+           
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

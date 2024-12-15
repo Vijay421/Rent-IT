@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20241213223919_added_models")]
+    partial class added_models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,44 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6df26f47-11ea-41ce-a2f7-fd9726d65289",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "a1c9eadf-0334-427f-9766-bd4ed9e4e914",
-                            Name = "backoffice_medewerker",
-                            NormalizedName = "BACKOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "0f13735c-4647-4944-8125-fda037f682e2",
-                            Name = "frontoffice_medewerker",
-                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "51af771d-91fe-44b0-bb5c-9b6c6ba58f9f",
-                            Name = "zakelijke_beheerder",
-                            NormalizedName = "ZAKELIJKE_BEHEERDER"
-                        },
-                        new
-                        {
-                            Id = "6dc6571e-eb96-4e9c-810c-f3a1f2487203",
-                            Name = "zakelijke_huurder",
-                            NormalizedName = "ZAKELIJKE_HUURDER"
-                        },
-                        new
-                        {
-                            Id = "1fb00f4c-cf4a-4786-9e35-068f1175919a",
-                            Name = "particuliere_huurder",
-                            NormalizedName = "PARTICULIERE_HUURDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -227,17 +192,6 @@ namespace backend.Migrations
                     b.HasIndex("HuurbeheerderId");
 
                     b.ToTable("Abonnementen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Einddatum = new DateOnly(2026, 1, 1),
-                            Max_huurders = 10,
-                            Naam = "abbo",
-                            Prijs_per_maand = 12.199999999999999,
-                            Soort = "prepaid"
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.Bedrijf", b =>
@@ -278,13 +232,10 @@ namespace backend.Migrations
 
                     b.Property<string>("Adresgegevens")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasAnnotation("Relational:JsonPropertyName", "adresgegevens");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("Einddatum")
-                        .HasColumnType("date")
-                        .HasAnnotation("Relational:JsonPropertyName", "einddatum");
+                    b.Property<DateTime>("Einddatum")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("Geaccepteerd")
                         .HasColumnType("bit");
@@ -293,50 +244,38 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasAnnotation("Relational:JsonPropertyName", "reisaard");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rijbewijsnummer")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasAnnotation("Relational:JsonPropertyName", "rijbewijsnummer");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("Startdatum")
-                        .HasColumnType("date")
-                        .HasAnnotation("Relational:JsonPropertyName", "startdatum");
+                    b.Property<DateTime>("Startdatum")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasAnnotation("Relational:JsonPropertyName", "vereiste_bestemming");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Verwachte_km")
-                        .HasColumnType("int")
-                        .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
+                        .HasColumnType("int");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -441,6 +380,7 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Aanschafjaar")
+                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("EindDatum")
@@ -467,6 +407,7 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("Prijs")
+                        .HasMaxLength(10)
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
@@ -490,113 +431,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Aanschafjaar = 2018,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "AB-123-CD",
-                            Kleur = "Red",
-                            Merk = "Toyota",
-                            Opmerking = "",
-                            Prijs = 50.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Corolla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Aanschafjaar = 2019,
-                            EindDatum = new DateOnly(2020, 8, 12),
-                            Kenteken = "EF-456-GH",
-                            Kleur = "Blue",
-                            Merk = "Ford",
-                            Opmerking = "",
-                            Prijs = 51.390000000000001,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2017, 4, 3),
-                            Status = "Verhuurbaar",
-                            Type = "Focus"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2024, 11, 9),
-                            Kenteken = "IJ-789-KL",
-                            Kleur = "Black",
-                            Merk = "Volkswagen",
-                            Opmerking = "",
-                            Prijs = 40.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2019, 10, 12),
-                            Status = "Verhuurbaar",
-                            Type = "Golf"
-                        },
-                        new
-                        {
-                            Id = 105,
-                            Aanschafjaar = 2021,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "QR-345-ST",
-                            Kleur = "Gray",
-                            Merk = "Citroën",
-                            Opmerking = "",
-                            Prijs = 65.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Jumper"
-                        },
-                        new
-                        {
-                            Id = 106,
-                            Aanschafjaar = 2016,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "UV-678-WX",
-                            Kleur = "Black",
-                            Merk = "Peugeot",
-                            Opmerking = "",
-                            Prijs = 68.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Boxer"
-                        },
-                        new
-                        {
-                            Id = 185,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "GH-456-IJ",
-                            Kleur = "Blue",
-                            Merk = "Dethle-s",
-                            Opmerking = "",
-                            Prijs = 52.5,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "C'go"
-                        },
-                        new
-                        {
-                            Id = 186,
-                            Aanschafjaar = 2017,
-                            EindDatum = new DateOnly(2016, 4, 12),
-                            Kenteken = "KL-789-MN",
-                            Kleur = "Red",
-                            Merk = "Burstner",
-                            Opmerking = "",
-                            Prijs = 48.0,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
-                            Status = "Verhuurbaar",
-                            Type = "Premio Life"
-                        });
                 });
 
             modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
@@ -762,9 +596,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()

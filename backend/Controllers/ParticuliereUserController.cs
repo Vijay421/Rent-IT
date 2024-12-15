@@ -195,8 +195,7 @@ namespace backend.Controllers
         /// <summary>
         /// Will update the given user fields including the address and password fields, when the current password is provided.
         /// </summary>
-        // TODO: should be: [Authorize(Roles = "particuliere_huurder")]
-        [Authorize]
+        [Authorize(Roles = "particuliere_huurder")]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
         {
