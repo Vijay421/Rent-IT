@@ -27,7 +27,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
             e.preventDefault();
             alert("Einddatum moet worden ingevuld.");
         } else {
-            navigate("/renting-submit", {
+            navigate("/huur-indienen", {
                 state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
             });
         }
@@ -113,7 +113,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
             e.preventDefault();
             alert("Einddatum moet worden ingevuld.");
         } else {
-            navigate("/renting-submit", {
+            navigate("/huur-indienen", {
                 state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
             });
         }
@@ -203,7 +203,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
             e.preventDefault();
             alert("Einddatum moet worden ingevuld.");
         } else {
-            navigate("/renting-submit", {
+            navigate("/huur-indienen", {
                 state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
             });
         }

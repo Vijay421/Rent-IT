@@ -8,7 +8,7 @@ function IndexPageButton() {
                 <div className="ParticulierDiv">
                     <h1 className="ParticulierH1">Particulier</h1>
                 </div>
-                <Link to='/renting'>
+                <Link to='/huur-overzicht'>
                     <div className="ButtonDivLeft">
                         <h1 className="BottomDivLeftHuren">Huren</h1>
                     </div>
@@ -19,7 +19,7 @@ function IndexPageButton() {
                     <h1 className="ZakelijkH1">Zakelijk</h1>
                 </div>
 
-                <Link to='/renting'>
+                <Link to='/huur-overzicht'>
                     <div className="ButtonDivRight">
                         <h1 className="BottomDivRightHuren">Huren</h1>
                     </div>
