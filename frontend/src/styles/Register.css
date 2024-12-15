@@ -2,6 +2,8 @@
     height: 90vh;
     display: flex;
     place-items: center;
+    margin-top: 10em;
+    margin-bottom: 10em;
 }
 
 /*register box that contains all the register fields in center of screen*/
