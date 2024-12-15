@@ -22,6 +22,7 @@ namespace backend.Data
         public DbSet<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
         public DbSet<Huurbeheerder> Huurbeheerders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
+        public DbSet<Bedrijf> Bedrijven { get; set; }
 
         public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
         {
@@ -41,9 +42,13 @@ namespace backend.Data
             var roleConfig = new RoleConfiguration();
             modelBuilder.ApplyConfiguration(roleConfig);
             
-            var voertuigSeeder = new VoertuigConfiguration();
+            var voertuigSeeder = new VoertuigSeeder();
             voertuigSeeder.Seed(modelBuilder);
+
+            var abonnementSeeder = new AbonnementSeeder();
+            abonnementSeeder.Seed(modelBuilder);
             */
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
