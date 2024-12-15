@@ -9,6 +9,7 @@ function Renting() {
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
+    const [selectedSorterenSoort, setSelectedSorterenSoort] = useState("geen");
     const [vehicles, setVehicles] = useState([]);
     const [searchText, setSearchText] = useState("");
 
@@ -74,6 +75,10 @@ function Renting() {
         setSearchText(event.target.value);
     };
 
+    const handleSorterenChange = (event) => {
+        setSelectedSorterenSoort(event.target.value);
+    };
+
     function onResetFiltersButtonClick() {
         setSelectedVoertuigSoort("alles");
         setSelectedMerkSoort("alles");
@@ -81,6 +86,7 @@ function Renting() {
         setSelectedBeschikbaarheidSoort("alles");
         setSelectedDateStartDatum("");
         setSelectedDateEindDatum("");
+        setSelectedSorterenSoort("geen");
     }
 
     const renderVehicleBoxes = () => {
@@ -105,7 +111,15 @@ function Renting() {
 
                 return true;
             })
-
+            .sort((a, b) => {
+                if (selectedSorterenSoort === "oplopend") {
+                    return a.prijs - b.prijs;
+                } else if (selectedSorterenSoort === "aflopend") {
+                    return b.prijs - a.prijs;
+                } else {
+                    return 0;
+                }
+            })
             .map((vehicle) => {
                 if (vehicle.soort === "Auto") {
                     return <RentalAutoBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
@@ -235,7 +249,25 @@ function Renting() {
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
                         <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
-                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset filters</button>
+
+                        <div className="divTop-divSelect-Sorteren-dropdown-container">
+                            <label htmlFor="options" className="dropdown-label">Sorteren: </label>
+                            <select
+                                id="options"
+                                name="options"
+                                className="divTop-divSelect-sorteren-dropdown"
+                                value={selectedSorterenSoort}
+                                onChange={handleSorterenChange}
+                            >
+                                <option value="geen">Geen</option>
+                                <option value="oplopend">Oplopend</option>
+                                <option value="aflopend">Aflopend</option>
+                            </select>
+                        </div>
+
+                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset
+                            filters
+                        </button>
                     </div>
                 </div>
             </div>

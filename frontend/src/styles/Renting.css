@@ -113,6 +113,10 @@ select, input {
     margin: 0 20px;
 }
 
+.divTop-divSelect-Sorteren-dropdown-container {
+    align-content: center;
+}
+
 .divTop-search-bar__input {
     width: 400px;
     font-size: 1.2em;
