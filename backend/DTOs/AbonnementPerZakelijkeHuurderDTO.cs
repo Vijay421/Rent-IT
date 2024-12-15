@@ -1,6 +1,6 @@
-namespace backend.DTOs
+﻿namespace backend.DTOs
 {
-    public class AbonnementDTO
+    public class AbonnementPerZakelijkeHuurderDTO
     {
         public int Id { get; set; }
 
@@ -8,8 +8,7 @@ namespace backend.DTOs
         public double PrijsPerMaand { get; set; }
         public int MaxHuurders { get; set; }
         public required DateOnly Einddatum { get; set; }
-        public required string Soort { get; set; } // pay as you go / maandabonnement
-        
-        public AbonnementDTO() {}
+        public required string Soort { get; set; }
+        public List<string> ZakelijkeHuurders { get; set; }
     }
 }

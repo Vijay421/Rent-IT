@@ -20,7 +20,7 @@
     margin-bottom: 10px;
 }
 
-.bedrijfsnaam__text, .adress__text, .kvk-number__text {
+.bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__end-date, .abonnement__naam {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -93,4 +93,11 @@ input[type="radio"] {
 
 .confirmation-message.error {
     color: darkred;
+}
+
+
+@media only screen and (max-width: 950px) {
+    .bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__end-date, .abonnement__naam {
+        width: 80%;
+    }
 }

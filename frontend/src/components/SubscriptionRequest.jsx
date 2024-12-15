@@ -6,6 +6,9 @@ function SubscriptionRequest() {
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
     const [adress, setAdress] = useState("");
     const [kvkNumber, setKvkNumber] = useState("");
+    const [maxSubs, setMaxSubs] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [subName, setSubName] = useState("");
     const [subscriptionType, setSubscriptionType] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
 
@@ -21,14 +24,43 @@ function SubscriptionRequest() {
         setSubscriptionType(e.target.value);
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
+        if (endDate !== "") {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Beginning of the day.
+            const endDateObj = new Date(endDate);
+
+            if (endDateObj < today) {
+                window.alert("Einddatum kan niet eerder zijn dan vandaag");
+                return;
+            }
+        }
+
         if (
             bedrijfsnaam &&
             adress &&
             kvkNumber &&
+            maxSubs &&
+            endDate &&
+            subName &&
             subscriptionType
         ) {
-            setConfirmationMessage("Uw abonnementhouders aanvraag is verzonden!");
+            const payload = {
+                naam: subName,
+                bedrijfsnaam,
+                adres: adress,
+                kvk_nummer: kvkNumber,
+                max_huurders: maxSubs,
+                einddatum: endDate,
+                soort: subscriptionType,
+            };
+    
+            try {
+                await sendSubRequest(payload);
+                setConfirmationMessage("Uw abonnementhouders aanvraag is verzonden!");
+            } catch {
+                window.alert("Error tijdens het versturen van de aanvraag");
+            }
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
         }
@@ -78,10 +110,53 @@ function SubscriptionRequest() {
                         }
                     }}
                 />
+
+                <label htmlFor="abonnement__max-number" className="form__text">Maximum huurder:</label>
+                <input
+                    id="abonnement__max-number"
+                    className="abonnement__max-number"
+                    type="number"
+                    placeholder="Vul hier het maximaal aantal huurder voor het abonnement."
+                    value={maxSubs}
+                    minLength="1"
+                    maxLength="1000"
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^\d*$/.test(value)) {
+                            setMaxSubs(value);
+                        }
+                    }}
+                />
+
+                <label htmlFor="abonnement__end-date" className="form__text">Einddatum:</label>
+                <input
+                    id="abonnement__end-date"
+                    className="abonnement__end-date"
+                    type="date"
+                    required
+                    onChange={(e) => {
+                        setEndDate(e.target.value)
+                    }}
+                />
+
+                <label htmlFor="abonnement__naam" className="form__text">Abonnementnaam:</label>
+                <input
+                    id="abonnement__naam"
+                    className="abonnement__naam"
+                    type="text"
+                    minLength="2"
+                    maxLength="50"
+                    placeholder="Vul hier de naam voor het  abonnement."
+                    required
+                    onChange={(e) => {
+                        setSubName(e.target.value)
+                    }}
+                />
+
                 <label htmlFor="subscription-type" className="form__text">Type Abonnement:</label>
                 <div className="radio-group" onChange={handleSubscriptionType}>
                     <label>
-                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="PayAsYouGo" /> Pay as you go
+                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" /> Pay as you go
                     </label>
                     <label>
                         <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid" /> Prepaid
@@ -109,3 +184,29 @@ function SubscriptionRequest() {
 }
 
 export default SubscriptionRequest;
+
+/**
+ * Will send the sub request to the backend.
+ * 
+ * @param {Object} payload 
+ * @returns {Object}
+ */
+async function sendSubRequest(payload) {
+    try {
+        const response = await fetch('https://localhost:53085/api/Abonnement', {
+            method: 'POST',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('error when requesting the rent history request, or parsing the response:', error);
+        throw error;
+    }
+}
