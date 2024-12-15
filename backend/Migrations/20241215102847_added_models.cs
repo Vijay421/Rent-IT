@@ -12,23 +12,6 @@ namespace backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Abonnementen",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prijs_per_maand = table.Column<float>(type: "real", nullable: false),
-                    Max_huurders = table.Column<int>(type: "int", nullable: false),
-                    Duur = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Abonnementen", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -55,6 +38,22 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bedrijven",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KvK_nummer = table.Column<int>(type: "int", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bedrijven", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FrontOfficeMedewerkers",
                 columns: table => new
                 {
@@ -64,19 +63,6 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FrontOfficeMedewerkers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Huurbeheerders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Bedrijfsrol = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Huurbeheerders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,19 +102,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZakelijkeHuurders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Factuuradres = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ZakelijkeHuurders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -147,6 +120,25 @@ namespace backend.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Huurbeheerders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Bedrijfsrol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BedrijfId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Huurbeheerders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Huurbeheerders_Bedrijven_BedrijfId",
+                        column: x => x.BedrijfId,
+                        principalTable: "Bedrijven",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -188,14 +180,37 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Abonnementen",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
+                    Naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Prijs_per_maand = table.Column<double>(type: "float", nullable: false),
+                    Max_huurders = table.Column<int>(type: "int", nullable: false),
+                    Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Abonnementen", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Abonnementen_Huurbeheerders_HuurbeheerderId",
+                        column: x => x.HuurbeheerderId,
+                        principalTable: "Huurbeheerders",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BackOfficeId = table.Column<int>(type: "int", nullable: true),
                     FrontOfficeId = table.Column<int>(type: "int", nullable: true),
-                    ZakelijkeHuurderId = table.Column<int>(type: "int", nullable: true),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
+                    HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -225,14 +240,14 @@ namespace backend.Migrations
                         principalTable: "FrontOfficeMedewerkers",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_AspNetUsers_Huurbeheerders_HuurbeheerderId",
+                        column: x => x.HuurbeheerderId,
+                        principalTable: "Huurbeheerders",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_AspNetUsers_ParticuliereHuurders_ParticuliereHuurderId",
                         column: x => x.ParticuliereHuurderId,
                         principalTable: "ParticuliereHuurders",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_ZakelijkeHuurders_ZakelijkeHuurderId",
-                        column: x => x.ZakelijkeHuurderId,
-                        principalTable: "ZakelijkeHuurders",
                         principalColumn: "Id");
                 });
 
@@ -321,6 +336,43 @@ namespace backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ZakelijkeHuurders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
+                    Factuuradres = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AbonnementId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZakelijkeHuurders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ZakelijkeHuurders_Abonnementen_AbonnementId",
+                        column: x => x.AbonnementId,
+                        principalTable: "Abonnementen",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ZakelijkeHuurders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ZakelijkeHuurders_Huurbeheerders_HuurbeheerderId",
+                        column: x => x.HuurbeheerderId,
+                        principalTable: "Huurbeheerders",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Abonnementen_HuurbeheerderId",
+                table: "Abonnementen",
+                column: "HuurbeheerderId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -364,14 +416,14 @@ namespace backend.Migrations
                 column: "FrontOfficeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_HuurbeheerderId",
+                table: "AspNetUsers",
+                column: "HuurbeheerderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParticuliereHuurderId",
                 table: "AspNetUsers",
                 column: "ParticuliereHuurderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ZakelijkeHuurderId",
-                table: "AspNetUsers",
-                column: "ZakelijkeHuurderId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -389,14 +441,32 @@ namespace backend.Migrations
                 name: "IX_Huuraanvragen_VoertuigId",
                 table: "Huuraanvragen",
                 column: "VoertuigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Huurbeheerders_BedrijfId",
+                table: "Huurbeheerders",
+                column: "BedrijfId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ZakelijkeHuurders_AbonnementId",
+                table: "ZakelijkeHuurders",
+                column: "AbonnementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ZakelijkeHuurders_HuurbeheerderId",
+                table: "ZakelijkeHuurders",
+                column: "HuurbeheerderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ZakelijkeHuurders_UserId",
+                table: "ZakelijkeHuurders",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Abonnementen");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -416,16 +486,19 @@ namespace backend.Migrations
                 name: "Huuraanvragen");
 
             migrationBuilder.DropTable(
-                name: "Huurbeheerders");
+                name: "ZakelijkeHuurders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Voertuigen");
 
             migrationBuilder.DropTable(
-                name: "Voertuigen");
+                name: "Abonnementen");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "BackOfficeMedewerkers");
@@ -434,10 +507,13 @@ namespace backend.Migrations
                 name: "FrontOfficeMedewerkers");
 
             migrationBuilder.DropTable(
+                name: "Huurbeheerders");
+
+            migrationBuilder.DropTable(
                 name: "ParticuliereHuurders");
 
             migrationBuilder.DropTable(
-                name: "ZakelijkeHuurders");
+                name: "Bedrijven");
         }
     }
 }
