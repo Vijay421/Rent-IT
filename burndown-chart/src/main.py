@@ -32,7 +32,7 @@ def get_sprint_data() -> pd.DataFrame:
         { "sprint": 3, "done": 0 },
         { "sprint": 4, "done": 0 },
         { "sprint": 5, "done": 1 },
-        { "sprint": 6, "done": 8 },
+        { "sprint": 6, "done": 10 },
     ]
 
     planned = [
