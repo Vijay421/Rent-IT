@@ -30,13 +30,7 @@ function FrontOffice() {
         fetchVehicles();
     }, []);
 
-    // TO-DO: sorteer bij meest recente aanvraag
-    // const sortedVehicles = vehicles.sort((a, b) => {
-    //     if (selectedSorterenSoort === "oplopend") return a.prijs - b.prijs;
-    //     if (selectedSorterenSoort === "aflopend") return b.prijs - a.prijs;
-    //     return 0;
-    // });
-
+    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (
         <main className="content">
@@ -44,9 +38,15 @@ function FrontOffice() {
                 <h1>FrontOffice</h1>
                 {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
 
-                {vehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                    vehicles.map((vehicle) => {
-                        <h2>{vehicle.name}</h2>
+                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                    sortedVehicles.map((vehicle) => {
+                        return (
+                            <div className="voertuigTab">
+                                <span>{vehicle.kenteken}</span>
+                                <span>{vehicle.merk} {vehicle.type}</span>
+                                <button>Bekijk</button>
+                            </div>
+                        );
                     })
                 }
             </div>
