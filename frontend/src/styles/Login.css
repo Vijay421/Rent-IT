@@ -13,7 +13,7 @@
     min-width: 300px;
     padding-bottom: 30px;
     border-radius: 20px;
-    width: 25%;
+    width: 30%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
@@ -29,7 +29,7 @@
 /*Input fields inside the login box*/
 .login-box__input-field {
     display: flex;
-    width: 66%;
+    width: 75%;
     height: 30px;
     font-size: 1.25rem;
     margin-left: auto;
@@ -41,7 +41,6 @@
     /*background-color: lightgreen;*/
     margin-top: 10px;
     margin-right: auto;
-    padding: 3px 0;
     margin-left: 16.5%;
     text-align: left;
     font-weight: bold;

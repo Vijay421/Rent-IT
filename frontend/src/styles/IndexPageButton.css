@@ -4,7 +4,6 @@
     align-items: center;
     margin-top: 6em;
     margin-bottom: 6em;
-    height: 90vh;
 }
 
 .MainDivLeft,
@@ -97,6 +96,6 @@
 
     .ParticulierH1,
     .ZakelijkH1 {
-        margin-top: 11px;
+        margin-top: 0;
     }
 }
