@@ -72,7 +72,7 @@ function Login() {
 
                     <nav className="login-box__hyperlinks">
                         <Link to="/wachtwoord-vergeten">Wachtwoord vergeten? Account hier herstellen</Link>
-                        <Link to="/register">Geen account? Maak hier een account aan</Link>
+                        <Link to="/registreren">Geen account? Maak hier een account aan</Link>
                     </nav>
                 </form>
             </div>
@@ -88,7 +88,7 @@ function Login() {
  * @param {string} userData.password
  * @param {React.MutableRefObject<null>} status
  * @param {Function} login
- * @param {Navigate} navigate
+ * @param {NavigateFunction} navigate
  * @param {Function} setUserRole
  * @param {Function} setUserName
  * @returns
@@ -116,7 +116,7 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
                 setUserName(userClaims.userName);
 
                 setTimeout(() => {
-                    navigate('/profile');
+                    navigate('/profiel');
                 }, 1500);
             } catch (error) {
                 status.current.textContent = 'Fout tijdens het inloggen';

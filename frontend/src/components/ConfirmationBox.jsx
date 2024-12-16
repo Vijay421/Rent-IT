@@ -59,7 +59,8 @@ export default function ConfirmationBox() {
                 statusText.style.display = 'block';
 
                 setTimeout(() => {
-                    navigate("/payment", data);
+                    // TODO: redirect to the page with it exists.
+                    // navigate("/betaling", data);
                 },3000);
             } else {
                 const errorMsg = await response.text();
