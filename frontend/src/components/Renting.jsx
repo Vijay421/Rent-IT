@@ -1,7 +1,7 @@
 import '../styles/Renting.css';
-import {useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicleBox.jsx';
-import {UserContext} from "./UserContext.jsx";
+import { UserContext } from "./UserContext.jsx";
 
 function Renting() {
     const { userRole } = useContext(UserContext);
@@ -160,12 +160,12 @@ function Renting() {
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
                             <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
-                            type="date"
-                            id="date-picker"
-                            className="date-input"
-                            value={selectedDateStartDatum}
-                        onChange={handleDateChangeStartDatum}
-                        />
+                                type="date"
+                                id="date-picker"
+                                className="date-input"
+                                value={selectedDateStartDatum}
+                                onChange={handleDateChangeStartDatum}
+                            />
                         </div>
                     </div>
 
@@ -247,7 +247,7 @@ function Renting() {
 
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
-                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
+                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar' />
 
                         <div className="divTop-divSelect-Sorteren-dropdown-container">
                             <label htmlFor="options" className="dropdown-label">Sorteren: </label>
@@ -275,8 +275,8 @@ function Renting() {
             <div className="divMain">
                 {sortedVehicles.length === 0 ? (
                     <span id="divMain-no-content__span">
-                Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
-            </span>
+                        Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
+                    </span>
                 ) : userRole !== "zakelijke_huurder" ? (
                     sortedVehicles.map((vehicle) => {
                         if (vehicle.soort === "Auto") {

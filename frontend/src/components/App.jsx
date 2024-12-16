@@ -18,6 +18,9 @@ import NotificationsPage from "../pages/NotificationsPage.jsx";
 import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 
+
+import FrontOfficePage from "../pages/FrontofficePage.jsx";
+
 function App() {
     return (
         <Router>
@@ -40,6 +43,8 @@ function App() {
                 <Route path="/notificaties" element={<NotificationsPage/>}/>
                 <Route path="/bevestiging" element={<ConfirmationPage/>}/>
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
+
+                <Route path="/frontoffice/inname" element={<FrontOfficePage/>}/>
             </Routes>
         </Router>
     );
