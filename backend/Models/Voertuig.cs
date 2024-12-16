@@ -29,8 +29,6 @@ public class Voertuig
     public string Kleur { get; set; }
 
     [Required]
-    [MinLength(4)]
-    [MaxLength(4)]
     public int Aanschafjaar { get; set; }
     
     [Required]
@@ -38,7 +36,6 @@ public class Voertuig
     [MaxLength(10)]
     public string Soort { get; set; }
     
-    [MinLength(2)]
     [MaxLength(500)]
     public string Opmerking { get; set; }
     
@@ -48,8 +45,6 @@ public class Voertuig
     public string Status { get; set; }
     
     [Required]
-    [MinLength(2)]
-    [MaxLength(10)]
     public double Prijs { get; set; }
 
     [Required]

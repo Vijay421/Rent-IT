@@ -63,6 +63,11 @@
     margin-bottom: 1em;
 }
 
+.ButtonDivLeft:hover,
+.ButtonDivRight:hover {
+    background-color: #52ab98;
+}
+
 .BottomDivLeftHuren,
 .BottomDivRightHuren {
     text-align: center;

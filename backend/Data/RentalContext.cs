@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -15,9 +16,13 @@ namespace backend.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Abonnement> Abonnementen { get; set; }
         public DbSet<Huuraanvraag> Huuraanvragen{ get; set; }
-        //public DbSet<Bedrijf> Bedrijven { get; set; }
+        public DbSet<BackOfficeMedewerker> BackOfficeMedewerkers { get; set; }
+        public DbSet<FrontOfficeMedewerker> FrontOfficeMedewerkers { get; set; }
         public DbSet<ParticuliereHuurder> ParticuliereHuurders { get; set; }
+        public DbSet<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
+        public DbSet<Huurbeheerder> Huurbeheerders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
+        public DbSet<Bedrijf> Bedrijven { get; set; }
 
         public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
         {
@@ -39,10 +44,9 @@ namespace backend.Data
             
             var voertuigSeeder = new VoertuigSeeder();
             voertuigSeeder.Seed(modelBuilder);
-            */
-            var abonnementSeeder = new AbonnementSeeder();
+            var abonnementSeeder = new AbonnementSeeder(); 
             abonnementSeeder.Seed(modelBuilder);
-            
+            */
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

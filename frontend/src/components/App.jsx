@@ -7,18 +7,39 @@ import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
 
+import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
+import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
+
+import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
+import RentHistory from "../pages/RentHistory.jsx";
+import ReviewRentRequest from "../pages/ReviewRentRequest.jsx";
+import NotificationsPage from "../pages/NotificationsPage.jsx";
+
+import ConfirmationPage from "../pages/ConfirmationPage.jsx";
+import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
+
 function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<IndexPage />} />
-                <Route path="/register" element={<RegisterPage/>} />
+                <Route path="/registreren" element={<RegisterPage/>} />
                 <Route path="/login" element={<LoginPage/>} />
-                <Route path="/retrievepassword" element={<RetrievePasswordPage/>} />
-                <Route path="/renting" element={<RentingPage/>} />
-                <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>}/>
-                <Route path="/profile" element={<ProfilePage/>}/>
-                <Route path="/account-settings" element={<AccountSettings/>}/>
+                <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
+                <Route path="/huur-overzicht" element={<RentingPage/>} />
+
+                <Route path="/profiel" element={<ProfilePage/>}/>
+                <Route path="/account-instellingen" element={<AccountSettings/>}/>
+
+                <Route path="/abonnement" element={<SubscriptionRequestPage/>}/>
+                <Route path="/abonnementen" element={<SubscriptionsManagePage/>}/>
+
+                <Route path="/huur-indienen" element={<RentingSubmitPage/>}/>
+                <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
+                <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
+                <Route path="/notificaties" element={<NotificationsPage/>}/>
+                <Route path="/bevestiging" element={<ConfirmationPage/>}/>
+                <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
             </Routes>
         </Router>
     );

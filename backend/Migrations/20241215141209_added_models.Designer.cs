@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241210092318_added_models")]
+    [Migration("20241215141209_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -166,17 +166,21 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeOnly>("Duur")
-                        .HasColumnType("time");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("HuurbeheerderId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Max_huurders")
                         .HasColumnType("int");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("Prijs_per_maand")
+                    b.Property<double>("Prijs_per_maand")
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
@@ -185,10 +189,12 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HuurbeheerderId");
+
                     b.ToTable("Abonnementen");
                 });
 
-            modelBuilder.Entity("backend.Models.BackOfficeMedewerker", b =>
+            modelBuilder.Entity("backend.Models.Bedrijf", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,22 +202,24 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.HasKey("Id");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("BackOfficeMedewerker");
-                });
-
-            modelBuilder.Entity("backend.Models.FrontOfficeMedewerker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("KvK_nummer")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("FrontOfficeMedewerker");
+                    b.ToTable("Bedrijven");
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -224,62 +232,75 @@ namespace backend.Migrations
 
                     b.Property<string>("Adresgegevens")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "adresgegevens");
 
-                    b.Property<DateTime>("Einddatum")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Einddatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "einddatum");
 
-                    b.Property<bool>("Geaccepteerd")
+                    b.Property<bool?>("Geaccepteerd")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("Gezien")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ParticuliereHuurderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reden")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Reisaard")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasAnnotation("Relational:JsonPropertyName", "reisaard");
 
                     b.Property<string>("Rijbewijsnummer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasAnnotation("Relational:JsonPropertyName", "rijbewijsnummer");
 
-                    b.Property<DateTime>("Startdatum")
+                    b.Property<DateOnly>("Startdatum")
+                        .HasColumnType("date")
+                        .HasAnnotation("Relational:JsonPropertyName", "startdatum");
+
+                    b.Property<DateTime>("VeranderDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Vereiste_bestemming")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "vereiste_bestemming");
 
                     b.Property<int>("Verwachte_km")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
+
+                    b.Property<int?>("ZakelijkeHuurder")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParticuliereHuurderId");
 
                     b.HasIndex("VoertuigId");
 
                     b.ToTable("Huuraanvragen");
-                });
-
-            modelBuilder.Entity("backend.Models.ParticuliereHuurder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ParticuliereHuurders");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -305,6 +326,9 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("FrontOfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -343,14 +367,13 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("ZakelijkeHuurderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
 
                     b.HasIndex("FrontOfficeId");
+
+                    b.HasIndex("HuurbeheerderId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -361,8 +384,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("ParticuliereHuurderId");
-
-                    b.HasIndex("ZakelijkeHuurderId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -376,7 +397,6 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Aanschafjaar")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("EindDatum")
@@ -403,7 +423,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("Prijs")
-                        .HasMaxLength(10)
                         .HasColumnType("float");
 
                     b.Property<string>("Soort")
@@ -429,7 +448,7 @@ namespace backend.Migrations
                     b.ToTable("Voertuigen");
                 });
 
-            modelBuilder.Entity("backend.Models.ZakelijkeHuurder", b =>
+            modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -437,13 +456,97 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.HasKey("Id");
+
+                    b.ToTable("BackOfficeMedewerkers");
+                });
+
+            modelBuilder.Entity("backend.Rollen.FrontOfficeMedewerker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FrontOfficeMedewerkers");
+                });
+
+            modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BedrijfId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Bedrijfsrol")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BedrijfId");
+
+                    b.ToTable("Huurbeheerders");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParticuliereHuurders");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AbonnementId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Factuuradres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HuurbeheerderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ZakelijkeHuurder");
+                    b.HasIndex("AbonnementId");
+
+                    b.HasIndex("HuurbeheerderId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ZakelijkeHuurders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -497,8 +600,19 @@ namespace backend.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("backend.Models.Abonnement", b =>
+                {
+                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                        .WithMany("Abonnement")
+                        .HasForeignKey("HuurbeheerderId");
+                });
+
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
                 {
+                    b.HasOne("backend.Rollen.ParticuliereHuurder", null)
+                        .WithMany("Huuraanvragen")
+                        .HasForeignKey("ParticuliereHuurderId");
+
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()
                         .HasForeignKey("VoertuigId")
@@ -510,29 +624,80 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.User", b =>
                 {
-                    b.HasOne("backend.Models.BackOfficeMedewerker", "BackOffice")
+                    b.HasOne("backend.Rollen.BackOfficeMedewerker", "BackOffice")
                         .WithMany()
                         .HasForeignKey("BackOfficeId");
 
-                    b.HasOne("backend.Models.FrontOfficeMedewerker", "FrontOffice")
+                    b.HasOne("backend.Rollen.FrontOfficeMedewerker", "FrontOffice")
                         .WithMany()
                         .HasForeignKey("FrontOfficeId");
 
-                    b.HasOne("backend.Models.ParticuliereHuurder", "ParticuliereHuurder")
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
+                        .WithMany()
+                        .HasForeignKey("HuurbeheerderId");
+
+                    b.HasOne("backend.Rollen.ParticuliereHuurder", "ParticuliereHuurder")
                         .WithMany()
                         .HasForeignKey("ParticuliereHuurderId");
-
-                    b.HasOne("backend.Models.ZakelijkeHuurder", "ZakelijkeHuurder")
-                        .WithMany()
-                        .HasForeignKey("ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
 
                     b.Navigation("FrontOffice");
 
-                    b.Navigation("ParticuliereHuurder");
+                    b.Navigation("Huurbeheerder");
 
+                    b.Navigation("ParticuliereHuurder");
+                });
+
+            modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
+                {
+                    b.HasOne("backend.Models.Bedrijf", null)
+                        .WithMany("Huurbeheerders")
+                        .HasForeignKey("BedrijfId");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.HasOne("backend.Models.Abonnement", null)
+                        .WithMany("ZakelijkeHuurders")
+                        .HasForeignKey("AbonnementId");
+
+                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                        .WithMany("ZakelijkeHuurders")
+                        .HasForeignKey("HuurbeheerderId");
+
+                    b.HasOne("backend.Models.User", null)
+                        .WithOne("ZakelijkeHuurder")
+                        .HasForeignKey("backend.Rollen.ZakelijkeHuurder", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.Abonnement", b =>
+                {
+                    b.Navigation("ZakelijkeHuurders");
+                });
+
+            modelBuilder.Entity("backend.Models.Bedrijf", b =>
+                {
+                    b.Navigation("Huurbeheerders");
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
                     b.Navigation("ZakelijkeHuurder");
+                });
+
+            modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
+                {
+                    b.Navigation("Abonnement");
+
+                    b.Navigation("ZakelijkeHuurders");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
+                {
+                    b.Navigation("Huuraanvragen");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,29 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Rollen;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
     public class Abonnement
     {
-        public int Id { get; set; }
+        public required int Id { get; set; }
+        public int? HuurbeheerderId { get; set; }
+
+        public List<ZakelijkeHuurder> ZakelijkeHuurders {  get; set; }
+
+
+        [StringLength(50, MinimumLength = 2)]
+        public required string Naam { get; set; }
+
+        [Range(1.0, 1_000_000.0)]
+        public required double Prijs_per_maand { get; set; }
+
+        [Range(1, 1000)]
+        public required int Max_huurders { get; set; }
+
+        public required DateOnly Einddatum { get; set; }
 
         [MinLength(2)]
-        public string Naam { get; set; }
-        public double Prijs_per_maand { get; set; }
-        public int Max_huurders { get; set; }
-        public TimeOnly Duur { get; set; }
-        [MinLength(2)]
-        public string Soort { get; set; } // pay as you go / maandabonnement
+        public required string Soort { get; set; } // pay as you go / prepaid
 
-        
-        public Abonnement(int id, string naam, double prijs_per_maand, int Max_huurders, TimeOnly duur, string soort) {
-            Id = id;
-            Naam = naam;
-            Prijs_per_maand = prijs_per_maand;
-            Max_huurders = Max_huurders;
-            Duur = duur;
-            Soort = soort;
+        public Abonnement()
+        {
+            ZakelijkeHuurders = new List<ZakelijkeHuurder>();
         }
-        
-        public Abonnement() {}
     }
 }

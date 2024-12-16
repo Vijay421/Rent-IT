@@ -7,6 +7,8 @@ function ProfilePageZakelijkeBeheerder() {
         <ProfilePageBase>
             <ProfilePageLinkButton link="/*" text="Account instellingen aanpassen"/>
             <ProfilePageLinkButton link="/*" text="Zakelijke huurders beheren"/>
+            <ProfilePageLinkButton link="/abonnement" text="Abonnement aanmaken"/>
+            <ProfilePageLinkButton link="/abonnementen" text="Abonnementen beheren"/>
         </ProfilePageBase>
     );
 }
