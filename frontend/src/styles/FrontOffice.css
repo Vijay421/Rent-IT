@@ -14,3 +14,16 @@
     width: 66.5vw;
     border-radius: 8px;
 }
+
+.voertuigTab{
+    display:flex;
+    justify-content: space-between;
+    border: 1px solid gray
+}
+.voertuigTab :nth-child(1){
+    width: 10%;
+}
+
+.voertuigTab :nth-child(2){
+    width: 30%;
+}
