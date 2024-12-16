@@ -147,7 +147,8 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParticuliereHuurderId = table.Column<int>(type: "int", nullable: false),
+                    ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
+                    ZakelijkeHuurder = table.Column<int>(type: "int", nullable: true),
                     VoertuigId = table.Column<int>(type: "int", nullable: false),
                     Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
@@ -169,8 +170,7 @@ namespace backend.Migrations
                         name: "FK_Huuraanvragen_ParticuliereHuurders_ParticuliereHuurderId",
                         column: x => x.ParticuliereHuurderId,
                         principalTable: "ParticuliereHuurders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Huuraanvragen_Voertuigen_VoertuigId",
                         column: x => x.VoertuigId,
@@ -344,8 +344,8 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
-                    Factuuradres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AbonnementId = table.Column<int>(type: "int", nullable: true)
+                    AbonnementId = table.Column<int>(type: "int", nullable: true),
+                    Factuuradres = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

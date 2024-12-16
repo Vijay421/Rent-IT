@@ -18,7 +18,7 @@ export default function ConfirmationBox() {
     const totalCost = carPrice + insurance + fuel + kmCharge + deposit + tax - korting;
 
 
-    function handleAkkoordButtonClick() {
+    async function handleAkkoordButtonClick() {
         const statusText = document.getElementById('confirmation-button-box-status__span');
 
         const payload = {
@@ -39,35 +39,40 @@ export default function ConfirmationBox() {
             gezien: false,
         };
 
-        fetch("https://localhost:53085/api/Huur", {
-            method: "POST",
-            // TODO: change to 'same-origin' when in production.
-            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
+        try {
+            const response = await fetch("https://localhost:53085/api/Huur", {
+                method: "POST",
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload),
+                
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
                 statusText.style.color = 'green';
                 statusText.textContent = 'Uw verzoek is succesvol verzonden.\r\n U wordt nu doorgestuurd naar de betaalpagina.';
                 statusText.style.display = 'block';
+
                 setTimeout(() => {
-                    navigate("/payment", data);
+                    // TODO: redirect to the page with it exists.
+                    // navigate("/betaling", data);
                 },3000);
-            })
-            .catch(error => {
-                console.error(error);
+            } else {
+                const errorMsg = await response.text();
                 statusText.style.color = 'red';
-                statusText.textContent = 'Uw verzoek kon niet worden verzonden. Probeer het later opnieuw.';
+                statusText.textContent = `Error tijdens het versturen: ${errorMsg}`;
                 statusText.style.display = 'block';
-            });
+            }
+        } catch {
+            statusText.style.color = 'red';
+            statusText.textContent = 'Uw verzoek kon niet worden verzonden. Probeer het later opnieuw.';
+            statusText.style.display = 'block';
+        }
     }
 
     return (

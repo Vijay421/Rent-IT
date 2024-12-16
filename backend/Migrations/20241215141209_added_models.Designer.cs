@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241215102847_added_models")]
+    [Migration("20241215141209_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -247,7 +247,6 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
@@ -291,6 +290,9 @@ namespace backend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
+
+                    b.Property<int?>("ZakelijkeHuurder")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -609,9 +611,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()

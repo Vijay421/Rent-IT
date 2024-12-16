@@ -9,9 +9,9 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         
-        [Required]
         public int? ParticuliereHuurderId { get; set; }
-        
+        public int? ZakelijkeHuurder { get; set; }
+
         [Required]
         public int VoertuigId { get; set; }
 

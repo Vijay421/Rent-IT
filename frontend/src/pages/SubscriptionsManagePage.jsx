@@ -71,9 +71,11 @@ function Subscription({ data, renters, subId, initialRenters }) {
     }
 
     async function handleSave() {
-        const didSucceed = updateRenters(selectedRenters, subId);
+        const didSucceed = await updateRenters(selectedRenters, subId);
         if (didSucceed) {
             window.alert("De veranderingen zijn opgeslagen!");
+        } else {
+            setSelectedRenters(data.zakelijkeHuurders);
         }
     }
 
@@ -198,7 +200,14 @@ async function updateRenters(payload, subId) {
             body: JSON.stringify(payload),
         });
 
-        return response.ok;
+        if (response.ok) {
+            return true;
+        } else {
+            const errorMsg = await response.text();
+            window.alert(`Error tijdens het opslaan: ${errorMsg}`);
+
+            return false;
+        }
     } catch (error) {
         console.error('error when saving renters, or parsing the response:', error);
         throw error;

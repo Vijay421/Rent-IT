@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241215102910_added_seeding_data")]
+    [Migration("20241215141229_added_seeding_data")]
     partial class added_seeding_data
     {
         /// <inheritdoc />
@@ -54,37 +54,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a9b08693-ff60-4990-b1ff-b564d1743d8a",
+                            Id = "a7642990-1869-403f-9b7c-167005bc8436",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7bb2e607-db08-44c3-84c5-128d8502a354",
+                            Id = "40dc77cc-c03e-47fe-8e6e-741fcb377cd0",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "0f1d9be6-e5d4-46c7-80a5-d8862d816033",
+                            Id = "9947d29c-4fe1-4514-830e-899e5ab24430",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "7a292194-c322-41c8-93c4-a6525048d698",
+                            Id = "019afcff-14e8-46e9-8490-58f6321d2d98",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "d91273b1-21bd-4d79-b719-c7e0805004d1",
+                            Id = "02e70917-0ff9-4c74-909a-136fa8f9b283",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "befd652e-857c-4484-a742-ff2921a0ede6",
+                            Id = "d9d67bb2-45d6-4a67-a0e6-defad8e88655",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -296,7 +296,6 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParticuliereHuurderId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Reden")
@@ -340,6 +339,9 @@ namespace backend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasAnnotation("Relational:JsonPropertyName", "wettelijke_naam");
+
+                    b.Property<int?>("ZakelijkeHuurder")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -765,9 +767,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Rollen.ParticuliereHuurder", null)
                         .WithMany("Huuraanvragen")
-                        .HasForeignKey("ParticuliereHuurderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()

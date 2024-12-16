@@ -1,23 +1,36 @@
 import '../styles/Renting.css';
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import { RentalAutoBox, RentalCaravanBox, RentalCamperBox } from './RentalVehicleBox.jsx';
+import {UserContext} from "./UserContext.jsx";
 
 function Renting() {
+    const { userRole } = useContext(UserContext);
+
     const [selectedVoertuigSoort, setSelectedVoertuigSoort] = useState("alles");
     const [selectedDateStartDatum, setSelectedDateStartDatum] = useState("");
     const [selectedDateEindDatum, setSelectedDateEindDatum] = useState("");
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
     const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
+    const [selectedSorterenSoort, setSelectedSorterenSoort] = useState("geen");
     const [vehicles, setVehicles] = useState([]);
     const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
         async function fetchVehicles() {
             try {
-                const response = await fetch('https://localhost:53085/api/Voertuig');
+                const response = await fetch('https://localhost:53085/api/Voertuig', {
+                    method: 'GET',
+
+                    // TODO: change to 'same-origin' when in production.
+                    credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                });
                 const data = await response.json();
                 setVehicles(data);
+                console.log(userRole);
             }
             catch (e) {
                 console.error(e);
@@ -74,6 +87,10 @@ function Renting() {
         setSearchText(event.target.value);
     };
 
+    const handleSorterenChange = (event) => {
+        setSelectedSorterenSoort(event.target.value);
+    };
+
     function onResetFiltersButtonClick() {
         setSelectedVoertuigSoort("alles");
         setSelectedMerkSoort("alles");
@@ -81,43 +98,31 @@ function Renting() {
         setSelectedBeschikbaarheidSoort("alles");
         setSelectedDateStartDatum("");
         setSelectedDateEindDatum("");
+        setSelectedSorterenSoort("geen");
     }
 
-    const renderVehicleBoxes = () => {
-        return vehicles
-            .filter((vehicle) => {
-                if (selectedVoertuigSoort !== "alles" && vehicle.soort.toLowerCase() !== selectedVoertuigSoort) return false;
+    const filteredVehicles = vehicles.filter((vehicle) => {
+        if (selectedVoertuigSoort !== "alles" && vehicle.soort.toLowerCase() !== selectedVoertuigSoort) return false;
+        if (selectedMerkSoort !== "alles" && vehicle.merk.toLowerCase() !== selectedMerkSoort) return false;
+        if (selectedPrijsSoort !== "alles" && vehicle.prijs > 50 && selectedPrijsSoort === "low") return false;
+        if (selectedPrijsSoort !== "alles" && (vehicle.prijs > 100 || vehicle.prijs < 51) && selectedPrijsSoort === "mid") return false;
+        if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
+        if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
+        if (selectedDateStartDatum && selectedDateStartDatum < vehicle.startDatum) return false;
+        if (selectedDateEindDatum && selectedDateEindDatum > vehicle.eindDatum) return false;
+        if (
+            !vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
+            !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase())
+        )
+            return false;
+        return true;
+    });
 
-                if (selectedMerkSoort !== "alles" && vehicle.merk.toLowerCase() !== selectedMerkSoort) return false;
-
-                if (selectedPrijsSoort !== "alles" && vehicle.prijs > 50 && selectedPrijsSoort === "low") return false;
-
-                if (selectedPrijsSoort !== "alles" && (vehicle.prijs > 100 || vehicle.prijs < 51) && selectedPrijsSoort === "mid") return false;
-
-                if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
-
-                if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
-
-                if (selectedDateStartDatum < vehicle.startDatum || selectedDateEindDatum > vehicle.eindDatum) return false;
-
-                if ( (!vehicle.merk.toLowerCase().includes(searchText.trim().toLowerCase()) &&
-                    !vehicle.type.toLowerCase().includes(searchText.trim().toLowerCase()))) return false;
-
-                return true;
-            })
-
-            .map((vehicle) => {
-                if (vehicle.soort === "Auto") {
-                    return <RentalAutoBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-                else if (vehicle.soort === "Caravan") {
-                    return <RentalCaravanBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-                else if (vehicle.soort === "Camper") {
-                    return <RentalCamperBox key={vehicle.id} data={vehicle} nieuwStartDatum={selectedDateStartDatum} nieuwEindDatum={selectedDateEindDatum}/>;
-                }
-            });
-    };
+    const sortedVehicles = filteredVehicles.sort((a, b) => {
+        if (selectedSorterenSoort === "oplopend") return a.prijs - b.prijs;
+        if (selectedSorterenSoort === "aflopend") return b.prijs - a.prijs;
+        return 0;
+    });
 
     return (
         <div className="content">
@@ -135,10 +140,18 @@ function Renting() {
                                 value={selectedVoertuigSoort} // Controlled component
                                 onChange={handleVoertuigChange} // Event handler
                             >
-                                <option value="alles">Alles</option>
-                                <option value="auto">Auto</option>
-                                <option value="camper">Camper</option>
-                                <option value="caravan">Caravan</option>
+                                {userRole !== "zakelijke_huurder" ? (
+                                    <>
+                                        <option value="alles">Alles</option>
+                                        <option value="auto">Auto</option>
+                                        <option value="caravan">Caravan</option>
+                                        <option value="camper">Camper</option>
+                                    </>
+                                ) : (
+                                    <>
+                                        <option value="auto">Auto</option>
+                                    </>
+                                )}
                             </select>
                         </div>
                     </div>
@@ -147,12 +160,12 @@ function Renting() {
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
                             <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
-                                type="date"
-                                id="date-picker"
-                                className="date-input"
-                                value={selectedDateStartDatum}
-                                onChange={handleDateChangeStartDatum}
-                            />
+                            type="date"
+                            id="date-picker"
+                            className="date-input"
+                            value={selectedDateStartDatum}
+                        onChange={handleDateChangeStartDatum}
+                        />
                         </div>
                     </div>
 
@@ -235,14 +248,79 @@ function Renting() {
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
                         <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
-                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset filters</button>
+
+                        <div className="divTop-divSelect-Sorteren-dropdown-container">
+                            <label htmlFor="options" className="dropdown-label">Sorteren: </label>
+                            <select
+                                id="options"
+                                name="options"
+                                className="divTop-divSelect-sorteren-dropdown"
+                                value={selectedSorterenSoort}
+                                onChange={handleSorterenChange}
+                            >
+                                <option value="geen">Geen</option>
+                                <option value="oplopend">Oplopend</option>
+                                <option value="aflopend">Aflopend</option>
+                            </select>
+                        </div>
+
+                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset
+                            filters
+                        </button>
                     </div>
                 </div>
             </div>
 
             <div className="divMargin"></div>
             <div className="divMain">
-                {renderVehicleBoxes()}
+                {sortedVehicles.length === 0 ? (
+                    <span id="divMain-no-content__span">
+                Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
+            </span>
+                ) : userRole !== "zakelijke_huurder" ? (
+                    sortedVehicles.map((vehicle) => {
+                        if (vehicle.soort === "Auto") {
+                            return (
+                                <RentalAutoBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        } else if (vehicle.soort === "Caravan") {
+                            return (
+                                <RentalCaravanBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        } else if (vehicle.soort === "Camper") {
+                            return (
+                                <RentalCamperBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        }
+                    })
+                ) :
+                    sortedVehicles.map((vehicle) => {
+                        if (vehicle.soort === "Auto") {
+                            return (
+                                <RentalAutoBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    nieuwStartDatum={selectedDateStartDatum}
+                                    nieuwEindDatum={selectedDateEindDatum}
+                                />
+                            );
+                        }
+                    })}
             </div>
         </div>
     );

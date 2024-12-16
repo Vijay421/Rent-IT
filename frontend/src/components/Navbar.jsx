@@ -16,8 +16,8 @@ function Navbar() {
             </Link>
 
             <div className='navbar__navigation-buttons'>
-                <NavButton className="navbar_navigation-buttons-nagivation" title="Home" link="/" />
-                <NavButton className="navbar_navigation-buttons-nagivation" title="Huren" link="/renting" />
+                <NavButton className="navbar_navigation-buttons-nagivation" title="Home" link="/"></NavButton>
+                <NavButton className="navbar_navigation-buttons-nagivation" title="Huren" link="/huur-overzicht"></NavButton>
             </div>
 
             {isLoggedIn ? (
@@ -36,7 +36,7 @@ function Navbar() {
                         <button>Login</button>
                     </Link>
 
-                    <Link to="/register">
+                    <Link to="/registreren">
                         <button id='register-button__button'>Register</button>
                     </Link>
                 </ul>
