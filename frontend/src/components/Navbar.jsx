@@ -24,9 +24,9 @@ function Navbar() {
                 <ul className='navbar__login-box__button'>
                     <Link to="/">
                         <button onClick={logout}>Logout</button>
-                        <Link to="/profile">
+                    </Link>
+                    <Link to="/profiel">
                             <button>Profiel</button>
-                        </Link>
                     </Link>
                 </ul>
             ) : (
