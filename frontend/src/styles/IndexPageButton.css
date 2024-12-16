@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin: 0;
-    height: 90vh;
+    margin-top: 6em;
+    margin-bottom: 6em;
 }
 
 .MainDivLeft,
@@ -96,6 +96,6 @@
 
     .ParticulierH1,
     .ZakelijkH1 {
-        margin-top: 11px;
+        margin-top: 0;
     }
 }
