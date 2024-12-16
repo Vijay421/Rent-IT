@@ -99,6 +99,7 @@ function Renting() {
         setSelectedDateStartDatum("");
         setSelectedDateEindDatum("");
         setSelectedSorterenSoort("geen");
+        setSearchText("");
     }
 
     const filteredVehicles = vehicles.filter((vehicle) => {
@@ -158,10 +159,10 @@ function Renting() {
 
                     <div className="divTop-divSelect-ophaalDatum">
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
+                            <label htmlFor="date-picker-start" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
                             type="date"
-                            id="date-picker"
+                            id="date-picker-start"
                             className="date-input"
                             value={selectedDateStartDatum}
                         onChange={handleDateChangeStartDatum}
@@ -171,10 +172,10 @@ function Renting() {
 
                     <div className="divTop-divSelect-inleverDatum">
                         <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-inleverDatum">Einddatum: </label>
+                            <label htmlFor="date-picker-end" className="date-label-inleverDatum">Einddatum: </label>
                             <input
                                 type="date"
-                                id="date-picker"
+                                id="date-picker-end"
                                 className="date-input"
                                 value={selectedDateEindDatum}
                                 onChange={handleDateChangeEindDatum}
