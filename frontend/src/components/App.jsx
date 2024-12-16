@@ -9,6 +9,7 @@ import AccountSettings from "../pages/AccountSettings.jsx";
 
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
+import SubscriptionOverviewPage from "../pages/SubscriptionOverviewPage.jsx";
 
 import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
@@ -33,6 +34,7 @@ function App() {
 
                 <Route path="/abonnement" element={<SubscriptionRequestPage/>}/>
                 <Route path="/abonnementen" element={<SubscriptionsManagePage/>}/>
+                <Route path="/abonnementen-overzicht" element={<SubscriptionOverviewPage/>}/>
 
                 <Route path="/huur-indienen" element={<RentingSubmitPage/>}/>
                 <Route path="/huur-geschiedenis" element={<RentHistory/>}/>

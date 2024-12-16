@@ -1,12 +1,12 @@
 import Navbar from "../components/Navbar.jsx";
-import Login from "../components/AbonnementWeergave.jsx";
+import SubscriptionOverview from "../components/SubscriptionOverview.jsx";
 import Footer from "../components/Footer.jsx";
 
-export default function AbonnementWeergavePage() {
+export default function SubscriptionOverviewPage() {
     return (
         <>
             <Navbar/>
-            <AbonnementWeergave/>
+            <SubscriptionOverview/>
             <Footer/>
         </>
     );
