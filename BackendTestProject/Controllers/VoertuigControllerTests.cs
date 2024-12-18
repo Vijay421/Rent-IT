@@ -51,7 +51,7 @@ namespace BackendTestProject.Controllers
         private RentalContext _createContext() => new RentalContext(_contextOptions, null, null);
 
         [Fact]
-        public async Task TestGetAllCars_ShouldReturnAllVehicles_WhenUserIsParticuliereUser()
+        public async Task GetAllCars_ShouldReturnAllVehicles_WhenUserIsParticuliereUser()
         {
             // Arrange
             var user = CreateMockUser("particuliere_huurder");
@@ -64,11 +64,11 @@ namespace BackendTestProject.Controllers
             var voertuigen = await controller.GetAllCars();
 
             // Assert
-            Assert.Equal(actual: voertuigen.Count, expected: _voertuigen.Count);
+            Assert.Equal(voertuigen.Count, _voertuigen.Count);
         }
 
         [Fact]
-        public async Task TestGetAllCars_ShouldReturnCarsOnly_WhenUserIsZakelijkeUser()
+        public async Task GetAllCars_ShouldReturnCarsOnly_WhenUserIsZakelijkeUser()
         {
             // Arrange
             var user = CreateMockUser("zakelijke_huurder");
