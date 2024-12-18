@@ -6,19 +6,13 @@ export default defineConfig({
     devServer: {
       framework: "react",
       bundler: "vite",
-      // optionally pass in vite config
       viteConfig: customViteConfig,
-      // or a function - the result is merged with
-      // any `vite.config` file that is detected
-      viteConfig: async (baseConfig) => {
-        // ... do things ...
-        const modifiedConfig = await injectCustomConfig(baseConfig);
-        return modifiedConfig;
-      },
     },
+    supportFile: "cypress/support/component.js",
   },
 
   e2e: {
+    baseUrl: "http://localhost:5173",
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
