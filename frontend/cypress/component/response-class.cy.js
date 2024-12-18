@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import getResponseClass from "../../../src/scripts/getResponseClass";
+import getResponseClass from "../../src/scripts/getResponseClass";
 
 describe("get the correct css class name", () => {
     it("should return an empty class name when isError is null", () => {
