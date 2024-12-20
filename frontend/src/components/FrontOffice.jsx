@@ -3,10 +3,15 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
 
 function FrontOffice() {
-
+    const location = useLocation();
+    const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
-
+    function bekijk() { 
+        navigate("/frontoffice/inname/:id", {
+            state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
+        });
+    }
     useEffect(() => {
         async function fetchVehicles() {
             try {
@@ -35,20 +40,24 @@ function FrontOffice() {
     return (
         <main className="content">
             <div className="divMain">
-                <h1>FrontOffice</h1>
-                {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
+                <div>
+                    <h1>FrontOffice</h1>
+                    {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
 
-                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                    sortedVehicles.map((vehicle) => {
-                        return (
-                            <div className="voertuigTab">
-                                <span>{vehicle.kenteken}</span>
-                                <span>{vehicle.merk} {vehicle.type}</span>
-                                <button>Bekijk</button>
-                            </div>
-                        );
-                    })
-                }
+                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                        sortedVehicles.map((vehicle) => {
+                            return (
+                                <div className="voertuigTab">
+                                    <span>{vehicle.kenteken}</span>
+                                    <span>{vehicle.merk} {vehicle.type}</span>
+                                    {/* <Link> to={pagina van de claim}*/}
+                                        <button onClick={bekijk}>Bekijk</button>
+                                    {/* </Link> */}
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </main>
     );
