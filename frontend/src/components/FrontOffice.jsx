@@ -10,6 +10,7 @@ function FrontOffice() {
     useEffect(() => {
         async function fetchVehicles() {
             try {
+                // TO-DO: Mick's API endpoint toevoegen
                 const response = await fetch('https://localhost:53085/api/Voertuig', {
                     method: 'GET',
 
