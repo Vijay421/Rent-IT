@@ -3,14 +3,18 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
 
 function FrontOffice() {
-
+    const location = useLocation();
+    const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
-
+    function bekijk() { 
+        navigate("/frontoffice/inname/:id", {
+            state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
+        });
+    }
     useEffect(() => {
         async function fetchVehicles() {
             try {
-                // TO-DO: Mick's API endpoint toevoegen
                 const response = await fetch('https://localhost:53085/api/Voertuig', {
                     method: 'GET',
 
@@ -47,7 +51,7 @@ function FrontOffice() {
                                     <span>{vehicle.kenteken}</span>
                                     <span>{vehicle.merk} {vehicle.type}</span>
                                     {/* <Link> to={pagina van de claim}*/}
-                                        <button>Bekijk</button>
+                                        <button onClick={bekijk}>Bekijk</button>
                                     {/* </Link> */}
                                 </div>
                             );
