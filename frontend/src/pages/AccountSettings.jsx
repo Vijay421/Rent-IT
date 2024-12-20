@@ -1,11 +1,14 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useContext} from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
 import getResponseClass from '../scripts/getResponseClass';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../components/UserContext';
 
 export default function AccountSettings() {
     const navigate = useNavigate();
+    const { userRole } = useContext(UserContext);
+    const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker";
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -169,18 +172,20 @@ export default function AccountSettings() {
                         />
                     </div>
 
-                    <div className='settings__input-box'>
-                        <label htmlFor="address">Adres:</label>
-                        <input
-                            id="address"
-                            className='settings__input-field'
-                            inputMode="numeric"
-                            placeholder='Vul hier je adres in'
-                            minLength='5'
-                            maxLength='255'
-                            onChange={e => setAddress(e.target.value)}
-                        />
-                    </div>
+                    { !isMedewerker && (
+                        <div className='settings__input-box'>
+                            <label htmlFor="address">Adres:</label>
+                            <input
+                                id="address"
+                                className='settings__input-field'
+                                inputMode="numeric"
+                                placeholder='Vul hier je adres in'
+                                minLength='5'
+                                maxLength='255'
+                                onChange={e => setAddress(e.target.value.length === 0 ? null : e.target.value)}
+                            />
+                        </div>
+                    ) }
 
                     <nav className='settings__nav'>
                         <button onClick={submit} className='settings__button'>Update</button>
@@ -208,7 +213,7 @@ export default function AccountSettings() {
  * @param {string} payload.email
  * @param {number} payload.phoneNumber
  * @param {string} payload.password
- * @param {string} payload.address
+ * @param {string | null} payload.address
  * @param {Function} setResponse
  */
 async function updateSettings(payload, setResponse) {
@@ -222,10 +227,10 @@ async function updateSettings(payload, setResponse) {
     };
 
     try {
-        const response = await fetch(`https://localhost:53085/api/ParticuliereUser/${payload.id}`, request);
+        const response = await fetch(`https://localhost:53085/api/User/${payload.id}`, request);
 
         switch (response.status) {
-            case 204:
+            case 200:
                 setResponse({
                     msg: 'de instellingen zijn geüpdated',
                     isError: false,
