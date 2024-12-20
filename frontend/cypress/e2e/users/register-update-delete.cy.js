@@ -80,7 +80,6 @@ describe("can register, update and delete user", () => {
 
         cy.log("particuliere user delete");
         cy.get("[data-cy='delete']").click();
-        cy.wait(100);
         cy.get("[data-cy='delete']").click();
 
         cy.wait('@DeleteRequest').then((interception) => {
@@ -89,7 +88,6 @@ describe("can register, update and delete user", () => {
 
 
         cy.log("redirect to index page");
-        cy.wait(1500);
         cy.url().should("eq", "http://localhost:5173/");
     });
 });
