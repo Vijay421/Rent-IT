@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "tests": "cypress run --component && cypress run --e2e"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
