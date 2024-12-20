@@ -51,7 +51,7 @@ namespace BackendTestProject.Controllers
         private RentalContext _createContext() => new RentalContext(_contextOptions, null, null);
 
         [Fact]
-        public async Task GetAllCars_ShouldReturnAllVehicles_WhenUserIsParticuliereUser()
+        public async Task GetAllCars_ShouldReturnAllVoertuigen_WhenUserIsParticuliereUser()
         {
             // Arrange
             var user = CreateMockUser("particuliere_huurder");
@@ -87,7 +87,7 @@ namespace BackendTestProject.Controllers
         }
 
         [Fact]
-        public async Task GetOneCar_ShouldReturnTheCorrectVechicle_WhenGivenItsId()
+        public async Task GetOneCar_ShouldReturnTheCorrectVoertuig_WhenGivenItsId()
         {
             // Arrange
             var user = CreateMockUser("particuliere_huurder");
@@ -106,7 +106,7 @@ namespace BackendTestProject.Controllers
         }
 
         [Fact]
-        public async Task GetOneCar_ShouldReturnNull_WhenNoIdCorrespondsWithTheGivenId()
+        public async Task GetOneCar_ShouldReturnNotFoundResult_WhenNoIdCorrespondsWithTheGivenId()
         {
             // Arrange
             var user = CreateMockUser("particuliere_huurder");
