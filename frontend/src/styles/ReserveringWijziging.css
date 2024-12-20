@@ -1,0 +1,42 @@
+.wijziging-page-container__div {
+    background-color: whitesmoke;
+    display: flex;
+    width: 66.5vw;
+    margin: 50px auto 10px auto;
+    border-radius: 8px;
+    border: 3px solid black;
+}
+
+.wijziging-page-form-box__div {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-box-title__h1 {
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.wijziging-form {
+    background-color: darkolivegreen;
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.form-box-submit__button {
+    background-color: #2b6777;
+    border-radius: 8px;
+    color: whitesmoke;
+    border: 2px solid black;
+    width: 150px;
+    height: 50px;
+    font-size: 1.5em;
+    margin: 10px auto;
+}
+
+.form-box-submit__button:hover {
+    background-color: #52ab98;
+}

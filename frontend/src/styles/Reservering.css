@@ -1,30 +1,27 @@
-.content {
-    display: flex;
-    width: 100%;
-    height: auto;
-}
-
 .reserveringen-box__div {
     border: 3px solid black;
+    background-color: #c8d8e4;
 }
 
 .reservering-nummer__h2 {
     text-align: center;
+    margin: 10px 0 5px 0;
 }
 
 .reservering-container__div {
-    background-color: gold;
+    background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 95%;
     border: 2px solid black;
     border-radius: 8px;
     padding: 5px;
+    margin-bottom: 15px;
 }
 
 .reserveringen-box__div {
-    background-color: rebeccapurple;
     margin: 10px auto;
     width: 80vw;
     border-radius: 8px;
@@ -35,7 +32,6 @@
 }
 
 .reservering-container-info-box__div {
-    background-color: palevioletred;
     display: flex;
 }
 
@@ -49,10 +45,19 @@
 
 .info-box-container1__div,
 .info-box-container2__div {
-    background-color: darkslategrey;
     flex-direction: column;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+}
+
+.container1-title__p,
+.container2-title__p {
+    font-weight: bold;
+}
+
+.container1-data__p,
+.container2-data__p {
+
 }
 
 .reservering-container-info-box__div p {
@@ -60,7 +65,6 @@
 }
 
 .reservering-container-action-buttons__div {
-    background-color: darkkhaki;
     display: flex;
     width: 100%;
     justify-content: space-evenly;
@@ -68,8 +72,17 @@
 }
 
 .action-container__button {
-    width: 150px;
-    height: 40px;
+    background-color: #2b6777;
+    color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 250px;
+    height: 50px;
     font-size: 1.3em;
     font-weight: bold;
+}
+
+.action-container__button:hover {
+    background-color: #52ab98;
+    transition: background-color 0.1s;
 }
