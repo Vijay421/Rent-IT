@@ -54,4 +54,19 @@ public class VoertuigController : ControllerBase
 
         return car;
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Schadeclaim>>> ReviewSchadeclaim(int id, VoertuigStatusDTO voertuigStatus)
+    {
+        var schadeclaim = await _context.Schadeclaim.FindAsync(id);
+        if (schadeclaim == null)
+        {
+            return NotFound($"Geen schadeclaim gevonden met id: '{id}'");
+        }
+
+        if (!schadeclaim.Schadeclaim)
+        {
+            
+        }
+    }
 }
