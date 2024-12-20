@@ -1,0 +1,75 @@
+.content {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.reserveringen-box__div {
+    border: 3px solid black;
+}
+
+.reservering-nummer__h2 {
+    text-align: center;
+}
+
+.reservering-container__div {
+    background-color: gold;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 95%;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.reserveringen-box__div {
+    background-color: rebeccapurple;
+    margin: 10px auto;
+    width: 80vw;
+    border-radius: 8px;
+}
+
+.reserveringen-box-title__h1 {
+    text-align: center;
+}
+
+.reservering-container-info-box__div {
+    background-color: palevioletred;
+    display: flex;
+}
+
+.info-box-container1__div {
+    width: 40%;
+}
+
+.info-box-container2__div {
+    width: 60%;
+}
+
+.info-box-container1__div,
+.info-box-container2__div {
+    background-color: darkslategrey;
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.reservering-container-info-box__div p {
+    font-size: 18px;
+}
+
+.reservering-container-action-buttons__div {
+    background-color: darkkhaki;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 5px auto 0 auto;
+}
+
+.action-container__button {
+    width: 150px;
+    height: 40px;
+    font-size: 1.3em;
+    font-weight: bold;
+}

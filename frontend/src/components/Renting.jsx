@@ -17,25 +17,6 @@ function Renting() {
     const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
-        async function fetchVehicles() {
-            try {
-                const response = await fetch('https://localhost:53085/api/Voertuig', {
-                    method: 'GET',
-
-                    // TODO: change to 'same-origin' when in production.
-                    credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                });
-                const data = await response.json();
-                setVehicles(data);
-                console.log(userRole);
-            }
-            catch (e) {
-                console.error(e);
-            }
-        }
         fetchVehicles();
     }, []);
 
@@ -123,6 +104,26 @@ function Renting() {
         if (selectedSorterenSoort === "aflopend") return b.prijs - a.prijs;
         return 0;
     });
+
+    async function fetchVehicles() {
+        try {
+            const response = await fetch('https://localhost:53085/api/Voertuig', {
+                method: 'GET',
+
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    'content-type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            setVehicles(data);
+            console.log(userRole);
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
 
     return (
         <div className="content">

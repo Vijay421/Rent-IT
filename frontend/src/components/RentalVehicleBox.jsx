@@ -289,7 +289,8 @@ RentalAutoBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any
@@ -305,7 +306,8 @@ RentalCaravanBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any
@@ -321,7 +323,8 @@ RentalCamperBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any
