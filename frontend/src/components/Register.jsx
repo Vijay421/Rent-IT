@@ -72,6 +72,7 @@ export default function Register() {
                             placeholder='Vul hier je naam in'
                             minLength='2'
                             maxLength='50'
+                            data-cy='username'
                             required
                             value={username}
                             onChange={handleUsername}
@@ -87,6 +88,7 @@ export default function Register() {
                             placeholder='Vul hier uw e-mailadres in'
                             minLength='5'
                             maxLength='255'
+                            data-cy='email'
                             required
                             value={email}
                             onChange={handleEmail}
@@ -102,6 +104,7 @@ export default function Register() {
                             placeholder='Vul hier uw wachtwoord in'
                             minLength='8'
                             maxLength='50'
+                            data-cy='password'
                             required
                             value={password}
                             onChange={handlePassword}
@@ -119,6 +122,7 @@ export default function Register() {
                             onChange={handlePhoneNumber}
                             minLength='5'
                             maxLength='15'
+                            data-cy='phone'
                             required
                             pattern="[0-9]*"
                             inputMode="numeric"
@@ -139,13 +143,14 @@ export default function Register() {
                             placeholder='Vul hier je adres in'
                             minLength='5'
                             maxLength='255'
+                            data-cy='adres'
                             required
                             value={address}
                             onChange={handleAddress}
                         />
                     </div>
 
-                    <button className='register-box__button' type='submit' onClick={submitForm} >Submit</button>
+                    <button className='register-box__button' type='submit' onClick={submitForm} data-cy='submit' >Submit</button>
                 </form>
 
                 <nav className="register-box__hyperlinks">

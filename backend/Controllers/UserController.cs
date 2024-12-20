@@ -60,26 +60,40 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Attempt to the delete the current logged in user.
-        /// Won't work when deleting a different user,
-        /// or if the user could not be found.
+        /// Allows admins to delete user.
+        /// Other users can only delete themselves.
         /// </summary>
         /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(string id)
+        [HttpDelete("{id?}")]
+        public async Task<ActionResult> Delete(string? id = null)
         {
+            string userToDelete;
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUserId == null)
             {
                 return NotFound("Kan de gebruiker niet vinden");
             }
+            var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (currentUserId != id)
+            if (role == "admin")
             {
-                return Unauthorized("Kan de gebruiker niet vinden");
+                if (id == null)
+                {
+                    return NotFound("Kan de gebruiker niet vinden");
+                }
+
+                userToDelete = id;
+            } else
+            {
+                if (currentUserId != id)
+                {
+                    return Unauthorized("Kan de gebruiker niet vinden");
+                }
+
+                userToDelete = currentUserId;
             }
 
-            var user = await _userManager.FindByIdAsync(currentUserId);
+            var user = await _userManager.FindByIdAsync(userToDelete);
             if (user == null)
             {
                 return NotFound("Kan de gebruiker niet vinden");
@@ -98,7 +112,7 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Will update all logged-in users.
+        /// Will update all logged-in roles.
         /// Allows addresses to be updated as wel, when logged-in as particuliere_huurder.
         /// </summary>
         /// <param name="id"></param>

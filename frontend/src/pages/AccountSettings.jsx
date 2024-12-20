@@ -116,6 +116,7 @@ export default function AccountSettings() {
                             minLength='2'
                             maxLength='50'
                             onChange={e => setUsername(e.target.value)}
+                            data-cy='username'
                         />
                     </div>
 
@@ -129,6 +130,7 @@ export default function AccountSettings() {
                             minLength='5'
                             maxLength='255'
                             onChange={e => setEmail(e.target.value)}
+                            data-cy='email'
                         />
                     </div>
 
@@ -142,6 +144,7 @@ export default function AccountSettings() {
                             minLength='8'
                             maxLength='50'
                             onChange={e => setCurrentPassword(e.target.value)}
+                            data-cy='currentPassword'
                         />
                     </div>
 
@@ -155,6 +158,7 @@ export default function AccountSettings() {
                             minLength='8'
                             maxLength='50'
                             onChange={e => setPassword(e.target.value)}
+                            data-cy='updatedPassword'
                         />
                     </div>
 
@@ -169,6 +173,7 @@ export default function AccountSettings() {
                             minLength='5'
                             maxLength='15'
                             onChange={e => setPhoneNumber(e.target.value)}
+                            data-cy='phone'
                         />
                     </div>
 
@@ -183,15 +188,16 @@ export default function AccountSettings() {
                                 minLength='5'
                                 maxLength='255'
                                 onChange={e => setAddress(e.target.value.length === 0 ? null : e.target.value)}
+                                data-cy='address'
                             />
                         </div>
                     ) }
 
                     <nav className='settings__nav'>
-                        <button onClick={submit} className='settings__button'>Update</button>
+                        <button onClick={submit} className='settings__button' data-cy='submit'>Update</button>
 
                         <div className='settings_delete-buttons'>
-                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete'>{deleteConfig.text}</button>
+                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete' data-cy='delete'>{deleteConfig.text}</button>
 
                             { deleteConfig.clickedDelete && <button onClick={handleWontDelete} className='settings__button settings__button--dont-delete'>Niet verwijderen</button> }
                         </div>
