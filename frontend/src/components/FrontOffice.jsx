@@ -35,20 +35,24 @@ function FrontOffice() {
     return (
         <main className="content">
             <div className="divMain">
-                <h1>FrontOffice</h1>
-                {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
+                <div>
+                    <h1>FrontOffice</h1>
+                    {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
 
-                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                    sortedVehicles.map((vehicle) => {
-                        return (
-                            <div className="voertuigTab">
-                                <span>{vehicle.kenteken}</span>
-                                <span>{vehicle.merk} {vehicle.type}</span>
-                                <button>Bekijk</button>
-                            </div>
-                        );
-                    })
-                }
+                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                        sortedVehicles.map((vehicle) => {
+                            return (
+                                <div className="voertuigTab">
+                                    <span>{vehicle.kenteken}</span>
+                                    <span>{vehicle.merk} {vehicle.type}</span>
+                                    {/* <Link> to={pagina van de claim}*/}
+                                        <button>Bekijk</button>
+                                    {/* </Link> */}
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </main>
     );
