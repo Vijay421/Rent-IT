@@ -60,7 +60,7 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Allows admins to delete user.
+        /// Allows admins to delete users.
         /// Other users can only delete themselves.
         /// </summary>
         /// <param name="id"></param>
@@ -85,7 +85,7 @@ namespace backend.Controllers
                 userToDelete = id;
             } else
             {
-                if (currentUserId != id)
+                if (currentUserId != id && id != null)
                 {
                     return Unauthorized("Kan de gebruiker niet vinden");
                 }

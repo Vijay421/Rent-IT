@@ -75,7 +75,7 @@ describe("can register, update and delete user", () => {
         });
 
 
-        cy.intercept("DELETE", "https://localhost:53085/api/User").as("DeleteRequest");
+        cy.intercept("DELETE", "https://localhost:53085/api/User/*").as("DeleteRequest");
         cy.visit("http://localhost:5173/account-instellingen");
 
         cy.log("particuliere user delete");
