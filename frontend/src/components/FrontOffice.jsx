@@ -1,10 +1,9 @@
 import "../styles/FrontOffice.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
+import VehicleReview from "./VehicleReview.jsx";
 
 function FrontOffice() {
-    const location = useLocation();
-    const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
 
@@ -43,10 +42,10 @@ function FrontOffice() {
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {
                             return (
-                                <div className="voertuigTab">
-                                    <span>{vehicle.kenteken}</span>
-                                    <span>{vehicle.merk} {vehicle.type}</span>
-                                </div>
+                                <VehicleReview
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                />
                             );
                         })
                     }
