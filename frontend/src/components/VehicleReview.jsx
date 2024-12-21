@@ -1,4 +1,16 @@
+import { useState } from "react";
+
 export default function VehicleReview({data}){
+
+    const [foto, setFoto] = useState("");
+    const [beschrijving, setBeschrijving] = useState("");
+
+    const schadeClaim = {
+        voertuigId: data.id,
+        beschrijving: Beschrijving,
+        datum: new Date().getDate(),
+        foto: Foto
+    };
 
     function voertuigAccepteren(){
         alert("Voertuig is YIPPIE");
@@ -9,18 +21,22 @@ export default function VehicleReview({data}){
     }
 
     function voertuigRegistreren(){
-        alert("Voertuig is geregistreerd!");
+        if (VoertuigId && Beschrijving && Foto){
+            alert("Voertuig is geregistreerd!");
+        }
+        else setConfirmationMessage("Vul alstublieft alle velden in.");
     }
     return(
         <div className="voertuigTab">
             <h2>{data.merk} {data.type} - {data.kenteken}</h2>
-            <form>
-                <input>
-                </input>
-                <input type="submit" onClick={voertuigRegistreren} value="Registreren"></input>
-            </form>
-            {/* <button onClick={voertuigAccepteren}>Akkoord</button>
-            <button onClick={voertuigWeigeren}>Weigeren</button> */}
+            <input
+                onChange={(e) => setBeschrijving(e.target.value)}
+            />
+            <input
+                onChange={(e) => setFoto(e.target.value)}
+            />
+            <button onClick={voertuigRegistreren}>Registreren</button>
+            {/* <button onClick={voertuigWeigeren}>Weigeren</button> */}
         </div>
     )
 }
