@@ -214,7 +214,7 @@ async function register(payload, setResponse, userRole) {
     try {
         let url;
         if (userRole === "admin") {
-            url = 'https://localhost:53085/api/User/employee';
+            url = 'https://localhost:53085/api/Admin/employee';
         } else {
             url = 'https://localhost:53085/api/ParticuliereUser';
         }

@@ -20,9 +20,9 @@ describe("can register, update and delete employees", () => {
             expect(interception.response.statusCode).to.equal(200);
         });
 
-        cy.get("a[href='/medewerker-aanmaken']").click();
 
-        cy.intercept("POST", "https://localhost:53085/api/User/employee").as("UpdateRequest");
+        cy.intercept("POST", "https://localhost:53085/api/Admin/employee").as("UpdateRequest");
+        cy.get("a[href='/medewerker-aanmaken']").click();
 
         cy.log("create back office employee");
         cy.get("[data-cy='username']").type("b-user-cy-test");
@@ -49,6 +49,7 @@ describe("can register, update and delete employees", () => {
         cy.wait("@loginRequest").then((interception) => {
             expect(interception.response.statusCode).to.equal(200);
         });
+
 
         cy.intercept("PUT", "https://localhost:53085/api/User/*").as("UpdateRequest");
         cy.get("a[href='/account-instellingen']").click();
