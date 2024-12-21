@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a7642990-1869-403f-9b7c-167005bc8436",
+                            Id = "e1d5fad1-4b5f-4185-b5df-48fd8283d66c",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "40dc77cc-c03e-47fe-8e6e-741fcb377cd0",
+                            Id = "384eab7b-056e-45ef-9983-f034300f3713",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "9947d29c-4fe1-4514-830e-899e5ab24430",
+                            Id = "e3c8727a-845e-490d-860e-2ac9d52f0532",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "019afcff-14e8-46e9-8490-58f6321d2d98",
+                            Id = "7d0e3067-e25b-4020-8c6f-d9d4ffe98280",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "02e70917-0ff9-4c74-909a-136fa8f9b283",
+                            Id = "1f7ce3b6-707e-406a-b9e7-06d4b7de25cb",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "d9d67bb2-45d6-4a67-a0e6-defad8e88655",
+                            Id = "f0d375e9-51e4-4cac-8c56-93736d2a8970",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -349,6 +349,34 @@ namespace backend.Migrations
                     b.ToTable("Huuraanvragen");
                 });
 
+            modelBuilder.Entity("backend.Models.Schadeclaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Beschrijving")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Datum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VoertuigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VoertuigId");
+
+                    b.ToTable("Schadeclaims");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -601,6 +629,27 @@ namespace backend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("backend.Models.Voertuigregistratie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Inname")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VoertuigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VoertuigId");
+
+                    b.ToTable("Voertuigregistraties");
+                });
+
             modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
                 {
                     b.Property<int>("Id")
@@ -775,6 +824,17 @@ namespace backend.Migrations
                     b.Navigation("Voertuig");
                 });
 
+            modelBuilder.Entity("backend.Models.Schadeclaim", b =>
+                {
+                    b.HasOne("backend.Models.Voertuig", "Voertuig")
+                        .WithMany()
+                        .HasForeignKey("VoertuigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Voertuig");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.HasOne("backend.Rollen.BackOfficeMedewerker", "BackOffice")
@@ -800,6 +860,17 @@ namespace backend.Migrations
                     b.Navigation("Huurbeheerder");
 
                     b.Navigation("ParticuliereHuurder");
+                });
+
+            modelBuilder.Entity("backend.Models.Voertuigregistratie", b =>
+                {
+                    b.HasOne("backend.Models.Voertuig", "Voertuig")
+                        .WithMany()
+                        .HasForeignKey("VoertuigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Voertuig");
                 });
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>

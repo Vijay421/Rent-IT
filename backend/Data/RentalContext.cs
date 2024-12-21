@@ -24,6 +24,7 @@ namespace backend.Data
         public DbSet<Huurbeheerder> Huurbeheerders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
         public DbSet<Bedrijf> Bedrijven { get; set; }
+        public DbSet<Voertuigregistratie> Voertuigregistraties { get; set; }
 
         public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
         {

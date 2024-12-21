@@ -40,8 +40,6 @@ public class Voertuig
     public string Opmerking { get; set; }
     
     [Required]
-    [MinLength(2)]
-    [MaxLength(50)]
     public string Status { get; set; }
     
     [Required]
