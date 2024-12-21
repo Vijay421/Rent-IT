@@ -2,19 +2,11 @@ import "../styles/FrontOffice.css";
 import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext.jsx";
+import VehicleReview from "./VehicleReview.jsx";
 
 function FrontOffice() {
-    const location = useLocation();
-    const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
-    const [error, setError] = useState(null);
-
-    function bekijk(vehicle) {
-        navigate(`/frontoffice/inname/${vehicle.id}`, {
-            state: { vehicleData: vehicle, startDatum: vehicle.startDatum, eindDatum: vehicle.eindDatum }
-        });
-    }
 
     useEffect(() => {
         async function fetchVehicles() {
@@ -48,18 +40,18 @@ function FrontOffice() {
             <div className="divMain">
                 <div>
                     <h1>FrontOffice</h1>
-                    {error && <p>Error: {error}</p>}
-                    {sortedVehicles.length === 0 ? (
-                        <p>Geen voertuigen aanwezig</p>
-                    ) : (
-                        sortedVehicles.map((vehicle) => (
-                            <div className="voertuigTab" key={vehicle.kenteken}>
-                                <span>{vehicle.kenteken}</span>
-                                <span>{vehicle.merk} {vehicle.type}</span>
-                                <button onClick={() => bekijk(vehicle)}>Bekijk</button>
-                            </div>
-                        ))
-                    )}
+                    {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
+
+                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                        sortedVehicles.map((vehicle) => {
+                            return (
+                                <VehicleReview
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                />
+                            );
+                        })
+                    }
                 </div>
             </div>
         </main>
