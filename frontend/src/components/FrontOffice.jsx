@@ -7,11 +7,7 @@ function FrontOffice() {
     const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
-    function bekijk() { 
-        navigate("/frontoffice/inname/:id", {
-            state: { vehicleData: data, startDatum: StartDatum, eindDatum: EindDatum }
-        });
-    }
+
     useEffect(() => {
         async function fetchVehicles() {
             try {
@@ -50,9 +46,6 @@ function FrontOffice() {
                                 <div className="voertuigTab">
                                     <span>{vehicle.kenteken}</span>
                                     <span>{vehicle.merk} {vehicle.type}</span>
-                                    {/* <Link> to={pagina van de claim}*/}
-                                        <button onClick={bekijk}>Bekijk</button>
-                                    {/* </Link> */}
                                 </div>
                             );
                         })
