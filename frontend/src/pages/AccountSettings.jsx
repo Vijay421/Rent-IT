@@ -8,7 +8,7 @@ import { UserContext } from '../components/UserContext';
 export default function AccountSettings() {
     const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
-    const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker";
+    const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker" || userRole === "admin";
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);

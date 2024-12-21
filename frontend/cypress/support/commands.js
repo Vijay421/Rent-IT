@@ -23,3 +23,30 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('deleteUser', (username, password) => {
+    cy.log("cleaning up test user if it exists");
+
+    cy.request({
+        method: "POST",
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        url: "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true",
+        body: {
+            email: username,
+            password: password,
+        },
+        failOnStatusCode: false, // Don't fail even if user does not exist.
+    }).then((response) => {
+        if (response.status === 200) {
+            cy.request({
+                method: "DELETE",
+                credentials: 'include', // TODO: change to 'same-origin' when in production.
+                url: "https://localhost:53085/api/User",
+            }).then((deleteResponse) => {
+                cy.log("test user deleted, status:", deleteResponse.status);
+            });
+        } else {
+            cy.log("user does not exist, no cleanup needed");
+        }
+    });
+});

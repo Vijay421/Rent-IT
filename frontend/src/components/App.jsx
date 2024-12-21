@@ -24,6 +24,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<IndexPage />} />
                 <Route path="/registreren" element={<RegisterPage/>} />
+                <Route path="/medewerker-aanmaken" element={<RegisterPage/>} />
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
                 <Route path="/huur-overzicht" element={<RentingPage/>} />
