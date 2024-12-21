@@ -8,12 +8,19 @@ export default function VehicleReview({data}){
         alert("Voertuig is GONE");
     }
 
+    function voertuigRegistreren(){
+        alert("Voertuig is geregistreerd!");
+    }
     return(
         <div className="voertuigTab">
-            <span>{data.kenteken}</span>
-            <span>{data.merk} {data.type}</span>    
-            <button onClick={voertuigAccepteren}>Bekeken</button>
-            <button onClick={voertuigWeigeren}>Bekeken</button>
+            <h2>{data.merk} {data.type} - {data.kenteken}</h2>
+            <form>
+                <input>
+                </input>
+                <input type="submit" onClick={voertuigRegistreren} value="Registreren"></input>
+            </form>
+            {/* <button onClick={voertuigAccepteren}>Akkoord</button>
+            <button onClick={voertuigWeigeren}>Weigeren</button> */}
         </div>
     )
 }
