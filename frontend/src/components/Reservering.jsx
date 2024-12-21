@@ -1,6 +1,7 @@
 import '../styles/Reservering.css';
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 export default function Reservering() {
     const [userData, setUserData] = useState([]);
@@ -42,8 +43,10 @@ export default function Reservering() {
 }
 
 function ContainerContent(props) {
+    const navigate = useNavigate();
+
     function handleWijzigenButtonClick() {
-        console.log("wijzigen clicked");
+        navigate('/reservering-wijziging',{ state: { user: props.user } });
     }
 
     async function handleAnnulerenButtonClick() {
