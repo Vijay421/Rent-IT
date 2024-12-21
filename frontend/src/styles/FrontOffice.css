@@ -16,14 +16,7 @@
 }
 
 .voertuigTab{
-    display:flex;
-    justify-content: space-between;
+    /* display:flex;
+    justify-content: space-between; */
     border: 1px solid gray
-}
-.voertuigTab :nth-child(1){
-    width: 10%;
-}
-
-.voertuigTab :nth-child(2){
-    width: 30%;
 }
