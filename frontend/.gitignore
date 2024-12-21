@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cypress screenshots and videos
+cypress/screenshots/
+cypress/videos/
+
+# Cypress output logs and reports
+cypress/reports/
+
+# Cypress configuration and cache files
+cypress.env.json
+cypress/fixtures/*.local.json
+node_modules/
+cypress/cache/

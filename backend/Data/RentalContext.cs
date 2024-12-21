@@ -10,9 +10,9 @@ namespace backend.Data
 {
     public class RentalContext : IdentityDbContext<User>
     {
-        private readonly IConfiguration _configuration;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly UserSeeder _userSeeder;
+        private readonly IConfiguration? _configuration;
+        private readonly IServiceProvider? _serviceProvider;
+        private readonly UserSeeder? _userSeeder;
         public DbSet<User> Users { get; set; }
         public DbSet<Abonnement> Abonnementen { get; set; }
         public DbSet<Huuraanvraag> Huuraanvragen{ get; set; }
@@ -25,7 +25,7 @@ namespace backend.Data
         public DbSet<Voertuig> Voertuigen { get; set; }
         public DbSet<Bedrijf> Bedrijven { get; set; }
 
-        public RentalContext(IConfiguration configuration, IServiceProvider serviceProvider)
+        public RentalContext(DbContextOptions<RentalContext> contextOptions, IConfiguration configuration, IServiceProvider serviceProvider) : base(contextOptions)
         {
             _configuration = configuration;
             _serviceProvider = serviceProvider;
@@ -54,8 +54,11 @@ namespace backend.Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            var dbUrl = _configuration.GetSection("db")["url"];
-            optionsBuilder.UseSqlServer(dbUrl);
+            if (_configuration != null)
+            {
+                var dbUrl = _configuration.GetSection("db")["url"];
+                optionsBuilder.UseSqlServer(dbUrl);
+            }
         }
     }
 }
