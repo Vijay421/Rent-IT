@@ -1,14 +1,19 @@
 export default function VehicleReview({data}){
 
-    function voertuigRegistreren(){
-        alert("Voertuig is geregistreerd");
+    function voertuigAccepteren(){
+        alert("Voertuig is YIPPIE");
+    }
+
+    function voertuigWeigeren(){
+        alert("Voertuig is GONE");
     }
 
     return(
         <div className="voertuigTab">
             <span>{data.kenteken}</span>
             <span>{data.merk} {data.type}</span>    
-            <button onClick={voertuigRegistreren}>Bekeken</button>
+            <button onClick={voertuigAccepteren}>Bekeken</button>
+            <button onClick={voertuigWeigeren}>Bekeken</button>
         </div>
     )
 }
