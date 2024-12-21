@@ -45,6 +45,7 @@ export default function EmployeeOverviewPage() {
                                 <p className={pageStyles.loginFailed}>{data.accessFailedCount}</p>
 
                                 {/* TODO: implement deblock functionlity */}
+                                {/* TODO: remove 'Kan geblokeerd worden' and 'Gefaalde inlogpogingen' just show if the user is blocked.*/}
                                 {/* {isLockedout(data.lockoutEnd) && ( */}
                                 {true && (
                                     <button className={pageStyles.lockout}>Deblokkeren</button>
