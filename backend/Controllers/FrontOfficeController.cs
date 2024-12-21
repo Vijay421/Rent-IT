@@ -30,7 +30,7 @@ public class FrontOfficeController : ControllerBase
         //     return NoContent();
         // }
 
-        
+
         return claims;
     }
     [HttpGet("{id}")]
@@ -69,10 +69,50 @@ public class FrontOfficeController : ControllerBase
         {
             return NotFound();
         }
-    
+
         _context.Schadeclaims.Remove(schadeclaim);
         await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<VoertuigRegistratieDTO>> PostVoertuigRegistratie(VoertuigRegistratieDTO voertuigRegistratieDto)
+    {
+        var voertuigregistratie = new Voertuigregistratie
+        {
+            VoertuigId = voertuigRegistratieDto.VoertuigId,
+            Inname = voertuigRegistratieDto.Inname,
+        };
+
+        _context.Voertuigregistraties.Add(voertuigregistratie);
+        await _context.SaveChangesAsync();
+
+        _context.Entry(voertuigregistratie).Reference(v => v.Voertuig).Load();
+
+        var dto = new VoertuigRegistratieDTO
+        {
+            VoertuigId = voertuigRegistratieDto.VoertuigId,
+            Inname = voertuigRegistratieDto.Inname,
+            Voertuig = voertuigregistratie.Voertuig,
+        };
+        return CreatedAtAction(nameof(PostVoertuigRegistratie), new { id = voertuigregistratie.Id }, dto);
+    }
     
+    [HttpPut("/accepteer-voertuig/{id}")]
+    public async Task<ActionResult> UpdateVoertuig(int id)
+    {
+        var voertuig = await _context.Voertuigen.FindAsync(id);
+        if (voertuig == null)
+        {
+            return NotFound($"Geen voertuig gevonden met id: '{id}'");
+        }
+
+        voertuig.Status = "Verhuurbaar";
+
+        _context.Entry(voertuig).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
         return NoContent();
     }
 }
