@@ -21,7 +21,6 @@ import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 
 
 import FrontOfficePage from "../pages/FrontofficePage.jsx";
-import FrontOfficeVehicleReviewPage from "../pages/FrontofficeVehicleReviewPage.jsx";
 
 function App() {
     return (
@@ -49,7 +48,6 @@ function App() {
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
 
                 <Route path="/frontoffice/inname" element={<FrontOfficePage/>}/>
-                <Route path="/frontoffice/inname/:id" element={<FrontOfficeVehicleReviewPage/>}/>
             </Routes>
         </Router>
     );
