@@ -50,7 +50,38 @@ export default function ReserveringWijziging() {
 
     function handleFormSubmit() {
         if (!form.current.checkValidity()) {
+            console.log("not valid");
             return;
+        }
+
+        const payload = {
+            id: userData.id,
+            particuliereHuurderId: userData.particuliereHuurderId,
+            voertuigId: selectedVehicle.id,
+            startdatum: startDatum,
+            einddatum: eindDatum,
+            wettelijke_naam: wettelijkeNaam,
+            adresgegevens: adresGegevens,
+            rijbewijsnummer: userData.rijbewijsnummer,
+            reisaard: reisAard,
+            vereiste_bestemming: versteBestemming,
+            verwachte_km: verwachteKm,
+            geaccepteerd: null,
+            reden: null,
+            veranderDatum: new Date().toJSON(),
+            gezien: false,
+        };
+
+        try {
+            fetch(`https://localhost:53085/api/Huur/${userData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+        } catch (e) {
+            console.error(e);
         }
     }
 
