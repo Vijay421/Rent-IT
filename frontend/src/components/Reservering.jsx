@@ -33,9 +33,20 @@ export default function Reservering() {
             <div className="reserveringen-box__div">
                 <h1 className='reserveringen-box-title__h1'>Reserveringen</h1>
                 <div className="reservering-containers__div">
-                    {userData.map((user) => (
+                    {userData
+                        .filter((user) => {
+                            if (user.startdatum !== null) { /*check if start date is more than 3 days away from the current date*/
+                                const startDatum = new Date(user.startdatum).getTime();
+                                const currentDate = new Date().getTime();
+                                const difference = currentDate - startDatum;
+                                const days = difference / (1000 * 3600 * 24);
+                                return days > 3;
+                            }
+                        })
+                        .map((user) => (
                         <ContainerContent key={user.id} user={user} onDelete={handleDelete} />
-                    ))}
+                        ))
+                    }
                 </div>
             </div>
         </div>
@@ -88,7 +99,8 @@ function ContainerContent(props) {
                         <p className='container1-data__p'>€ {props.user.voertuig.prijs}</p>
 
                         <p className='container1-title__p'>Huurperiode: </p>
-                        <p className='container1-data__p'>{props.user.voertuig.startDatum} - {props.user.voertuig.eindDatum}</p>
+                        <p className='container1-data__p'>
+                            {new Date(props.user.startdatum).getDate()}-{new Date(props.user.startdatum).getMonth() + 1}-{new Date(props.user.startdatum).getFullYear()} - {new Date(props.user.einddatum).getDate()}-{new Date(props.user.einddatum).getMonth() + 1}-{new Date(props.user.einddatum).getFullYear()}</p>
                     </div>
 
                     <div className="info-box-container2__div">
@@ -109,11 +121,8 @@ function ContainerContent(props) {
                     </div>
                 </div>
                 <div className='reservering-container-action-buttons__div'>
-                    <button className='action-container__button' onClick={handleWijzigenButtonClick}>Reservering wijzigen
-                    </button>
-                    <button className='action-container__button' onClick={handleAnnulerenButtonClick}>Reservering
-                        annuleren
-                    </button>
+                    <button className='action-container__button' onClick={handleWijzigenButtonClick}>Wijzigen</button>
+                    <button className='action-container__button' onClick={handleAnnulerenButtonClick}>Annuleren</button>
                 </div>
             </div>
         </>
