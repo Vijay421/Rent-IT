@@ -2,7 +2,7 @@
 
 import localConfig from "../../../../backend/local_config.json";
 
-describe("can register, update and delete employees", () => {
+describe("admins can register, update and delete employees", () => {
     before(() => {
         cy.deleteUser("b-user-cy-test", "Qwerty123!");
     });
