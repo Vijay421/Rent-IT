@@ -4,7 +4,7 @@ import localConfig from "../../../../backend/local_config.json";
 
 describe("can register, update and delete employees", () => {
     before(() => {
-        cy.log("Let the backoffice employee be locked out, through 5 incorrect login attempts");
+        cy.log("Let the back office employee be locked out, through 5 incorrect login attempts");
         cy.loginFail("b-user", "Wrongpass!");
         cy.loginFail("b-user", "Wrongpass!");
         cy.loginFail("b-user", "Wrongpass!");
@@ -30,7 +30,7 @@ describe("can register, update and delete employees", () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
         cy.visit("http://localhost:5173/login");
 
-        cy.log("login as backoffice employee");
+        cy.log("login as back office employee");
         cy.get("[data-cy='username']").type(localConfig.accounts.admin.userName);
         cy.get("[data-cy='password']").type(localConfig.accounts.admin.password);
         cy.get("[data-cy='submit']").click();
@@ -49,11 +49,11 @@ describe("can register, update and delete employees", () => {
         });
     });
 
-    it("should login as the unblocked backoffice employee", () => {
+    it("should login as the unblocked back office employee", () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequestSuccess");
         cy.visit("http://localhost:5173/login");
 
-        cy.log("login as backoffice employee");
+        cy.log("login as back office employee");
         cy.get("[data-cy='username']").type("b-user");
         cy.get("[data-cy='password']").type("Qwerty123!");
         cy.get("[data-cy='submit']").click();
