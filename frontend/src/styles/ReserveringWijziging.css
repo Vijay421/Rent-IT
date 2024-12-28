@@ -3,14 +3,13 @@
     display: flex;
     flex-direction: column;
     width: 66.5vw;
-    margin: 50px auto 20px auto;
+    margin: 20px auto;
     border-radius: 8px;
     border: 3px solid black;
     gap: 10px;
 }
 
 .form-box-title__h1 {
-    padding-top: 5px;
     margin: 0 auto;
 }
 
@@ -105,6 +104,59 @@
     border-radius: 8px;
     display: none;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
     width: 66.5vw;
+}
+
+#wijziging-voertuig-kosten__div {
+    background-color: whitesmoke;
+    display: flex;
+    margin: 0 auto 50px auto;
+    flex-direction: column;
+    gap: 5px;
+    width: 35%;
+    font-size: 1.05em;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 3px solid black;
+}
+
+.voertuig-kosten-title__h1 {
+    font-size: 2em;
+    margin: 0 auto;
+}
+
+.voertuig-box-column3__div {
+    padding: 2px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.voertuig-box-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.voertuig-box-column3__div p {
+    font-size: max(0.6vw, 10px);
+    margin: 0;
+}
+
+.voertuig-box-row p:nth-child(1) {
+    width: 2%;
+    font-weight: bold;
+}
+
+.voertuig-box-column4__div {
+    display: flex;
+    margin: 0 auto;
+}
+
+.voertuig-box-column5__div {
+    display: flex;
+    margin: 0 auto;
 }

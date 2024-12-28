@@ -35,13 +35,14 @@ export default function Reservering() {
                 <div className="reservering-containers__div">
                     {userData
                         .filter((user) => {
-                            if (user.startdatum !== null) { /*check if start date is more than 3 days away from the current date*/
+                            if (user.startdatum !== null) {
                                 const startDatum = new Date(user.startdatum).getTime();
                                 const currentDate = new Date().getTime();
-                                const difference = currentDate - startDatum;
+                                const difference = startDatum - currentDate;
                                 const days = difference / (1000 * 3600 * 24);
                                 return days > 3;
                             }
+                            return false;
                         })
                         .map((user) => (
                         <ContainerContent key={user.id} user={user} onDelete={handleDelete} />
