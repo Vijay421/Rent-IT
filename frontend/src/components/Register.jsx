@@ -199,7 +199,7 @@ export default function Register() {
  * @param {string} payload.password
  * @param {string} payload.address
  * @param {Function} setResponse 
- * @param {string} userRole | null
+ * @param {string | null} userRole
  */
 async function register(payload, setResponse, userRole) {
     const request = {

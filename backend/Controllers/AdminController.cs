@@ -45,6 +45,32 @@ namespace backend.Controllers
             return Ok(employees);
         }
 
+        [HttpPost("unblock-employee/{id}")]
+        public async Task<ActionResult<GetEmployeeDTO>> UnblockEmployee(string id)
+        {
+            var employee = await _userManager.FindByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound($"Geen medewerker met id: {id}");
+            }
+
+            await _userManager.SetLockoutEndDateAsync(employee, DateTimeOffset.Now);
+
+            _context.Entry(employee).Reference(e => e.BackOffice).Load();
+            _context.Entry(employee).Reference(e => e.FrontOffice).Load();
+
+            return Ok(new GetEmployeeDTO
+            {
+                Id = employee.Id,
+                UserName = employee.UserName,
+                Email = employee.Email,
+                Role = employee.BackOffice != null ? "backoffice_medewerker" : "frontoffice_medewerker",
+                LockoutEnd = employee.LockoutEnd,
+                LockoutEnabled = employee.LockoutEnabled,
+                AccessFailedCount = employee.AccessFailedCount,
+            });
+        }
+
         [HttpPost("employee")]
         public async Task<ActionResult<UserDTO>> CreateEmployee(CreateEmployeeDTO createEmployeeDTO)
         {

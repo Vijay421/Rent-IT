@@ -37,15 +37,17 @@
     display: grid;
     /* The *-l means: *-label and *-b means: *-button */
     grid-template-areas:
-    "id-l username-l email-l locked-date-l locked-l login-failed-l"
-    "id username email locked-date locked login-failed"
-    ". . lockout-b lockout-b . ."
+    "id-l username-l email-l role-l locked-date-l"
+    "id username email role locked-date"
+    ". . lockout-b . ."
     ;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     row-gap: 10px;
+    column-gap: 10px;
 
     margin: 15px auto;
-    width: max(150px,62vw);
+    /* width: max(150px,62vw); */
+    width: 95%;
     border-radius: 5px;
     background-color: #f1f1f1;
     border: 2px solid black;
@@ -61,7 +63,7 @@
 }
 .id {
     grid-area: id;
-    width: 100px;
+    word-break: break-all;
 }
 
 .usernameLabel {
@@ -69,6 +71,7 @@
 }
 .username {
     grid-area: username;
+    word-break: break-all;
 }
 
 .emailLabel {
@@ -76,6 +79,15 @@
 }
 .email {
     grid-area: email;
+    word-break: break-all;
+}
+
+.roleLabel {
+    grid-area: role-l;
+}
+.role {
+    grid-area: role;
+    word-break: break-all;
 }
 
 .lockedDateLabel {
@@ -83,6 +95,7 @@
 }
 .lockedDate {
     grid-area: locked-date;
+    word-break: break-all;
 }
 
 .lockedLabel {
@@ -90,6 +103,7 @@
 }
 .locked {
     grid-area: locked;
+    word-break: break-all;
 }
 
 .loginFailedLabel {
@@ -97,6 +111,7 @@
 }
 .loginFailed {
     grid-area: login-failed;
+    word-break: break-all;
 }
 
 .lockout {
@@ -108,8 +123,8 @@
         grid-template-areas:
         "id-l username-l email-l"
         "id username email"
-        "locked-date-l locked-l login-failed-l"
-        "locked-date locked login-failed"
+        "role-l locked-date-l ."
+        "role locked-date ."
         ". lockout-b ."
         ;
         grid-template-columns: repeat(3, 1fr);
@@ -124,10 +139,10 @@
         grid-template-areas:
         "id-l username-l"
         "id username"
-        "email-l locked-date-l"
-        "email locked-date "
-        "locked-l login-failed-l"
-        "locked login-failed"
+        "email-l role-l"
+        "email role"
+        "locked-date-l ."
+        "locked-date ."
         "lockout-b lockout-b"
         ;
         grid-template-columns: repeat(2, 1fr);
@@ -149,16 +164,13 @@
         "email"
         "."
 
+        "role-l"
+        "role"
+        "."
+
         "locked-date-l"
         "locked-date"
         "."
-
-        "locked-l"
-        "locked"
-        "."
-
-        "login-failed-l"
-        "login-failed"
 
         "lockout-b"
         ;

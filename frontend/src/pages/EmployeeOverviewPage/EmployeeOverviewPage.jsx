@@ -9,11 +9,38 @@ export default function EmployeeOverviewPage() {
     useEffect(() => {
         const getData = async () => {
             const receivedEmployees = await getEmployees();
-            setEmployees(receivedEmployees);
+
+            // Map date string to date object.
+            const employeesMapped = receivedEmployees.map((e) => {
+                e.lockoutEnd = new Date(e.lockoutEnd);
+                return e;
+            });
+            setEmployees(employeesMapped);
         };
 
         getData();
     }, []);
+
+    async function handleUnlockEmployee(id) {
+        try {
+            const unblockedEmployee =  await unblockEmployee(id);
+            setEmployees((old) => {
+                const copy = [...old];
+                const index = copy.findIndex((employee) => employee.id === id);
+                if (index === -1) {
+                    return copy;
+                }
+
+                // Map date string to date object.
+                unblockedEmployee.lockoutEnd = new Date(unblockedEmployee.lockoutEnd);
+
+                copy[index] = unblockedEmployee;
+                return copy;
+            });
+        } catch (error) {
+            window.alert(error);
+        }
+    }
 
     return (
         <>
@@ -36,19 +63,13 @@ export default function EmployeeOverviewPage() {
                                 <p className={pageStyles.email}>{data.email}</p>
 
                                 <p className={`${pageStyles.lockedDateLabel} ${pageStyles.label}`}>Blokeereinddatum</p>
-                                <p className={pageStyles.lockedDate}>{data.lockoutEnd === null ? "N.v.t." : formatDate(new Date(data.lockoutEnd))}</p>
+                                <p className={pageStyles.lockedDate}>{data.lockoutEnd === null ? "N.v.t." : formatDate(data.lockoutEnd)}</p>
 
-                                <p className={`${pageStyles.lockedLabel} ${pageStyles.label}`}>Kan geblokeerd worden</p>
-                                <p className={pageStyles.locked}>{data.lockoutEnabled ? "Ja" : "Nee"}</p>
+                                <p className={`${pageStyles.roleLabel} ${pageStyles.label}`}>Rol</p>
+                                <p className={pageStyles.role}>{data.role}</p>
 
-                                <p className={`${pageStyles.loginFailedLabel} ${pageStyles.label}`}>Gefaalde inlogpogingen</p>
-                                <p className={pageStyles.loginFailed}>{data.accessFailedCount}</p>
-
-                                {/* TODO: implement deblock functionlity */}
-                                {/* TODO: remove 'Kan geblokeerd worden' and 'Gefaalde inlogpogingen' just show if the user is blocked.*/}
-                                {/* {isLockedout(data.lockoutEnd) && ( */}
-                                {true && (
-                                    <button className={pageStyles.lockout}>Deblokkeren</button>
+                                {isLockedout(data.lockoutEnd) && (
+                                    <button className={pageStyles.lockout} onClick={() => handleUnlockEmployee(data.id)} data-cy="unblock">Deblokkeren</button>
                                 ) }
                             </div>
                         ))
@@ -76,9 +97,9 @@ function formatDate(date) {
     const month = date.getMonth() + 1; // Months start from 0 for some reason.
     const year = date.getFullYear();
 
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
 
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 }
@@ -118,5 +139,37 @@ async function getEmployees() {
     } catch (error) {
         console.error('error when getting the employees, or parsing the response:', error);
         throw error;
+    }
+}
+
+/**
+ * Attempts to unblock the user with the given id.
+ * 
+ * @param {string} id 
+ * @returns {Object}
+ */
+async function unblockEmployee(id) {
+    const request = {
+        method: 'POST',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const response = await fetch(`https://localhost:53085/api/Admin/unblock-employee/${id}`, request);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(await response.text());
+            }
+            throw new Error("Kon de medewerker niet deblokkeren");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('error when unblocking an employees, or parsing the response:', error);
+        throw new Error("Kon de medewerker niet deblokkeren");
     }
 }

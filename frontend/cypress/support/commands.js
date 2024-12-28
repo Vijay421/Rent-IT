@@ -50,3 +50,18 @@ Cypress.Commands.add('deleteUser', (username, password) => {
         }
     });
 });
+
+Cypress.Commands.add('loginFail', (username, password) => {
+    cy.request({
+        method: "POST",
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        url: "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true",
+        body: {
+            email: username,
+            password: password,
+        },
+        failOnStatusCode: false, // Don't fail even if user does not exist.
+    }).then((response) => {
+        expect(response.status).to.equal(401);
+    });
+});
