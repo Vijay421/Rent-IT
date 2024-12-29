@@ -24,6 +24,20 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add("login", (username, password) => {
+    cy.request({
+        method: "POST",
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        url: "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true",
+        body: {
+            email: username,
+            password: password,
+        },
+    }).then((response) => {
+        expect(response.status).to.equal(200);
+    });
+});
+
 Cypress.Commands.add('deleteUser', (username, password) => {
     cy.log("cleaning up test user if it exists");
 
@@ -51,7 +65,7 @@ Cypress.Commands.add('deleteUser', (username, password) => {
     });
 });
 
-Cypress.Commands.add('loginFail', (username, password) => {
+Cypress.Commands.add("loginFail", (username, password) => {
     cy.request({
         method: "POST",
         credentials: 'include', // TODO: change to 'same-origin' when in production.

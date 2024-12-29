@@ -12,7 +12,7 @@ export default function EmployeeOverviewPage() {
 
             // Map date string to date object.
             const employeesMapped = receivedEmployees.map((e) => {
-                e.lockoutEnd = new Date(e.lockoutEnd);
+                e.lockoutEnd = e.lockoutEnd === null ? null : new Date(e.lockoutEnd);
                 return e;
             });
             setEmployees(employeesMapped);
@@ -20,6 +20,36 @@ export default function EmployeeOverviewPage() {
 
         getData();
     }, []);
+
+    return (
+        <>
+            <Navbar/>
+
+            <main className={pageStyles.main}>
+                <div className={pageStyles.content}>
+                    <h1 className={pageStyles.title}>Medewerkers</h1>
+
+                    <div className={pageStyles.employees}>
+                        {
+                            employees.map((data, key) => (
+                                <Employee key={key} data={data} setEmployees={setEmployees} />
+                            ))
+                        }
+
+                        {
+                            employees.length === 0 && <p className={pageStyles.emptyText}>Geen medewerkers</p>
+                        }
+                    </div>
+                </div>
+            </main>
+
+            <Footer/>
+        </>
+    );
+}
+
+function Employee({ data, setEmployees }) {
+    const [confirmDelete, setConfigDelete] = useState(false);
 
     async function handleUnlockEmployee(id) {
         try {
@@ -32,7 +62,7 @@ export default function EmployeeOverviewPage() {
                 }
 
                 // Map date string to date object.
-                unblockedEmployee.lockoutEnd = new Date(unblockedEmployee.lockoutEnd);
+                unblockedEmployee.lockoutEnd = unblockedEmployee.lockoutEnd === null ? null : new Date(unblockedEmployee.lockoutEnd);
 
                 copy[index] = unblockedEmployee;
                 return copy;
@@ -42,47 +72,51 @@ export default function EmployeeOverviewPage() {
         }
     }
 
+    async function handleDeleteUser(id) {
+        const didDelete = await deleteUser(id);
+        if (!didDelete) {
+            window.alert("Kon de medewerker niet verwijderen");
+            return;
+        }
+
+        setEmployees((old) => {
+            const copy = [...old];
+            return copy.filter((employee) => employee.id !== id);
+        });
+    }
+
     return (
-        <>
-            <Navbar/>
+        <div className={pageStyles.employee}>
+            <p className={`${pageStyles.idLabel} ${pageStyles.label}`}>Id</p>
+            <p className={pageStyles.id}>{data.id}</p>
 
-            <main className={pageStyles.main}>
-                <h1 className={pageStyles.title}>Medewerkers</h1>
+            <p className={`${pageStyles.usernameLabel} ${pageStyles.label}`}>Gebruikersnaam</p>
+            <p className={pageStyles.username}>{data.userName}</p>
 
-                <div className={pageStyles.employees}>
-                    {
-                        employees.map((data, key) => (
-                            <div key={key} className={pageStyles.employee}>
-                                <p className={`${pageStyles.idLabel} ${pageStyles.label}`}>Id</p>
-                                <p className={pageStyles.id}>{data.id}</p>
+            <p className={`${pageStyles.emailLabel} ${pageStyles.label}`}>Email</p>
+            <p className={pageStyles.email}>{data.email}</p>
 
-                                <p className={`${pageStyles.usernameLabel} ${pageStyles.label}`}>Gebruikersnaam</p>
-                                <p className={pageStyles.username}>{data.userName}</p>
+            <p className={`${pageStyles.lockedDateLabel} ${pageStyles.label}`}>Blokeereinddatum</p>
+            <p className={pageStyles.lockedDate}>{data.lockoutEnd === null ? "N.v.t." : formatDate(data.lockoutEnd)}</p>
 
-                                <p className={`${pageStyles.emailLabel} ${pageStyles.label}`}>Email</p>
-                                <p className={pageStyles.email}>{data.email}</p>
+            <p className={`${pageStyles.roleLabel} ${pageStyles.label}`}>Rol</p>
+            <p className={pageStyles.role}>{data.role}</p>
 
-                                <p className={`${pageStyles.lockedDateLabel} ${pageStyles.label}`}>Blokeereinddatum</p>
-                                <p className={pageStyles.lockedDate}>{data.lockoutEnd === null ? "N.v.t." : formatDate(data.lockoutEnd)}</p>
+            <div className={pageStyles.controls}>
+                {isLockedout(data.lockoutEnd) && (
+                    <button className={pageStyles.lockout} onClick={() => handleUnlockEmployee(data.id)} data-cy="unblock">Deblokkeren</button>
+                ) }
 
-                                <p className={`${pageStyles.roleLabel} ${pageStyles.label}`}>Rol</p>
-                                <p className={pageStyles.role}>{data.role}</p>
+                { !confirmDelete && <button data-cy="delete" data-user-name={data.userName} onClick={() => setConfigDelete(true)}>Verwijderen</button> }
 
-                                {isLockedout(data.lockoutEnd) && (
-                                    <button className={pageStyles.lockout} onClick={() => handleUnlockEmployee(data.id)} data-cy="unblock">Deblokkeren</button>
-                                ) }
-                            </div>
-                        ))
-                    }
-
-                    {
-                        employees.length === 0 && <p className={pageStyles.emptyText}>Geen medewerkers</p>
-                    }
-                </div>
-            </main>
-
-            <Footer/>
-        </>
+                { confirmDelete && (
+                    <>
+                        <button data-cy="will-delete" data-user-name={data.userName} onClick={() => {handleDeleteUser(data.id)}}>Daadwerkelijk verwijderen</button>
+                        <button data-cy="will-not-delete" data-user-name={data.userName} onClick={() => setConfigDelete(false)}>Niet verwijderen</button>
+                    </>
+                ) }
+            </div>
+        </div>
     );
 }
 
@@ -107,11 +141,15 @@ function formatDate(date) {
 /**
  * Return true when lockoutEnd is set later then the current time.
  * 
- * @param {string} lockoutEnd 
+ * @param {date} lockoutEnd 
  * @returns bool
  */
 function isLockedout(date) {
-    const lockedOutEnd = new Date(date).getTime();
+    if (date === null) {
+        return false;
+    }
+
+    const lockedOutEnd = date.getTime();
     const today = new Date().getTime();
 
     const isLockedOut = lockedOutEnd > today;
@@ -171,5 +209,29 @@ async function unblockEmployee(id) {
     } catch (error) {
         console.error('error when unblocking an employees, or parsing the response:', error);
         throw new Error("Kon de medewerker niet deblokkeren");
+    }
+}
+
+/**
+ * 
+ * @param {string} id 
+ * @returns bool
+ */
+async function deleteUser(id) {
+    const request = {
+        method: 'DELETE',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const response = await fetch(`https://localhost:53085/api/User/${id}`, request);
+
+        return response.ok;
+    } catch (error) {
+        console.error('error when deleting an employee, or parsing the response:', error);
+        return false;
     }
 }

@@ -4,12 +4,14 @@
     align-items: center;
 }
 
+.content {
+    width: 80%;
+}
+
 .title {
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    height: auto;
-    width: 66.5vw;
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 10px 0;
@@ -22,7 +24,6 @@
     border: 2px solid black;
     min-height: 35em;
     height: auto;
-    width: 66.5vw;
     margin-bottom: 30px;
 }
 
@@ -46,7 +47,6 @@
     column-gap: 10px;
 
     margin: 15px auto;
-    /* width: max(150px,62vw); */
     width: 95%;
     border-radius: 5px;
     background-color: #f1f1f1;
@@ -114,8 +114,11 @@
     word-break: break-all;
 }
 
-.lockout {
+.controls {
     grid-area: lockout-b;
+
+    display: flex;
+    justify-content: space-evenly;
 }
 
 @media only screen and (max-width: 1100px) {
