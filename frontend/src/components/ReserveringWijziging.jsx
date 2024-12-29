@@ -85,8 +85,12 @@ export default function ReserveringWijziging() {
     }
 
     function handleFormSubmit() {
+        const statusText = document.getElementById('confirmation-button-box-status__span');
+
         if (!form.current.checkValidity()) {
             console.log("not valid");
+            statusText.textContent = "Formulier is niet geldig. Controleer uw invoer.";
+            statusText.style.color = "red";
             return;
         }
 
@@ -115,11 +119,29 @@ export default function ReserveringWijziging() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
-            });
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                })
+                .then(data => {
+                    console.log("Success:", data);
+                    statusText.textContent = "Gegevens succesvol opgeslagen!";
+                    statusText.style.color = "green";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    statusText.textContent = `Er is een fout opgetreden: ${error.message}`;
+                    statusText.style.color = "red";
+                });
         } catch (e) {
-            console.error(e);
+            console.error("Unexpected error:", e);
+            statusText.textContent = `Onverwachte fout: ${e.message}`;
+            statusText.style.color = "red";
         }
     }
+
 
     return (
         <>
@@ -280,71 +302,73 @@ export default function ReserveringWijziging() {
                 <h1 className='voertuig-kosten-title__h1'>Kosten</h1>
 
                 <div className="voertuig-kosten-box__div">
-                        {selectedVehicle ? (
-                            <>
-                                <div className='voertuig-box-column2__div'>
-                                    <p>Huurprijs:</p>
-                                    <p>€ {(amountOfDays * selectedVehicle.prijs).toFixed(2)} ({amountOfDays} x
-                                        € {selectedVehicle.prijs})</p>
+                    {selectedVehicle ? (
+                        <>
+                            <div className='voertuig-box-column2__div'>
+                                <p>Huurprijs:</p>
+                                <p>€ {(amountOfDays * selectedVehicle.prijs).toFixed(2)} ({amountOfDays} x
+                                    € {selectedVehicle.prijs})</p>
 
-                                    <p>Verzekering:</p>
-                                    {selectedVehicle.soort === "Auto" &&
-                                        <p>€ {(amountOfDays * 15.50).toFixed(2)} ({amountOfDays} x € 15.50)</p>}
-                                    {selectedVehicle.soort === "Caravan" &&
-                                        <p>€ {amountOfDays * 22} ({amountOfDays} x € 22)</p>}
-                                    {selectedVehicle.soort === "Camper" && <p>€ 0 (Eigen verzekering)</p>}
+                                <p>Verzekering:</p>
+                                {selectedVehicle.soort === "Auto" &&
+                                    <p>€ {(amountOfDays * 15.50).toFixed(2)} ({amountOfDays} x € 15.50)</p>}
+                                {selectedVehicle.soort === "Caravan" &&
+                                    <p>€ {amountOfDays * 22} ({amountOfDays} x € 22)</p>}
+                                {selectedVehicle.soort === "Camper" && <p>€ 0 (Eigen verzekering)</p>}
 
-                                    <p>Belasting:</p>
-                                    <p>€ {tax.toFixed(2)} (21%)</p>
+                                <p>Belasting:</p>
+                                <p>€ {tax.toFixed(2)} (21%)</p>
 
-                                    <p>Km vergoeding:</p>
-                                    <p>€ {(0.23 * userData.verwachte_km).toFixed(2)} (€ 0.23
-                                        / {userData.verwachte_km} km)</p>
+                                <p>Km vergoeding:</p>
+                                <p>€ {(0.23 * userData.verwachte_km).toFixed(2)} (€ 0.23
+                                    / {userData.verwachte_km} km)</p>
 
-                                    <p>Borg:</p>
-                                    {selectedVehicle.soort === "Auto" && <p>€ 400*</p>}
-                                    {selectedVehicle.soort === "Caravan" && <p>€ 750*</p>}
-                                    {selectedVehicle.soort === "Camper" && <p>€ 1500*</p>}
+                                <p>Borg:</p>
+                                {selectedVehicle.soort === "Auto" && <p>€ 400*</p>}
+                                {selectedVehicle.soort === "Caravan" && <p>€ 750*</p>}
+                                {selectedVehicle.soort === "Camper" && <p>€ 1500*</p>}
 
-                                    <p>Benzine:</p>
-                                    {selectedVehicle.soort === "Auto" && <p>€ 50**</p>}
-                                    {selectedVehicle.soort === "Caravan" && <p>€ 0</p>}
-                                    {selectedVehicle.soort === "Camper" && <p>€ 100**</p>}
+                                <p>Benzine:</p>
+                                {selectedVehicle.soort === "Auto" && <p>€ 50**</p>}
+                                {selectedVehicle.soort === "Caravan" && <p>€ 0</p>}
+                                {selectedVehicle.soort === "Camper" && <p>€ 100**</p>}
 
-                                    <p>Korting:</p>
-                                    <p>€ 0</p>
+                                <p>Korting:</p>
+                                <p>€ 0</p>
+                            </div>
+
+                            <div className="voertuig-box-column3__div">
+                                <div className="voertuig-box-row">
+                                    <p>*</p>
+                                    <p>De borgsom wordt terugbetaald als het voertuig in dezelfde staat wordt
+                                        teruggebracht als waarin het is ontvangen.</p>
                                 </div>
-
-                                <div className="voertuig-box-column3__div">
-                                    <div className="voertuig-box-row">
-                                        <p>*</p>
-                                        <p>De borgsom wordt terugbetaald als het voertuig in dezelfde staat wordt
-                                            teruggebracht als waarin het is ontvangen.</p>
-                                    </div>
-                                    <div className="voertuig-box-row">
-                                        <p>**</p>
-                                        <p>De brandstofkosten worden terugbetaald als het voertuig met een volle tank
-                                            wordt ingeleverd.</p>
-                                    </div>
+                                <div className="voertuig-box-row">
+                                    <p>**</p>
+                                    <p>De brandstofkosten worden terugbetaald als het voertuig met een volle tank
+                                        wordt ingeleverd.</p>
                                 </div>
+                            </div>
 
-                                <div className="voertuig-box-column4__div">
-                                    <p className='voertuig-box-column4-title1-paragraph__p'>Huurperiode</p>
-                                    <p className='voertuig-box-column4-title2-paragraph__p'>Totale kosten</p>
-                                </div>
+                            <div className="voertuig-box-column4__div">
+                                <p className='voertuig-box-column4-title1-paragraph__p'>Huurperiode</p>
+                                <p className='voertuig-box-column4-title2-paragraph__p'>Totale kosten</p>
+                            </div>
 
-                                <div className="voertuig-box-column5__div">
-                                    <p className='voertuig-box-column5-answer1-paragraph__p'>{startDatum} – {eindDatum}</p>
-                                    <p className='voertuig-box-column5-answer2-paragraph__p'>
-                                        € {totalCost.toFixed(2)}
-                                    </p>
-                                </div>
-                            </>
-                        ) : (
-                            <p>An error has occurred</p>
-                        )}
+                            <div className="voertuig-box-column5__div">
+                                <p className='voertuig-box-column5-answer1-paragraph__p'>{startDatum} – {eindDatum}</p>
+                                <p className='voertuig-box-column5-answer2-paragraph__p'>
+                                    € {totalCost.toFixed(2)}
+                                </p>
+                            </div>
+                        </>
+                    ) : (
+                        <p>An error has occurred</p>
+                    )}
                 </div>
             </div>
+
+            <span id='confirmation-button-box-status__span'></span>
         </>
     );
 }
