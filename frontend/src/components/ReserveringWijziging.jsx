@@ -129,6 +129,8 @@ export default function ReserveringWijziging() {
                     console.log("Success:", data);
                     statusText.textContent = "Gegevens succesvol opgeslagen!";
                     statusText.style.color = "green";
+
+                    alert("Nu zou het eigenlijk een e-mail naar de inbox van de gebruiker moeten sturen, maar dat is nog niet functioneel.");
                 })
                 .catch(error => {
                     console.error("Error:", error);
