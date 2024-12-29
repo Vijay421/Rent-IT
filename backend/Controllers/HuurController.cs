@@ -23,53 +23,58 @@ public class HuurController : ControllerBase
         _userManager = userManager;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
-    // {
-    //     return await _context.Huuraanvragen.ToListAsync();
-    // }
-    //
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<Huuraanvraag>> GetHuuraanvraag(int id)
-    // {
-    //     var huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
-    //
-    //     if (huuraanvraag == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     return huuraanvraag;
-    // }
-    //
-    // [HttpPut("{id}")]
-    // public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag huuraanvraag)
-    // {
-    //     if (id != huuraanvraag.Id)
-    //     {
-    //         return BadRequest();
-    //     }
-    //
-    //     _context.Entry(huuraanvraag).State = EntityState.Modified;
-    //
-    //     try
-    //     {
-    //         await _context.SaveChangesAsync();
-    //     }
-    //     catch (DbUpdateConcurrencyException)
-    //     {
-    //         if (!HuuraanvraagExists(id))
-    //         {
-    //             return NotFound();
-    //         }
-    //         else
-    //         {
-    //             throw;
-    //         }
-    //     }
-    //
-    //     return NoContent();
-    // }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
+    {
+        return await _context.Huuraanvragen.ToListAsync();
+    }
+    
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvraag(int id)
+    {
+        var huuraanvragen = await _context.Huuraanvragen
+            .Where(h => h.ParticuliereHuurderId == id)
+            .Include(h => h.Voertuig)
+            .ToListAsync();
+
+        if (huuraanvragen == null)
+        {
+            return NotFound("Geen huuraanvragen gevonden.");
+        }
+
+        return Ok(huuraanvragen);
+    }
+
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag huuraanvraag)
+    {
+        if (id != huuraanvraag.Id)
+        {
+            return BadRequest();
+        }
+    
+        _context.Entry(huuraanvraag).State = EntityState.Modified;
+    
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!HuuraanvraagExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+    
+        return NoContent();
+    }
 
     [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
     [HttpPost]
@@ -103,7 +108,8 @@ public class HuurController : ControllerBase
             {
                 return Unauthorized("U bent niet gekoppeld aan een abonnementen. Bij problemen vraag, uw huurbeheerder om hulp.");
             }
-        } else
+        }
+        else
         {
             _context.Entry(user).Reference((u => u.ParticuliereHuurder)).Load();
             if (user.ParticuliereHuurder == null)
@@ -114,9 +120,14 @@ public class HuurController : ControllerBase
 
         if (huuraanvraagDto.VoertuigId > 0)
         {
-            var vehicle = new Voertuig { Id = huuraanvraagDto.VoertuigId };
-            _context.Voertuigen.Attach(vehicle);
-            huuraanvraagDto.Voertuig = vehicle;
+            var vehicle = await _context.Voertuigen.FindAsync(huuraanvraagDto.VoertuigId);
+            if (vehicle == null)
+            {
+                return BadRequest("Voertuig niet gevonden.");
+            }
+            
+            vehicle.Status = "Onverhuurbaar";
+            _context.Voertuigen.Update(vehicle);
         }
 
         var huuraanvraag = new Huuraanvraag
@@ -124,7 +135,7 @@ public class HuurController : ControllerBase
             Id = huuraanvraagDto.Id,
             ParticuliereHuurderId = user.ParticuliereHuurder?.Id,
             ZakelijkeHuurder = user.ZakelijkeHuurder?.Id,
-            Voertuig = huuraanvraagDto.Voertuig,
+            VoertuigId = huuraanvraagDto.VoertuigId,
             Startdatum = huuraanvraagDto.Startdatum,
             Einddatum = huuraanvraagDto.Einddatum,
             Wettelijke_naam = huuraanvraagDto.Wettelijke_naam,
@@ -142,26 +153,28 @@ public class HuurController : ControllerBase
         _context.Huuraanvragen.Add(huuraanvraag);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(PostHuuraanvraag), new { id = huuraanvraagDto.Id }, huuraanvraagDto);
+        return CreatedAtAction(nameof(PostHuuraanvraag), new { id = huuraanvraag.Id }, huuraanvraag);
     }
 
-    // [HttpDelete("{id}")]
-    // public async Task<IActionResult> DeleteHuuraanvraag(int id)
-    // {
-    //     var huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
-    //     if (huuraanvraag == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     _context.Huuraanvragen.Remove(huuraanvraag);
-    //     await _context.SaveChangesAsync();
-    //
-    //     return NoContent();
-    // }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteHuuraanvraag(int id)
+    {
+        var huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
+        if (huuraanvraag == null)
+        {
+            return NotFound();
+        }
+    
+        _context.Huuraanvragen.Remove(huuraanvraag);
+        await _context.SaveChangesAsync();
+    
+        return NoContent();
+    }
 
     private bool HuuraanvraagExists(int id)
     {
         return _context.Huuraanvragen.Any(e => e.Id == id);
     }
+    
+    
 }

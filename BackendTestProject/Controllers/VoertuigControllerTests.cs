@@ -35,13 +35,13 @@ namespace BackendTestProject.Controllers
 
             _voertuigen = new List<Voertuig>()
             {
-                new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-                new Voertuig(2, "Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar", 51.39, new DateOnly(2017, 4, 3), new DateOnly(2020, 8, 12)),
-                new Voertuig(3, "Volkswagen", "Golf", "IJ-789-KL", "Black", 2020, "Auto", "", "Verhuurbaar", 40.00, new DateOnly(2019, 10, 12), new DateOnly(2024, 11, 9)),
-                new Voertuig(105, "Citroën", "Jumper", "QR-345-ST", "Gray", 2021, "Camper", "", "Verhuurbaar", 65.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-                new Voertuig(106, "Peugeot", "Boxer", "UV-678-WX", "Black", 2016, "Camper", "", "Verhuurbaar", 68.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-                new Voertuig(185, "Dethle-s", "C'go", "GH-456-IJ", "Blue", 2020, "Caravan", "", "Verhuurbaar", 52.50, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-                new Voertuig(186, "Burstner", "Premio Life", "KL-789-MN", "Red", 2017, "Caravan", "", "Verhuurbaar", 48.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12))
+                new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00),
+                new Voertuig(2, "Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar", 51.39),
+                new Voertuig(3, "Volkswagen", "Golf", "IJ-789-KL", "Black", 2020, "Auto", "", "Verhuurbaar", 40.00),
+                new Voertuig(105, "Citroën", "Jumper", "QR-345-ST", "Gray", 2021, "Camper", "", "Verhuurbaar", 65.00),
+                new Voertuig(106, "Peugeot", "Boxer", "UV-678-WX", "Black", 2016, "Camper", "", "Verhuurbaar", 68.00),
+                new Voertuig(185, "Dethle-s", "C'go", "GH-456-IJ", "Blue", 2020, "Caravan", "", "Verhuurbaar", 52.50),
+                new Voertuig(186, "Burstner", "Premio Life", "KL-789-MN", "Red", 2017, "Caravan", "", "Verhuurbaar", 48.00)
             };
 
             context.Voertuigen.AddRange(_voertuigen);
