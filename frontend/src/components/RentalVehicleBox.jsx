@@ -72,7 +72,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
                             Verzekering: €75<br/>
                             Belasting: €37<br/>
                             Benzine: €43<br/>
@@ -166,7 +166,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                         {showPopup && (
                             <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
                             Verzekering: €65<br/>
                             Belasting: €62<br/> {/*21%*/}
                             Benzine: €0<br/>
@@ -259,7 +259,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                        Huurprijs: €{data.prijs} (amount of days x €{data.prijs})<br/>
+                        Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
                         Verzekering: €75<br/>
                         Belasting: €37<br/> {/*21%*/}
                         Benzine: €60<br/>
@@ -289,7 +289,8 @@ RentalAutoBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any
@@ -305,7 +306,8 @@ RentalCaravanBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any
@@ -321,7 +323,8 @@ RentalCamperBox.propTypes = {
         status: PropTypes.string.isRequired,
         prijs: PropTypes.number.isRequired,
         startDatum: PropTypes.string.isRequired,
-        eindDatum: PropTypes.string.isRequired
+        eindDatum: PropTypes.string.isRequired,
+        soort: PropTypes.string.isRequired,
     }).isRequired,
     nieuwStartDatum: PropTypes.any,
     nieuwEindDatum: PropTypes.any

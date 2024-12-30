@@ -1,0 +1,176 @@
+body {
+    margin-bottom: 50px;
+}
+
+.wijziging-page-container__div {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    width: 66.5vw;
+    margin: 10px auto;
+    border-radius: 8px;
+    border: 3px solid black;
+    gap: 10px;
+}
+
+.form-box-title__h1 {
+    margin: 0 auto;
+}
+
+.wijziging-page-voertuig-box__div {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.wijziging-page-form-box__div {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 100%;
+}
+
+.wijziging-form {
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wijziging-fields {
+    margin-top: 5px;
+    font-size: 1.25em;
+    display: flex;
+}
+
+.wijziging-fields label {
+    align-self: center;
+    font-weight: bold;
+}
+
+.wijziging-fields input {
+    align-self: center;
+    width: 70%;
+    font-size: 1em;
+    margin-left: auto;
+}
+
+.datum-fields__div {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+}
+
+.start-datum-field,
+.eind-datum-field {
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+    font-size: 1.25em;
+}
+
+.start-datum-field label,
+.eind-datum-field label {
+    font-weight: bold;
+}
+
+.start-datum-field input,
+.eind-datum-field input {
+    font-size: 0.8em;
+}
+
+.wijziging-page-action-buttons__div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-box-submit__button {
+    background-color: #2b6777;
+    border-radius: 8px;
+    color: whitesmoke;
+    border: 2px solid black;
+    width: auto;
+    height: 50px;
+    font-size: 1.5em;
+    margin: 10px auto;
+}
+
+.form-box-submit__button:hover {
+    background-color: #52ab98;
+    transition: background-color 0.3s ease;
+}
+
+#wijziging-voertuigen-list__div {
+    background-color: whitesmoke;
+    border: 3px solid black;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    margin: 0 auto 20px auto;
+    width: 66.5vw;
+}
+
+#wijziging-voertuig-kosten__div {
+    background-color: whitesmoke;
+    display: flex;
+    margin: 0 auto 5px auto;
+    flex-direction: column;
+    gap: 5px;
+    width: 35%;
+    font-size: 1.05em;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 3px solid black;
+}
+
+.voertuig-kosten-title__h1 {
+    font-size: 2em;
+    margin: 0 auto;
+}
+
+.voertuig-box-column3__div {
+    padding: 2px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.voertuig-box-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.voertuig-box-column3__div p {
+    font-size: max(0.6vw, 10px);
+    margin: 0;
+}
+
+.voertuig-box-row p:nth-child(1) {
+    width: 2%;
+    font-weight: bold;
+}
+
+.voertuig-box-column4__div {
+    display: flex;
+    margin: 0 auto;
+}
+
+.voertuig-box-column5__div {
+    display: flex;
+    margin: 0 auto;
+}
+
+#confirmation-button-box-status__span {
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+    font-size: 1.5em;
+    white-space: pre;
+    text-wrap: balance;
+}

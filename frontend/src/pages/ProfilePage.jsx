@@ -15,6 +15,7 @@ export default function ProfilePage() {
 
     if (userRole === null) {
         // TODO: redirect to index page, because user is not logged in.
+        console.log('user is null');
     }
 
     return (

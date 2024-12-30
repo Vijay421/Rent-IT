@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import styles from './ProfilePageLinkButton.module.css'
+import styles from './ProfilePageLinkButton.module.css';
 import PropTypes from "prop-types";
 
 function ProfilePageLinkButton({id, link, text}) {
