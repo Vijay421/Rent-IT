@@ -1,13 +1,7 @@
-﻿using backend.Data;
-using backend.DTOs;
-using backend.Models;
-using backend.Rollen;
+﻿using backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace backend.Controllers
@@ -19,13 +13,11 @@ namespace backend.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly RentalContext _context;
 
-        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, RentalContext context)
+        public UserController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _context = context;
         }
 
         /// <summary>
@@ -62,40 +54,26 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Allows admins to delete users.
-        /// Other users can only delete themselves.
+        /// Attempt to the delete the current logged in user.
+        /// Won't work when deleting a different user,
+        /// or if the user could not be found.
         /// </summary>
         /// <param name="id"></param>
-        [HttpDelete("{id?}")]
-        public async Task<ActionResult> Delete(string? id = null)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string id)
         {
-            string userToDelete;
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUserId == null)
             {
                 return NotFound("Kan de gebruiker niet vinden");
             }
-            var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "admin")
+            if (currentUserId != id)
             {
-                if (id == null)
-                {
-                    return NotFound("Kan de gebruiker niet vinden");
-                }
-
-                userToDelete = id;
-            } else
-            {
-                if (currentUserId != id && id != null)
-                {
-                    return NotFound("Kan de gebruiker niet vinden");
-                }
-
-                userToDelete = currentUserId;
+                return Unauthorized("Kan de gebruiker niet vinden");
             }
 
-            var user = await _userManager.FindByIdAsync(userToDelete);
+            var user = await _userManager.FindByIdAsync(currentUserId);
             if (user == null)
             {
                 return NotFound("Kan de gebruiker niet vinden");
@@ -114,116 +92,37 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Will update all logged-in roles.
-        /// Allows addresses to be updated as wel, when logged-in as particuliere_huurder.
+        /// Endpoint to test anonymous users.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="updateUserDTO"></param>
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(string id, UpdateUserDTO updateUserDTO)
+        [AllowAnonymous]
+        [HttpGet("everyone")]
+        public ActionResult Everyone()
         {
-            if (!updateUserDTO.HasData())
+            if (User.Identity.IsAuthenticated)
             {
-                return BadRequest("Geen data ontvangen");
+                Console.WriteLine("is logged in");
             }
 
-            if (updateUserDTO.Id != id)
-            {
-                return BadRequest("Incorrecte id");
-            }
+            return Ok("Everyone");
+        }
 
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("Kan gebruiker niet vinden");
-            }
+        /// <summary>
+        /// Endpoint to test all users.
+        /// </summary>
+        [HttpGet("users-only")]
+        public ActionResult UsersOnly()
+        {
+            return Ok("UsersOnly");
+        }
 
-            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (CurrentUserId == null)
-            {
-                return NotFound("Kan gebruiker niet vinden");
-            }
-            var role = User.FindFirstValue(ClaimTypes.Role);
-
-            if (CurrentUserId != id)
-            {
-                return Unauthorized("Kan gebruiker niet vinden");
-            }
-
-            user.UserName = updateUserDTO.UserName ?? user.UserName;
-            user.Email = updateUserDTO.Email ?? user.Email;
-            user.PhoneNumber = updateUserDTO.PhoneNumber ?? user.PhoneNumber;
-
-            if (updateUserDTO.UserName != null)
-            {
-                if (await _userManager.FindByNameAsync(updateUserDTO.UserName) != null)
-                {
-                    return UnprocessableEntity($"Naam: '{updateUserDTO.UserName}' is al in gebruik");
-                }
-            }
-
-            if (updateUserDTO.Email != null)
-            {
-                if (await _userManager.FindByEmailAsync(updateUserDTO.Email) != null)
-                {
-                    return UnprocessableEntity($"E-mail: '{updateUserDTO.Email}' is al in gebruik");
-                }
-            }
-
-            if (role == "particuliere_huurder" && updateUserDTO.Address != null)
-            {
-                await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
-                if (user.ParticuliereHuurder != null)
-                {
-                    user.ParticuliereHuurder.Address = updateUserDTO.Address;
-                }
-            }
-
-            if (updateUserDTO.Password != null)
-            {
-                if (updateUserDTO.CurrentPassword == null)
-                {
-                    return UnprocessableEntity("Vul het huidige wachtwoord in");
-                }
-
-                var pasChangeResult = await _userManager.ChangePasswordAsync(user, updateUserDTO.CurrentPassword, updateUserDTO.Password);
-                if (!pasChangeResult.Succeeded)
-                {
-                    return UnprocessableEntity("Incorrect wachtwoord");
-                }
-            }
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (result.Succeeded)
-            {
-                await _userManager.UpdateNormalizedEmailAsync(user);
-                await _userManager.UpdateNormalizedUserNameAsync(user);
-            }
-            else
-            {
-                var errorSet = new HashSet<string>();
-                var errorMsg = string.Join(", ", result.Errors.Select(e =>
-                {
-                    errorSet.Add(e.Code);
-                    return e.Description;
-                }));
-                Console.Error.WriteLine($"error: {errorMsg}");
-
-                if (errorSet.Contains("InvalidUserName"))
-                {
-                    return UnprocessableEntity("De naam kan alleen letters of getallen bevatten");
-                }
-
-                return UnprocessableEntity("Kan de gebruiker niet updaten");
-            }
-
-            return Ok(new
-            {
-                UserId = CurrentUserId,
-                UserName = User.FindFirstValue(ClaimTypes.Name),
-                Role = User.FindFirstValue(ClaimTypes.Role),
-            });
+        /// <summary>
+        /// Endpoint to test the admin role.
+        /// </summary>
+        [Authorize(Roles = "admin")]
+        [HttpGet("admins-only")]
+        public ActionResult AdminsOnly()
+        {
+            return Ok("AdminsOnly");
         }
     }
 }
