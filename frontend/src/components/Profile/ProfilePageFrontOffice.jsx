@@ -5,7 +5,7 @@ function ProfilePageFrontOffice() {
 
     return (
         <ProfilePageBase>
-            <ProfilePageLinkButton link="/account-instellingen" text="Account instellingen aanpassen"/>
+            <ProfilePageLinkButton link="/*" text="Account instellingen aanpassen"/>
         </ProfilePageBase>
     );
 }

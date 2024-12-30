@@ -191,5 +191,110 @@ namespace backend.Controllers
 
             return Ok(notificaties);
         }
+
+        /// <summary>
+        /// Will update the given user fields including the address and password fields, when the current password is provided.
+        /// </summary>
+        [Authorize(Roles = "particuliere_huurder")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(string id, UpdateParticuliereHuurderDTO huurderDTO)
+        {
+            if (!huurderDTO.HasData())
+            {
+                return BadRequest("Geen data ontvangen");
+            }
+
+            if (huurderDTO.Id != id)
+            {
+                return BadRequest("Incorrecte id");
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId == null)
+            {
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            if (CurrentUserId != id)
+            {
+                return Unauthorized("Kan gebruiker niet vinden");
+            }
+
+            user.UserName = huurderDTO.UserName ?? user.UserName;
+            user.Email = huurderDTO.Email ?? user.Email;
+            user.PhoneNumber = huurderDTO.PhoneNumber ?? user.PhoneNumber;
+
+            if (huurderDTO.UserName != null)
+            {
+                if (await _userManager.FindByNameAsync(huurderDTO.UserName) != null)
+                {
+                    return UnprocessableEntity($"Naam: '{huurderDTO.UserName}' is al in gebruik");
+                }
+            }
+
+            if (huurderDTO.Email != null)
+            {
+                if (await _userManager.FindByEmailAsync(huurderDTO.Email) != null)
+                {
+                    return UnprocessableEntity($"E-mail: '{huurderDTO.Email}' is al in gebruik");
+                }
+            }
+
+            if (huurderDTO.Address != null)
+            {
+                await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+                if (user.ParticuliereHuurder != null)
+                {
+                    user.ParticuliereHuurder.Address = huurderDTO.Address;
+                }
+            }
+
+            if (huurderDTO.Password != null)
+            {
+                if (huurderDTO.CurrentPassword == null)
+                {
+                    return UnprocessableEntity("Vul het huidige wachtwoord in");
+                }
+
+                var pasChangeResult = await _userManager.ChangePasswordAsync(user, huurderDTO.CurrentPassword, huurderDTO.Password);
+                
+                if (!pasChangeResult.Succeeded)
+                {
+                    return UnprocessableEntity("Incorrect wachtwoord");
+                }
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await _userManager.UpdateNormalizedEmailAsync(user);
+                await _userManager.UpdateNormalizedUserNameAsync(user);
+            } else
+            {
+                var errorSet = new HashSet<string>();
+                var errorMsg = string.Join(", ", result.Errors.Select(e =>
+                {
+                    errorSet.Add(e.Code);
+                    return e.Description;
+                }));
+                Console.Error.WriteLine($"error: {errorMsg}");
+
+                if (errorSet.Contains("InvalidUserName"))
+                {
+                    return UnprocessableEntity("De naam kan alleen letters of getallen bevatten");
+                }
+
+                return UnprocessableEntity("Kan de gebruiker niet updaten");
+            }
+
+            return NoContent();
+        }
     }
 }
