@@ -2,7 +2,7 @@
 
 import localConfig from "../../../../backend/local_config.json";
 
-describe("can register, update and delete employees", () => {
+describe("can register and update employees", () => {
     before(() => {
         cy.log("Let the back office employee be locked out, through 5 incorrect login attempts");
         cy.loginFail("b-user", "Wrongpass!");
