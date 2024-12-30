@@ -109,7 +109,7 @@ body {
     display: none;
     flex-direction: column;
     margin: 0 auto 20px auto;
-    width: 66.5vw;
+    width: 66.5%;
 }
 
 #wijziging-voertuig-kosten__div {
@@ -118,7 +118,7 @@ body {
     margin: 0 auto 5px auto;
     flex-direction: column;
     gap: 5px;
-    width: 35%;
+    width: 50%;
     font-size: 1.05em;
     font-weight: bold;
     border-radius: 8px;
@@ -126,8 +126,12 @@ body {
 }
 
 .voertuig-kosten-title__h1 {
-    font-size: 2em;
+    font-size: min(2vw, 48px);
     margin: 0 auto;
+}
+
+.voertuig-box-column2__div p {
+    font-size: min(3vw, 24px);
 }
 
 .voertuig-box-column3__div {
@@ -155,6 +159,10 @@ body {
     font-weight: bold;
 }
 
+.voertuig-box-row p {
+    font-size: 12px;
+}
+
 .voertuig-box-column4__div {
     display: flex;
     margin: 0 auto;
@@ -173,4 +181,73 @@ body {
     font-size: 1.5em;
     white-space: pre;
     text-wrap: balance;
+}
+
+
+
+@media only screen and (max-width: 1111px) {
+    .voertuig-box-column5-answer1-paragraph__p,
+    .voertuig-box-column5-answer2-paragraph__p {
+        font-size: 4vw;
+    }
+
+    .wijziging-form {
+        width: 90%;
+    }
+
+    .wijziging-fields input,
+    .wijziging-fields label {
+        font-size: max(1.75vw, 14px);
+    }
+
+    .datum-fields__div {
+        gap: 5px;
+    }
+
+    .start-datum-field label,
+    .eind-datum-field label,
+    .start-datum-field input,
+    .eind-datum-field input {
+        font-size: max(1.75vw, 12px);
+    }
+
+    .form-box-submit__button {
+        width: 33%;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .voertuig-box-column2__div p {
+        font-size: max(2vw, 16px);
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .wijziging-page-container__div {
+        width: 90%;
+    }
+
+    #wijziging-voertuig-kosten__div {
+        width: 90%;
+    }
+
+    .wettelijke-form__input {
+        font-size: 1px;
+    }
+
+    .voertuig-box-column5-answer1-paragraph__p {
+        font-size: 18px;
+    }
+
+    .voertuig-box-column5-answer2-paragraph__p {
+        font-size: 20px;
+    }
+
+    .voertuig-box-column2__div p {
+        font-size: 14px;
+    }
+
+    .voertuig-box-row p {
+        font-size: 10px;
+    }
 }
