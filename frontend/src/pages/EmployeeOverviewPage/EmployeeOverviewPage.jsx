@@ -214,6 +214,7 @@ async function unblockEmployee(id) {
 
 /**
  * Attempts to delete the user on the server.
+ * Will return true if the user has been deleted.
  * 
  * @param {string} id 
  * @returns bool
