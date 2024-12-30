@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
-
+[Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
 [ApiController]
 [Route("api/[controller]")]
 public class HuurController : ControllerBase
@@ -23,24 +23,63 @@ public class HuurController : ControllerBase
         _userManager = userManager;
     }
 
+    // [HttpGet]
+    // public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
+    // {
+    //     return await _context.Huuraanvragen.ToListAsync();
+    // }
+    
+    
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvraag()
     {
-        return await _context.Huuraanvragen.ToListAsync();
-    }
-    
-    
-    [HttpGet("{id}")]
-    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvraag(int id)
-    {
-        var huuraanvragen = await _context.Huuraanvragen
-            .Where(h => h.ParticuliereHuurderId == id)
-            .Include(h => h.Voertuig)
-            .ToListAsync();
-
-        if (huuraanvragen == null)
+        var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (CurrentUserId == null)
         {
-            return NotFound("Geen huuraanvragen gevonden.");
+            return Unauthorized("Kan gebruiker niet vinden");
+        }
+
+        var user = await _userManager.FindByIdAsync(CurrentUserId);
+        if (user == null)
+        {
+            return NotFound("Kan gebruiker niet vinden");
+        }
+        
+        var CurrentUserRole = User.FindFirstValue(ClaimTypes.Role);
+        if (CurrentUserRole == null)
+        {
+            return Unauthorized("Kan rol niet vinden");
+        }
+
+        var huuraanvragen = new List<Huuraanvraag>();
+        
+        if (CurrentUserRole == "particuliere_huurder")
+        {
+            _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+            if (user.ParticuliereHuurder == null)
+            {
+                return Unauthorized("Verkeerde rol");
+            }
+
+            huuraanvragen = await _context.Huuraanvragen
+                .Where(h => h.ParticuliereHuurderId == user.ParticuliereHuurder.Id)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+        }
+        
+        if (CurrentUserRole == "zakelijke_huurder")
+        {
+            _context.Entry(user).Reference(u => u.ZakelijkeHuurder).Load();
+            if (user.ZakelijkeHuurder == null)
+            {
+                return Unauthorized("Verkeerde rol");
+            }
+
+            huuraanvragen = await _context.Huuraanvragen
+                .Where(h => h.ZakelijkeHuurder == user.ZakelijkeHuurder.Id)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
         }
 
         return Ok(huuraanvragen);
