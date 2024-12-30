@@ -1,9 +1,12 @@
 import '../styles/Reservering.css';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import {UserContext} from "./UserContext.jsx";
 
 export default function Reservering() {
+    const {userId} = useContext(UserContext);
+
     const [userData, setUserData] = useState([]);
 
     useEffect(() => {
@@ -11,9 +14,7 @@ export default function Reservering() {
     }, []);
 
     async function fetchReserveringen() {
-        const userId = 1;
-
-        const response = await fetch(`https://localhost:53085/api/Huur/${userId}`, {
+        const response = await fetch(`https://localhost:53085/api/Huur`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -22,6 +23,7 @@ export default function Reservering() {
         });
         const data = await response.json();
         setUserData(data);
+        console.log(data);
     }
 
     function handleDelete(id) {
