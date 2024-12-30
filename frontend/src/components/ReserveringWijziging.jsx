@@ -115,6 +115,7 @@ export default function ReserveringWijziging() {
         try {
             fetch(`https://localhost:53085/api/Huur/${userData.id}`, {
                 method: 'PUT',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
