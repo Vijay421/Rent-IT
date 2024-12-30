@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241230113305_added-models")]
+    [Migration("20241230213256_added-models")]
     partial class addedmodels
     {
         /// <inheritdoc />
@@ -407,6 +407,9 @@ namespace backend.Migrations
                     b.Property<int>("Aanschafjaar")
                         .HasColumnType("int");
 
+                    b.Property<DateOnly>("EindDatum")
+                        .HasColumnType("date");
+
                     b.Property<string>("Kenteken")
                         .IsRequired()
                         .HasMaxLength(9)
@@ -434,6 +437,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateOnly>("StartDatum")
+                        .HasColumnType("date");
 
                     b.Property<string>("Status")
                         .IsRequired()

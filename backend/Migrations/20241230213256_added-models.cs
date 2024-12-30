@@ -92,7 +92,9 @@ namespace backend.Migrations
                     Soort = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Opmerking = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Prijs = table.Column<double>(type: "float", nullable: false)
+                    Prijs = table.Column<double>(type: "float", nullable: false),
+                    StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

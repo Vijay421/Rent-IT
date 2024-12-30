@@ -47,8 +47,13 @@ public class Voertuig
     [Required]
     public double Prijs { get; set; }
     
+    [Required]
+    public DateOnly StartDatum { get; set; }
+    
+    [Required]
+    public DateOnly EindDatum { get; set; }
     public Voertuig (int id, string merk, string type, string kenteken, string kleur, int aanschafjaar, string soort, string opmerking,
-        string status, double prijs)
+        string status, double prijs, DateOnly startDatum, DateOnly eindDatum)
     {
         Id = id;
         Merk = merk;
@@ -60,6 +65,8 @@ public class Voertuig
         Opmerking = opmerking;
         Status = status;
         Prijs = prijs;
+        StartDatum = startDatum;
+        EindDatum = eindDatum;
     }
     
     public Voertuig() {}
