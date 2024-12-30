@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241215141209_added_models")]
+    [Migration("20241229095835_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -367,6 +367,12 @@ namespace backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("ZakelijkeHuurderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ZakelijkeHuurderId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
@@ -384,6 +390,8 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("ParticuliereHuurderId");
+
+                    b.HasIndex("ZakelijkeHuurderId1");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -535,16 +543,13 @@ namespace backend.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AbonnementId");
 
                     b.HasIndex("HuurbeheerderId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("ZakelijkeHuurders");
                 });
@@ -640,6 +645,10 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("ParticuliereHuurderId");
 
+                    b.HasOne("backend.Rollen.ZakelijkeHuurder", "ZakelijkeHuurder")
+                        .WithMany()
+                        .HasForeignKey("ZakelijkeHuurderId1");
+
                     b.Navigation("BackOffice");
 
                     b.Navigation("FrontOffice");
@@ -647,6 +656,8 @@ namespace backend.Migrations
                     b.Navigation("Huurbeheerder");
 
                     b.Navigation("ParticuliereHuurder");
+
+                    b.Navigation("ZakelijkeHuurder");
                 });
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
@@ -665,12 +676,6 @@ namespace backend.Migrations
                     b.HasOne("backend.Rollen.Huurbeheerder", null)
                         .WithMany("ZakelijkeHuurders")
                         .HasForeignKey("HuurbeheerderId");
-
-                    b.HasOne("backend.Models.User", null)
-                        .WithOne("ZakelijkeHuurder")
-                        .HasForeignKey("backend.Rollen.ZakelijkeHuurder", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
@@ -681,11 +686,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Bedrijf", b =>
                 {
                     b.Navigation("Huurbeheerders");
-                });
-
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.Navigation("ZakelijkeHuurder");
                 });
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>

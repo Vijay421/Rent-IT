@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "../pages/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage.jsx";
+import EmployeeOverviewPage from "../pages/EmployeeOverviewPage";
 import IndexPage from "../pages/IndexPage.jsx";
 import RetrievePasswordPage from "../pages/RetrievePasswordPage.jsx";
 import RentingPage from "../pages/RentingPage.jsx";
@@ -26,6 +27,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<IndexPage />} />
                 <Route path="/registreren" element={<RegisterPage/>} />
+                <Route path="/medewerker-aanmaken" element={<RegisterPage/>} />
+                <Route path="/medewerkersoverzicht" element={<EmployeeOverviewPage/>} />
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
                 <Route path="/huur-overzicht" element={<RentingPage/>} />

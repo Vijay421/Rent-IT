@@ -51,6 +51,7 @@ function Login() {
                             placeholder="Vul hier uw gebruikersnaam in"
                             value={username}
                             onChange={handleUsername}
+                            data-cy='username'
                         />
                     </div>
 
@@ -63,12 +64,13 @@ function Login() {
                             placeholder="Vul hier uw wachtwoord in"
                             value={password}
                             onChange={handlePassword}
+                            data-cy='password'
                         />
                     </div>
 
                     <p id='login-box__loginstatus' ref={statusRef}></p>
 
-                    <button className='login-box__button' type='submit' onClick={handleLoginButtonClick}>Login</button>
+                    <button className='login-box__button' type='submit' onClick={handleLoginButtonClick} data-cy='submit'>Login</button>
 
                     <nav className="login-box__hyperlinks">
                         <Link to="/wachtwoord-vergeten">Wachtwoord vergeten? Account hier herstellen</Link>
