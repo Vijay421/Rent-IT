@@ -1,11 +1,14 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useContext} from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
 import getResponseClass from '../scripts/getResponseClass';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../components/UserContext';
 
 export default function AccountSettings() {
     const navigate = useNavigate();
+    const { userRole } = useContext(UserContext);
+    const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker" || userRole === "admin";
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -113,6 +116,7 @@ export default function AccountSettings() {
                             minLength='2'
                             maxLength='50'
                             onChange={e => setUsername(e.target.value)}
+                            data-cy='username'
                         />
                     </div>
 
@@ -126,6 +130,7 @@ export default function AccountSettings() {
                             minLength='5'
                             maxLength='255'
                             onChange={e => setEmail(e.target.value)}
+                            data-cy='email'
                         />
                     </div>
 
@@ -139,6 +144,7 @@ export default function AccountSettings() {
                             minLength='8'
                             maxLength='50'
                             onChange={e => setCurrentPassword(e.target.value)}
+                            data-cy='currentPassword'
                         />
                     </div>
 
@@ -152,6 +158,7 @@ export default function AccountSettings() {
                             minLength='8'
                             maxLength='50'
                             onChange={e => setPassword(e.target.value)}
+                            data-cy='updatedPassword'
                         />
                     </div>
 
@@ -166,27 +173,31 @@ export default function AccountSettings() {
                             minLength='5'
                             maxLength='15'
                             onChange={e => setPhoneNumber(e.target.value)}
+                            data-cy='phone'
                         />
                     </div>
 
-                    <div className='settings__input-box'>
-                        <label htmlFor="address">Adres:</label>
-                        <input
-                            id="address"
-                            className='settings__input-field'
-                            inputMode="numeric"
-                            placeholder='Vul hier je adres in'
-                            minLength='5'
-                            maxLength='255'
-                            onChange={e => setAddress(e.target.value)}
-                        />
-                    </div>
+                    { !isMedewerker && (
+                        <div className='settings__input-box'>
+                            <label htmlFor="address">Adres:</label>
+                            <input
+                                id="address"
+                                className='settings__input-field'
+                                inputMode="numeric"
+                                placeholder='Vul hier je adres in'
+                                minLength='5'
+                                maxLength='255'
+                                onChange={e => setAddress(e.target.value.length === 0 ? null : e.target.value)}
+                                data-cy='address'
+                            />
+                        </div>
+                    ) }
 
                     <nav className='settings__nav'>
-                        <button onClick={submit} className='settings__button'>Update</button>
+                        <button onClick={submit} className='settings__button' data-cy='submit'>Update</button>
 
                         <div className='settings_delete-buttons'>
-                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete'>{deleteConfig.text}</button>
+                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete' data-cy='delete'>{deleteConfig.text}</button>
 
                             { deleteConfig.clickedDelete && <button onClick={handleWontDelete} className='settings__button settings__button--dont-delete'>Niet verwijderen</button> }
                         </div>
@@ -208,7 +219,7 @@ export default function AccountSettings() {
  * @param {string} payload.email
  * @param {number} payload.phoneNumber
  * @param {string} payload.password
- * @param {string} payload.address
+ * @param {string | null} payload.address
  * @param {Function} setResponse
  */
 async function updateSettings(payload, setResponse) {
@@ -222,10 +233,10 @@ async function updateSettings(payload, setResponse) {
     };
 
     try {
-        const response = await fetch(`https://localhost:53085/api/ParticuliereUser/${payload.id}`, request);
+        const response = await fetch(`https://localhost:53085/api/User/${payload.id}`, request);
 
         switch (response.status) {
-            case 204:
+            case 200:
                 setResponse({
                     msg: 'de instellingen zijn geüpdated',
                     isError: false,
