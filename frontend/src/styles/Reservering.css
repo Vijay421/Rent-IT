@@ -87,3 +87,49 @@
     background-color: #52ab98;
     transition: background-color 0.1s;
 }
+
+@media only screen and (max-width: 1112px) {
+    .reserveringen-box__div {
+        width: 95vw;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .reserveringen-box__div {
+        width: 95vw;
+    }
+
+    .reservering-container__div {
+        flex-direction: column;
+        margin-bottom: 1%;
+    }
+
+    .reservering-container-info-box__div {
+        flex-direction: column;
+    }
+
+    .info-box-container1__div,
+    .info-box-container2__div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: none;
+        text-align: center;
+    }
+
+    .info-box-container1__div p,
+    .info-box-container2__div p {
+        font-size: 16px;
+        margin: 2px 0;
+    }
+
+    .reservering-container-action-buttons__div {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .action-container__button {
+        width: 90%;
+        margin: 10px 0;
+    }
+}

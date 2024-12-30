@@ -37,7 +37,7 @@ export function DisplayAutoBox({ data, huurButtonStatus, onHuur }) {
                     className='display-vehicle-huurprijs__p'
                     onMouseEnter={() => setShowPopup(true)}
                     onMouseLeave={() => setShowPopup(false)}>
-                    €{data.prijs.toFixed(2)}
+                    €{data.prijs.toFixed(2)}*
 
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
@@ -50,7 +50,7 @@ export function DisplayAutoBox({ data, huurButtonStatus, onHuur }) {
                         </span>
                     )}
                 </p>
-                <p className='display-vehicle-kosten__p'>Totale huurkosten</p>
+                <p className='display-vehicle-kosten__p'>per dag</p>
                 {huurButton && <button
                     id='display-vehicle-huur-box__button'
                     onClick={onHuur}>
@@ -112,7 +112,7 @@ export function DisplayCaravanBox({ data, huurButtonStatus, onHuur }) {
                     className='display-vehicle-huurprijs__p'
                     onMouseEnter={() => setShowPopup(true)}
                     onMouseLeave={() => setShowPopup(false)}>
-                    €{data.prijs.toFixed(2)}
+                    €{data.prijs.toFixed(2)}*
 
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
@@ -125,7 +125,7 @@ export function DisplayCaravanBox({ data, huurButtonStatus, onHuur }) {
                         </span>
                     )}
                 </p>
-                <p className='display-vehicle-kosten__p'>Totale huurkosten</p>
+                <p className='display-vehicle-kosten__p'>per dag</p>
                 {huurButton && <button
                     id='display-vehicle-huur-box__button'
                     onClick={onHuur}>
@@ -186,7 +186,7 @@ export function DisplayCamperBox({ data, huurButtonStatus, onHuur }) {
                     className='display-vehicle-huurprijs__p'
                     onMouseEnter={() => setShowPopup(true)}
                     onMouseLeave={() => setShowPopup(false)}>
-                    €{data.prijs.toFixed(2)}
+                    €{data.prijs.toFixed(2)}*
 
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
@@ -199,7 +199,7 @@ export function DisplayCamperBox({ data, huurButtonStatus, onHuur }) {
                         </span>
                     )}
                 </p>
-                <p className='display-vehicle-kosten__p'>Totale huurkosten</p>
+                <p className='display-vehicle-kosten__p'>per dag</p>
                 {huurButton && <button
                     id='display-vehicle-huur-box__button'
                     onClick={onHuur}>
