@@ -416,9 +416,6 @@ namespace backend.Migrations
                     b.Property<int?>("ZakelijkeHuurderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ZakelijkeHuurderId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
@@ -437,7 +434,7 @@ namespace backend.Migrations
 
                     b.HasIndex("ParticuliereHuurderId");
 
-                    b.HasIndex("ZakelijkeHuurderId1");
+                    b.HasIndex("ZakelijkeHuurderId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -800,7 +797,7 @@ namespace backend.Migrations
 
                     b.HasOne("backend.Rollen.ZakelijkeHuurder", "ZakelijkeHuurder")
                         .WithMany()
-                        .HasForeignKey("ZakelijkeHuurderId1");
+                        .HasForeignKey("ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
 

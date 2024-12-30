@@ -236,7 +236,6 @@ namespace backend.Migrations
                     BackOfficeId = table.Column<int>(type: "int", nullable: true),
                     FrontOfficeId = table.Column<int>(type: "int", nullable: true),
                     ZakelijkeHuurderId = table.Column<int>(type: "int", nullable: true),
-                    ZakelijkeHuurderId1 = table.Column<int>(type: "int", nullable: true),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -278,8 +277,8 @@ namespace backend.Migrations
                         principalTable: "ParticuliereHuurders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_ZakelijkeHuurders_ZakelijkeHuurderId1",
-                        column: x => x.ZakelijkeHuurderId1,
+                        name: "FK_AspNetUsers_ZakelijkeHuurders_ZakelijkeHuurderId",
+                        column: x => x.ZakelijkeHuurderId,
                         principalTable: "ZakelijkeHuurders",
                         principalColumn: "Id");
                 });
@@ -427,9 +426,9 @@ namespace backend.Migrations
                 column: "ParticuliereHuurderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ZakelijkeHuurderId1",
+                name: "IX_AspNetUsers_ZakelijkeHuurderId",
                 table: "AspNetUsers",
-                column: "ZakelijkeHuurderId1");
+                column: "ZakelijkeHuurderId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
