@@ -8,6 +8,8 @@ import RentingPage from "../pages/RentingPage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
 
+import VehicleOverviewPage from "../pages/VehicleOverviewPage";
+
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
 
@@ -30,6 +32,8 @@ function App() {
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
                 <Route path="/huur-overzicht" element={<RentingPage/>} />
+
+                <Route path="/voertuig-overzicht" element={<VehicleOverviewPage/>} />
 
                 <Route path="/profiel" element={<ProfilePage/>}/>
                 <Route path="/account-instellingen" element={<AccountSettings/>}/>
