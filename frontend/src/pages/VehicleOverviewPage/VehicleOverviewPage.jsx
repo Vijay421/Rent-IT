@@ -24,6 +24,10 @@ export default function VehicleOverviewPage() {
 
                     <h1 className={pageStyles.title}>Voertuigoverzicht</h1>
 
+                    <div className={pageStyles.addVehicle}>
+                        <button className={pageStyles.addVehicleButton}>Voertuig toevoegen</button>
+                    </div>
+
                     <div className={pageStyles.vehicles}>
                         {
                             vehicles.map((data, key) => (
@@ -75,6 +79,11 @@ function Vehicle({ data }) {
         <div className={pageStyles.vehicleCosts}>
             <p className={`${pageStyles.vehicleCost} ${pageStyles.label} ${pageStyles.labelFirst}`}>Kosten</p>
             <p className="rent-history-item__vehicle-cost">€{data.prijs.toFixed(2)}</p>
+        </div>
+
+        <div className={pageStyles.controls}>
+            <button className={pageStyles.controlUpdateButton}>Updaten</button>
+            <button>Verwijderen</button>
         </div>
     </div>
     );
