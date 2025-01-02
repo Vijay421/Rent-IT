@@ -30,6 +30,7 @@ export default function VehicleOverviewPage() {
                         <button
                             className={pageStyles.addVehicleButton}
                             onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "create" } })}
+                            data-cy="create-vehicle"
                         >
                             Voertuig toevoegen
                         </button>
@@ -107,11 +108,13 @@ function Vehicle({ data, setVehicles }) {
             <button
                 className={pageStyles.controlUpdateButton}
                 onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "update", vehicle: data, } })}
+                data-cy="update-vehicle"
             >
                 Updaten
             </button>
             <button
                 onClick={() => handleDeleteVehicle(data.id)}
+                data-cy="delete-vehicle"
             >
                 Verwijderen
             </button>
