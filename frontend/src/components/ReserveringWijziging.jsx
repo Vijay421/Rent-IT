@@ -278,6 +278,7 @@ export default function ReserveringWijziging() {
             <div id='wijziging-voertuigen-list__div'>
                 {vehicles
                     .filter(vehicle => vehicle.id !== (selectedVehicle?.id || userData.voertuigId))
+                    .filter(vehicle => vehicle.status === "Verhuurbaar")
                     .map(vehicle => (
                         vehicle.soort === "Auto" ? (
                             <DisplayAutoBox
