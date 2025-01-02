@@ -99,7 +99,7 @@ function ContainerContent(props) {
                         <p className='container1-data__p'>{props.user.voertuig.aanschafjaar}</p>
 
                         <p className='container1-title__p'>Prijs:</p>
-                        <p className='container1-data__p'>€ {props.user.voertuig.prijs}</p>
+                        <p className='container1-data__p'>€ {(props.user.voertuig.prijs).toFixed(2)}</p>
 
                         <p className='container1-title__p'>Huurperiode: </p>
                         <p className='container1-data__p'>

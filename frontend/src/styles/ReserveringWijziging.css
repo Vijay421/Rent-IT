@@ -173,6 +173,14 @@ body {
     margin: 0 auto;
 }
 
+.confirmation-button-status-box__div {
+    background-color: whitesmoke;
+    border: 3px solid black;
+    width: 50%;
+    border-radius: 8px;
+    margin: 10px auto;
+}
+
 #confirmation-button-box-status__span {
     display: block;
     margin: 0 auto;
