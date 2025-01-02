@@ -87,15 +87,42 @@ public class HuurController : ControllerBase
 
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag huuraanvraag)
+    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag updatedHuuraanvraag)
     {
-        if (id != huuraanvraag.Id)
+        if (id != updatedHuuraanvraag.Id)
         {
             return BadRequest();
         }
-    
-        _context.Entry(huuraanvraag).State = EntityState.Modified;
-    
+
+        var currentHuuraanvraag = await _context.Huuraanvragen
+            .Include(h => h.Voertuig)
+            .FirstOrDefaultAsync(h => h.Id == id);
+
+        if (currentHuuraanvraag == null)
+        {
+            return NotFound("Huuraanvraag not found");
+        }
+
+        if (currentHuuraanvraag.VoertuigId != updatedHuuraanvraag.VoertuigId)
+        {
+            var previousVehicle = await _context.Voertuigen.FindAsync(currentHuuraanvraag.VoertuigId);
+            var newVehicle = await _context.Voertuigen.FindAsync(updatedHuuraanvraag.VoertuigId);
+
+            if (previousVehicle != null)
+            {
+                previousVehicle.Status = "Verhuurbaar";
+                _context.Voertuigen.Update(previousVehicle);
+            }
+
+            if (newVehicle != null)
+            {
+                newVehicle.Status = "Onverhuurbaar";
+                _context.Voertuigen.Update(newVehicle);
+            }
+        }
+
+        _context.Entry(currentHuuraanvraag).CurrentValues.SetValues(updatedHuuraanvraag);
+
         try
         {
             await _context.SaveChangesAsync();
@@ -111,9 +138,10 @@ public class HuurController : ControllerBase
                 throw;
             }
         }
-    
+
         return NoContent();
     }
+
 
     [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
     [HttpPost]
