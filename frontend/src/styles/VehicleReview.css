@@ -29,10 +29,19 @@
 }
 
 .confirmationMessage {
-    color: red;
     text-align: right;
     font-size: 0.8rem; /* Slightly smaller font for messages */
     margin-top: 5px;
+}
+
+/* Red for error messages */
+.confirmationMessage.error {
+    color: red;
+}
+
+/* Green for success messages */
+.confirmationMessage.success {
+    color: darkgreen;
 }
 
 /* Media Query for Small Screens */

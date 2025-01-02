@@ -2,15 +2,16 @@ import { useState } from "react";
 import "../styles/VehicleReview.css";
 
 export default function VehicleReview({ data }) {
-    const [foto, setFoto] = useState(null); // Changed to null to represent no file initially
+    const [foto, setFoto] = useState(null);
     const [beschrijving, setBeschrijving] = useState("");
-    const [confirmationMessage, setConfirmationMessage] = useState(""); // Added for feedback to the user
+    const [confirmationMessage, setConfirmationMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
 
     const schadeClaim = {
         voertuigId: data.id,
         beschrijving: beschrijving,
-        datum: new Date().toISOString(), // Use ISO string for accurate timestamp
-        foto: foto ? URL.createObjectURL(foto) : null, // Temporarily preview the image
+        datum: new Date().toISOString(),
+        foto: foto ? URL.createObjectURL(foto) : null,
     };
 
     function voertuigAccepteren() {
@@ -23,10 +24,11 @@ export default function VehicleReview({ data }) {
 
     function voertuigRegistreren() {
         if (data.id && beschrijving && foto) {
-            alert("Voertuig is geregistreerd!");
-            // You can handle form submission here, e.g., send `schadeClaim` to an API
+            setConfirmationMessage("Voertuig is geregistreerd!");
+            setMessageType("success");
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
+            setMessageType("error");
         }
     }
 
@@ -50,7 +52,9 @@ export default function VehicleReview({ data }) {
                 <button onClick={voertuigRegistreren}>Registreren</button>
             </div>
             {confirmationMessage && (
-                <p className="confirmationMessage">{confirmationMessage}</p>
+                <p className={`confirmationMessage ${messageType}`}>
+                    {confirmationMessage}
+                </p>
             )}
         </div>
     );
