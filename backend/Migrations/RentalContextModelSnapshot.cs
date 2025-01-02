@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "990ef634-981b-4c58-994a-5c306b808f31",
+                            Id = "7761f9d9-0fab-4933-927a-f6942e322bd1",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "27652548-b1a3-4d5f-9866-738098777c36",
+                            Id = "e6922f77-6820-4713-8288-caf0c50595bc",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "fc78feb9-f89f-4015-bf41-33c59b017d63",
+                            Id = "41839f27-a756-424e-b3ad-93c439dc54ed",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "effd4964-5eee-451a-b065-b7104cbe0fe2",
+                            Id = "a2bae16f-0ac1-4728-b6eb-5f2c0890fbb2",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "3ee4fe72-e986-4b66-a4af-64214ad86773",
+                            Id = "7d9e29f0-98f1-4ad7-9b03-5aa3982e493f",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "575c4fb2-a0dd-40ae-b4f1-cdc6b1051433",
+                            Id = "6b7aaee8-e999-414e-810e-0e7431e4784e",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -506,14 +506,14 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             Aanschafjaar = 2018,
-                            EindDatum = new DateOnly(2016, 4, 12),
+                            EindDatum = new DateOnly(2025, 1, 4),
                             Kenteken = "AB-123-CD",
                             Kleur = "Red",
                             Merk = "Toyota",
                             Opmerking = "",
                             Prijs = 50.0,
                             Soort = "Auto",
-                            StartDatum = new DateOnly(2012, 2, 24),
+                            StartDatum = new DateOnly(2025, 1, 1),
                             Status = "Verhuurbaar",
                             Type = "Corolla"
                         },
@@ -521,14 +521,14 @@ namespace backend.Migrations
                         {
                             Id = 2,
                             Aanschafjaar = 2019,
-                            EindDatum = new DateOnly(2020, 8, 12),
+                            EindDatum = new DateOnly(2025, 1, 4),
                             Kenteken = "EF-456-GH",
                             Kleur = "Blue",
                             Merk = "Ford",
                             Opmerking = "",
                             Prijs = 51.390000000000001,
                             Soort = "Auto",
-                            StartDatum = new DateOnly(2017, 4, 3),
+                            StartDatum = new DateOnly(2025, 1, 1),
                             Status = "Verhuurbaar",
                             Type = "Focus"
                         },
@@ -536,14 +536,14 @@ namespace backend.Migrations
                         {
                             Id = 3,
                             Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2024, 11, 9),
+                            EindDatum = new DateOnly(2025, 1, 5),
                             Kenteken = "IJ-789-KL",
                             Kleur = "Black",
                             Merk = "Volkswagen",
                             Opmerking = "",
                             Prijs = 40.0,
                             Soort = "Auto",
-                            StartDatum = new DateOnly(2019, 10, 12),
+                            StartDatum = new DateOnly(2025, 1, 3),
                             Status = "Verhuurbaar",
                             Type = "Golf"
                         },
@@ -551,14 +551,14 @@ namespace backend.Migrations
                         {
                             Id = 105,
                             Aanschafjaar = 2021,
-                            EindDatum = new DateOnly(2016, 4, 12),
+                            EindDatum = new DateOnly(2025, 1, 24),
                             Kenteken = "QR-345-ST",
                             Kleur = "Gray",
                             Merk = "Citroën",
                             Opmerking = "",
                             Prijs = 65.0,
                             Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
+                            StartDatum = new DateOnly(2025, 1, 10),
                             Status = "Verhuurbaar",
                             Type = "Jumper"
                         },
@@ -566,14 +566,14 @@ namespace backend.Migrations
                         {
                             Id = 106,
                             Aanschafjaar = 2016,
-                            EindDatum = new DateOnly(2016, 4, 12),
+                            EindDatum = new DateOnly(2025, 2, 4),
                             Kenteken = "UV-678-WX",
                             Kleur = "Black",
                             Merk = "Peugeot",
                             Opmerking = "",
                             Prijs = 68.0,
                             Soort = "Camper",
-                            StartDatum = new DateOnly(2012, 2, 24),
+                            StartDatum = new DateOnly(2025, 2, 1),
                             Status = "Verhuurbaar",
                             Type = "Boxer"
                         },
@@ -581,14 +581,14 @@ namespace backend.Migrations
                         {
                             Id = 185,
                             Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2016, 4, 12),
+                            EindDatum = new DateOnly(2025, 6, 7),
                             Kenteken = "GH-456-IJ",
                             Kleur = "Blue",
                             Merk = "Dethle-s",
                             Opmerking = "",
                             Prijs = 52.5,
                             Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
+                            StartDatum = new DateOnly(2025, 5, 1),
                             Status = "Verhuurbaar",
                             Type = "C'go"
                         },
@@ -596,14 +596,14 @@ namespace backend.Migrations
                         {
                             Id = 186,
                             Aanschafjaar = 2017,
-                            EindDatum = new DateOnly(2016, 4, 12),
+                            EindDatum = new DateOnly(2025, 8, 24),
                             Kenteken = "KL-789-MN",
                             Kleur = "Red",
                             Merk = "Burstner",
                             Opmerking = "",
                             Prijs = 48.0,
                             Soort = "Caravan",
-                            StartDatum = new DateOnly(2012, 2, 24),
+                            StartDatum = new DateOnly(2025, 8, 21),
                             Status = "Verhuurbaar",
                             Type = "Premio Life"
                         });

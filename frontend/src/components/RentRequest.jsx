@@ -1,29 +1,29 @@
 import { useState } from "react";
 import "../styles/RentRquest.css";
 
-export default function RentRequest({ data, setRequests, index }) {
-    const [shouldReview, setShouldReview] = useState(false);
-    const [reason, setReason] = useState(null);
+                export default function RentRequest({ data, setRequests, index }) {
+                    const [shouldReview, setShouldReview] = useState(false);
+                    const [reason, setReason] = useState(null);
 
-    function handleShouldReview() {
-        setShouldReview(true);
-    }
+                    function handleShouldReview() {
+                        setShouldReview(true);
+                    }
 
-    function handleBackButton() {
-        setShouldReview(false);
-    }
+                    function handleBackButton() {
+                        setShouldReview(false);
+                    }
 
-    function handleReason(e) {
-        setReason(e.target.value);
-    }
+                    function handleReason(e) {
+                        setReason(e.target.value);
+                    }
 
-    async function handleBackCorrect() {
-        const payload = { beoordeling: true };
-        try {
-            const huuraanvraag = await sendReview(data.id, payload);
+                    async function handleBackCorrect() {
+                        const payload = { beoordeling: true };
+                        try {
+                            const huuraanvraag = await sendReview(data.id, payload);
 
-            // Update the state from the parent, and insert the updated huuraanvraag.
-            setRequests((huuraanvragen) => {
+                            // Update the state from the parent, and insert the updated huuraanvraag.
+                            setRequests((huuraanvragen) => {
                 const copy = [...huuraanvragen]; // Can only update a copy of the array.
                 copy[index] = huuraanvraag;
                 return copy;
@@ -36,6 +36,11 @@ export default function RentRequest({ data, setRequests, index }) {
     async function handleBackWrong() {
         if (reason === null || reason === "") {
             window.alert("Vul een reden in bij het afkeuren!");
+            return;
+        }
+
+        if (reason.length < 2) {
+            window.alert("Reden moet langer zijn 2 characters!");
             return;
         }
 
