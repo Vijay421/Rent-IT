@@ -20,6 +20,7 @@ describe("back office employees can manage vehicles", () => {
 
         cy.log("create a vehicle");
         cy.get("[data-cy='create-vehicle']").click();
+
         cy.get("[data-cy='brand']").type("Merk");
         cy.get("[data-cy='type']").type("Type");
         cy.get("[data-cy='licensePlate']").type("AA-BB-CC");
