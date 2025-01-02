@@ -300,6 +300,9 @@ export default function ReserveringWijziging() {
                     ))}
             </div>
 
+            <div className="confirmation-button-status-box__div">
+                <span id='confirmation-button-box-status__span'></span>
+            </div>
 
             <div id="wijziging-voertuig-kosten__div">
                 <h1 className='voertuig-kosten-title__h1'>Kosten</h1>
