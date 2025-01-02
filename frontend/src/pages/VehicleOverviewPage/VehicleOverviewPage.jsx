@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/Navbar.jsx";
 import Footer from "../../components/Footer.jsx";
 import pageStyles from "./vehiclePage.module.css";
 import temp from '../../assets/toyota-corolla.png';
 
 export default function VehicleOverviewPage() {
+    const navigate = useNavigate();
     const [vehicles, setVehicles] = useState([]);
 
     useEffect(() => {
@@ -25,7 +27,12 @@ export default function VehicleOverviewPage() {
                     <h1 className={pageStyles.title}>Voertuigoverzicht</h1>
 
                     <div className={pageStyles.addVehicle}>
-                        <button className={pageStyles.addVehicleButton}>Voertuig toevoegen</button>
+                        <button
+                            className={pageStyles.addVehicleButton}
+                            onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "create" } })}
+                        >
+                            Voertuig toevoegen
+                        </button>
                     </div>
 
                     <div className={pageStyles.vehicles}>

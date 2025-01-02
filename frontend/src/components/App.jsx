@@ -9,6 +9,7 @@ import ProfilePage from "../pages/ProfilePage.jsx";
 import AccountSettings from "../pages/AccountSettings.jsx";
 
 import VehicleOverviewPage from "../pages/VehicleOverviewPage";
+import VehicleCreateAndUpdate from "../pages/VehicleCreateAndUpdate";
 
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/huur-overzicht" element={<RentingPage/>} />
 
                 <Route path="/voertuigoverzicht" element={<VehicleOverviewPage/>} />
+                <Route path="/voertuig-aanpassen" element={<VehicleCreateAndUpdate/>} />
 
                 <Route path="/profiel" element={<ProfilePage/>}/>
                 <Route path="/account-instellingen" element={<AccountSettings/>}/>
