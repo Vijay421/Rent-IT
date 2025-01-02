@@ -7,9 +7,9 @@ export default function VehicleReview({data}){
 
     const schadeClaim = {
         voertuigId: data.id,
-        beschrijving: Beschrijving,
+        beschrijving: beschrijving,
         datum: new Date().getDate(),
-        foto: Foto
+        foto: foto
     };
 
     function voertuigAccepteren(){
