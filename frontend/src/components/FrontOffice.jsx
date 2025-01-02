@@ -36,8 +36,7 @@ function FrontOffice() {
         <main className="content">
             <div className="divMain">
                 <div>
-                    <h1>FrontOffice</h1>
-                    {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
+                    <h1 className="divMain__text__FrontOffice">FrontOffice</h1>
 
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {

@@ -1,9 +1,8 @@
- .content {
+.content {
     display: grid;
     width: 100%;
-    margin: 3dvh 0;
+    margin: 3dvh 0 3em;
 }
-
 
 .divMain {
     background-color: #c8d8e4;
@@ -16,7 +15,14 @@
 }
 
 .voertuigTab{
-    /* display:flex;
-    justify-content: space-between; */
     border: 1px solid gray
+}
+
+.divMain__text__FrontOffice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    font-size: 20px;
 }

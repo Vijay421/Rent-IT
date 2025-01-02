@@ -1,0 +1,43 @@
+.voertuigTab {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px; /* Limit the width for better layout scaling */
+    margin: 0 auto; /* Center the tab */
+    padding: 1rem; /* Add consistent spacing around the tab */
+    box-sizing: border-box; /* Ensure padding is included in size calculations */
+}
+
+.voertuigTab__text {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1rem; /* Scalable font size */
+}
+
+.voertuigTab__inputs {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px;
+    margin-top: 10px; /* Add spacing above the inputs */
+}
+
+.voertuigTab__inputs input,
+.voertuigTab__inputs button {
+    font-size: 0.8rem; /* Reduced font size */
+    text-align: center;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+}
+
+.confirmationMessage {
+    color: red;
+    text-align: right;
+    font-size: 0.8rem; /* Slightly smaller font for messages */
+    margin-top: 5px;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .voertuigTab__inputs {
+        flex-direction: column; /* Stack inputs and button on small screens */
+    }
+}
