@@ -845,7 +845,7 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("BackOfficeId");
 
-                    b.HasOne("backend.Rollen.FrontOfficeMedewerker", "FrontOffice")
+                    b.HasOne("backend.Rollen.FrontOfficeMedewerker", "FrontofficeIntake")
                         .WithMany()
                         .HasForeignKey("FrontOfficeId");
 
@@ -863,7 +863,7 @@ namespace backend.Migrations
 
                     b.Navigation("BackOffice");
 
-                    b.Navigation("FrontOffice");
+                    b.Navigation("FrontofficeIntake");
 
                     b.Navigation("Huurbeheerder");
 

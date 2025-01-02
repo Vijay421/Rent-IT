@@ -13,7 +13,7 @@ namespace backend.Models
 
         [ForeignKey("FrontOfficeMedewerkers")]
         public int? FrontOfficeId { get; set; }
-        public FrontOfficeMedewerker? FrontOffice { get; set; }
+        public FrontOfficeMedewerker? FrontofficeIntake { get; set; }
 
         [ForeignKey("ZakelijkeHuurders")]
         public int? ZakelijkeHuurderId { get; set; }

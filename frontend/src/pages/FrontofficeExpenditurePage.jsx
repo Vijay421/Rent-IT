@@ -1,13 +1,13 @@
 import Navbar from "../components/Navbar.jsx";
-import FrontOffice from "../components/FrontOffice.jsx";
+import FrontofficeExpenditure from "../components/FrontofficeExpenditure.jsx";
 import Footer from "../components/Footer.jsx";
 
-export default function FrontOfficePage() {
+export default function FrontofficeExpenditurePage() {
 
     return (
         <>
             <Navbar/>
-            <FrontOffice/>
+            <FrontofficeExpenditure/>
             <Footer/>
         </>
     );

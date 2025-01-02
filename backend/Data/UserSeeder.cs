@@ -305,7 +305,7 @@ namespace backend.Data
                 UserName = "f-user",
                 Email = "fuser@user.com",
                 EmailConfirmed = true,
-                FrontOffice = frontoffice,
+                FrontofficeIntake = frontoffice,
             };
             var result = await userManager.CreateAsync(fUser, "Qwerty123!");
 

@@ -19,8 +19,8 @@ import NotificationsPage from "../pages/NotificationsPage.jsx";
 import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 
-
-import FrontOfficePage from "../pages/FrontofficePage.jsx";
+import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
+import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
 
 function App() {
     return (
@@ -47,7 +47,8 @@ function App() {
                 <Route path="/bevestiging" element={<ConfirmationPage/>}/>
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
 
-                <Route path="/frontoffice/inname" element={<FrontOfficePage/>}/>
+                <Route path="/frontoffice/inname" element={<FrontofficeIntakePage/>}/>
+                <Route path="/frontoffice/uitgave" element={<FrontofficeExpenditurePage/>}/>
             </Routes>
         </Router>
     );

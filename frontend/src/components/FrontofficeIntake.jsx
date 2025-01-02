@@ -1,9 +1,9 @@
-import "../styles/FrontOffice.css";
+import "../styles/FrontofficeIntake.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
 import VehicleReview from "./VehicleReview.jsx";
 
-function FrontOffice() {
+function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
 
@@ -36,7 +36,7 @@ function FrontOffice() {
         <main className="content">
             <div className="divMain">
                 <div>
-                    <h1 className="divMain__text__FrontOffice">FrontOffice</h1>
+                    <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
 
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {
@@ -55,4 +55,4 @@ function FrontOffice() {
 }
 
 
-export default FrontOffice;
+export default FrontofficeIntake;
