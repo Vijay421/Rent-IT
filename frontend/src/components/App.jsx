@@ -18,6 +18,8 @@ import NotificationsPage from "../pages/NotificationsPage.jsx";
 
 import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
+import ReserveringPage from "../pages/ReserveringPage.jsx";
+import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
 
 
 import FrontOfficePage from "../pages/FrontofficePage.jsx";
@@ -46,8 +48,9 @@ function App() {
                 <Route path="/notificaties" element={<NotificationsPage/>}/>
                 <Route path="/bevestiging" element={<ConfirmationPage/>}/>
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
-
                 <Route path="/frontoffice/inname" element={<FrontOfficePage/>}/>
+                <Route path="/reserveringen" element={<ReserveringPage/>}/>
+                <Route path="/reservering-wijziging" element={<ReserveringWijzigingPage/>}/>
             </Routes>
         </Router>
     );

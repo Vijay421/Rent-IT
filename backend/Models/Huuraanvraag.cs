@@ -15,7 +15,6 @@ namespace backend.Models
         [Required]
         public int VoertuigId { get; set; }
 
-        [JsonIgnore]
         public Voertuig? Voertuig { get; set; }
 
         [Required]
@@ -68,7 +67,7 @@ namespace backend.Models
         public bool Gezien { get; set; }
 
         public Huuraanvraag() { }
-
+    
         public Huuraanvraag(int id, int? particuliereHuurderId, Voertuig? voertuig, DateOnly startdatum, DateOnly einddatum, string? wettelijke_naam, string? adresgegevens, string? rijbewijsnummer, string? reisaard, string? vereiste_bestemming, int verwachte_km, bool? geaccepteerd, string? reden, DateTime veranderDatum, bool gezien)
         {
             Id = id;
