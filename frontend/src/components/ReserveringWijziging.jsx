@@ -83,6 +83,7 @@ export default function ReserveringWijziging() {
     function handleCarChangeButtonClick() {
         document.getElementById("wijziging-voertuigen-list__div").style.display = 'flex';
         document.getElementById("wijziging-voertuig-kosten__div").style.display = 'none';
+        document.getElementById("confirmation-button-box-status__span").style.display = 'none';
     }
 
     function handleFormSubmit() {
@@ -300,7 +301,6 @@ export default function ReserveringWijziging() {
                         if (vehicle.startDatum > startDatum) return false;
                         if (vehicle.eindDatum < eindDatum) return false;
                         // if (userData.particuliereHuurderId == null && vehicle.soort !== "Auto") return false;
-
                         return vehicle;
                     });
 
