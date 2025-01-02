@@ -18,10 +18,38 @@
     text-align: center;
 }
 
+.formStatus {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.formStatusText {
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
 .form {
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
     min-height: 35em;
     height: auto;
+}
+
+.comment {
+    max-height: 200px;
+    max-width: 400px;
+    min-width: 100px;
 }

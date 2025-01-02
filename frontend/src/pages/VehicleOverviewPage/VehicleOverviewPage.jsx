@@ -38,7 +38,7 @@ export default function VehicleOverviewPage() {
                     <div className={pageStyles.vehicles}>
                         {
                             vehicles.map((data, key) => (
-                                <Vehicle key={key} data={data} />
+                                <Vehicle key={key} data={data} setVehicles={setVehicles} />
                             ))
                         }
 
@@ -52,8 +52,23 @@ export default function VehicleOverviewPage() {
     );
 }
 
-function Vehicle({ data }) {
+function Vehicle({ data, setVehicles }) {
+    const navigate = useNavigate();
     const altImageName = `${data.merk} ${data.type}`;
+
+    async function handleDeleteVehicle(id) {
+        try {
+            await deleteVehicle(data.id);
+
+            setVehicles((old) => {
+                const copy = [...old];
+                return copy.filter(v => v.id !== id);
+            });
+        } catch (error) {
+            window.alert(error);
+        }
+    }
+
 
     return (
         <div className={pageStyles.vehicle}>
@@ -85,18 +100,26 @@ function Vehicle({ data }) {
 
         <div className={pageStyles.vehicleCosts}>
             <p className={`${pageStyles.vehicleCost} ${pageStyles.label} ${pageStyles.labelFirst}`}>Kosten</p>
-            <p className="rent-history-item__vehicle-cost">€{data.prijs.toFixed(2)}</p>
+            <p className="">€{data.prijs.toFixed(2)}</p>
         </div>
 
         <div className={pageStyles.controls}>
-            <button className={pageStyles.controlUpdateButton}>Updaten</button>
-            <button>Verwijderen</button>
+            <button
+                className={pageStyles.controlUpdateButton}
+                onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "update", vehicle: data, } })}
+            >
+                Updaten
+            </button>
+            <button
+                onClick={() => handleDeleteVehicle(data.id)}
+            >
+                Verwijderen
+            </button>
         </div>
     </div>
     );
 }
 
-// TODO: handle server errors.
 /**
  * Will attempt to get the rent history from the server.
  * 
@@ -118,5 +141,26 @@ async function getVehicles() {
     } catch (error) {
         console.error('error when requesting the vehicles, or parsing the response:', error);
         throw error;
+    }
+}
+
+async function deleteVehicle(id) {
+    const request = {
+        method: 'DELETE',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    try {
+        const response = await fetch(`https://localhost:53085/api/Voertuig/${id}`, request);
+
+        if (!response.ok) {
+            throw Error("Kon het voertuig niet verwijderen");
+        }
+    } catch (error) {
+        console.error('error when updating deleting the vehicle, or parsing the response:', error);
+        throw Error("Kon het voertuig niet verwijderen");
     }
 }
