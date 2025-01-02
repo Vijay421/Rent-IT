@@ -36,7 +36,7 @@ function FrontOffice() {
         <main className="content">
             <div className="divMain">
                 <div>
-                    <h1>FrontOffice</h1>
+                    <h1>FrontOffice - Inname</h1>
                     {/* TO-DO: Lijst van voertuigen die geregistreerd moeten worden */}
 
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :

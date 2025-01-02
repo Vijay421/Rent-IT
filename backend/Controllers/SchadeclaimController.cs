@@ -10,16 +10,16 @@ namespace backend.Controllers;
 [Authorize(Roles = "frontoffice_medewerker")]
 [Route("api/[controller]")]
 [ApiController]
-public class FrontOfficeController : ControllerBase
+public class SchadeclaimController : ControllerBase
 {
     private readonly RentalContext _context;
 
-    public FrontOfficeController(RentalContext context)
+    public SchadeclaimController(RentalContext context)
     {
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<List<Schadeclaim>> GetAllSchadeclaims()
     {
         var claims = await _context.Schadeclaims.ToListAsync();
@@ -33,7 +33,7 @@ public class FrontOfficeController : ControllerBase
 
         return claims;
     }
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<Schadeclaim>> GetSchadeclaim(int id)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);
@@ -46,7 +46,7 @@ public class FrontOfficeController : ControllerBase
         return schadeclaim;
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update/{id}")]
     public async Task<ActionResult<IEnumerable<Schadeclaim>>> UpdateSchadeclaim(int id)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);
@@ -61,7 +61,7 @@ public class FrontOfficeController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteSchadeclaim(int id)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);
@@ -76,27 +76,24 @@ public class FrontOfficeController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost]
-    public async Task<ActionResult<VoertuigRegistratieDTO>> PostVoertuigRegistratie(VoertuigRegistratieDTO voertuigRegistratieDto)
+    [HttpPut("put")]
+    public async Task<ActionResult<Schadeclaim>> PutSchadeclaim(Schadeclaim schadeclaimDto)
     {
-        var voertuigregistratie = new Voertuigregistratie
+        var schadeclaim = new Schadeclaim
         {
-            VoertuigId = voertuigRegistratieDto.VoertuigId,
-            Inname = voertuigRegistratieDto.Inname,
+            Voertuig = schadeclaimDto.Voertuig,
+            Datum = schadeclaimDto.Datum,
+            Beschrijving = schadeclaimDto.Beschrijving,
+            Foto = schadeclaimDto.Foto
         };
 
-        _context.Voertuigregistraties.Add(voertuigregistratie);
+        _context.Schadeclaims.Add(schadeclaim);
         await _context.SaveChangesAsync();
 
-        _context.Entry(voertuigregistratie).Reference(v => v.Voertuig).Load();
+        _context.Entry(schadeclaim).Reference(v => v.Voertuig).Load();
 
-        var dto = new VoertuigRegistratieDTO
-        {
-            VoertuigId = voertuigRegistratieDto.VoertuigId,
-            Inname = voertuigRegistratieDto.Inname,
-            Voertuig = voertuigregistratie.Voertuig,
-        };
-        return CreatedAtAction(nameof(PostVoertuigRegistratie), new { id = voertuigregistratie.Id }, dto);
+
+        return CreatedAtAction(nameof(PutSchadeclaim), schadeclaim);
     }
     
     [HttpPut("/accepteer-voertuig/{id}")]
