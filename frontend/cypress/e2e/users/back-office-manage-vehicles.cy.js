@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
-describe("back office employees can create, retrieve, update and delete vehicles", () => {
-    it("should let the back office employee create vehicles", () => {
+describe("back office employees can manage vehicles", () => {
+    it("should let back office employees can create, retrieve, update and delete vehicles", () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
         cy.visit("http://localhost:5173/login");
 
