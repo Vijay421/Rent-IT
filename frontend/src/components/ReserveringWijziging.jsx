@@ -49,6 +49,7 @@ export default function ReserveringWijziging() {
 
     useEffect(() => {
         fetchVehicles();
+
     }, []);
 
     useEffect(() => {
@@ -276,33 +277,45 @@ export default function ReserveringWijziging() {
 
 
             <div id='wijziging-voertuigen-list__div'>
-                {vehicles
-                    .filter(vehicle => vehicle.id !== (selectedVehicle?.id || userData.voertuigId))
-                    .filter(vehicle => vehicle.status === "Verhuurbaar")
-                    .map(vehicle => (
-                        vehicle.soort === "Auto" ? (
-                            <DisplayAutoBox
-                                key={vehicle.id}
-                                data={vehicle}
-                                huurButtonStatus={true}
-                                onHuur={() => handleVehicleHuurButtonClick(vehicle)}
-                            />
-                        ) : vehicle.soort === "Caravan" ? (
-                            <DisplayCaravanBox
-                                key={vehicle.id}
-                                data={vehicle}
-                                huurButtonStatus={true}
-                                onHuur={() => handleVehicleHuurButtonClick(vehicle)}
-                            />
-                        ) : (
-                            <DisplayCamperBox
-                                key={vehicle.id}
-                                data={vehicle}
-                                huurButtonStatus={true}
-                                onHuur={() => handleVehicleHuurButtonClick(vehicle)}
-                            />
-                        )
-                    ))}
+                {(() => {
+                    const filteredVehicles = vehicles.filter(vehicle => {
+                        if (vehicle.id === (selectedVehicle?.id || userData.voertuigId)) return false;
+                        if (vehicle.startDatum > startDatum) return false;
+                        if (vehicle.eindDatum < eindDatum) return false;
+                        if (userData.particuliereHuurderId == null && vehicle.soort !== "Auto") return false;
+
+                        return vehicle;
+                    });
+
+                    return filteredVehicles.length > 0 ? (
+                        filteredVehicles.map(vehicle => (
+                            vehicle.soort === "Auto" ? (
+                                <DisplayAutoBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    huurButtonStatus={true}
+                                    onHuur={() => handleVehicleHuurButtonClick(vehicle)}
+                                />
+                            ) : vehicle.soort === "Caravan" ? (
+                                <DisplayCaravanBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    huurButtonStatus={true}
+                                    onHuur={() => handleVehicleHuurButtonClick(vehicle)}
+                                />
+                            ) : (
+                                <DisplayCamperBox
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                    huurButtonStatus={true}
+                                    onHuur={() => handleVehicleHuurButtonClick(vehicle)}
+                                />
+                            )
+                        ))
+                    ) : (
+                        <span className='wijziging-voertuig-no-content__span'>Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.</span>
+                    );
+                })()}
             </div>
 
             <span id='confirmation-button-box-status__span'></span>
