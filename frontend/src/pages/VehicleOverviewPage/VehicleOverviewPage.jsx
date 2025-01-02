@@ -22,7 +22,7 @@ export default function VehicleOverviewPage() {
             <main className={pageStyles.main}>
                 <div className={pageStyles.content}>
 
-                    <h1 className={pageStyles.title}>Voertuig overzicht</h1>
+                    <h1 className={pageStyles.title}>Voertuigoverzicht</h1>
 
                     <div className={pageStyles.vehicles}>
                         {

@@ -33,7 +33,7 @@ function App() {
                 <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
                 <Route path="/huur-overzicht" element={<RentingPage/>} />
 
-                <Route path="/voertuig-overzicht" element={<VehicleOverviewPage/>} />
+                <Route path="/voertuigoverzicht" element={<VehicleOverviewPage/>} />
 
                 <Route path="/profiel" element={<ProfilePage/>}/>
                 <Route path="/account-instellingen" element={<AccountSettings/>}/>
