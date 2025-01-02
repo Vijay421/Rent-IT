@@ -173,24 +173,20 @@ body {
     margin: 0 auto;
 }
 
-.confirmation-button-status-box__div {
-    background-color: whitesmoke;
-    border: 3px solid black;
-    width: 50%;
-    border-radius: 8px;
-    margin: 10px auto;
-}
-
 #confirmation-button-box-status__span {
-    display: block;
-    margin: 0 auto;
+    display: none;
+    margin: 0 auto 10px;
     width: 500px;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.7em;
     white-space: pre;
     text-wrap: balance;
+    padding: 10px;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: 2px solid black;
+    font-weight: bold;
 }
-
 
 
 @media only screen and (max-width: 1111px) {
