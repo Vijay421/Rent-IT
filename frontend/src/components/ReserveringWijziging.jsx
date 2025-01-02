@@ -91,6 +91,7 @@ export default function ReserveringWijziging() {
             console.log("not valid");
             statusText.textContent = "Formulier is niet geldig. Controleer uw invoer.";
             statusText.style.color = "red";
+            statusText.style.display = "block";
             return;
         }
 
@@ -130,6 +131,7 @@ export default function ReserveringWijziging() {
                     console.log("Success:", data);
                     statusText.textContent = "Gegevens succesvol opgeslagen!";
                     statusText.style.color = "green";
+                    statusText.style.display = "block";
 
                     alert("Nu zou het eigenlijk een e-mail naar de inbox van de gebruiker moeten sturen, maar dat is nog niet functioneel.");
                 })
@@ -137,11 +139,13 @@ export default function ReserveringWijziging() {
                     console.error("Error:", error);
                     statusText.textContent = `Er is een fout opgetreden: ${error.message}`;
                     statusText.style.color = "red";
+                    statusText.style.display = "block";
                 });
         } catch (e) {
             console.error("Unexpected error:", e);
             statusText.textContent = `Onverwachte fout: ${e.message}`;
             statusText.style.color = "red";
+            statusText.style.display = "block";
         }
     }
 
@@ -274,6 +278,7 @@ export default function ReserveringWijziging() {
             <div id='wijziging-voertuigen-list__div'>
                 {vehicles
                     .filter(vehicle => vehicle.id !== (selectedVehicle?.id || userData.voertuigId))
+                    .filter(vehicle => vehicle.status === "Verhuurbaar")
                     .map(vehicle => (
                         vehicle.soort === "Auto" ? (
                             <DisplayAutoBox
@@ -300,9 +305,7 @@ export default function ReserveringWijziging() {
                     ))}
             </div>
 
-            <div className="confirmation-button-status-box__div">
-                <span id='confirmation-button-box-status__span'></span>
-            </div>
+            <span id='confirmation-button-box-status__span'></span>
 
             <div id="wijziging-voertuig-kosten__div">
                 <h1 className='voertuig-kosten-title__h1'>Kosten</h1>
@@ -373,8 +376,6 @@ export default function ReserveringWijziging() {
                     )}
                 </div>
             </div>
-
-            <span id='confirmation-button-box-status__span'></span>
         </>
     );
 }
