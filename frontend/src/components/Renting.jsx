@@ -27,7 +27,7 @@ function Renting() {
     const handleDateChangeStartDatum = (event) => {
         const newStartDatum = event.target.value;
         if (selectedDateStartDatum !== "") {
-            if (newStartDatum > selectedDateEindDatum) {
+            if (newStartDatum >= selectedDateEindDatum) {
                 alert("De startdatum kan niet later zijn dan uw einddatum.");
             } else {
                 setSelectedDateStartDatum(newStartDatum);
@@ -41,7 +41,7 @@ function Renting() {
     const handleDateChangeEindDatum = (event) => {
         const newEindDatum = event.target.value;
         if (selectedDateStartDatum !== "") {
-            if (newEindDatum < selectedDateStartDatum) {
+            if (newEindDatum <= selectedDateStartDatum) {
                 alert("De einddatum kan niet eerder zijn dan uw startdatum.");
             } else {
                 setSelectedDateEindDatum(newEindDatum);

@@ -140,6 +140,31 @@ export default function ReserveringWijziging() {
             });
     }
 
+    const handleDateChangeStartDatum = (event) => {
+        const newStartDatum = event.target.value;
+        if (eindDatum !== "") {
+            if (newStartDatum >= eindDatum) {
+                alert("De startdatum kan niet later zijn dan uw einddatum.");
+            } else {
+                setStartDatum(newStartDatum);
+            }
+        } else {
+            setStartDatum(newStartDatum);
+        }
+    };
+
+    const handleDateChangeEindDatum = (event) => {
+        const newEindDatum = event.target.value;
+        if (startDatum !== "") {
+            if (newEindDatum <= startDatum) {
+                alert("De einddatum kan niet eerder zijn dan uw startdatum.");
+            } else {
+                setEindDatum(newEindDatum);
+            }
+        } else {
+            setEindDatum(newEindDatum);
+        }
+    };
 
     return (
         <>
@@ -235,22 +260,24 @@ export default function ReserveringWijziging() {
                                 <label htmlFor="start-datum__form">
                                     Start datum
                                 </label>
-                                <input type="date"
-                                       className='datum-fields__input'
-                                       id='start-datum__form'
-                                       value={startDatum}
-                                       onChange={(e) => setStartDatum(e.target.value)}
+                                <input
+                                    type="date"
+                                    className="datum-fields__input"
+                                    id="start-datum__form"
+                                    value={startDatum}
+                                    onChange={handleDateChangeStartDatum}
                                 />
                             </div>
                             <div className="eind-datum-field">
                                 <label htmlFor="eind-datum__form">
                                     Eind datum
                                 </label>
-                                <input type="date"
-                                       className='datum-fields__input'
-                                       id='eind-datum__form'
-                                       value={eindDatum}
-                                       onChange={(e) => setEindDatum(e.target.value)}
+                                <input
+                                    type="date"
+                                    className="datum-fields__input"
+                                    id="eind-datum__form"
+                                    value={eindDatum}
+                                    onChange={handleDateChangeEindDatum}
                                 />
                             </div>
                         </div>
