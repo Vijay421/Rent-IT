@@ -99,7 +99,7 @@ export default function ReserveringWijziging() {
         const payload = {
             id: userData.id,
             particuliereHuurderId: userData.particuliereHuurderId,
-            voertuigId: selectedVehicle.id,
+            voertuigId: selectedVehicle?.id,
             startdatum: startDatum,
             einddatum: eindDatum,
             wettelijke_naam: wettelijkeNaam,
@@ -114,42 +114,57 @@ export default function ReserveringWijziging() {
             gezien: false,
         };
 
-        try {
-            fetch(`https://localhost:53085/api/Huur/${userData.id}`, {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
+        fetch(`https://localhost:53085/api/Huur/${userData.id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                })
-                .then(data => {
-                    console.log("Success:", data);
-                    statusText.textContent = "Gegevens succesvol opgeslagen!";
-                    statusText.style.color = "green";
-                    statusText.style.display = "block";
-
-                    alert("Nu zou het eigenlijk een e-mail naar de inbox van de gebruiker moeten sturen, maar dat is nog niet functioneel.");
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    statusText.textContent = `Er is een fout opgetreden: ${error.message}`;
-                    statusText.style.color = "red";
-                    statusText.style.display = "block";
-                });
-        } catch (e) {
-            console.error("Unexpected error:", e);
-            statusText.textContent = `Onverwachte fout: ${e.message}`;
-            statusText.style.color = "red";
-            statusText.style.display = "block";
-        }
+            .then(() => {
+                statusText.textContent = "Gegevens succesvol opgeslagen!";
+                statusText.style.color = "green";
+                statusText.style.display = "block";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                statusText.textContent = `Er is een fout opgetreden: ${error.message}`;
+                statusText.style.color = "red";
+                statusText.style.display = "block";
+            });
     }
 
+    const handleDateChangeStartDatum = (event) => {
+        const newStartDatum = event.target.value;
+        if (eindDatum !== "") {
+            if (newStartDatum >= eindDatum) {
+                alert("De startdatum kan niet later zijn dan uw einddatum.");
+            } else {
+                setStartDatum(newStartDatum);
+            }
+        } else {
+            setStartDatum(newStartDatum);
+        }
+    };
+
+    const handleDateChangeEindDatum = (event) => {
+        const newEindDatum = event.target.value;
+        if (startDatum !== "") {
+            if (newEindDatum <= startDatum) {
+                alert("De einddatum kan niet eerder zijn dan uw startdatum.");
+            } else {
+                setEindDatum(newEindDatum);
+            }
+        } else {
+            setEindDatum(newEindDatum);
+        }
+    };
 
     return (
         <>
@@ -245,22 +260,24 @@ export default function ReserveringWijziging() {
                                 <label htmlFor="start-datum__form">
                                     Start datum
                                 </label>
-                                <input type="date"
-                                       className='datum-fields__input'
-                                       id='start-datum__form'
-                                       value={startDatum}
-                                       onChange={(e) => setStartDatum(e.target.value)}
+                                <input
+                                    type="date"
+                                    className="datum-fields__input"
+                                    id="start-datum__form"
+                                    value={startDatum}
+                                    onChange={handleDateChangeStartDatum}
                                 />
                             </div>
                             <div className="eind-datum-field">
                                 <label htmlFor="eind-datum__form">
                                     Eind datum
                                 </label>
-                                <input type="date"
-                                       className='datum-fields__input'
-                                       id='eind-datum__form'
-                                       value={eindDatum}
-                                       onChange={(e) => setEindDatum(e.target.value)}
+                                <input
+                                    type="date"
+                                    className="datum-fields__input"
+                                    id="eind-datum__form"
+                                    value={eindDatum}
+                                    onChange={handleDateChangeEindDatum}
                                 />
                             </div>
                         </div>
@@ -282,7 +299,7 @@ export default function ReserveringWijziging() {
                         if (vehicle.id === (selectedVehicle?.id || userData.voertuigId)) return false;
                         if (vehicle.startDatum > startDatum) return false;
                         if (vehicle.eindDatum < eindDatum) return false;
-                        if (userData.particuliereHuurderId == null && vehicle.soort !== "Auto") return false;
+                        // if (userData.particuliereHuurderId == null && vehicle.soort !== "Auto") return false;
 
                         return vehicle;
                     });
