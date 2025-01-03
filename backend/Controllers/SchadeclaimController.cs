@@ -24,23 +24,15 @@ public class SchadeclaimController : ControllerBase
     {
         var claims = await _context.Schadeclaims.ToListAsync();
 
-        // var role = User.FindFirstValue(ClaimTypes.Role);
-        // if (role == null)
-        // {
-        //     return NoContent();
-        // }
-
-
         return claims;
     }
     [HttpGet("get/{id}")]
     public async Task<ActionResult<Schadeclaim>> GetSchadeclaim(int id)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);
-
         if (schadeclaim == null)
         {
-            return NotFound();
+            return NotFound($"Geen schadeclaim gevonden met id: '{id}'");
         }
 
         return schadeclaim;
@@ -56,6 +48,7 @@ public class SchadeclaimController : ControllerBase
         }
 
         // TO-DO: Add update logic
+        // await _context.SaveChangesAsync();
 
 
         return NoContent();
@@ -76,13 +69,25 @@ public class SchadeclaimController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("put")]
-    public async Task<ActionResult<Schadeclaim>> PutSchadeclaim(Schadeclaim schadeclaimDto)
+    [HttpPost("create")]
+    public async Task<ActionResult<Schadeclaim>> CreateSchadeclaim(int id, Schadeclaim schadeclaimDto)
     {
+        var voertuig = await _context.Voertuigen.FindAsync(id);
+        if (voertuig == null)
+        {
+            return NotFound($"Geen voertuig gevonden met id: '{id}'");
+        }
+
+        voertuig.Status = "Onverhuurbaar";
+        await _context.SaveChangesAsync();
+
+        _context.Entry(voertuig).State = EntityState.Modified;
+
+
         var schadeclaim = new Schadeclaim
         {
             Voertuig = schadeclaimDto.Voertuig,
-            Datum = schadeclaimDto.Datum,
+            Datum = DateTime.Today,
             Beschrijving = schadeclaimDto.Beschrijving,
             Foto = schadeclaimDto.Foto
         };
@@ -92,11 +97,10 @@ public class SchadeclaimController : ControllerBase
 
         _context.Entry(schadeclaim).Reference(v => v.Voertuig).Load();
 
-
-        return CreatedAtAction(nameof(PutSchadeclaim), schadeclaim);
+        return CreatedAtAction(nameof(CreateSchadeclaim), schadeclaim);
     }
     
-    [HttpPut("/accepteer-voertuig/{id}")]
+    [HttpPut("/voertuig-accepteren/{id}")]
     public async Task<ActionResult> UpdateVoertuig(int id)
     {
         var voertuig = await _context.Voertuigen.FindAsync(id);

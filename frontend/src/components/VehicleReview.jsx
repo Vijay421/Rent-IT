@@ -7,25 +7,42 @@ export default function VehicleReview({ data }) {
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
 
-    const schadeClaim = {
-        voertuigId: data.id,
-        beschrijving: beschrijving,
-        datum: new Date().toISOString(),
-        foto: foto ? URL.createObjectURL(foto) : null,
-    };
-
-    function voertuigAccepteren() {
-        alert("Voertuig is YIPPIE");
+    function voertuigAccepteren(){
+        try {
+            const response = await fetch('https://localhost:53085/api/Schadeclaim/voertuig-accepteren/{data.id}', {
+                method: 'PUT',
+        
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    'content-type': 'application/json'
+                },
+            });
+            await return response.json();
+        }
+        catch (e) {
+            window.alert(e);
+        }
     }
 
-    function voertuigWeigeren() {
+    function handleWeigeren(){       
         if (data.id && beschrijving && foto) {
-            setConfirmationMessage("Voertuig is geweigerd!");
-            setMessageType("success");
-        } else {
-            setConfirmationMessage("Vul alstublieft alle velden in.");
-            setMessageType("error");
+            const schadeClaim = {
+                voertuigId: data.id,
+                beschrijving: beschrijving,
+                foto: foto ? URL.createObjectURL(foto) : null,
+            };
+            try {
+                await voertuigWeigeren(schadeClaim);
+            }
+            catch (e) {
+                window.alert(e);
+            }
         }
+        else {
+            setConfirmationMessage("Vul alstublieft alle velden in.");
+        }
+        
     }
 
     return (
@@ -46,7 +63,7 @@ export default function VehicleReview({ data }) {
                     onChange={(e) => setFoto(e.target.files[0])}
                 />
                 <button onClick={voertuigAccepteren}>Accepteer</button>
-                <button onClick={voertuigWeigeren}>Weiger</button>
+                <button onClick={handleWeigeren}>Weiger</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
@@ -55,4 +72,17 @@ export default function VehicleReview({ data }) {
             )}
         </div>
     );
+}
+async function voertuigWeigeren(payload) {
+    const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
+        method: 'POST',
+
+        // TODO: change to 'same-origin' when in production.
+        credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+    return await response.json();
 }
