@@ -18,6 +18,8 @@ import NotificationsPage from "../pages/NotificationsPage.jsx";
 
 import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
+import ReserveringPage from "../pages/ReserveringPage.jsx";
+import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
 
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
@@ -49,6 +51,8 @@ function App() {
 
                 <Route path="/frontoffice/inname" element={<FrontofficeIntakePage/>}/>
                 <Route path="/frontoffice/uitgave" element={<FrontofficeExpenditurePage/>}/>
+                <Route path="/reserveringen" element={<ReserveringPage/>}/>
+                <Route path="/reservering-wijziging" element={<ReserveringWijzigingPage/>}/>
             </Routes>
         </Router>
     );

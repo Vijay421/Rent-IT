@@ -12,13 +12,13 @@ namespace backend.Data
             // DO NOT change the Voertuig ids, they are used in the user seeder!
             builder.Entity<Voertuig>().HasData(
                 
-            new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00, new DateOnly(2012,2,24), new DateOnly(2016,4,12)),
-            new Voertuig(2, "Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar", 51.39, new DateOnly(2017,4,3), new DateOnly(2020,8,12)),
-            new Voertuig(3, "Volkswagen", "Golf", "IJ-789-KL", "Black", 2020, "Auto", "", "Verhuurbaar", 40.00, new DateOnly(2019,10,12), new DateOnly(2024,11,9)),
-            new Voertuig(105, "Citroën", "Jumper", "QR-345-ST", "Gray", 2021, "Camper", "", "Verhuurbaar", 65.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-            new Voertuig(106, "Peugeot", "Boxer", "UV-678-WX", "Black", 2016, "Camper", "", "Verhuurbaar", 68.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-            new Voertuig(185, "Dethle-s", "C'go", "GH-456-IJ", "Blue", 2020, "Caravan", "", "Verhuurbaar", 52.50, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12)),
-            new Voertuig(186, "Burstner", "Premio Life", "KL-789-MN", "Red", 2017, "Caravan", "", "Verhuurbaar", 48.00, new DateOnly(2012, 2, 24), new DateOnly(2016, 4, 12))
+            new Voertuig(1, "Toyota", "Corolla", "AB-123-CD", "Red", 2018, "Auto", "", "Verhuurbaar", 50.00, new DateOnly(2025, 1, 1), new DateOnly(2025, 1, 4)),
+            new Voertuig(2, "Ford", "Focus", "EF-456-GH", "Blue", 2019, "Auto", "", "Verhuurbaar", 51.39, new DateOnly(2025, 1, 1), new DateOnly(2025, 1, 4)),
+            new Voertuig(3, "Volkswagen", "Golf", "IJ-789-KL", "Black", 2020, "Auto", "", "Verhuurbaar", 40.00, new DateOnly(2025, 1, 3), new DateOnly(2025, 1, 5)),
+            new Voertuig(105, "Citroën", "Jumper", "QR-345-ST", "Gray", 2021, "Camper", "", "Verhuurbaar", 65.00, new DateOnly(2025, 1, 10), new DateOnly(2025, 1, 24)),
+            new Voertuig(106, "Peugeot", "Boxer", "UV-678-WX", "Black", 2016, "Camper", "", "Verhuurbaar", 68.00, new DateOnly(2025, 2, 1), new DateOnly(2025, 2, 4)),
+            new Voertuig(185, "Dethle-s", "C'go", "GH-456-IJ", "Blue", 2020, "Caravan", "", "Verhuurbaar", 52.50, new DateOnly(2025, 5, 1), new DateOnly(2025, 6, 7)),
+            new Voertuig(186, "Burstner", "Premio Life", "KL-789-MN", "Red", 2017, "Caravan", "", "Verhuurbaar", 48.00, new DateOnly(2025, 8, 21), new DateOnly(2025, 8, 24))
 
             // new Voertuig(4, "Honda", "Civic", "MN-012-OP", "White", 2017, "Auto", "", "Verhuurbaar", 27.00),
             // new Voertuig(5, "BMW", "3 Series", "QR-345-ST", "Gray", 2021, "Auto", "", "Verhuurbaar", 64.39),
@@ -60,8 +60,7 @@ namespace backend.Data
             // new Voertuig(41, "Bailey", "Unicorn", "CD-123-EF", "Gray", 2018, "Auto", "", "Verhuurbaar", 66.75),
             // new Voertuig(42, "Lunar", "Clubman", "GH-456-IJ", "Black", 2019, "Auto", "", "Verhuurbaar", 62.00),
             // new Voertuig(43, "Swi-", "Conqueror", "KL-789-MN", "White", 2020, "Auto", "", "Verhuurbaar", 70.50),
-            // new Voertuig(44, "Elddis", "Avante", "OP-012-QR", "Silver", 2017, "Auto", "", "Verhuurbaar", 55.00),
-            // new Voertuig(45, "Compass", "Casita", "ST-345-UV", "Blue", 2021, "Auto", "", "Verhuurbaar", 74.00),
+            // new Voertuig(44, "Elddis", "Avante", "OP-012-QR", "Silver", 2017, "Auto", "", "Verhuurbaar", 55.00),// new Voertuig(45, "Compass", "Casita", "ST-345-UV", "Blue", 2021, "Auto", "", "Verhuurbaar", 74.00),
             // new Voertuig(46, "Coachman", "VIP", "WX-678-YZ", "Green", 2016, "Auto", "", "Verhuurbaar", 59.00),
             // new Voertuig(47, "Buccaneer", "Commodore", "AB-901-CD", "Red", 2022, "Auto", "", "Verhuurbaar", 77.00),
             // new Voertuig(48, "Caravelair", "Allegra", "EF-234-GH", "Black", 2015, "Auto", "", "Verhuurbaar", 49.50),

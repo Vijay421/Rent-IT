@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class added_seeding_data : Migration
+    public partial class seedingdata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,12 +23,12 @@ namespace backend.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "27652548-b1a3-4d5f-9866-738098777c36", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
-                    { "3ee4fe72-e986-4b66-a4af-64214ad86773", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "575c4fb2-a0dd-40ae-b4f1-cdc6b1051433", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
-                    { "990ef634-981b-4c58-994a-5c306b808f31", null, "admin", "ADMIN" },
-                    { "effd4964-5eee-451a-b065-b7104cbe0fe2", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" },
-                    { "fc78feb9-f89f-4015-bf41-33c59b017d63", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" }
+                    { "41839f27-a756-424e-b3ad-93c439dc54ed", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
+                    { "6b7aaee8-e999-414e-810e-0e7431e4784e", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
+                    { "7761f9d9-0fab-4933-927a-f6942e322bd1", null, "admin", "ADMIN" },
+                    { "7d9e29f0-98f1-4ad7-9b03-5aa3982e493f", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "a2bae16f-0ac1-4728-b6eb-5f2c0890fbb2", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" },
+                    { "e6922f77-6820-4713-8288-caf0c50595bc", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" }
                 });
 
             migrationBuilder.InsertData(
@@ -36,13 +36,13 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Aanschafjaar", "EindDatum", "Kenteken", "Kleur", "Merk", "Opmerking", "Prijs", "Soort", "StartDatum", "Status", "Type" },
                 values: new object[,]
                 {
-                    { 1, 2018, new DateOnly(2016, 4, 12), "AB-123-CD", "Red", "Toyota", "", 50.0, "Auto", new DateOnly(2012, 2, 24), "Verhuurbaar", "Corolla" },
-                    { 2, 2019, new DateOnly(2020, 8, 12), "EF-456-GH", "Blue", "Ford", "", 51.390000000000001, "Auto", new DateOnly(2017, 4, 3), "Verhuurbaar", "Focus" },
-                    { 3, 2020, new DateOnly(2024, 11, 9), "IJ-789-KL", "Black", "Volkswagen", "", 40.0, "Auto", new DateOnly(2019, 10, 12), "Verhuurbaar", "Golf" },
-                    { 105, 2021, new DateOnly(2016, 4, 12), "QR-345-ST", "Gray", "Citroën", "", 65.0, "Camper", new DateOnly(2012, 2, 24), "Verhuurbaar", "Jumper" },
-                    { 106, 2016, new DateOnly(2016, 4, 12), "UV-678-WX", "Black", "Peugeot", "", 68.0, "Camper", new DateOnly(2012, 2, 24), "Verhuurbaar", "Boxer" },
-                    { 185, 2020, new DateOnly(2016, 4, 12), "GH-456-IJ", "Blue", "Dethle-s", "", 52.5, "Caravan", new DateOnly(2012, 2, 24), "Verhuurbaar", "C'go" },
-                    { 186, 2017, new DateOnly(2016, 4, 12), "KL-789-MN", "Red", "Burstner", "", 48.0, "Caravan", new DateOnly(2012, 2, 24), "Verhuurbaar", "Premio Life" }
+                    { 1, 2018, new DateOnly(2025, 1, 4), "AB-123-CD", "Red", "Toyota", "", 50.0, "Auto", new DateOnly(2025, 1, 1), "Verhuurbaar", "Corolla" },
+                    { 2, 2019, new DateOnly(2025, 1, 4), "EF-456-GH", "Blue", "Ford", "", 51.390000000000001, "Auto", new DateOnly(2025, 1, 1), "Verhuurbaar", "Focus" },
+                    { 3, 2020, new DateOnly(2025, 1, 5), "IJ-789-KL", "Black", "Volkswagen", "", 40.0, "Auto", new DateOnly(2025, 1, 3), "Verhuurbaar", "Golf" },
+                    { 105, 2021, new DateOnly(2025, 1, 24), "QR-345-ST", "Gray", "Citroën", "", 65.0, "Camper", new DateOnly(2025, 1, 10), "Verhuurbaar", "Jumper" },
+                    { 106, 2016, new DateOnly(2025, 2, 4), "UV-678-WX", "Black", "Peugeot", "", 68.0, "Camper", new DateOnly(2025, 2, 1), "Verhuurbaar", "Boxer" },
+                    { 185, 2020, new DateOnly(2025, 6, 7), "GH-456-IJ", "Blue", "Dethle-s", "", 52.5, "Caravan", new DateOnly(2025, 5, 1), "Verhuurbaar", "C'go" },
+                    { 186, 2017, new DateOnly(2025, 8, 24), "KL-789-MN", "Red", "Burstner", "", 48.0, "Caravan", new DateOnly(2025, 8, 21), "Verhuurbaar", "Premio Life" }
                 });
         }
 
@@ -57,32 +57,32 @@ namespace backend.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "27652548-b1a3-4d5f-9866-738098777c36");
+                keyValue: "41839f27-a756-424e-b3ad-93c439dc54ed");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "3ee4fe72-e986-4b66-a4af-64214ad86773");
+                keyValue: "6b7aaee8-e999-414e-810e-0e7431e4784e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "575c4fb2-a0dd-40ae-b4f1-cdc6b1051433");
+                keyValue: "7761f9d9-0fab-4933-927a-f6942e322bd1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "990ef634-981b-4c58-994a-5c306b808f31");
+                keyValue: "7d9e29f0-98f1-4ad7-9b03-5aa3982e493f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "effd4964-5eee-451a-b065-b7104cbe0fe2");
+                keyValue: "a2bae16f-0ac1-4728-b6eb-5f2c0890fbb2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fc78feb9-f89f-4015-bf41-33c59b017d63");
+                keyValue: "e6922f77-6820-4713-8288-caf0c50595bc");
 
             migrationBuilder.DeleteData(
                 table: "Voertuigen",
