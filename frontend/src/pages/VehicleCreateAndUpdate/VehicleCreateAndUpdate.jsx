@@ -89,7 +89,7 @@ export default function VehicleCreateAndUpdate() {
                     <form ref={form} className={pageStyles.form} onSubmit={(e) => {e.preventDefault()}}>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="brand">Merk</label>
+                            <label htmlFor="brand">Merk:</label>
                             <input
                                 id="brand"
                                 className="brand"
@@ -105,7 +105,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="type">Type</label>
+                            <label htmlFor="type">Type:</label>
                             <input
                                 id="type"
                                 className="type"
@@ -121,7 +121,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="licensePlate">Kenteken</label>
+                            <label htmlFor="licensePlate">Kenteken:</label>
                             <input
                                 id="licensePlate"
                                 className="licensePlate"
@@ -137,7 +137,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="color">Kleur</label>
+                            <label htmlFor="color">Kleur:</label>
                             <input
                                 id="color"
                                 className="color"
@@ -153,7 +153,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="boughtYear">Aanschafjaar</label>
+                            <label htmlFor="boughtYear">Aanschafjaar:</label>
                             <input
                                 id="boughtYear"
                                 className="boughtYear"
@@ -168,7 +168,7 @@ export default function VehicleCreateAndUpdate() {
 
                         <div className={pageStyles.formGroup}>
 
-                            <label htmlFor="kind">Soort</label>
+                            <label htmlFor="kind">Soort:</label>
                             <select
                                 id="kind"
                                 className="kind"
@@ -185,7 +185,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="comment">Opmerking</label>
+                            <label htmlFor="comment">Opmerking:</label>
                             <textarea
                                 id="comment"
                                 className={pageStyles.comment}
@@ -204,7 +204,7 @@ export default function VehicleCreateAndUpdate() {
 
                         <div className={pageStyles.formGroup}>
 
-                            <label htmlFor="status">status</label>
+                            <label htmlFor="status">Status:</label>
                             <select
                                 id="status"
                                 className="status"
@@ -220,11 +220,11 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="price">Prijs</label>
+                            <label htmlFor="price">Prijs:</label>
                             <input
                                 id="price"
                                 className="price"
-                                placeholder=""
+                                placeholder="prijs"
                                 min="0"
                                 data-cy="price"
                                 required={mode === "create"}
@@ -235,7 +235,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="startDate">Startdatum</label>
+                            <label htmlFor="startDate">Startdatum:</label>
                             <input
                                 id="startDate"
                                 className="startDate"
@@ -248,7 +248,7 @@ export default function VehicleCreateAndUpdate() {
                         </div>
 
                         <div className={pageStyles.formGroup}>
-                            <label htmlFor="EndDate">Einddatum</label>
+                            <label htmlFor="EndDate">Einddatum:</label>
                             <input
                                 id="EndDate"
                                 className="EndDate"
@@ -260,7 +260,7 @@ export default function VehicleCreateAndUpdate() {
                             />
                         </div>
 
-                        <button className="" type="submit" onClick={submit} data-cy="submit" >Opslaan</button>
+                        <button className={pageStyles.button__submit} type="submit" onClick={submit} data-cy="submit" >Opslaan</button>
                     </form>
                 </div>
             </main>
