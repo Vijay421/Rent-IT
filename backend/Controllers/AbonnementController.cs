@@ -146,6 +146,7 @@ public class AbonnementController : ControllerBase
             .Abonnementen
             .Where(a => a.HuurbeheerderId == user.Huurbeheerder.Id)
             .Include(a => a.ZakelijkeHuurders)
+            .ThenInclude(z => z.User)
             .Select(a => new AbonnementPerZakelijkeHuurderDTO
                 {
                     Id = a.Id,
@@ -154,7 +155,7 @@ public class AbonnementController : ControllerBase
                     MaxHuurders = a.Max_huurders,
                     Einddatum = a.Einddatum,
                     Soort = a.Soort,
-                    ZakelijkeHuurders = a.ZakelijkeHuurders.Select(z => z.UserId).ToList(),
+                    ZakelijkeHuurders = a.ZakelijkeHuurders.Select(z => z.User.Id).ToList(),
                 }
             )
             .ToListAsync();
@@ -193,12 +194,19 @@ public class AbonnementController : ControllerBase
 
         _context.Entry(user.Huurbeheerder).Collection(z => z.ZakelijkeHuurders).Load();
 
+        foreach (var zakelijkeHuurder in user.Huurbeheerder.ZakelijkeHuurders)
+        {
+            _context.Entry(zakelijkeHuurder)
+                .Reference(z => z.User)
+                .Load();
+        }
+
         foreach (var renter in renters)
         {
             var isRenterOfUser = user
                 .Huurbeheerder
                 .ZakelijkeHuurders
-                .Any(z => z.UserId == renter);
+                .Any(z => z.User.Id == renter);
 
             if (!isRenterOfUser)
             {
@@ -206,13 +214,13 @@ public class AbonnementController : ControllerBase
             }
         }
 
-        var huuders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.UserId)).ToListAsync();
-        if (huuders.Count() > abonnement.Max_huurders)
+        var huurders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.User.Id)).ToListAsync();
+        if (huurders.Count() > abonnement.Max_huurders)
         {
-            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huuders.Count()}");
+            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huurders.Count()}");
         }
 
-        abonnement.ZakelijkeHuurders = huuders;
+        abonnement.ZakelijkeHuurders = huurders;
         _context.Entry(abonnement).State = EntityState.Modified;
 
         try

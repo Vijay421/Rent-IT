@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20241230213256_added-models")]
-    partial class addedmodels
+    [Migration("20250103105941_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -370,9 +370,6 @@ namespace backend.Migrations
                     b.Property<int?>("ZakelijkeHuurderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ZakelijkeHuurderId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
@@ -391,7 +388,9 @@ namespace backend.Migrations
 
                     b.HasIndex("ParticuliereHuurderId");
 
-                    b.HasIndex("ZakelijkeHuurderId1");
+                    b.HasIndex("ZakelijkeHuurderId")
+                        .IsUnique()
+                        .HasFilter("[ZakelijkeHuurderId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -541,10 +540,6 @@ namespace backend.Migrations
                     b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AbonnementId");
@@ -646,8 +641,8 @@ namespace backend.Migrations
                         .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Rollen.ZakelijkeHuurder", "ZakelijkeHuurder")
-                        .WithMany()
-                        .HasForeignKey("ZakelijkeHuurderId1");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
 
@@ -698,6 +693,11 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
                 {
                     b.Navigation("Huuraanvragen");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
