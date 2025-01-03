@@ -113,6 +113,7 @@ function Vehicle({ data, setVehicles }) {
                 Updaten
             </button>
             <button
+                className={pageStyles.controlUpdateButton}
                 onClick={() => handleDeleteVehicle(data.id)}
                 data-cy="delete-vehicle"
             >
