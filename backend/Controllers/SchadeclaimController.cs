@@ -100,7 +100,7 @@ public class SchadeclaimController : ControllerBase
         return CreatedAtAction(nameof(CreateSchadeclaim), schadeclaim);
     }
     
-    [HttpPut("/voertuig-accepteren/{id}")]
+    [HttpPut("voertuig-accepteren")]
     public async Task<ActionResult> UpdateVoertuig(int id)
     {
         var voertuig = await _context.Voertuigen.FindAsync(id);
