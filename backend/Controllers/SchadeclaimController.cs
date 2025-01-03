@@ -70,12 +70,12 @@ public class SchadeclaimController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<Schadeclaim>> CreateSchadeclaim(int id, Schadeclaim schadeclaimDto)
+    public async Task<ActionResult<Schadeclaim>> CreateSchadeclaim(Schadeclaim schadeclaimDto)
     {
-        var voertuig = await _context.Voertuigen.FindAsync(id);
+        var voertuig = await _context.Voertuigen.FindAsync(schadeclaimDto.Voertuig.Id);
         if (voertuig == null)
         {
-            return NotFound($"Geen voertuig gevonden met id: '{id}'");
+            return NotFound($"Geen voertuig gevonden met id: '{schadeclaimDto.Voertuig.Id}'");
         }
 
         voertuig.Status = "Onverhuurbaar";
@@ -100,8 +100,8 @@ public class SchadeclaimController : ControllerBase
         return CreatedAtAction(nameof(CreateSchadeclaim), schadeclaim);
     }
     
-    [HttpPut("voertuig-accepteren")]
-    public async Task<IActionResult> UpdateVoertuig(int id)
+    [HttpPut("voertuig-accepteren/{id}")]
+    public async Task<ActionResult> UpdateVoertuig(int id)
     {
         var voertuig = await _context.Voertuigen.FindAsync(id);
         if (voertuig == null)

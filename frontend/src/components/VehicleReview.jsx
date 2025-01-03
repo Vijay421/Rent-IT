@@ -9,7 +9,7 @@ export default function VehicleReview({ data }) {
 
     async function voertuigAccepteren(){
         try {
-            const response = await fetch('https://localhost:53085/api/Schadeclaim/voertuig-accepteren', {
+            const response = await fetch(`https://localhost:53085/api/Schadeclaim/voertuig-accepteren/${data.id}`, {
                 method: 'PUT',
         
                 // TODO: change to 'same-origin' when in production.
@@ -17,26 +17,25 @@ export default function VehicleReview({ data }) {
                 headers: {
                     'content-type': 'application/json'
                 },
-                body:{
-                    id: data.Id
-                }
             });
-            window.alert(response.json());
+            if(response.ok) alert("Voertuig is geaccepteerd!");
+            // else alert(response);
         }
         catch (e) {
-            window.alert(e);
+            alert(e);
         }
     }
 
     async function handleWeigeren(){       
-        if (data.id && beschrijving && foto) {
+        if (beschrijving && foto) {
             const schadeClaim = {
-                voertuigId: data.id,
+                Voertuig: data,
                 beschrijving: beschrijving,
                 foto: foto ? URL.createObjectURL(foto) : null,
             };
             try {
                 await voertuigWeigeren(schadeClaim);
+                alert("Voertuig is succcesvol geweigerd!");
             }
             catch (e) {
                 window.alert(e);
