@@ -19,12 +19,8 @@ export default function VehicleReview({ data }) {
     }
 
     function voertuigWeigeren() {
-        alert("Voertuig is GONE");
-    }
-
-    function voertuigRegistreren() {
         if (data.id && beschrijving && foto) {
-            setConfirmationMessage("Voertuig is geregistreerd!");
+            setConfirmationMessage("Voertuig is geweigerd!");
             setMessageType("success");
         } else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
@@ -49,7 +45,8 @@ export default function VehicleReview({ data }) {
                     accept="image/*"
                     onChange={(e) => setFoto(e.target.files[0])}
                 />
-                <button onClick={voertuigRegistreren}>Registreren</button>
+                <button onClick={voertuigAccepteren}>Accepteer</button>
+                <button onClick={voertuigWeigeren}>Weiger</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
