@@ -112,7 +112,7 @@ namespace backend.Data
             var zh1 = new ZakelijkeHuurder
             {
                 Factuuradres = "Hierzo",
-                UserId = user1.Id,
+                User = user1,
             };
             context.ZakelijkeHuurders.Add(zh1);
             await context.SaveChangesAsync();
@@ -128,7 +128,7 @@ namespace backend.Data
             var zh2 = new ZakelijkeHuurder
             {
                 Factuuradres = "Daarzo",
-                UserId = user2.Id,
+                User = user2,
             };
             context.ZakelijkeHuurders.Add(zh2);
             await context.SaveChangesAsync();

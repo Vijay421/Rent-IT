@@ -188,7 +188,7 @@ async function getEmployees() {
  */
 async function unblockEmployee(id) {
     const request = {
-        method: 'POST',
+        method: 'POST', // TODO: change to PUT method.
         credentials: 'include', // TODO: change to 'same-origin' when in production.
         headers: {
             'Content-Type': 'application/json',

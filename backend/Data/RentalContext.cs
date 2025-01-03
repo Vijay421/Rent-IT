@@ -37,16 +37,18 @@ namespace backend.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            
+
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
-            
-//             var roleConfig = new RoleConfiguration();
-//             modelBuilder.ApplyConfiguration(roleConfig);
-//
-//             var voertuigSeeder = new VoertuigSeeder();
-//             voertuigSeeder.Seed(modelBuilder);
-//             var abonnementSeeder = new AbonnementSeeder();
-//             abonnementSeeder.Seed(modelBuilder);
+
+/*
+            var roleConfig = new RoleConfiguration();
+            modelBuilder.ApplyConfiguration(roleConfig);
+
+            var voertuigSeeder = new VoertuigSeeder();
+            voertuigSeeder.Seed(modelBuilder);
+            var abonnementSeeder = new AbonnementSeeder();
+            abonnementSeeder.Seed(modelBuilder);
+*/
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

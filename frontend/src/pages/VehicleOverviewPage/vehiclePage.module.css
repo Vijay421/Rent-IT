@@ -1,0 +1,185 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    width: 80%;
+}
+
+.title {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.addVehicle {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+.addVehicleButton {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 200px;
+    height: 50px;
+    font-size: 1.3rem;
+    border-radius: 0.5vw;
+    border: transparent;
+    margin-left: 1vw;
+}
+
+.addVehicleButton:hover {
+    background-color: var(--tertiary-color);
+    cursor: pointer;
+}
+
+.vehicles {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.vehicle {
+    display: grid;
+    grid-template-areas:
+        "image title title title title"
+        "image details comment costs controls"
+    ;
+    grid-template-columns: 250px 1fr 1fr 1fr 1fr;
+
+    margin: 15px auto;
+    width: max(150px,62vw);
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: 2px solid black;
+    padding: 10px 0;
+}
+
+.label {
+    font-weight: bold;
+    margin-top: 5px;
+}
+.labelFirst {
+    margin-top: 0;
+}
+
+.vehicleImageBox {
+    grid-area: image;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vehicleImage {
+    width: 240px;
+}
+
+.vehicleTitle {
+    grid-area: title;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.vehicleDetails {
+    grid-area: details;
+}
+
+.vehicleComment {
+    grid-area: comment;
+}
+.vehicleCommentText {
+    max-height: 150px;
+    max-width: 200px;
+    word-break: break-all;
+    overflow: auto;
+}
+
+.vehicleCosts {
+    grid-area: costs;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.vehicleCost {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.controls {
+    grid-area: controls;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 10px;
+}
+.controlUpdateButton {
+    margin-bottom: 15px;
+    background-color: var(--secondary-color);
+    border: none;
+    height: 25px;
+    color: white;
+}
+
+.controlUpdateButton:hover {
+    background-color: var(--tertiary-color);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 980px) {
+    .vehicle {
+        grid-template-areas:
+            "title title title title"
+            "image image image image"
+            "details comment costs controls"
+        ;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .vehicleDetails, .vehicleComment, .vehicleCosts {
+        justify-self: center;
+        width: min-content;
+    }
+
+    .vehicleImageBox {
+        margin-bottom: 10px;
+    }
+}
+
+
+@media only screen and (max-width: 660px) {
+    .title {
+        font-size: 25px;
+    }
+
+    .vehicle {
+        grid-template-areas:
+            "title"
+            "image"
+            "details"
+            "comment"
+            "costs"
+            "controls"
+        ;
+        grid-template-columns: 1fr;
+    }
+
+    .vehicleImage {
+        width: 200px;
+    }
+}

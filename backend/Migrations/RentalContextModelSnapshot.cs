@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2698ca47-1d6c-4865-a7ba-974201e6084c",
+                            Id = "7f0a6bf3-694c-4aa9-8618-bacd2b25da79",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bdfac7bd-6f5c-4207-a888-374f7142a901",
+                            Id = "05bc708c-a700-4e36-b334-612271a9d565",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "1c84da15-89e6-4454-903d-551f83087365",
+                            Id = "71429550-a524-4484-a67f-e0859e4083f9",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "a4db2b8a-1a12-4d56-b4ea-8e0a6112e066",
+                            Id = "fb692bbd-1752-4cda-aac4-f53f20bbcdac",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "cb1ad671-5604-4685-8bda-8d5bb158b9ef",
+                            Id = "de3a98fd-3cb1-41cd-82a0-a57dddbbbd13",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "4acd744e-07ee-47d3-9e2b-e2ccf90fa26c",
+                            Id = "b44ea369-a68c-49f9-a9dc-5edf6cee2357",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -447,9 +447,6 @@ namespace backend.Migrations
                     b.Property<int?>("ZakelijkeHuurderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ZakelijkeHuurderId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
@@ -468,7 +465,9 @@ namespace backend.Migrations
 
                     b.HasIndex("ParticuliereHuurderId");
 
-                    b.HasIndex("ZakelijkeHuurderId1");
+                    b.HasIndex("ZakelijkeHuurderId")
+                        .IsUnique()
+                        .HasFilter("[ZakelijkeHuurderId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -745,10 +744,6 @@ namespace backend.Migrations
                     b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AbonnementId");
@@ -861,8 +856,8 @@ namespace backend.Migrations
                         .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Rollen.ZakelijkeHuurder", "ZakelijkeHuurder")
-                        .WithMany()
-                        .HasForeignKey("ZakelijkeHuurderId1");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
 
@@ -924,6 +919,11 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
                 {
                     b.Navigation("Huuraanvragen");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
