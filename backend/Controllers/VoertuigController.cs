@@ -41,27 +41,27 @@ public class VoertuigController : ControllerBase
 
         return cars;
     }
-   [HttpGet]
-    public async Task<List<Voertuig>> GetAllCarsFrontOffice()
-    {
+//    [HttpGet]
+//     public async Task<List<Voertuig>> GetAllCarsFrontOffice()
+//     {
        
-        var cars = await _rentalContext.Voertuigen
-        // .Where(Voertuig goedgekeurd moet worden door FrontOffice)
-        .ToListAsync();
+//         var cars = await _rentalContext.Voertuigen
+//         // .Where(Voertuig goedgekeurd moet worden door FrontOffice)
+//         .ToListAsync();
 
-        var role = User.FindFirstValue(ClaimTypes.Role);
-        if (role == null)
-        {
-            return cars;
-        }
+//         var role = User.FindFirstValue(ClaimTypes.Role);
+//         if (role == null)
+//         {
+//             return cars;
+//         }
 
-        if (role == "zakelijke_huurder")
-        {
-            return cars.Where(c => c.Soort == "Auto").ToList();
-        }
+//         if (role == "zakelijke_huurder")
+//         {
+//             return cars.Where(c => c.Soort == "Auto").ToList();
+//         }
 
-        return cars;
-    }
+//         return cars;
+//     }
     [HttpGet("{id}")]
     public async Task<ActionResult<Voertuig>> GetOneCar(int id)
     {
@@ -76,24 +76,24 @@ public class VoertuigController : ControllerBase
     }
 
 
-    [HttpGet("registraties")]
-    public async Task<List<Voertuig>> GetAllCarsInname()
-    {
-        var cars = await _rentalContext.Voertuigen
-        // .Join(Voertuigregistratie)
-        .ToListAsync();
+    // [HttpGet("registraties")]
+    // public async Task<List<Voertuig>> GetAllCarsInname()
+    // {
+    //     var cars = await _rentalContext.Voertuigen
+    //     // .Join(Voertuigregistratie)
+    //     .ToListAsync();
 
-        var role = User.FindFirstValue(ClaimTypes.Role);
-        if (role == null)
-        {
-            return cars;
-        }
+    //     var role = User.FindFirstValue(ClaimTypes.Role);
+    //     if (role == null)
+    //     {
+    //         return cars;
+    //     }
 
-        if (role == "zakelijke_huurder")
-        {
-            return cars.Where(c => c.Soort == "Auto").ToList();
-        }
+    //     if (role == "zakelijke_huurder")
+    //     {
+    //         return cars.Where(c => c.Soort == "Auto").ToList();
+    //     }
 
-        return cars;
-    }
+    //     return cars;
+    // }
 }

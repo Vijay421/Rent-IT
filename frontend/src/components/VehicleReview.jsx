@@ -17,6 +17,9 @@ export default function VehicleReview({ data }) {
                 headers: {
                     'content-type': 'application/json'
                 },
+                body:{
+                    id: data.Id
+                }
             });
             window.alert(response.json());
         }
@@ -42,7 +45,6 @@ export default function VehicleReview({ data }) {
         else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
         }
-        
     }
 
     return (
@@ -73,6 +75,11 @@ export default function VehicleReview({ data }) {
         </div>
     );
 }
+
+/**
+* @param {Object} payload 
+* @returns {Object}
+*/
 async function voertuigWeigeren(payload) {
     const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
         method: 'POST',

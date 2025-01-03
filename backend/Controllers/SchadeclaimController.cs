@@ -86,7 +86,7 @@ public class SchadeclaimController : ControllerBase
 
         var schadeclaim = new Schadeclaim
         {
-            Voertuig = schadeclaimDto.Voertuig,
+            Voertuig = voertuig,
             Datum = DateTime.Today,
             Beschrijving = schadeclaimDto.Beschrijving,
             Foto = schadeclaimDto.Foto
@@ -101,17 +101,19 @@ public class SchadeclaimController : ControllerBase
     }
     
     [HttpPut("voertuig-accepteren")]
-    public async Task<ActionResult> UpdateVoertuig(int id)
+    public async Task<IActionResult> UpdateVoertuig(int id)
     {
         var voertuig = await _context.Voertuigen.FindAsync(id);
         if (voertuig == null)
         {
             return NotFound($"Geen voertuig gevonden met id: '{id}'");
         }
-
+        
+        if(voertuig.Status == "Verhuurbaar") return NoContent();
         voertuig.Status = "Verhuurbaar";
 
         _context.Entry(voertuig).State = EntityState.Modified;
+        _context.Update(voertuig);
         await _context.SaveChangesAsync();
 
         return NoContent();
