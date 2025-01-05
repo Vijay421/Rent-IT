@@ -27,7 +27,7 @@ describe("get the correct css class name", () => {
         expect(newClassName).to.equal("element--error");
     });
 
-    it("should return an success class name when isError is false", () => {
+    it("should return a success class name when isError is false", () => {
         // Arrange
         const response = { isError: false };
         const className = "element";

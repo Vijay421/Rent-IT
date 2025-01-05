@@ -116,6 +116,7 @@ function Vehicle({ data, setVehicles }) {
                 className={pageStyles.controlUpdateButton}
                 onClick={() => handleDeleteVehicle(data.id)}
                 data-cy="delete-vehicle"
+                data-cy-name={`${data.merk} ${data.type}`}
             >
                 Verwijderen
             </button>
