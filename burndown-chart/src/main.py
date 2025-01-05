@@ -24,7 +24,7 @@ def get_burndown(data: pd.DataFrame) -> alt.JupyterChart:
     ) \
     .interactive()
 
-    labels = alt.Chart(data).mark_text(align="center", dy=-15, fontSize=12) \
+    labels = alt.Chart(data).mark_text(align="center", dy=-15, dx=5, fontSize=12) \
     .encode(
         x="sprint:N",
         y="done:N",
@@ -40,7 +40,7 @@ def get_sprint_data() -> pd.DataFrame:
         { "sprint": 3, "done": 0 },
         { "sprint": 4, "done": 0 },
         { "sprint": 5, "done": 1 },
-        { "sprint": 6, "done": 10 },
+        { "sprint": 6, "done": 11 },
     ]
 
     planned = [
