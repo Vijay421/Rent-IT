@@ -44,6 +44,7 @@ export default function VehicleReview({ data }) {
         }
         else {
             setConfirmationMessage("Vul alstublieft alle velden in.");
+            setMessageType('error');
         }
     }
 

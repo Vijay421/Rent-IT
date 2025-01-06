@@ -9,6 +9,7 @@ function FrontofficeIntake() {
 
     useEffect(() => {
         async function fetchVehicles() {
+            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)
             try {
                 const response = await fetch('https://localhost:53085/api/Voertuig', {
                     method: 'GET',
