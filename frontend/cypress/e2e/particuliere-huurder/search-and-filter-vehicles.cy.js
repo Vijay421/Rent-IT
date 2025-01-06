@@ -53,10 +53,10 @@ describe("Particuliere user vehicles search and filter", () => {
         cy.get("@resetButton").click();
 
         // TODO: should insert dates to get the correct vehicles (but I don't know which dates to use).
-        // cy.log("filter dates");
-        // cy.get("#date-picker-start").type("2018-01-01");
-        // cy.get("#date-picker-end").type("2019-01-01");
-        // cy.get(".rental-vehicle-box__div").should("have.length", 1);
+        cy.log("filter dates");
+        cy.get("#date-picker-start").type("2025-01-03");
+        cy.get("#date-picker-end").type("2025-01-05");
+        cy.get(".rental-vehicle-box__div").should("have.length", 1);
 
 
         cy.log("filter brand");
