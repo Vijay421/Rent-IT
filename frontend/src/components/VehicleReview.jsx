@@ -34,6 +34,7 @@ export default function VehicleReview({ data }) {
                 foto: foto ? URL.createObjectURL(foto) : null,
             };
             try {
+                setConfirmationMessage("");
                 await voertuigWeigeren(schadeClaim);
                 alert("Voertuig is succcesvol geweigerd!");
             }

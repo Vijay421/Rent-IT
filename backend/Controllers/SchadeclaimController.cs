@@ -39,7 +39,7 @@ public class SchadeclaimController : ControllerBase
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<IEnumerable<Schadeclaim>>> UpdateSchadeclaim(int id)
+    public async Task<ActionResult<Schadeclaim>> UpdateSchadeclaim(int id, SchadeclaimDTO schadeclaimDTO)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);
         if (schadeclaim == null)
@@ -47,11 +47,29 @@ public class SchadeclaimController : ControllerBase
             return NotFound($"Geen schadeclaim gevonden met id: '{id}'");
         }
 
-        // TO-DO: Add update logic
-        // await _context.SaveChangesAsync();
+        schadeclaim.Voertuig = schadeclaimDTO.Voertuig ?? schadeclaim.Voertuig;
+        schadeclaim.Datum = schadeclaimDTO.Datum ?? schadeclaim.Datum;
+        schadeclaim.Beschrijving = schadeclaimDTO.Beschrijving ?? schadeclaim.Beschrijving;
+        schadeclaim.Foto = schadeclaimDTO.Foto ??  schadeclaim.Foto;
 
+        try
+        {
+            _context.Update(schadeclaim);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Schadeclaims.Any(z => z.Id == id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
 
-        return NoContent();
+        return Ok(schadeclaim);
     }
 
     [HttpDelete("delete/{id}")]
