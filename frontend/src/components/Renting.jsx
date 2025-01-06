@@ -17,25 +17,6 @@ function Renting() {
     const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
-        async function fetchVehicles() {
-            try {
-                const response = await fetch('https://localhost:53085/api/Voertuig', {
-                    method: 'GET',
-
-                    // TODO: change to 'same-origin' when in production.
-                    credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                });
-                const data = await response.json();
-                setVehicles(data);
-                console.log(userRole);
-            }
-            catch (e) {
-                console.error(e);
-            }
-        }
         fetchVehicles();
     }, []);
 
@@ -46,7 +27,7 @@ function Renting() {
     const handleDateChangeStartDatum = (event) => {
         const newStartDatum = event.target.value;
         if (selectedDateStartDatum !== "") {
-            if (newStartDatum > selectedDateEindDatum) {
+            if (newStartDatum >= selectedDateEindDatum) {
                 alert("De startdatum kan niet later zijn dan uw einddatum.");
             } else {
                 setSelectedDateStartDatum(newStartDatum);
@@ -60,7 +41,7 @@ function Renting() {
     const handleDateChangeEindDatum = (event) => {
         const newEindDatum = event.target.value;
         if (selectedDateStartDatum !== "") {
-            if (newEindDatum < selectedDateStartDatum) {
+            if (newEindDatum <= selectedDateStartDatum) {
                 alert("De einddatum kan niet eerder zijn dan uw startdatum.");
             } else {
                 setSelectedDateEindDatum(newEindDatum);
@@ -99,6 +80,7 @@ function Renting() {
         setSelectedDateStartDatum("");
         setSelectedDateEindDatum("");
         setSelectedSorterenSoort("geen");
+        setSearchText("");
     }
 
     const filteredVehicles = vehicles.filter((vehicle) => {
@@ -124,6 +106,26 @@ function Renting() {
         return 0;
     });
 
+    async function fetchVehicles() {
+        try {
+            const response = await fetch('https://localhost:53085/api/Voertuig', {
+                method: 'GET',
+
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    'content-type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            setVehicles(data);
+            console.log(userRole);
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
     return (
         <div className="content">
             <div className="divTop">
@@ -139,6 +141,7 @@ function Renting() {
                                 className="divTop-divSelect-voertuig-dropdown"
                                 value={selectedVoertuigSoort} // Controlled component
                                 onChange={handleVoertuigChange} // Event handler
+                                data-cy="kind-filter"
                             >
                                 {userRole !== "zakelijke_huurder" ? (
                                     <>
@@ -158,23 +161,23 @@ function Renting() {
 
                     <div className="divTop-divSelect-ophaalDatum">
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-ophaalDatum">Startdatum: </label>
+                            <label htmlFor="date-picker-start" className="date-label-ophaalDatum">Startdatum: </label>
                             <input
                             type="date"
-                            id="date-picker"
+                            id="date-picker-start"
                             className="date-input"
                             value={selectedDateStartDatum}
-                        onChange={handleDateChangeStartDatum}
+                            onChange={handleDateChangeStartDatum}
                         />
                         </div>
                     </div>
 
                     <div className="divTop-divSelect-inleverDatum">
                         <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker" className="date-label-inleverDatum">Einddatum: </label>
+                            <label htmlFor="date-picker-end" className="date-label-inleverDatum">Einddatum: </label>
                             <input
                                 type="date"
-                                id="date-picker"
+                                id="date-picker-end"
                                 className="date-input"
                                 value={selectedDateEindDatum}
                                 onChange={handleDateChangeEindDatum}
@@ -193,6 +196,7 @@ function Renting() {
                                 className="divTop-divSelect-merk-dropdown"
                                 value={selectedMerkSoort}
                                 onChange={handleMerkChange}
+                                data-cy="brand-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="toyota">Toyota</option>
@@ -218,6 +222,7 @@ function Renting() {
                                 className="divTop-divSelect-prijs-dropdown"
                                 value={selectedPrijsSoort}
                                 onChange={handlePrijsChange}
+                                data-cy="price-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="low">0-50</option>
@@ -236,6 +241,7 @@ function Renting() {
                                 className="divTop-divSelect-beschikbaarheid-dropdown"
                                 value={selectedBeschikbaarheidSoort}
                                 onChange={handleBeschikbaarheidChange}
+                                data-cy="availability-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="Verhuurbaar">Beschikbaar</option>
@@ -247,7 +253,7 @@ function Renting() {
 
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
-                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
+                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar' data-cy="search-bar" />
 
                         <div className="divTop-divSelect-Sorteren-dropdown-container">
                             <label htmlFor="options" className="dropdown-label">Sorteren: </label>
@@ -257,6 +263,7 @@ function Renting() {
                                 className="divTop-divSelect-sorteren-dropdown"
                                 value={selectedSorterenSoort}
                                 onChange={handleSorterenChange}
+                                data-cy="sort-filter"
                             >
                                 <option value="geen">Geen</option>
                                 <option value="oplopend">Oplopend</option>
@@ -264,7 +271,7 @@ function Renting() {
                             </select>
                         </div>
 
-                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset
+                        <button className='divTop-reset-filters__button' data-cy="reset-button" onClick={onResetFiltersButtonClick}>Reset
                             filters
                         </button>
                     </div>

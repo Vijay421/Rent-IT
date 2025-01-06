@@ -19,6 +19,7 @@ namespace backend.Data
                 await SeedBackofficeUser(userManager, config, context);
                 await SeedParticuliereUser(userManager, config, context);
                 await SeedZakelijkeBeheerder(userManager, config, context);
+                await SeedFrontofficeUser(userManager, config, context);
             }
         }
 
@@ -111,7 +112,7 @@ namespace backend.Data
             var zh1 = new ZakelijkeHuurder
             {
                 Factuuradres = "Hierzo",
-                UserId = user1.Id,
+                User = user1,
             };
             context.ZakelijkeHuurders.Add(zh1);
             await context.SaveChangesAsync();
@@ -127,7 +128,7 @@ namespace backend.Data
             var zh2 = new ZakelijkeHuurder
             {
                 Factuuradres = "Daarzo",
-                UserId = user2.Id,
+                User = user2,
             };
             context.ZakelijkeHuurders.Add(zh2);
             await context.SaveChangesAsync();
@@ -279,6 +280,40 @@ namespace backend.Data
                 await userManager.AddToRoleAsync(user, "particuliere_huurder");
                 context.Entry(user).State = EntityState.Modified;
                 await context.SaveChangesAsync(); // Adds the ParticuliereHuurder relation.
+            }
+            else
+            {
+                var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
+                Console.Error.WriteLine($"error: {errorText}");
+            }
+        }
+        private async Task SeedFrontofficeUser(UserManager<User> userManager, IConfiguration config, RentalContext context)
+        {
+            // Create the frontoffice user only when it does not exists already.
+            var user = await userManager.FindByNameAsync("f-user");
+            if (user != null)
+            {
+                return;
+            }
+
+            var frontoffice = new FrontOfficeMedewerker();
+            context.FrontOfficeMedewerkers.Add(frontoffice);
+            await context.SaveChangesAsync();
+
+            var fUser = new User
+            {
+                UserName = "f-user",
+                Email = "fuser@user.com",
+                EmailConfirmed = true,
+                FrontofficeIntake = frontoffice,
+            };
+            var result = await userManager.CreateAsync(fUser, "Qwerty123!");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(fUser, "frontoffice_medewerker");
+                context.Entry(fUser).State = EntityState.Modified;
+                await context.SaveChangesAsync(); // Adds the relation to frontOfficeMedewerker.
             }
             else
             {

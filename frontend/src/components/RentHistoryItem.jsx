@@ -37,7 +37,7 @@ export default function RentHistoryItem({ data }) {
 
             <div className="rent-history-item__vehicle-costs">
                 <p className="rent-history-item__vehicle-cost-title rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Kosten</p>
-                <p className="rent-history-item__vehicle-cost">€{data.prijs.toFixed(2)}</p>
+                <p className="rent-history-item__vehicle-cost">€{data.prijs.toFixed(2)}*</p>
             </div>
         </div>
     );

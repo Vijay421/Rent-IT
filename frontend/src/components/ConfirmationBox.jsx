@@ -1,9 +1,8 @@
 import '../styles/ConfirmationBox.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export default function ConfirmationBox() {
     const location = useLocation();
-    const navigate = useNavigate();
     const { vehicleData, userData, startDatum, eindDatum } = location.state;
 
     const amountOfDays = Math.floor((new Date(eindDatum) - new Date(startDatum)) / (1000 * 60 * 60 * 24));
@@ -48,20 +47,17 @@ export default function ConfirmationBox() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(payload),
-                
             });
 
             if (response.ok) {
-                const data = await response.json();
-
                 statusText.style.color = 'green';
                 statusText.textContent = 'Uw verzoek is succesvol verzonden.\r\n U wordt nu doorgestuurd naar de betaalpagina.';
                 statusText.style.display = 'block';
 
-                setTimeout(() => {
+                // setTimeout(() => {
                     // TODO: redirect to the page with it exists.
                     // navigate("/betaling", data);
-                },3000);
+                // },3000);
             } else {
                 const errorMsg = await response.text();
                 statusText.style.color = 'red';

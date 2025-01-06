@@ -5,8 +5,16 @@ def get_burndown(data: pd.DataFrame) -> alt.JupyterChart:
     burndown_chart = alt.Chart(data) \
     .mark_line(point=alt.OverlayMarkDef(size=150, filled=True)) \
     .encode(
-        x=alt.X("sprint:O", axis=alt.Axis(labelAngle=0)).title("sprints"),
-        y=alt.Y("done:N").title("user stories"),
+        x=alt.X(
+            "sprint:O",
+            axis=alt.Axis(labelAngle=0, grid=True),
+            scale=alt.Scale(type='linear'),
+        ).title("sprints"),
+        y=alt.Y(
+            "done:N",
+            axis=alt.Axis(grid=True),
+            scale=alt.Scale(type='linear'),
+            ).title("user stories"),
         color=alt.Color("status:N"),
         tooltip=["sprint", "done", "status"],
     ) \
@@ -16,7 +24,7 @@ def get_burndown(data: pd.DataFrame) -> alt.JupyterChart:
     ) \
     .interactive()
 
-    labels = alt.Chart(data).mark_text(align="center", dy=-15, fontSize=12) \
+    labels = alt.Chart(data).mark_text(align="center", dy=-15, dx=5, fontSize=12) \
     .encode(
         x="sprint:N",
         y="done:N",
@@ -32,7 +40,7 @@ def get_sprint_data() -> pd.DataFrame:
         { "sprint": 3, "done": 0 },
         { "sprint": 4, "done": 0 },
         { "sprint": 5, "done": 1 },
-        { "sprint": 6, "done": 8 },
+        { "sprint": 6, "done": 11 },
     ]
 
     planned = [
@@ -57,4 +65,3 @@ if __name__ == "__main__":
     sprint_data = get_sprint_data()
     burndown = get_burndown(sprint_data)
     burndown.save("burndown-chart.png")
-

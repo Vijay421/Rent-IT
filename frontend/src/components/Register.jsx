@@ -1,14 +1,18 @@
 import '../styles/Register.css';
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import getResponseClass from '../scripts/getResponseClass';
+import { UserContext } from '../components/UserContext';
 
 export default function Register() {
+    const { userRole } = useContext(UserContext);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
+    const [role, setRole] = useState("backoffice_medewerker");
     const [response, setResponse] = useState({
         msg: "",
         isError: null,
@@ -35,6 +39,10 @@ export default function Register() {
         setAddress(e.target.value);
     }
 
+    function handleRole(e) {
+        setRole(e.target.value);
+    }
+
     async function submitForm() {
         // Don't submit when the form is invalid.
         if (!form.current.checkValidity()) {
@@ -46,9 +54,11 @@ export default function Register() {
             email,
             phoneNumber,
             password,
-            address,
+            address: address.length === 0 ? null : address,
+            role: role.length === 0 ? null : role,
         };
-        await register(payload, setResponse);
+
+        await register(payload, setResponse, userRole);
     }
 
     const responseClass = getResponseClass(response, 'register-box__response-text');
@@ -72,6 +82,7 @@ export default function Register() {
                             placeholder='Vul hier je naam in'
                             minLength='2'
                             maxLength='50'
+                            data-cy='username'
                             required
                             value={username}
                             onChange={handleUsername}
@@ -87,6 +98,7 @@ export default function Register() {
                             placeholder='Vul hier uw e-mailadres in'
                             minLength='5'
                             maxLength='255'
+                            data-cy='email'
                             required
                             value={email}
                             onChange={handleEmail}
@@ -102,6 +114,7 @@ export default function Register() {
                             placeholder='Vul hier uw wachtwoord in'
                             minLength='8'
                             maxLength='50'
+                            data-cy='password'
                             required
                             value={password}
                             onChange={handlePassword}
@@ -119,6 +132,7 @@ export default function Register() {
                             onChange={handlePhoneNumber}
                             minLength='5'
                             maxLength='15'
+                            data-cy='phone'
                             required
                             pattern="[0-9]*"
                             inputMode="numeric"
@@ -130,22 +144,40 @@ export default function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="adres" className='register-box__input-text'>Adres:</label>
-                        <input
-                            id="adres"
-                            className='register-box__input-field'
-                            type="text"
-                            placeholder='Vul hier je adres in'
-                            minLength='5'
-                            maxLength='255'
-                            required
-                            value={address}
-                            onChange={handleAddress}
-                        />
-                    </div>
+                    { userRole !== "admin" && (
+                        <div className="form-group">
+                            <label htmlFor="adres" className='register-box__input-text'>Adres:</label>
+                            <input
+                                id="adres"
+                                className='register-box__input-field'
+                                type="text"
+                                placeholder='Vul hier je adres in'
+                                minLength='5'
+                                maxLength='255'
+                                data-cy='adres'
+                                required
+                                value={address}
+                                onChange={handleAddress}
+                            />
+                        </div>
+                    ) }
 
-                    <button className='register-box__button' type='submit' onClick={submitForm} >Submit</button>
+                    { userRole === "admin" && (
+                        <div className="form-group">
+                            <label htmlFor="rollen" className='register-box__input-text'>Rol:</label>
+                            <select
+                                className='register-box__input-field'
+                                name="rollen"
+                                id="rollen"
+                                onChange={handleRole}
+                            >
+                                <option value="backoffice_medewerker">Backoffice</option>
+                                <option value="frontoffice_medewerker">Frontoffice</option>
+                            </select>
+                        </div>
+                    ) }
+
+                    <button className='register-box__button' type='submit' onClick={submitForm} data-cy='submit' >Submit</button>
                 </form>
 
                 <nav className="register-box__hyperlinks">
@@ -167,10 +199,12 @@ export default function Register() {
  * @param {string} payload.password
  * @param {string} payload.address
  * @param {Function} setResponse 
+ * @param {string | null} userRole
  */
-async function register(payload, setResponse) {
+async function register(payload, setResponse, userRole) {
     const request = {
         method: 'POST',
+        credentials: 'include', // TODO: change to 'same-origin' when in production.
         headers: {
             'Content-Type': 'application/json',
         },
@@ -178,9 +212,16 @@ async function register(payload, setResponse) {
     };
 
     try {
-        const response = await fetch('https://localhost:53085/api/ParticuliereUser', request);
+        let url;
+        if (userRole === "admin") {
+            url = 'https://localhost:53085/api/Admin/employee';
+        } else {
+            url = 'https://localhost:53085/api/ParticuliereUser';
+        }
 
+        const response = await fetch(url, request);
         switch (response.status) {
+            case 200:
             case 201:
                 const user = await response.json();
                 setResponse({
@@ -190,8 +231,9 @@ async function register(payload, setResponse) {
                 console.log(user);
             break;
 
-            case 400:
+            case 409:
             case 422:
+            case 400:
                 const errorMsg = await response.text();
                 setResponse({
                     msg: errorMsg,

@@ -23,12 +23,12 @@ namespace backend.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "019afcff-14e8-46e9-8490-58f6321d2d98", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" },
-                    { "02e70917-0ff9-4c74-909a-136fa8f9b283", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "40dc77cc-c03e-47fe-8e6e-741fcb377cd0", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
-                    { "9947d29c-4fe1-4514-830e-899e5ab24430", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
-                    { "a7642990-1869-403f-9b7c-167005bc8436", null, "admin", "ADMIN" },
-                    { "d9d67bb2-45d6-4a67-a0e6-defad8e88655", null, "particuliere_huurder", "PARTICULIERE_HUURDER" }
+                    { "05bc708c-a700-4e36-b334-612271a9d565", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
+                    { "71429550-a524-4484-a67f-e0859e4083f9", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
+                    { "7f0a6bf3-694c-4aa9-8618-bacd2b25da79", null, "admin", "ADMIN" },
+                    { "b44ea369-a68c-49f9-a9dc-5edf6cee2357", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
+                    { "de3a98fd-3cb1-41cd-82a0-a57dddbbbd13", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "fb692bbd-1752-4cda-aac4-f53f20bbcdac", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" }
                 });
 
             migrationBuilder.InsertData(
@@ -36,13 +36,13 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Aanschafjaar", "EindDatum", "Kenteken", "Kleur", "Merk", "Opmerking", "Prijs", "Soort", "StartDatum", "Status", "Type" },
                 values: new object[,]
                 {
-                    { 1, 2018, new DateOnly(2016, 4, 12), "AB-123-CD", "Red", "Toyota", "", 50.0, "Auto", new DateOnly(2012, 2, 24), "Verhuurbaar", "Corolla" },
-                    { 2, 2019, new DateOnly(2020, 8, 12), "EF-456-GH", "Blue", "Ford", "", 51.390000000000001, "Auto", new DateOnly(2017, 4, 3), "Verhuurbaar", "Focus" },
-                    { 3, 2020, new DateOnly(2024, 11, 9), "IJ-789-KL", "Black", "Volkswagen", "", 40.0, "Auto", new DateOnly(2019, 10, 12), "Verhuurbaar", "Golf" },
-                    { 105, 2021, new DateOnly(2016, 4, 12), "QR-345-ST", "Gray", "Citroën", "", 65.0, "Camper", new DateOnly(2012, 2, 24), "Verhuurbaar", "Jumper" },
-                    { 106, 2016, new DateOnly(2016, 4, 12), "UV-678-WX", "Black", "Peugeot", "", 68.0, "Camper", new DateOnly(2012, 2, 24), "Verhuurbaar", "Boxer" },
-                    { 185, 2020, new DateOnly(2016, 4, 12), "GH-456-IJ", "Blue", "Dethle-s", "", 52.5, "Caravan", new DateOnly(2012, 2, 24), "Verhuurbaar", "C'go" },
-                    { 186, 2017, new DateOnly(2016, 4, 12), "KL-789-MN", "Red", "Burstner", "", 48.0, "Caravan", new DateOnly(2012, 2, 24), "Verhuurbaar", "Premio Life" }
+                    { 1, 2018, new DateOnly(2025, 1, 4), "AB-123-CD", "Red", "Toyota", "", 50.0, "Auto", new DateOnly(2025, 1, 1), "Verhuurbaar", "Corolla" },
+                    { 2, 2019, new DateOnly(2025, 1, 4), "EF-456-GH", "Blue", "Ford", "", 51.390000000000001, "Auto", new DateOnly(2025, 1, 1), "Verhuurbaar", "Focus" },
+                    { 3, 2020, new DateOnly(2025, 1, 5), "IJ-789-KL", "Black", "Volkswagen", "", 40.0, "Auto", new DateOnly(2025, 1, 3), "Verhuurbaar", "Golf" },
+                    { 105, 2021, new DateOnly(2025, 1, 24), "QR-345-ST", "Gray", "Citroën", "", 65.0, "Camper", new DateOnly(2025, 1, 10), "Verhuurbaar", "Jumper" },
+                    { 106, 2016, new DateOnly(2025, 2, 4), "UV-678-WX", "Black", "Peugeot", "", 68.0, "Camper", new DateOnly(2025, 2, 1), "Verhuurbaar", "Boxer" },
+                    { 185, 2020, new DateOnly(2025, 6, 7), "GH-456-IJ", "Blue", "Dethle-s", "", 52.5, "Caravan", new DateOnly(2025, 5, 1), "Verhuurbaar", "C'go" },
+                    { 186, 2017, new DateOnly(2025, 8, 24), "KL-789-MN", "Red", "Burstner", "", 48.0, "Caravan", new DateOnly(2025, 8, 21), "Verhuurbaar", "Premio Life" }
                 });
         }
 
@@ -57,32 +57,32 @@ namespace backend.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "019afcff-14e8-46e9-8490-58f6321d2d98");
+                keyValue: "05bc708c-a700-4e36-b334-612271a9d565");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "02e70917-0ff9-4c74-909a-136fa8f9b283");
+                keyValue: "71429550-a524-4484-a67f-e0859e4083f9");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "40dc77cc-c03e-47fe-8e6e-741fcb377cd0");
+                keyValue: "7f0a6bf3-694c-4aa9-8618-bacd2b25da79");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9947d29c-4fe1-4514-830e-899e5ab24430");
+                keyValue: "b44ea369-a68c-49f9-a9dc-5edf6cee2357");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a7642990-1869-403f-9b7c-167005bc8436");
+                keyValue: "de3a98fd-3cb1-41cd-82a0-a57dddbbbd13");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d9d67bb2-45d6-4a67-a0e6-defad8e88655");
+                keyValue: "fb692bbd-1752-4cda-aac4-f53f20bbcdac");
 
             migrationBuilder.DeleteData(
                 table: "Voertuigen",

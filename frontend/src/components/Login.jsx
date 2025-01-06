@@ -11,7 +11,7 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useContext(AuthContext);
-    const { setUserRole, setUserName } = useContext(UserContext);
+    const { setUserRole, setUserName, setUserId } = useContext(UserContext);
 
     const statusRef = useRef(null);
 
@@ -33,7 +33,7 @@ function Login() {
             "twoFactorRecoveryCode": ""
         };
 
-        await callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName);
+        await callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName, setUserId);
     }
 
     return (
@@ -51,6 +51,7 @@ function Login() {
                             placeholder="Vul hier uw gebruikersnaam in"
                             value={username}
                             onChange={handleUsername}
+                            data-cy='username'
                         />
                     </div>
 
@@ -63,12 +64,13 @@ function Login() {
                             placeholder="Vul hier uw wachtwoord in"
                             value={password}
                             onChange={handlePassword}
+                            data-cy='password'
                         />
                     </div>
 
                     <p id='login-box__loginstatus' ref={statusRef}></p>
 
-                    <button className='login-box__button' type='submit' onClick={handleLoginButtonClick}>Login</button>
+                    <button className='login-box__button' type='submit' onClick={handleLoginButtonClick} data-cy='submit'>Login</button>
 
                     <nav className="login-box__hyperlinks">
                         <Link to="/wachtwoord-vergeten">Wachtwoord vergeten? Account hier herstellen</Link>
@@ -91,9 +93,10 @@ function Login() {
  * @param {NavigateFunction} navigate
  * @param {Function} setUserRole
  * @param {Function} setUserName
+ * @param {Function} setUserId
  * @returns
  */
-async function callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName) {
+async function callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName, setUserId) {
     try {
         const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
             method: 'POST',
@@ -114,6 +117,7 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
                 setUserRole(userClaims.role);
                 setUserName(userClaims.userName);
+                setUserId(userClaims.userId);
 
                 setTimeout(() => {
                     navigate('/profiel');
@@ -160,6 +164,7 @@ async function getUserClaims() {
 
     try {
         const response = await fetch('https://localhost:53085/api/User/claims', request);
+        console.log(response);
         return await response.json();
     } catch (error) {
         console.error('error when sending user claims request, or parsing the response:', error);
