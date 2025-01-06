@@ -7,6 +7,8 @@ export default function ExpenditureReview({ vehicle, customer }) {
 
     const voertuigRegistreren = () => {
         if (beschrijving) {
+            setConfirmationMessage('');
+            alert("Voertuig is succcesvol uitgegeven!");
             setConfirmationMessage('Expenditure successfully registered!');
             setMessageType('success');
         } else {
