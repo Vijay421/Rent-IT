@@ -6,7 +6,7 @@
 - Then click e2e tests and run `{insert test file}.cy.js`
 
 ## Page(s)
-[Role]:
+{Insert role}:
 - http://localhost:5173/{insert route}
 
 ## Trello card(s)
