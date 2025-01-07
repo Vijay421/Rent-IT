@@ -18,6 +18,7 @@ namespace BackendTestProject.Controllers
         private User _huurbeheerder;
         private RentalContext _context;
         private Mock<UserManager<User>> _mockUserManager;
+        private ControllerContext _controllerContext;
 
         public AbonnementControllerTests()
         {
@@ -59,6 +60,8 @@ namespace BackendTestProject.Controllers
             _mockUserManager = new Mock<UserManager<User>>(store.Object, null, null, null, null, null, null, null, null);
             _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync((string id) => _huurbeheerder);
+
+            _controllerContext = CreateMockControllerContext("zakelijke_beheerder", "1");
         }
 
         private RentalContext _createContext() => new RentalContext(_contextOptions, null, null);
@@ -69,7 +72,7 @@ namespace BackendTestProject.Controllers
             // Arrange
             var controller = new AbonnementController(_createContext(), _mockUserManager.Object)
             {
-                ControllerContext = CreateMockControllerContext("zakelijke_beheerder", "1"),
+                ControllerContext = _controllerContext,
             };
 
             // Act
