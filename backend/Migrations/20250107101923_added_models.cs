@@ -46,7 +46,8 @@ namespace backend.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     KvK_nummer = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Domein = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,7 +130,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Bedrijfsrol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    BedrijfId = table.Column<int>(type: "int", nullable: true)
+                    BedrijfId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +139,8 @@ namespace backend.Migrations
                         name: "FK_Huurbeheerders_Bedrijven_BedrijfId",
                         column: x => x.BedrijfId,
                         principalTable: "Bedrijven",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

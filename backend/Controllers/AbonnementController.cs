@@ -155,7 +155,8 @@ public class AbonnementController : ControllerBase
                     MaxHuurders = a.Max_huurders,
                     Einddatum = a.Einddatum,
                     Soort = a.Soort,
-                    ZakelijkeHuurders = a.ZakelijkeHuurders.Select(z => z.User.Id).ToList(),
+                    ZakelijkeHuurders = a.ZakelijkeHuurders
+                        .Select(z => z.User.Id).ToList(),
                 }
             )
             .ToListAsync();
@@ -184,6 +185,13 @@ public class AbonnementController : ControllerBase
         {
             return Unauthorized("Incorrecte gebruiker");
         }
+
+        _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
+        if (user.Huurbeheerder.Bedrijf == null)
+        {
+            return UnprocessableEntity("Huidige gebruiker is niet gekoppeld aan een bedrijf");
+        }
+        var domein = user.Huurbeheerder.Bedrijf.Domein;
 
         var abonnement = await _context.Abonnementen.FindAsync(abonnementId);
         if (abonnement == null)
@@ -218,6 +226,12 @@ public class AbonnementController : ControllerBase
         if (huurders.Count() > abonnement.Max_huurders)
         {
             return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huurders.Count()}");
+        }
+
+        var noDomainInEmail = _context.Users.Where(u => renters.Contains(u.Id)).Any(u => !u.Email.Contains(domein));
+        if (noDomainInEmail)
+        {
+            return BadRequest($"Kan geen huurder toevoegen die geen '{domein}' als domein heeft in het emailadres");
         }
 
         abonnement.ZakelijkeHuurders = huurders;

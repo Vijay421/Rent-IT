@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250103105941_added_models")]
+    [Migration("20250107101923_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -205,6 +205,11 @@ namespace backend.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Domein")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("KvK_nummer")
                         .HasColumnType("int");
@@ -489,7 +494,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BedrijfId")
+                    b.Property<int>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("Bedrijfsrol")
@@ -657,9 +662,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Bedrijf", null)
+                    b.HasOne("backend.Models.Bedrijf", "Bedrijf")
                         .WithMany("Huurbeheerders")
-                        .HasForeignKey("BedrijfId");
+                        .HasForeignKey("BedrijfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bedrijf");
                 });
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>

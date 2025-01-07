@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250103110005_added_seeding_data")]
+    [Migration("20250107101944_added_seeding_data")]
     partial class added_seeding_data
     {
         /// <inheritdoc />
@@ -54,37 +54,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b78963c3-e37d-47fd-8f0a-9da79045d92c",
+                            Id = "5825b66b-cd18-497d-8d5e-e497cc18aabb",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a82f3097-cf66-4ccb-9408-943c22c7bbc1",
+                            Id = "e2977c1c-8aa0-4c71-80e9-4007cd2ddf5e",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "331432c4-bf46-49a2-ad3f-6555e991e74b",
+                            Id = "cfcf09c9-9490-43ec-9619-c7fd2e112d81",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "676a7de6-98ad-4f50-8341-2c5d80e8e8b8",
+                            Id = "0ee7f19a-6a87-4fd6-b87f-d80d3861d020",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "bf99f5bc-350d-4b61-83e1-d44af454712b",
+                            Id = "5d5e00e7-58db-465e-a8cb-beff07139ee7",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "f81d6348-6d24-4cd3-9666-e59fb26bb6cb",
+                            Id = "cacac55e-4af7-4353-a010-cc124d406e31",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -254,6 +254,11 @@ namespace backend.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Domein")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("KvK_nummer")
                         .HasColumnType("int");
@@ -645,7 +650,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BedrijfId")
+                    b.Property<int>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("Bedrijfsrol")
@@ -813,9 +818,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Bedrijf", null)
+                    b.HasOne("backend.Models.Bedrijf", "Bedrijf")
                         .WithMany("Huurbeheerders")
-                        .HasForeignKey("BedrijfId");
+                        .HasForeignKey("BedrijfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bedrijf");
                 });
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
