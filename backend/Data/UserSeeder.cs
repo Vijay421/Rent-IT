@@ -119,7 +119,7 @@ namespace backend.Data
             var user2 = new User
             {
                 UserName = "z-user2",
-                Email = "zuser2@user.com",
+                Email = "zuser2@google.com",
                 EmailConfirmed = true,
             };
             await userManager.CreateAsync(user2, "Qwerty123!");
@@ -132,11 +132,23 @@ namespace backend.Data
             context.ZakelijkeHuurders.Add(zh2);
             await context.SaveChangesAsync();
 
+            var bedrijf = new Bedrijf
+            {
+                Name = "Google LLC",
+                Address = "Claude Debussylaan Etage, Md, Amsterdam 1082 15E 34",
+                KvK_nummer = 34198589,
+                PhoneNumber = "423432423",
+                Domein = "google.com"
+            };
+            context.Bedrijven.Add(bedrijf);
+            await context.SaveChangesAsync();
+
             var zhuurder = new Huurbeheerder
             {
                 Id = 0,
                 Bedrijfsrol = "project-manager",
                 ZakelijkeHuurders = { zh1, zh2 },
+                Bedrijf = bedrijf,
             };
             context.Huurbeheerders.Add(zhuurder);
             await context.SaveChangesAsync();
@@ -161,17 +173,6 @@ namespace backend.Data
                 var errorText = string.Join(", ", result.Errors.Select(e => e.Description));
                 Console.Error.WriteLine($"error: {errorText}");
             }
-
-            var bedrijf = new Bedrijf
-            {
-                Name = "Google LLC",
-                Address = "Claude Debussylaan Etage, Md, Amsterdam 1082 15E 34",
-                KvK_nummer = 34198589,
-                PhoneNumber = "423432423",
-                Huurbeheerders = { zhuurder },
-            };
-            context.Bedrijven.Add(bedrijf);
-            await context.SaveChangesAsync();
         }
 
         private async Task SeedParticuliereUser(UserManager<User> userManager, IConfiguration config, RentalContext context)

@@ -25,6 +25,9 @@ namespace backend.Models
 
         public List<Huurbeheerder> Huurbeheerders { get; set; }
 
+        [StringLength(50, MinimumLength = 2)]
+        public string Domein { get; set; }
+
         public Bedrijf()
         {
             Huurbeheerders = new List<Huurbeheerder>();

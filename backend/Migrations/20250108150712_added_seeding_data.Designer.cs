@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250103110005_added_seeding_data")]
+    [Migration("20250108150712_added_seeding_data")]
     partial class added_seeding_data
     {
         /// <inheritdoc />
@@ -54,37 +54,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b78963c3-e37d-47fd-8f0a-9da79045d92c",
+                            Id = "a63a81b1-b614-4365-9192-3ac024e15afe",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a82f3097-cf66-4ccb-9408-943c22c7bbc1",
+                            Id = "46ce9ba7-10c5-48bc-9b6c-cc7cedee8685",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "331432c4-bf46-49a2-ad3f-6555e991e74b",
+                            Id = "72a7f819-12cd-4ec7-940b-454db936e184",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "676a7de6-98ad-4f50-8341-2c5d80e8e8b8",
+                            Id = "bfa973b3-6638-4387-8787-5c4aa8886b6f",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "bf99f5bc-350d-4b61-83e1-d44af454712b",
+                            Id = "e56dd67f-1dc9-42dc-b1af-42aeff39edb6",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "f81d6348-6d24-4cd3-9666-e59fb26bb6cb",
+                            Id = "9f10b470-2f0c-4020-b52f-db387b3d53f5",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -254,6 +254,11 @@ namespace backend.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Domein")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("KvK_nummer")
                         .HasColumnType("int");
@@ -645,7 +650,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BedrijfId")
+                    b.Property<int>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("Bedrijfsrol")
@@ -813,20 +818,27 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Bedrijf", null)
+                    b.HasOne("backend.Models.Bedrijf", "Bedrijf")
                         .WithMany("Huurbeheerders")
-                        .HasForeignKey("BedrijfId");
+                        .HasForeignKey("BedrijfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bedrijf");
                 });
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
                 {
-                    b.HasOne("backend.Models.Abonnement", null)
+                    b.HasOne("backend.Models.Abonnement", "Abonnement")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("AbonnementId");
+                        .HasForeignKey("AbonnementId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("backend.Rollen.Huurbeheerder", null)
                         .WithMany("ZakelijkeHuurders")
                         .HasForeignKey("HuurbeheerderId");
+
+                    b.Navigation("Abonnement");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
