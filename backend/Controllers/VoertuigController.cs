@@ -77,6 +77,7 @@ public class VoertuigController : ControllerBase
         return car;
     }
 
+<<<<<<< HEAD
 
     // [HttpGet("registraties")]
     // public async Task<List<Voertuig>> GetAllCarsInname()
@@ -99,6 +100,8 @@ public class VoertuigController : ControllerBase
     //     return cars;
     // }
 
+=======
+>>>>>>> 1575ab05184df40321ba659834bb8c783f80a7fe
     [Authorize(Roles = "backoffice_medewerker")]
     [HttpPost]
     public async Task<ActionResult<Voertuig>> Create(Voertuig voertuig)

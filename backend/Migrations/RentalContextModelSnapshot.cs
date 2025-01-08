@@ -468,6 +468,9 @@ namespace backend.Migrations
                     b.HasIndex("ZakelijkeHuurderId")
                         .IsUnique()
                         .HasFilter("[ZakelijkeHuurderId] IS NOT NULL");
+                    b.HasIndex("ZakelijkeHuurderId")
+                        .IsUnique()
+                        .HasFilter("[ZakelijkeHuurderId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -858,6 +861,8 @@ namespace backend.Migrations
                     b.HasOne("backend.Rollen.ZakelijkeHuurder", "ZakelijkeHuurder")
                         .WithOne("User")
                         .HasForeignKey("backend.Models.User", "ZakelijkeHuurderId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
 
@@ -919,6 +924,11 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Rollen.ParticuliereHuurder", b =>
                 {
                     b.Navigation("Huuraanvragen");
+                });
+
+            modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
