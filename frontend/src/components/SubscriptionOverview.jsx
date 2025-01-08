@@ -12,8 +12,8 @@ function SubscriptionOverview()
                 <p className="prijs__text">€150</p>
                 <h3>per maand.</h3>
 
-                <Link to='/huur-overzicht'>
-                    <button className='button'>Huren</button>
+                <Link to='/abonnement'>
+                    <button className='button'>Neem dit abonnement</button>
                 </Link>
 
             </div>
@@ -25,8 +25,8 @@ function SubscriptionOverview()
                 <p className="prijs__text">€50</p>
                 <h3>per maand.</h3>
 
-                <Link to='/huur-overzicht'>
-                    <button className='button'>Huren</button>
+                <Link to='/abonnement'>
+                    <button className='button'>Neem dit abonnement</button>
                 </Link>
             </div>
         </main>

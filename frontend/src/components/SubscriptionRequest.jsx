@@ -1,6 +1,7 @@
 import '../styles/SubscriptionRequest.css';
 import { useState } from "react";
 import styles from "./Profile/ProfilePageBase.module.css";
+import {Link} from "react-router-dom";
 
 function SubscriptionRequest() {
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
@@ -156,11 +157,15 @@ function SubscriptionRequest() {
                 <label htmlFor="subscription-type" className="form__text">Type Abonnement:</label>
                 <div className="radio-group" onChange={handleSubscriptionType}>
                     <label>
-                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" /> Pay as you go
+                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go"/> Pay as you
+                        go
                     </label>
                     <label>
-                        <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid" /> Prepaid
+                        <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid"/> Prepaid
                     </label>
+                    <Link to="/abonnementen-overzicht" className="type-abonnementen__link">
+                        <p>Welke soorten abonnementen zijn er?</p>
+                    </Link>
                 </div>
             </div>
             {confirmationMessage && (
