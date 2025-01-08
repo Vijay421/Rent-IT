@@ -33,6 +33,8 @@ namespace backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ZakelijkeHuurder>()
                 .HasOne(z => z.Abonnement)
                 .WithMany(a => a.ZakelijkeHuurders)
