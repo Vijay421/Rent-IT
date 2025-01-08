@@ -312,6 +312,8 @@ public class AbonnementController : ControllerBase
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
 
+        //var huuders = _context.ZakelijkeHuurders.Where(z => z.AbonnementId == id);
+
         _context.Remove(abonnement);
 
         await _context.SaveChangesAsync();

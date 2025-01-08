@@ -12,6 +12,7 @@ namespace backend.Rollen
 
         public int? HuurbeheerderId { get; set; }
         public int? AbonnementId { get; set; }
+        public Abonnement? Abonnement { get; set; }
 
         [MinLength(2)]
         public required string Factuuradres{get;set;}

@@ -221,7 +221,8 @@ namespace backend.Migrations
                         name: "FK_ZakelijkeHuurders_Abonnementen_AbonnementId",
                         column: x => x.AbonnementId,
                         principalTable: "Abonnementen",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_ZakelijkeHuurders_Huurbeheerders_HuurbeheerderId",
                         column: x => x.HuurbeheerderId,

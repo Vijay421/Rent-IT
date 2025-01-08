@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250107101923_added_models")]
+    [Migration("20250108150647_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -673,13 +673,16 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
                 {
-                    b.HasOne("backend.Models.Abonnement", null)
+                    b.HasOne("backend.Models.Abonnement", "Abonnement")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("AbonnementId");
+                        .HasForeignKey("AbonnementId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("backend.Rollen.Huurbeheerder", null)
                         .WithMany("ZakelijkeHuurders")
                         .HasForeignKey("HuurbeheerderId");
+
+                    b.Navigation("Abonnement");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
