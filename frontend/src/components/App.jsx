@@ -23,36 +23,34 @@ import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 import ReserveringPage from "../pages/ReserveringPage.jsx";
 import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
+import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<IndexPage />} />
-                <Route path="/registreren" element={<RegisterPage/>} />
-                <Route path="/medewerker-aanmaken" element={<RegisterPage/>} />
-                <Route path="/medewerkersoverzicht" element={<EmployeeOverviewPage/>} />
-                <Route path="/login" element={<LoginPage/>} />
-                <Route path="/wachtwoord-vergeten" element={<RetrievePasswordPage/>} />
-                <Route path="/huur-overzicht" element={<RentingPage/>} />
-
-                <Route path="/voertuigoverzicht" element={<VehicleOverviewPage/>} />
-                <Route path="/voertuig-aanpassen" element={<VehicleCreateAndUpdate/>} />
-
-                <Route path="/profiel" element={<ProfilePage/>}/>
-                <Route path="/account-instellingen" element={<AccountSettings/>}/>
-
-                <Route path="/abonnement" element={<SubscriptionRequestPage/>}/>
-                <Route path="/abonnementen" element={<SubscriptionsManagePage/>}/>
-
-                <Route path="/huur-indienen" element={<RentingSubmitPage/>}/>
-                <Route path="/huur-geschiedenis" element={<RentHistory/>}/>
-                <Route path="/huuraanvraag-beoordelen" element={<ReviewRentRequest/>}/>
-                <Route path="/notificaties" element={<NotificationsPage/>}/>
-                <Route path="/bevestiging" element={<ConfirmationPage/>}/>
-                <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
-                <Route path="/reserveringen" element={<ReserveringPage/>}/>
-                <Route path="/reservering-wijziging" element={<ReserveringWijzigingPage/>}/>
+                <Route path="/" element=                        {<IndexPage />} />
+                <Route path="/registreren" element=             {<RegisterPage/>} />
+                <Route path="/medewerker-aanmaken" element=     {<RegisterPage/>} />
+                <Route path="/medewerkersoverzicht" element=    {<EmployeeOverviewPage/>} />
+                <Route path="/login" element=                   {<LoginPage/>} />
+                <Route path="/wachtwoord-vergeten" element=     {<RetrievePasswordPage/>} />
+                <Route path="/huur-overzicht" element=          {<RentingPage/>} />
+                <Route path="/voertuigoverzicht" element=       {<VehicleOverviewPage/>} />
+                <Route path="/voertuig-aanpassen" element=      {<VehicleCreateAndUpdate/>} />
+                <Route path="/profiel" element=                 {<ProfilePage/>}/>
+                <Route path="/account-instellingen" element=    {<AccountSettings/>}/>
+                <Route path="/abonnement" element=              {<SubscriptionRequestPage/>}/>
+                <Route path="/abonnementen" element=            {<SubscriptionsManagePage/>}/>
+                <Route path="/huur-indienen" element=           {<RentingSubmitPage/>}/>
+                <Route path="/huur-geschiedenis" element=       {<RentHistory/>}/>
+                <Route path="/huuraanvraag-beoordelen" element= {<ReviewRentRequest/>}/>
+                <Route path="/notificaties" element=            {<NotificationsPage/>}/>
+                <Route path="/bevestiging" element=             {<ConfirmationPage/>}/>
+                <Route path="/huur-betaling" element=           {<RentingPaymentPage/>}/>
+                <Route path="/reserveringen" element=           {<ReserveringPage/>}/>
+                <Route path="/reservering-wijziging" element=   {<ReserveringWijzigingPage/>}/>
+                <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
             </Routes>
         </Router>
     );
