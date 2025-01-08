@@ -97,7 +97,7 @@ function Subscription({ data, renters, subId, initialRenters }) {
             <p>{data.soort}</p>
 
             <p className="subs__item-label">Zakelijke huurders</p>
-            <select onChange={handleRentersSelect}>
+            <select onChange={handleRentersSelect} data-cy="select-renter">
                 <option value={null}>Geen</option>
                 {
                     renters.map((data, key) => (
@@ -117,7 +117,7 @@ function Subscription({ data, renters, subId, initialRenters }) {
                                     .map((data, key) => (
                                         <li key={key} className="subs__item-renter">
                                             <p>{ data.userName }</p>
-                                            <button onClick={() => RemoveSelectedRenter(data.id)}>Verwijder</button>
+                                            <button onClick={() => RemoveSelectedRenter(data.id)} data-cy="remove" >Verwijder</button>
                                         </li>
                                     ))
                             }
@@ -126,7 +126,7 @@ function Subscription({ data, renters, subId, initialRenters }) {
                 )
             }
 
-            <button onClick={handleSave} >Opslaan</button>
+            <button onClick={handleSave} data-cy="save" >Opslaan</button>
         </div>
     );
 }

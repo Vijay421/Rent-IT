@@ -8,10 +8,13 @@ using static BackendTestProject.MockUtils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using backend.DTOs;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http;
 
 namespace BackendTestProject.Controllers
 {
-    public class AbonnementControllerTests
+    public class HuurBeheerderControllerTests
     {
         private SqliteConnection _connection;
         private DbContextOptions<RentalContext> _contextOptions;
@@ -20,7 +23,7 @@ namespace BackendTestProject.Controllers
         private Mock<UserManager<User>> _mockUserManager;
         private ControllerContext _controllerContext;
 
-        public AbonnementControllerTests()
+        public HuurBeheerderControllerTests()
         {
             _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
@@ -52,8 +55,7 @@ namespace BackendTestProject.Controllers
             _context.SaveChanges();
 
             _context.Users.Add(new User { Id = "2", Email = "zuser2@google.com", ZakelijkeHuurder = zakelijkeHuurder1 });
-            _context.Users.Add(new User { Id = "3", Email = "zuser2@otherCompany.com", ZakelijkeHuurder = zakelijkeHuurder2 });
-            _context.Abonnementen.Add(new Abonnement { Id = 1, HuurbeheerderId = 1, Naam = "A name", Prijs_per_maand = 50.0, Max_huurders = 20, Einddatum = new DateOnly(9999, 1, 1), Soort = "prepaid" });
+            _context.Users.Add(new User { Id = "3", Email = "zuser3@otherCompany.com", ZakelijkeHuurder = zakelijkeHuurder2 });
             _context.SaveChanges();
 
             var store = new Mock<IUserStore<User>>();
@@ -69,35 +71,23 @@ namespace BackendTestProject.Controllers
         private RentalContext _createContext() => new RentalContext(_contextOptions, null, null);
 
         [Fact]
-        public async Task UpdateRenters_ShouldAddRentersToSubscription_WhenAValidUserIsProvided()
+        public async Task GetZakelijkeHuurders_ShouldRentersFromCurrentZakelijkeBeheerder()
         {
             // Arrange
-            var controller = new AbonnementController(_createContext(), _mockUserManager.Object)
+            var controller = new HuurBeheerderController(_createContext(), _mockUserManager.Object)
             {
                 ControllerContext = _controllerContext,
             };
 
             // Act
-            var actionResult = await controller.UpdateRenters(1, ["2"]);
+            var actionResult = await controller.GetZakelijkeHuurders();
 
             // Assert
-            Assert.IsType<NoContentResult>(actionResult);
-        }
+            var result = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var value = Assert.IsAssignableFrom<IEnumerable<UserDTO>>(result.Value);
 
-        [Fact]
-        public async Task UpdateRenters_ShouldNotAddRentersToSubscription_WhenTheRenterDoesNotBelongToTheCompanyOfTheZakelijkeBeheerder()
-        {
-            // Arrange
-            var controller = new AbonnementController(_createContext(), _mockUserManager.Object)
-            {
-                ControllerContext = CreateMockControllerContext("zakelijke_beheerder", "1"),
-            };
-
-            // Act
-            var actionResult = await controller.UpdateRenters(1, ["3"]);
-
-            // Assert
-            Assert.IsType<BadRequestObjectResult>(actionResult);
+            Assert.NotNull(value);
+            Assert.Single(value);
         }
     }
 }

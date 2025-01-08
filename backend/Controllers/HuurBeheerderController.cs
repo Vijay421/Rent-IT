@@ -56,7 +56,6 @@ namespace backend.Controllers
             var huurders = await _context
                 .Users
                 .Include(u => u.ZakelijkeHuurder)
-                .ThenInclude(z => z.User)
                 .Where(u => u.ZakelijkeHuurder.HuurbeheerderId == user.Huurbeheerder.Id && u.Email.Contains(domein))
                 .Select(u => new UserDTO
                 {
