@@ -40,23 +40,15 @@ namespace backend.Data
 
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
 
-<<<<<<< HEAD
 /*
             var roleConfig = new RoleConfiguration();
-=======
-/*            var roleConfig = new RoleConfiguration();
->>>>>>> 1575ab05184df40321ba659834bb8c783f80a7fe
             modelBuilder.ApplyConfiguration(roleConfig);
 
             var voertuigSeeder = new VoertuigSeeder();
             voertuigSeeder.Seed(modelBuilder);
             var abonnementSeeder = new AbonnementSeeder();
-<<<<<<< HEAD
             abonnementSeeder.Seed(modelBuilder);
 */
-=======
-            abonnementSeeder.Seed(modelBuilder);*/
->>>>>>> 1575ab05184df40321ba659834bb8c783f80a7fe
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
