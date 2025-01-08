@@ -26,6 +26,12 @@
     margin-bottom: 30px;
 }
 
+.subs_no-subs-text {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .subs__item {
     margin: 15px auto;
     width: max(150px,62vw);

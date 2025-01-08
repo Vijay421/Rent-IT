@@ -5,7 +5,7 @@ describe("can register and update employees", () => {
 
     });
 
-    it("should allow zakelijke huurders to create subscriptions and add renter to them", () => {
+    it("should allow zakelijke huurders to create subscriptions, add renter to them, and delete the subscription", () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
         cy.visit("http://localhost:5173/login");
 
@@ -28,7 +28,7 @@ describe("can register and update employees", () => {
         cy.get("[data-cy='address']").type("cy-test-address");
         cy.get("[data-cy='company-number']").type("27154982");
         cy.get("[data-cy='max-renters']").type("20");
-        cy.get("[data-cy='end-date']").type("2026-01-01"); // TODO
+        cy.get("[data-cy='end-date']").type("2026-01-01");
         cy.get("[data-cy='subscription-name']").type("cy-test-subscription-name");
         cy.get("[data-cy='pay-as-you-go']").click();
 
@@ -63,11 +63,21 @@ describe("can register and update employees", () => {
         });
 
 
-        cy.log("remove renter to subscription");
-        cy.get("[data-cy='remove']").first().click();
-        cy.get("[data-cy='save']").first().click();
+        cy.log("remove renter from subscription");
+        cy.get("[data-cy='remove']").last().click();
+        cy.get("[data-cy='save']").last().click();
 
         cy.wait('@updateRentersRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(204);
+        });
+
+
+        cy.log("remove subscription");
+        cy.intercept("DELETE", "https://localhost:53085/api/Abonnement/*").as("deleteSubscriptionRequest");
+
+        cy.get("[data-cy='delete-subscription']").last().click();
+
+        cy.wait("@deleteSubscriptionRequest").then((interception) => {
             expect(interception.response.statusCode).to.equal(204);
         });
     });
