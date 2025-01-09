@@ -227,8 +227,9 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Returns users are renters.
+        /// Returns users who are renters.
         /// </summary>
+        [Authorize(Roles = "zakelijke_beheerder")]
         [HttpGet("huurders")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetRenters()
         {
