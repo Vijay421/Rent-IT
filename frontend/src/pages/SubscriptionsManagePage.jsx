@@ -51,7 +51,10 @@ export default function SubscriptionsManagePage() {
 
 function Subscription({ data, renters, subId, setSubs, initialRenters, beheederNaam }) {
     const [selectedRenters, setSelectedRenters] = useState(initialRenters);
+    const [searchedEmail, setSearchedEmail] = useState("");
     const selectElement = useRef(null);
+
+    const userSearchId = `users-list-${subId}`;
 
     function handleSelectedRenter(e) {
         const id = e.target.value;
@@ -64,6 +67,34 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
 
             if (!copy.includes(id)) {
                 copy.push(id);
+                return copy;
+            } else {
+                return copy;
+            }
+        });
+    }
+
+    function handleEmailSearch(e) {
+        if (e.key !== "Enter") {
+            return;
+        }
+
+        let renter = renters.filter(renter => renter.email === searchedEmail);
+        if (renter.length === 0) {
+            return;
+        }
+
+        if (renter.length > 1) {
+            console.warn("Found users with duplicate email address, aborting!");
+            return;
+        }
+        renter = renter[0];
+
+        setSelectedRenters((oldRenters) => {
+            const copy = [...oldRenters];
+
+            if (!copy.includes(renter.id)) {
+                copy.push(renter.id);
                 return copy;
             } else {
                 return copy;
@@ -125,6 +156,22 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
             <p>{data.soort}</p>
 
             <p className="subs__item-label">Zakelijke huurders</p>
+            <input
+                list={userSearchId}
+                onChange={(e) => setSearchedEmail(e.target.value)}
+                onKeyUp={handleEmailSearch}
+                data-cy="user-search"
+            />
+            <datalist id={userSearchId}>
+                <>
+                    {
+                        renters.map((data, key) => (
+                            <option key={key} value={data.email}>{data.email}</option>
+                        ))
+                    }
+                </>
+            </datalist>
+
             <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
                 <option value={null}>Geen</option>
                 {
@@ -217,7 +264,7 @@ async function getSubsFromCurrentUser(payload) {
  */
 async function getRentersFromCurrentUser() {
     try {
-        const response = await fetch('https://localhost:53085/api/HuurBeheerder/zakelijke-huurders', {
+        const response = await fetch('https://localhost:53085/api/User/huurders', {
             method: 'GET',
     
             // TODO: change to 'same-origin' when in production.

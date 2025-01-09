@@ -26,7 +26,7 @@ describe("can register and update employees", () => {
 
         cy.get("[data-cy='company-name']").type("cy-test-company-name");
         cy.get("[data-cy='address']").type("cy-test-address");
-        cy.get("[data-cy='company-number']").type("27154982");
+        cy.get("[data-cy='company-number']").type("271549821111");
         cy.get("[data-cy='max-renters']").type("20");
         cy.get("[data-cy='end-date']").type("2026-01-01");
         cy.get("[data-cy='subscription-name']").type("cy-test-subscription-name");
@@ -40,7 +40,7 @@ describe("can register and update employees", () => {
 
 
         cy.intercept("GET", "https://localhost:53085/api/Abonnement/company").as("getSubscriptionsRequest");
-        cy.intercept("GET", "https://localhost:53085/api/HuurBeheerder/zakelijke-huurders").as("getRentersRequest");
+        cy.intercept("GET", "https://localhost:53085/api/User/huurders").as("getRentersRequest");
         cy.intercept("PUT", "https://localhost:53085/api/Abonnement/renters/*").as("updateRentersRequest");
         cy.log("add renter to subscription");
 

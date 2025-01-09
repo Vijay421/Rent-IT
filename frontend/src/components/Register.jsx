@@ -154,7 +154,7 @@ export default function Register() {
                                 placeholder='Vul hier je adres in'
                                 minLength='5'
                                 maxLength='255'
-                                data-cy='adres'
+                                data-cy='address'
                                 required
                                 value={address}
                                 onChange={handleAddress}

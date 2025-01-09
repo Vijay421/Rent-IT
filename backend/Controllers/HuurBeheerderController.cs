@@ -25,7 +25,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("zakelijke-huurders")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetZakelijkeHuurders()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetRenters()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -53,18 +53,20 @@ namespace backend.Controllers
 
             var domein = user.Huurbeheerder.Bedrijf.Domein;
 
-            var huurders = await _context
+            var users = await _context
                 .Users
+                .Include(u => u.ParticuliereHuurder)
                 .Include(u => u.ZakelijkeHuurder)
-                .Where(u => u.ZakelijkeHuurder.HuurbeheerderId == user.Huurbeheerder.Id && u.Email.Contains(domein))
+                .Where(u => (u.ParticuliereHuurder != null || u.ZakelijkeHuurder != null) && u.Email.Contains(domein))
                 .Select(u => new UserDTO
                 {
                     Id = u.Id,
                     UserName = u.UserName,
+                    Email = u.Email,
                 })
                 .ToListAsync();
 
-            return Ok(huurders);
+            return Ok(users);
         }
     }
 }

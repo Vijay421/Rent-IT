@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -148,16 +149,16 @@ public class AbonnementController : ControllerBase
             .Include(a => a.ZakelijkeHuurders)
             .ThenInclude(z => z.User)
             .Select(a => new AbonnementPerZakelijkeHuurderDTO
-                {
-                    Id = a.Id,
-                    Naam = a.Naam,
-                    PrijsPerMaand = a.Prijs_per_maand,
-                    MaxHuurders = a.Max_huurders,
-                    Einddatum = a.Einddatum,
-                    Soort = a.Soort,
-                    ZakelijkeHuurders = a.ZakelijkeHuurders
+            {
+                Id = a.Id,
+                Naam = a.Naam,
+                PrijsPerMaand = a.Prijs_per_maand,
+                MaxHuurders = a.Max_huurders,
+                Einddatum = a.Einddatum,
+                Soort = a.Soort,
+                ZakelijkeHuurders = a.ZakelijkeHuurders
                         .Select(z => z.User.Id).ToList(),
-                }
+            }
             )
             .ToListAsync();
 
@@ -200,43 +201,68 @@ public class AbonnementController : ControllerBase
         }
         _context.Entry(abonnement).Collection(a => a.ZakelijkeHuurders).Load();
 
-        _context.Entry(user.Huurbeheerder).Collection(z => z.ZakelijkeHuurders).Load();
+        var newRenters = await _context
+            .Users
+            .Where(u => renters.Contains(u.Id))
+            .Include(u => u.ParticuliereHuurder)
+            .Include(u => u.ZakelijkeHuurder)
+            .Where(u => u.ParticuliereHuurder != null || u.ZakelijkeHuurder != null)
+            .ToListAsync();
 
-        foreach (var zakelijkeHuurder in user.Huurbeheerder.ZakelijkeHuurders)
+        if (newRenters.Count() > abonnement.Max_huurders)
         {
-            _context.Entry(zakelijkeHuurder)
-                .Reference(z => z.User)
-                .Load();
+            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {newRenters.Count()}");
         }
 
-        foreach (var renter in renters)
-        {
-            var isRenterOfUser = user
-                .Huurbeheerder
-                .ZakelijkeHuurders
-                .Any(z => z.User.Id == renter);
-
-            if (!isRenterOfUser)
-            {
-                return BadRequest($"Zakelijke huurder met id '{renter}' hoort niet bij de huidige beheerder");
-            }
-        }
-
-        var huurders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.User.Id)).ToListAsync();
-        if (huurders.Count() > abonnement.Max_huurders)
-        {
-            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huurders.Count()}");
-        }
-
-        var noDomainInEmail = _context.Users.Where(u => renters.Contains(u.Id)).Any(u => !u.Email.Contains(domein));
+        var noDomainInEmail = newRenters.Where(u => renters.Contains(u.Id)).Any(u => !u.Email.Contains(domein));
         if (noDomainInEmail)
         {
             return BadRequest($"Kan geen huurder toevoegen die geen '{domein}' als domein heeft in het emailadres");
         }
 
-        abonnement.ZakelijkeHuurders = huurders;
-        _context.Entry(abonnement).State = EntityState.Modified;
+        var zakelijkeRenters = newRenters.Select(r => r.ZakelijkeHuurder).Where(z => z != null).ToList();
+        var convertedRenter = new List<ZakelijkeHuurder>();
+        foreach (var renter in newRenters)
+        {
+            var renterEntry = _context.Entry(renter);
+            renterEntry.Reference(r => r.ParticuliereHuurder).Load();
 
+            if (renter.ParticuliereHuurder != null)
+            {
+                _context.ParticuliereHuurders.Remove(renter.ParticuliereHuurder);
+            }
+
+            var hasPRole = await _userManager.IsInRoleAsync(renter, "particuliere_huurder");
+            if (hasPRole)
+            {
+                await _userManager.RemoveFromRoleAsync(renter, "particuliere_huurder");
+                await _userManager.AddToRoleAsync(renter, "zakelijke_huurder");
+                
+                var zakelijkeHuurder = new ZakelijkeHuurder 
+                {
+                    HuurbeheerderId = user.HuurbeheerderId,
+                    AbonnementId = abonnement.Id,
+                    Abonnement = abonnement,
+
+                    // TODO: somehow get this from the user (it could be optional, but required when renting).
+                    Factuuradres = "Hierzo", 
+                };
+                renter.ZakelijkeHuurder = zakelijkeHuurder;
+                renterEntry.State = EntityState.Modified;
+
+                convertedRenter.Add(zakelijkeHuurder);
+            }
+        }
+
+        if (convertedRenter.Count > 0)
+        {
+            await _context.ZakelijkeHuurders.AddRangeAsync(convertedRenter);
+            await _context.SaveChangesAsync();
+        }
+
+        zakelijkeRenters.AddRange(convertedRenter);
+        abonnement.ZakelijkeHuurders = zakelijkeRenters;
+        _context.Entry(abonnement).State = EntityState.Modified;
         try
         {
             _context.Update(abonnement);
