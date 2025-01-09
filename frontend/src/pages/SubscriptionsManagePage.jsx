@@ -1,11 +1,15 @@
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/SubscriptionsManagePage.css";
+import { useContext } from "react";
+import { UserContext } from "../components/UserContext.jsx";
+import downloadFile from "../scripts/downloadFile.js";
 
 export default function SubscriptionsManagePage() {
     const [subs, setSubs] = useState([]);
     const [renters, setRenters] = useState([]);
+    const { userName } = useContext(UserContext);
 
     useEffect(() => {
         const getData = async () => {
@@ -29,8 +33,12 @@ export default function SubscriptionsManagePage() {
                     <div className="subs__subs">
                         {
                             subs.map((data, key) => (
-                                <Subscription key={key} data={data} renters={renters} subId={data.id} initialRenters={data.zakelijkeHuurders} />
+                                <Subscription key={key} data={data} renters={renters} subId={data.id} setSubs={setSubs} initialRenters={data.zakelijkeHuurders} beheederNaam={userName} />
                             ))
+                        }
+
+                        {
+                            subs.length === 0 && <p className="subs_no-subs-text">Geen abonnementen.</p>
                         }
                     </div>
 
@@ -41,10 +49,11 @@ export default function SubscriptionsManagePage() {
     );
 }
 
-function Subscription({ data, renters, subId, initialRenters }) {
+function Subscription({ data, renters, subId, setSubs, initialRenters, beheederNaam }) {
     const [selectedRenters, setSelectedRenters] = useState(initialRenters);
+    const selectElement = useRef(null);
 
-    function handleRentersSelect(e) {
+    function handleSelectedRenter(e) {
         const id = e.target.value;
         if (id === "Geen") {
             return;
@@ -68,14 +77,33 @@ function Subscription({ data, renters, subId, initialRenters }) {
             const filtered = copy.filter(renterId => renterId !== id);
             return filtered;
         });
+
+        selectElement.current.selectedIndex = 0;
     }
 
     async function handleSave() {
         const didSucceed = await updateRenters(selectedRenters, subId);
         if (didSucceed) {
             window.alert("De veranderingen zijn opgeslagen!");
+
+            if (selectedRenters.length > 0) {
+                const addRenters = renters.filter(renter => selectedRenters.includes(renter.id));
+                sendConformationEmail(addRenters, beheederNaam);
+            }
         } else {
             setSelectedRenters(data.zakelijkeHuurders);
+        }
+    }
+
+    async function handleDeleteSubscription() {
+        const didSucceed = await deleteSubscription(subId);
+        if (!didSucceed) {
+            window.alert("Error tijdens het verwijderen");
+        } else {
+            setSubs((old) => {
+                const copy = [...old];
+                return copy.filter(sub => sub.id != subId);
+            });
         }
     }
 
@@ -97,7 +125,7 @@ function Subscription({ data, renters, subId, initialRenters }) {
             <p>{data.soort}</p>
 
             <p className="subs__item-label">Zakelijke huurders</p>
-            <select onChange={handleRentersSelect}>
+            <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
                 <option value={null}>Geen</option>
                 {
                     renters.map((data, key) => (
@@ -117,7 +145,7 @@ function Subscription({ data, renters, subId, initialRenters }) {
                                     .map((data, key) => (
                                         <li key={key} className="subs__item-renter">
                                             <p>{ data.userName }</p>
-                                            <button onClick={() => RemoveSelectedRenter(data.id)}>Verwijder</button>
+                                            <button onClick={() => RemoveSelectedRenter(data.id)} data-cy="remove" >Verwijder</button>
                                         </li>
                                     ))
                             }
@@ -126,9 +154,34 @@ function Subscription({ data, renters, subId, initialRenters }) {
                 )
             }
 
-            <button onClick={handleSave} >Opslaan</button>
+            <button onClick={handleSave} data-cy="save" >Opslaan</button>
+            <button onClick={() => handleDeleteSubscription(subId)} data-cy="delete-subscription" >Verwijder abonnement</button>
         </div>
     );
+}
+
+function sendConformationEmail(renters, beheederNaam) {
+    for (const renter of renters) {
+        const emailContents = getEmailContents(renter, beheederNaam);
+        downloadFile(emailContents, "bevestigingsmail.txt");
+    }
+}
+
+function getEmailContents(renter, beheederNaam) {
+    const emailContents = `Geachte ${renter.userName},
+
+Hierbij de inloggegevens voor uw Rent-IT account:
+
+Gebruikersnaam: ${renter.userName}
+Het wachtwoord heeft u al. Mocht dit niet het geval zijn contacteer uw huurbeheerder.
+
+Met vriendelijke groet,
+
+${beheederNaam}
+Uw huurbeheeder.
+`;
+
+    return emailContents;
 }
 
 /**
@@ -210,6 +263,24 @@ async function updateRenters(payload, subId) {
         }
     } catch (error) {
         console.error('error when saving renters, or parsing the response:', error);
+        throw error;
+    }
+}
+
+async function deleteSubscription(subId) {
+    try {
+        const response = await fetch(`https://localhost:53085/api/Abonnement/${subId}`, {
+            method: 'DELETE',
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+        });
+
+        return response.ok;
+    } catch (error) {
+        console.error('error when deleting the subscription, or parsing the response:', error);
         throw error;
     }
 }

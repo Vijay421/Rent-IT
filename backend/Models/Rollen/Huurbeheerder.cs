@@ -8,10 +8,13 @@ namespace backend.Rollen
         public required int Id { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
-        public required string Bedrijfsrol{ get;set; }
+        public required string Bedrijfsrol { get;set; }
 
         public List<Abonnement> Abonnement { get; set; }
         public List<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
+
+        public int BedrijfId { get; set; }
+        public Bedrijf Bedrijf { get; set; }
 
         public Huurbeheerder()
         {

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import RentHistoryItem from "../components/RentHistoryItem.jsx";
 import "../styles/RentHistory.css";
+import downloadFile from "../scripts/downloadFile.js";
 
 export default function RentHistory() {
     const [vehicleType, setVehicleType] = useState("");
@@ -67,12 +68,7 @@ export default function RentHistory() {
         }
 
         const contents = JSON.stringify(filteredVehicles);
-        const blob = new Blob([contents], { type: "text/json" });
-        const link = document.createElement("a");
-
-        link.href = URL.createObjectURL(blob);
-        link.download = "voertuigen.json";
-        link.click();
+        downloadFile(contents, "voertuigen.json", "text/json");
     }
 
     return (

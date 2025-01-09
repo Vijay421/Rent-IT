@@ -57,7 +57,7 @@ namespace BackendTestProject.Controllers
             var user = CreateMockUser("particuliere_huurder");
             var controller = new VoertuigController(_createContext(), null)
             {
-                ControllerContext = CreateMockControllerContext(user),
+                ControllerContext = CreateMockControllerContextWithUser(user),
             };
 
             // Act
@@ -74,7 +74,7 @@ namespace BackendTestProject.Controllers
             var user = CreateMockUser("zakelijke_huurder");
             var controller = new VoertuigController(_createContext(), null)
             {
-                ControllerContext = CreateMockControllerContext(user),
+                ControllerContext = CreateMockControllerContextWithUser(user),
             };
 
             // Act
@@ -93,7 +93,7 @@ namespace BackendTestProject.Controllers
             var user = CreateMockUser("particuliere_huurder");
             var controller = new VoertuigController(_createContext(), null)
             {
-                ControllerContext = CreateMockControllerContext(user),
+                ControllerContext = CreateMockControllerContextWithUser(user),
             };
             var voertuigId = 1;
 
@@ -112,7 +112,7 @@ namespace BackendTestProject.Controllers
             var user = CreateMockUser("particuliere_huurder");
             var controller = new VoertuigController(_createContext(), null)
             {
-                ControllerContext = CreateMockControllerContext(user),
+                ControllerContext = CreateMockControllerContextWithUser(user),
             };
             var voertuigId = -1;
 

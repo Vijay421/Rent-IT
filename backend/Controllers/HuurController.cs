@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
-[Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
+[Authorize(Roles = "particuliere_huurder, zakelijke_huurder, backoffice_medewerker")]
 [ApiController]
 [Route("api/[controller]")]
 public class HuurController : ControllerBase
@@ -23,11 +23,15 @@ public class HuurController : ControllerBase
         _userManager = userManager;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
-    // {
-    //     return await _context.Huuraanvragen.ToListAsync();
-    // }
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
+    {
+        var huuraanvragen = await _context.Huuraanvragen
+            .Include(h => h.Voertuig)
+            .ToListAsync();
+
+        return Ok(huuraanvragen);
+    }
     
     
     [HttpGet]

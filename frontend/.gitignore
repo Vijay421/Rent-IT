@@ -35,3 +35,6 @@ cypress.env.json
 cypress/fixtures/*.local.json
 node_modules/
 cypress/cache/
+
+# Cypress downloaded files
+cypress/downloads

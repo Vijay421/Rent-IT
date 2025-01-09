@@ -83,6 +83,7 @@ function SubscriptionRequest() {
                     minLength="2"
                     maxLength="50"
                     onChange={handleBedrijfsnaam}
+                    data-cy="company-name"
                 />
                 <label htmlFor="adress" className="form__text">Adres:</label>
                 <input
@@ -94,6 +95,7 @@ function SubscriptionRequest() {
                     minLength="2"
                     maxLength="50"
                     onChange={handleAdress}
+                    data-cy="address"
                 />
                 <label htmlFor="kvk-number" className="form__text">KVK-nummer:</label>
                 <input
@@ -110,6 +112,7 @@ function SubscriptionRequest() {
                             setKvkNumber(value);
                         }
                     }}
+                    data-cy="company-number"
                 />
 
                 <label htmlFor="abonnement__max-number" className="form__text">Maximum huurder:</label>
@@ -127,6 +130,7 @@ function SubscriptionRequest() {
                             setMaxSubs(value);
                         }
                     }}
+                    data-cy="max-renters"
                 />
 
                 <label htmlFor="abonnement__end-date" className="form__text">Einddatum:</label>
@@ -138,6 +142,7 @@ function SubscriptionRequest() {
                     onChange={(e) => {
                         setEndDate(e.target.value)
                     }}
+                    data-cy="end-date"
                 />
 
                 <label htmlFor="abonnement__naam" className="form__text">Abonnementnaam:</label>
@@ -152,16 +157,16 @@ function SubscriptionRequest() {
                     onChange={(e) => {
                         setSubName(e.target.value)
                     }}
+                    data-cy="subscription-name"
                 />
 
                 <label htmlFor="subscription-type" className="form__text">Type Abonnement:</label>
                 <div className="radio-group" onChange={handleSubscriptionType}>
                     <label>
-                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go"/> Pay as you
-                        go
+                        <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" data-cy="pay-as-you-go"/> Pay as you go
                     </label>
                     <label>
-                        <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid"/> Prepaid
+                        <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid" data-cy="prepaid"/> Prepaid
                     </label>
                     <Link to="/abonnementen-overzicht" className="type-abonnementen__link">
                         <p>Welke soorten abonnementen zijn er?</p>
@@ -179,7 +184,7 @@ function SubscriptionRequest() {
                     {confirmationMessage}
                 </p>
             )}
-            <div onClick={handleSubmit} className="submit-button">
+            <div onClick={handleSubmit} className="submit-button" data-cy="submit">
                 <div className="submit-button__div">
                     <p className="submit-button__text">Verstuur abonnement aanvraag</p>
                 </div>
