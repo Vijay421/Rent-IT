@@ -55,6 +55,9 @@ function App() {
                 <Route path="/reserveringen" element=           {<ReserveringPage/>}/>
                 <Route path="/reservering-wijziging" element=   {<ReserveringWijzigingPage/>}/>
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
+                <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
+                <Route path="/frontoffice/uitgave" element= {<FrontofficeExpenditurePage/>}/>
+
             </Routes>
         </Router>
     );
