@@ -34,7 +34,7 @@ export default function VoertuigStaten() {
         //Fetch interval - 5 seconds
         const intervalId = setInterval(() => {
             getData();
-        }, 5000);
+        }, 3000);
 
         return () => clearInterval(intervalId);
     }, []);
@@ -77,6 +77,56 @@ export default function VoertuigStaten() {
         setInleverDatum("");
         setStaat("Alles");
     }
+
+    {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 83 to 99*/}
+    async function handleVoertuigStatusChange(e, item) {
+        const newStatus = e.target.value;
+
+        const payload = {
+            "id": item.id,
+            "merk": item.merk,
+            "type": item.type,
+            "kenteken": item.kenteken,
+            "kleur": item.kleur,
+            "aanschafjaar": item.aanschafjaar,
+            "soort": item.soort,
+            "opmerking": item.opmerking,
+            "status": newStatus,
+            "prijs": item.prijs,
+            "startDatum": item.startDatum,
+            "eindDatum": item.eindDatum
+        };
+
+        try {
+            const request = {
+                method: 'PUT',
+                credentials: 'include', // TODO: change to 'same-origin' when in production.
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            };
+
+            try {
+                const response = await fetch(`https://localhost:53085/api/Voertuig/${payload.id}`, request);
+
+                if (!response.ok) {
+                    throw new Error("Kon het voertuig niet updaten");
+                }
+
+                console.log("Status updated");
+                return await response.json();
+            } catch (error) {
+                console.error('error when updating vehicle, or parsing the response:', error);
+                throw new Error("Kon het voertuig niet updaten");
+            }
+        } catch (error) {
+            console.error('error when updating vehicle, or parsing the response:', error);
+            throw new Error("Kon het voertuig niet up");
+        }
+    }
+
+    const uniqueStatuses = ["Verhuurbaar", "Onverhuurbaar", "Reparatie", "Geblokkeerd"];
 
     return (
         <main className='voertuig-staten-page__main'>
@@ -134,13 +184,22 @@ export default function VoertuigStaten() {
                         <div key={index} className="staten-voertuig__div">
                             <div className="staten-voertuig-data">
                                 <p className="staten-voertuig-info__p"><b>Voertuig:</b> {item.merk} {item.type}</p>
-                                <p className="staten-voertuig-info__p"><b>Kleur:</b> {item.kleur}</p>
                                 <p className="staten-voertuig-info__p"><b>Kenteken:</b> {item.kenteken}</p>
-                                <p className="staten-voertuig-info__p"><b>Startdatum:</b> {item.startDatum}</p>
-                                <p className="staten-voertuig-info__p"><b>Einddatum:</b> {item.eindDatum}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
-                                <p><b>{item.status}</b></p>
+                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 191 to 203*/}
+                                <select
+                                    id="staten-voertuig-status__select"
+                                    value={item.status}
+                                    onChange={(e) => handleVoertuigStatusChange(e, item)}
+                                >
+                                    <option value={item.status} selected>{item.status}</option>
+                                    {uniqueStatuses
+                                        .filter((status) => status !== item.status)
+                                        .map((status, index) => (
+                                            <option key={index} value={status}>{status}</option>
+                                        ))}
+                                </select>
                             </div>
                         </div>
                     ))
