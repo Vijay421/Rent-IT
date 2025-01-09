@@ -1,7 +1,7 @@
 import "../styles/SchademeldingOverview.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
-// import VehicleReview from "./VehicleReview.jsx";
+import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
@@ -42,7 +42,7 @@ function SchademeldingOverview() {
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {
                             return (
-                                <VehicleReview
+                                <SchademeldingReview
                                     key={vehicle.id}
                                     data={vehicle}
                                 />
