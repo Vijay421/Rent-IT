@@ -30,10 +30,17 @@ export default function VerhuurdeVoertuig() {
 
     useEffect(() => {
         const getData = async () => {
-            const vehicles = await fetchVehicles();
-            setVehicles(vehicles);
+            const fetchData = await fetchVehicles();
+            setVehicles(fetchData);
         };
         getData();
+
+        //Fetch interval - 5 seconds
+        const intervalId = setInterval(() => {
+            getData();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     async function fetchVehicles() {
