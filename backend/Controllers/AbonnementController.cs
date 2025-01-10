@@ -212,7 +212,7 @@ public class AbonnementController : ControllerBase
             .ToListAsync();
 
         var subscribedRenters = newRenters
-            .Where(u => (u.ZakelijkeHuurder.Abonnement != null && u.ZakelijkeHuurder.Abonnement.Id != abonnement.Id))
+            .Where(u => (u.ZakelijkeHuurder?.Abonnement != null && u.ZakelijkeHuurder.Abonnement.Id != abonnement.Id))
             .Select(u => u.UserName)
             .ToList();
         if (subscribedRenters.Count > 0)
