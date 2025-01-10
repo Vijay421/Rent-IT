@@ -105,7 +105,7 @@ public class SchadeclaimController : ControllerBase
         var schadeclaim = new Schadeclaim
         {
             Voertuig = voertuig,
-            Datum = DateTime.Today,
+            Datum = schadeclaimDto.Datum,
             Beschrijving = schadeclaimDto.Beschrijving,
             Foto = schadeclaimDto.Foto
         };

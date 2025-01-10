@@ -6,7 +6,9 @@ import VehicleReview from "./VehicleReview.jsx";
 function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
     const [vehicles, setVehicles] = useState([]);
-
+    if (userRole === null) {
+        return <Navigate to='/'/>
+    }
     useEffect(() => {
         async function fetchVehicles() {
             // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)

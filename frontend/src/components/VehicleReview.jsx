@@ -31,6 +31,7 @@ export default function VehicleReview({ data }) {
             const schadeClaim = {
                 Voertuig: data,
                 beschrijving: beschrijving,
+                datum: new Date(),
                 foto: foto ? URL.createObjectURL(foto) : null,
             };
             try {
