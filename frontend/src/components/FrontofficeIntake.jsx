@@ -38,7 +38,7 @@ function FrontofficeIntake() {
             <div className="divMain">
                 <div>
                     <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
-
+                    
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {
                             return (

@@ -19,14 +19,14 @@ public class SchadeclaimController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("get")]
+    [HttpGet]
     public async Task<List<Schadeclaim>> GetAllSchadeclaims()
     {
         var claims = await _context.Schadeclaims.ToListAsync();
 
         return claims;
     }
-    [HttpGet("get/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Schadeclaim>> GetSchadeclaim(int id)
     {
         var schadeclaim = await _context.Schadeclaims.FindAsync(id);

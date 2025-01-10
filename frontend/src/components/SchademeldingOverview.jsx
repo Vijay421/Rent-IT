@@ -1,17 +1,17 @@
 import "../styles/SchademeldingOverview.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
-import SchademeldingReview from "./SchademeldingReview.jsx";
+import SchademeldingReview from "./SchademeldingOverview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
-    const [vehicles, setVehicles] = useState([]);
+    const [schadeclaims, setSchadeclaims] = useState([]);
 
     useEffect(() => {
         async function fetchVehicles() {
-            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)
+            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie & Schadeclaims)
             try {
-                const response = await fetch('https://localhost:53085/api/Voertuig', {
+                const response = await fetch('https://localhost:53085/api/Schadeclaim', {
                     method: 'GET',
 
                     // TODO: change to 'same-origin' when in production.
@@ -21,7 +21,7 @@ function SchademeldingOverview() {
                     },
                 });
                 const data = await response.json();
-                setVehicles(data);
+                setSchadeclaims(data);
                 console.log(userRole);
             }
             catch (e) {
@@ -31,20 +31,20 @@ function SchademeldingOverview() {
         fetchVehicles();
     }, []);
 
-    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
+    const sortedSchadeclaims = schadeclaims.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (
         <main className="content">
             <div className="divMain">
                 <div>
-                    <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
-
-                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                        sortedVehicles.map((vehicle) => {
+                    <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
+                    <button>Voeg nieuwe schadeclaim toe</button>
+                    {sortedSchadeclaims.length === 0 ? (<p>Geen schadeclaims aanwezig</p>) :
+                        sortedSchadeclaims.map((schadeclaim) => {
                             return (
                                 <SchademeldingReview
-                                    key={vehicle.id}
-                                    data={vehicle}
+                                    key={schadeclaim.id}
+                                    data={schadeclaim}
                                 />
                             );
                         })
@@ -56,4 +56,4 @@ function SchademeldingOverview() {
 }
 
 
-export default FrontofficeIntake;
+export default SchademeldingOverview;

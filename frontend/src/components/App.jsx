@@ -29,6 +29,8 @@ import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
 
+import SchademeldingOverviewPage from "../pages/SchademeldingOverviewPage.jsx";
+
 function App() {
     return (
         <Router>
@@ -56,7 +58,8 @@ function App() {
                 <Route path="/reservering-wijziging" element=   {<ReserveringWijzigingPage/>}/>
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
                 <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
-                <Route path="/frontoffice/uitgave" element= {<FrontofficeExpenditurePage/>}/>
+                <Route path="/frontoffice/uitgave" element=     {<FrontofficeExpenditurePage/>}/>
+                <Route path="/backoffice/schadeclaims" element=      {<SchademeldingOverviewPage/>}/>
 
             </Routes>
         </Router>
