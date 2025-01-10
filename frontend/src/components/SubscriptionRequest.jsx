@@ -25,7 +25,15 @@ function SubscriptionRequest() {
     }
 
     function handleSubscriptionType(e) {
-        setSubscriptionType(e.target.value);
+        const value = e.target.value;
+        setSubscriptionType(value);
+
+        if (value === "pay_as_you_go" && (maxSubs.length === 0 || maxSubs === 50)) {
+            setMaxSubs(100);
+        }
+        if (value === "prepaid" && (maxSubs.length === 0 || maxSubs === 100)) {
+            setMaxSubs(50);
+        }
     }
 
     async function handleSubmit() {

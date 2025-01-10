@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Claims;
 
 namespace backend.Controllers;
@@ -206,8 +207,19 @@ public class AbonnementController : ControllerBase
             .Where(u => renters.Contains(u.Id))
             .Include(u => u.ParticuliereHuurder)
             .Include(u => u.ZakelijkeHuurder)
+            .ThenInclude(z => z.Abonnement)
             .Where(u => u.ParticuliereHuurder != null || u.ZakelijkeHuurder != null)
             .ToListAsync();
+
+        var subscribedRenters = newRenters
+            .Where(u => (u.ZakelijkeHuurder.Abonnement != null && u.ZakelijkeHuurder.Abonnement.Id != abonnement.Id))
+            .Select(u => u.UserName)
+            .ToList();
+        if (subscribedRenters.Count > 0)
+        {
+            var names = string.Join(", ", subscribedRenters);
+            return BadRequest($"De volgende huurders hebben al een abonnement, huurders: {names}");
+        }
 
         if (newRenters.Count() > abonnement.Max_huurders)
         {

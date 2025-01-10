@@ -51,6 +51,8 @@ export default function SubscriptionsManagePage() {
 
 function Subscription({ data, renters, subId, setSubs, initialRenters, beheederNaam }) {
     const [selectedRenters, setSelectedRenters] = useState(initialRenters);
+    const [rentersToAdd, setRentersToAdd] = useState([]);
+    const [rentersToDelete, setRentersToDelete] = useState([]);
     const [searchedEmail, setSearchedEmail] = useState("");
     const selectElement = useRef(null);
 
@@ -62,6 +64,7 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
             return;
         }
 
+        setRentersToAdd((old) => [...old, id]);
         setSelectedRenters((oldRenters) => {
             const copy = [...oldRenters];
 
@@ -90,6 +93,7 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
         }
         renter = renter[0];
 
+        setRentersToAdd((old) => [...old, renter.id]);
         setSelectedRenters((oldRenters) => {
             const copy = [...oldRenters];
 
@@ -108,6 +112,7 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
             const filtered = copy.filter(renterId => renterId !== id);
             return filtered;
         });
+        setRentersToDelete((old) => [...old, id]);
 
         selectElement.current.selectedIndex = 0;
     }
@@ -117,13 +122,21 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
         if (didSucceed) {
             window.alert("De veranderingen zijn opgeslagen!");
 
-            if (selectedRenters.length > 0) {
-                const addRenters = renters.filter(renter => selectedRenters.includes(renter.id));
-                sendConformationEmail(addRenters, beheederNaam);
+            if (rentersToAdd.length > 0) {
+                const addedRenters = renters.filter(renter => rentersToAdd.includes(renter.id));
+                sendEmails(addedRenters, beheederNaam, getEmailContentsWhenAdded);
+            }
+
+            if (rentersToDelete.length > 0) {
+                const deletedRenters = renters.filter(renter => rentersToDelete.includes(renter.id));
+                const getEmailContents = (renter, beheederNaam) => getEmailContentsWhenRemoved(renter, beheederNaam, data.naam);
+                sendEmails(deletedRenters, beheederNaam, getEmailContents);
             }
         } else {
             setSelectedRenters(data.zakelijkeHuurders);
         }
+        setRentersToAdd([]);
+        setRentersToDelete([]);
     }
 
     async function handleDeleteSubscription() {
@@ -207,14 +220,28 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
     );
 }
 
-function sendConformationEmail(renters, beheederNaam) {
+/**
+ * Downloads email files, with the provided email contents form getEmailContents.
+ * 
+ * @param {[]} renters 
+ * @param {string} beheederNaam 
+ * @param {Function} getEmailContents 
+ */
+function sendEmails(renters, beheederNaam, getEmailContents) {
     for (const renter of renters) {
         const emailContents = getEmailContents(renter, beheederNaam);
         downloadFile(emailContents, "bevestigingsmail.txt");
     }
 }
 
-function getEmailContents(renter, beheederNaam) {
+/**
+ * Returns the contents of the email when a use has been added to a subscription.
+ * 
+ * @param {array} renter 
+ * @param {string} beheederNaam 
+ * @returns {string}
+ */
+function getEmailContentsWhenAdded(renter, beheederNaam) {
     const emailContents = `Geachte ${renter.userName},
 
 Hierbij de inloggegevens voor uw Rent-IT account:
@@ -225,7 +252,31 @@ Het wachtwoord heeft u al. Mocht dit niet het geval zijn contacteer uw huurbehee
 Met vriendelijke groet,
 
 ${beheederNaam}
-Uw huurbeheeder.
+Uw huurbeheeder
+`;
+
+    return emailContents;
+}
+
+/**
+ * Returns the contents of the email when a user has been removed from a subscription.
+ * 
+ * @param {array} renter 
+ * @param {string} beheederNaam 
+ * @param {string} subName 
+ * @returns {string}
+ */
+function getEmailContentsWhenRemoved(renter, beheederNaam, subName) {
+    const emailContents = `Geachte ${renter.userName},
+
+Uw bent verwijderd voor het abonnement: ${subName}
+
+Bij vragen contacteer uw huurbeheerder.
+
+Met vriendelijke groet,
+
+${beheederNaam}
+Uw huurbeheeder
 `;
 
     return emailContents;
