@@ -6,6 +6,7 @@ export default function VoertuigStaten() {
     const [staat, setStaat] = useState("Alles");
     const [ophaalDatum, setOphaalDatum] = useState("");
     const [inleverDatum, setInleverDatum] = useState("");
+    const [optimisticStatuses, setOptimisticStatuses] = useState({});
 
     async function fetchVehicles() {
         try {
@@ -78,23 +79,17 @@ export default function VoertuigStaten() {
         setStaat("Alles");
     }
 
-    {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 83 to 99*/}
     async function handleVoertuigStatusChange(e, item) {
         const newStatus = e.target.value;
 
+        setOptimisticStatuses((prevStatuses) => ({
+            ...prevStatuses,
+            [item.id]: newStatus,
+        }));
+
         const payload = {
-            "id": item.id,
-            "merk": item.merk,
-            "type": item.type,
-            "kenteken": item.kenteken,
-            "kleur": item.kleur,
-            "aanschafjaar": item.aanschafjaar,
-            "soort": item.soort,
-            "opmerking": item.opmerking,
-            "status": newStatus,
-            "prijs": item.prijs,
-            "startDatum": item.startDatum,
-            "eindDatum": item.eindDatum
+            ...item,
+            status: newStatus,
         };
 
         try {
@@ -107,22 +102,21 @@ export default function VoertuigStaten() {
                 body: JSON.stringify(payload),
             };
 
-            try {
-                const response = await fetch(`https://localhost:53085/api/Voertuig/${payload.id}`, request);
+            const response = await fetch(`https://localhost:53085/api/Voertuig/${payload.id}`, request);
 
-                if (!response.ok) {
-                    throw new Error("Kon het voertuig niet updaten");
-                }
-
-                console.log("Status updated");
-                return await response.json();
-            } catch (error) {
-                console.error('error when updating vehicle, or parsing the response:', error);
+            if (!response.ok) {
                 throw new Error("Kon het voertuig niet updaten");
             }
+
+            console.log("Status updated");
+            return await response.json();
         } catch (error) {
-            console.error('error when updating vehicle, or parsing the response:', error);
-            throw new Error("Kon het voertuig niet up");
+            console.error('Error when updating vehicle, or parsing the response:', error);
+            alert("Kon het voertuig niet updaten");
+            setOptimisticStatuses((prevStatuses) => ({
+                ...prevStatuses,
+                [item.id]: item.status,
+            }));
         }
     }
 
@@ -187,10 +181,10 @@ export default function VoertuigStaten() {
                                 <p className="staten-voertuig-info__p"><b>Kenteken:</b> {item.kenteken}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
-                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 191 to 203*/}
+                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 187 to 197*/}
                                 <select
                                     id="staten-voertuig-status__select"
-                                    value={item.status}
+                                    value={optimisticStatuses[item.id] || item.status}
                                     onChange={(e) => handleVoertuigStatusChange(e, item)}
                                 >
                                     <option value={item.status} selected>{item.status}</option>
@@ -204,7 +198,7 @@ export default function VoertuigStaten() {
                         </div>
                     ))
                 ) : (
-                    <p>No matching vehicles found.</p>
+                    <p className='no-voertuigen-text'>Geen voertuigen gevonden.</p>
                 )}
             </div>
         </main>
