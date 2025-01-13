@@ -63,44 +63,39 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("p").contains("Verhuurde voertuigen").click();
         cy.log("to /verhuurde-voertuigen page")
 
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
         //
-        // cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
-        // cy.get("#verhuurde-inleverdatum__input").type("2025-02-04");
-        //
-        // cy.get(".verhuurde-voertuig-box__div").should(($divs) => {
-        //     const count = $divs.length;
-        //     expect(count).to.eq(1);
-        // });
-        //
-        // cy.get("#verhuurde-reset-filters__button").click();
-        //
-        // cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01")
-        // cy.get("#verhuurde-inleverdatum__input").type("2025-02-03")
-        // cy.get(".verhuurde-voertuig-box__div").should(($divs) => {
-        //     const count = $divs.length;
-        //     expect(count).to.eq(0);
-        // });
-        //
-        // cy.get("#verhuurde-reset-filters__button").click();
-        //
-        // cy.get("#verhuurde-huurder__select").select("Test w naam");
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
-        //
-        // cy.get("#verhuurde-reset-filters__button").click();
-        //
-        // cy.get("#verhuurde-voertuigtype__select").select("Auto");
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 0);
-        //
-        // cy.get("#verhuurde-voertuigtype__select").select("Camper");
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
-        //
-        // cy.get("#verhuurde-voertuigtype__select").select("Caravan");
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 0);
-        //
-        // cy.get("#verhuurde-reset-filters__button").click();
-        // cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
-        //
-        // cy.get("#verhuurde-download_button").click();
+        cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
+        cy.get("#verhuurde-inleverdatum__input").type("2025-02-04");
+
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+
+        cy.get("#verhuurde-reset-filters__button").click();
+
+        cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01")
+        cy.get("#verhuurde-inleverdatum__input").type("2025-02-03")
+
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+
+        cy.get("#verhuurde-reset-filters__button").click();
+
+        cy.get("#verhuurde-huurder__select").select("Test w naam");
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+
+        cy.get("#verhuurde-reset-filters__button").click();
+
+        cy.get("#verhuurde-voertuigtype__select").select("Auto");
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+
+        cy.get("#verhuurde-voertuigtype__select").select("Camper");
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+
+        cy.get("#verhuurde-voertuigtype__select").select("Caravan");
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+
+        cy.get("#verhuurde-reset-filters__button").click();
+        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+
+        cy.get("#verhuurde-download_button").click();
     })
 })
