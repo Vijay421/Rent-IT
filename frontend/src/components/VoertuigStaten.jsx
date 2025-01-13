@@ -155,7 +155,7 @@ export default function VoertuigStaten() {
                         onChange={(e) => setStaat(e.target.value)}
                     >
                         <option value="Alles">Alles</option>
-                        <option value="Verhuurbaar">Verhuurbaar</option>
+                        <option value="Verhuurbaar">Beschikbaar</option>
                         <option value="Onverhuurbaar">Verhuurd</option>
                         <option value="Reparatie">In reparatie</option>
                         <option value="Geblokkeerd">Geblokkeerd</option>
