@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 describe("Back office employees can view rented vehicles", () => {
     it('should let back office employees view a page that contains all the vehicles that are currently being rented/unavailable with their hired period and the renter', () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
@@ -49,11 +51,9 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("p").contains("Reserveringen").click();
         cy.log("To /reserveringen page");
 
-        cy.get('.reserveringen-box__div')
-            .find('.reservering-containers__div')
-            .contains('Annuleren')
-            .each(($button) => {
-                cy.wrap($button).click();
+        cy.get("[data-cy='annuleren']")
+            .each((a) => {
+                cy.wrap(a).click();
             });
 
         cy.get("button").contains("Huren").click();
@@ -109,33 +109,36 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
         cy.get("#verhuurde-inleverdatum__input").type("2025-02-04");
 
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+        cy.get("[data-cy='vehicle']").should("have.length", 1);
 
         cy.get("#verhuurde-reset-filters__button").click();
 
         cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
         cy.get("#verhuurde-inleverdatum__input").type("2025-02-03");
 
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+        cy.get("[data-cy='vehicle']").should("have.length", 0);
+
 
         cy.get("#verhuurde-reset-filters__button").click();
 
         cy.get("#verhuurde-huurder__select").select("Test w naam");
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+        cy.get("[data-cy='vehicle']").should("have.length", 1);
 
         cy.get("#verhuurde-reset-filters__button").click();
 
         cy.get("#verhuurde-voertuigtype__select").select("Auto");
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+        cy.get("[data-cy='vehicle']").should("have.length", 0);
 
         cy.get("#verhuurde-voertuigtype__select").select("Camper");
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+        cy.get("[data-cy='vehicle']").should("have.length", 1);
+
 
         cy.get("#verhuurde-voertuigtype__select").select("Caravan");
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
+        cy.get("[data-cy='vehicle']").should("have.length", 0);
 
         cy.get("#verhuurde-reset-filters__button").click();
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+        cy.get("[data-cy='vehicle']").should("have.length", 1);
+
 
         cy.get("#verhuurde-download_button").click();
     })
