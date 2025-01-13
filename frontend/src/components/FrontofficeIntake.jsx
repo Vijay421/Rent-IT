@@ -5,6 +5,7 @@ import VehicleReview from "./VehicleReview.jsx";
 
 function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
+    const [view, setView] = useState([]);
     const [vehicles, setVehicles] = useState([]);
     if (userRole === null) {
         return <Navigate to='/'/>
@@ -38,19 +39,31 @@ function FrontofficeIntake() {
     return (
         <main className="content">
             <div className="divMain">
+                <h1 className="divMain__text__FrontOffice">Frontoffice Intake</h1>
+                <label className='divMain__text__subText' htmlFor="select-input">Possible values:</label>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                    <option value="0">Openstaand</option>
+                    <option value="1">Geschiedenis</option>
+                </select>
                 <div>
-                    <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
+                    {(() => {
+                        switch(view){
+                            case(0):
+                            {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                                sortedVehicles.map((vehicle) => {
+                                    return (
+                                        <VehicleReview
+                                            key={vehicle.id}
+                                            data={vehicle}
+                                        />
+                                    );
+                                })
+                            }
+                            case(1):
+                                return(<h1>test test</h1>)
+                        }
+                    })}
 
-                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                        sortedVehicles.map((vehicle) => {
-                            return (
-                                <VehicleReview
-                                    key={vehicle.id}
-                                    data={vehicle}
-                                />
-                            );
-                        })
-                    }
                 </div>
             </div>
         </main>

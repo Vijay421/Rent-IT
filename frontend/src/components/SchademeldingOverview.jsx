@@ -5,6 +5,8 @@ import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
+    const {view, setView} = useState([]);
+    
     const [vehicles, setVehicles] = useState([]);
     if (userRole === null) {
         return <Navigate to='/'/>
@@ -38,19 +40,32 @@ function SchademeldingOverview() {
     return (
         <main className="content">
             <div className="divMain">
+                <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
+                <label className='label' htmlFor="select-input">Possible values:</label>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                    <option>Not defined</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
                 <div>
-                    <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
+                    {(() => {
+                        switch(view){
+                            case(0):
+                                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                                        sortedVehicles.map((vehicle) => {
+                                            return (
+                                                <SchademeldingReview
+                                                    key={vehicle.id}
+                                                    data={vehicle}
+                                                />
+                                            );
+                                        })
+                                    }
 
-                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                        sortedVehicles.map((vehicle) => {
-                            return (
-                                <SchademeldingReview
-                                    key={vehicle.id}
-                                    data={vehicle}
-                                />
-                            );
-                        })
-                    }
+                            case(1):
+                        }
+                    })}
+                    
                 </div>
             </div>
         </main>
