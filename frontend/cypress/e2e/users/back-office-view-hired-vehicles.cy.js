@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 describe("Back office employees can view rented vehicles", () => {
     it('should let back office employees view a page that contains all the vehicles that are currently being rented/unavailable with their hired period and the renter', () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
@@ -36,14 +34,57 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("#form__eind-punt").type("test eind punt");
 
         cy.get(".submit-button__button").click();
-        cy.log("to /bevestiging page")
+        cy.log("to /bevestiging page");
 
-        cy.intercept("POST", "https://localhost:53085/api/Huur").as("sendRentRequest")
+        cy.intercept("POST", "https://localhost:53085/api/Huur").as("sendRentRequest");
 
         cy.get(".confirmation-button-box__button").click();
         cy.wait("@sendRentRequest").then((i) => {
             expect(i.response.statusCode).to.equal(201);
-        })
+        });
+
+        cy.get("button").contains("Profiel").click();
+        cy.log("To /profiel page");
+
+        cy.get("p").contains("Reserveringen").click();
+        cy.log("To /reserveringen page");
+
+        cy.get('.reserveringen-box__div')
+            .find('.reservering-containers__div')
+            .contains('Annuleren')
+            .each(($button) => {
+                cy.wrap($button).click();
+            });
+
+        cy.get("button").contains("Huren").click();
+        cy.log("To /huur-overzicht page");
+
+        cy.get("#date-picker-start").type("2025-02-01");
+        cy.get("#date-picker-end").type("2025-02-04");
+
+        cy.get("#rental-vehicle-huur-box__button").first().click();
+        cy.log("to /huur-indienen page");
+
+        cy.get("#form__wettelijke-naam").type("Test w naam");
+        cy.get("#form__adres-gegevens").type("Test adres");
+        cy.get("#form__stad-gegevens").type("Test stad");
+        cy.get("#form__postcode-gegevens").type("1234AB");
+        cy.get("#form__rijbewijs-nummer").type("1234567890");
+        cy.get("#form__reisaard").type("test reisaard");
+        cy.get("#form__verwachte-km").type("123");
+        cy.get("#form__verste-punt").type("test v punt");
+        cy.get("#form__start-punt").type("test start punt");
+        cy.get("#form__eind-punt").type("test eind punt");
+
+        cy.get(".submit-button__button").click();
+        cy.log("to /bevestiging page");
+
+        cy.intercept("POST", "https://localhost:53085/api/Huur").as("sendRentRequest");
+
+        cy.get(".confirmation-button-box__button").click();
+        cy.wait("@sendRentRequest").then((i) => {
+            expect(i.response.statusCode).to.equal(201);
+        });
 
         cy.get("button").contains("Logout").click();
         cy.log("Logout of particuliere huurder");
@@ -61,9 +102,9 @@ describe("Back office employees can view rented vehicles", () => {
         cy.wait(1600);
 
         cy.get("p").contains("Verhuurde voertuigen").click();
-        cy.log("to /verhuurde-voertuigen page")
+        cy.log("to /verhuurde-voertuigen page");
 
-        cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 1);
+        cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
         //
         cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
         cy.get("#verhuurde-inleverdatum__input").type("2025-02-04");
@@ -72,8 +113,8 @@ describe("Back office employees can view rented vehicles", () => {
 
         cy.get("#verhuurde-reset-filters__button").click();
 
-        cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01")
-        cy.get("#verhuurde-inleverdatum__input").type("2025-02-03")
+        cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
+        cy.get("#verhuurde-inleverdatum__input").type("2025-02-03");
 
         cy.get(".verhuurde-voertuig-box__div").children().should("have.length", 0);
 
