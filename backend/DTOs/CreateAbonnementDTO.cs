@@ -13,7 +13,9 @@ namespace backend.DTOs
         //public required double Prijs_per_maand { get; set; }
 
         public required string Adres { get; set; }
-        public required int KvK_nummer { get; set; }
+
+        [Range(100000000000, 999999999999)]
+        public required long KvK_nummer { get; set; }
 
         [Range(1, 1000)]
         public required int Max_huurders { get; set; }
