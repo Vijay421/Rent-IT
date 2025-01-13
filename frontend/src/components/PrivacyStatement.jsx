@@ -1,6 +1,10 @@
 import '../styles/PrivacyStatement.css';
+import React, {useContext} from 'react';
+import {UserContext} from "./UserContext.jsx";
 
 export default function PrivacyStatement() {
+    const { userRole } = useContext(UserContext);
+
     return (
         <main className="Main-Content">
             <div className="PrivacyStatement__div">
@@ -38,7 +42,15 @@ export default function PrivacyStatement() {
                     wijreagerenwellicht@gmail.com<br/>
                     Dat ronde gebouw, Den Haag
                 </p>
+                {userRole === 'backoffice_medewerker' && (
+                    <div className="backoffice-medewerker__Content">
+                        <p>hier komt button om shit te veranderen.</p>
+                    </div>
+                )}
             </div>
         </main>
     );
 }
+
+// Alle tekst moet in een <pre> komen voor sql injection tegen te gaan.
+// HttpPut request om de p tag te veranderen.

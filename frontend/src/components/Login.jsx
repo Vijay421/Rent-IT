@@ -98,6 +98,7 @@ function Login() {
  */
 async function callLoginEndpoint(userData, status, login, navigate, setUserRole, setUserName, setUserId) {
     try {
+        debugger;
         const response = await fetch('https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true', {
             method: 'POST',
 
@@ -113,6 +114,7 @@ async function callLoginEndpoint(userData, status, login, navigate, setUserRole,
             login();
 
             try {
+                debugger;
                 const userClaims = await getUserClaims();
                 sessionStorage.setItem('userClaims', JSON.stringify(userClaims));
                 setUserRole(userClaims.role);
