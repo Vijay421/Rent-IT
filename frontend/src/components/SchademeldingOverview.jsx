@@ -58,4 +58,4 @@ function SchademeldingOverview() {
 }
 
 
-export default FrontofficeIntake;
+export default SchademeldingOverview;
