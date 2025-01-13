@@ -10,12 +10,11 @@
     width: 100%;
 }
 
-/*Actions for hyperlinks inside footer for when they are active (clicking), being hovered on or have already been visited*/
 .page__footer a:active, .page__footer a:hover{
     color: blue;
 }
 
-.footer__info {
+.privacy-statement {
     color: black;
     text-decoration: underline;
     margin-top: 0.5em;
