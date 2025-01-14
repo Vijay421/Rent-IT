@@ -83,6 +83,7 @@ function RentingSubmit() {
                         onChange={(e) => setWettelijkenaam(e.target.value)}
                         minLength='2'
                         maxLength='50'
+                        data-cy="name"
                     />
 
                     <label htmlFor="form__adres-gegevens" className="label">
@@ -96,6 +97,7 @@ function RentingSubmit() {
                         value={adresgegevens}
                         onChange={(e) => setAdresgegevens(e.target.value)}
                         maxLength='28'
+                        data-cy="address"
                     />
 
                     <label htmlFor="form__stad-gegevens" className="label">
@@ -109,6 +111,7 @@ function RentingSubmit() {
                         value={stadgegevens}
                         onChange={(e) => setStadgegevens(e.target.value)}
                         maxLength='16'
+                        data-cy="city"
                     />
 
                     <label htmlFor="form__postcode-gegevens" className="label">
@@ -122,6 +125,7 @@ function RentingSubmit() {
                         value={postcodegegevens}
                         onChange={(e) => setPostcodegegevens(e.target.value)}
                         maxLength='6'
+                        data-cy="zipcode"
                     />
 
                     <label htmlFor="form__rijbewijs-nummer" className="label">
@@ -140,6 +144,7 @@ function RentingSubmit() {
                                 e.preventDefault();
                             }
                         }}
+                        data-cy="driverid"
                     />
 
                     <label htmlFor="form__reisaard" className="label">
@@ -153,6 +158,7 @@ function RentingSubmit() {
                         value={reisaard}
                         onChange={(e) => setReisaard(e.target.value)}
                         maxLength='100'
+                        data-cy="travel-nature"
                     />
 
                     <label htmlFor="form__verwachte-km" className="label">
@@ -172,6 +178,7 @@ function RentingSubmit() {
                                 e.preventDefault();
                             }
                         }}
+                        data-cy="distance"
                     />
 
                     <label htmlFor="form__verste-punt" className="label">
@@ -185,6 +192,7 @@ function RentingSubmit() {
                         value={verstePunt}
                         onChange={(e) => setVerstePunt(e.target.value)}
                         maxLength='50'
+                        data-cy="furthest-point"
                     />
 
                     <label htmlFor="form__start-punt" className="label">
@@ -198,6 +206,7 @@ function RentingSubmit() {
                         value={startPunt}
                         onChange={(e) => setStartPunt(e.target.value)}
                         maxLength='50'
+                        data-cy="starting-point"
                     />
 
                     <label htmlFor="form__eind-punt" className="label">
@@ -211,6 +220,7 @@ function RentingSubmit() {
                         value={eindPunt}
                         onChange={(e) => setEindPunt(e.target.value)}
                         maxLength='50'
+                        data-cy="end-point"
                     />
                 </div>
                 {confirmationMessage && (
@@ -220,7 +230,7 @@ function RentingSubmit() {
                 )}
 
                 <div className="submit-button">
-                    <button onClick={handleSubmit} className="submit-button__button">Volgende pagina</button>
+                    <button onClick={handleSubmit} data-cy="submit" className="submit-button__button">Volgende pagina</button>
                 </div>
             </div>
         </main>
