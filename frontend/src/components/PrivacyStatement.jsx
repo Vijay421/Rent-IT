@@ -7,8 +7,6 @@ export default function PrivacyStatement() {
 
     const [privacyStatement, setPrivacyStatement] = useState('');
     const [newPrivacyStatement, setNewPrivacyStatement] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-    const [isUpdating, setIsUpdating] = useState(false);
 
     useEffect(() => {
         async function fetchPrivacyStatement() {
@@ -19,10 +17,8 @@ export default function PrivacyStatement() {
                 }
                 const data = await response.json();
                 setPrivacyStatement(data.statementText);
-                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching privacy statement:', error);
-                setIsLoading(false);
             }
         }
 
@@ -56,14 +52,8 @@ export default function PrivacyStatement() {
             setPrivacyStatement(data.statementText);
         } catch (error) {
             console.error('Error updating privacy statement:', error);
-        } finally {
-            setIsUpdating(false);
         }
     }
-
-    // if (isLoading) {
-    //     return <p>Loading privacy statement...</p>;
-    // }
 
     return (
         <main className="Main-Content">
@@ -84,10 +74,9 @@ export default function PrivacyStatement() {
                             className="change-privacy-statement__button"
                             type="submit"
                             onClick={handlePrivacyButtonClick}
-                            disabled={isUpdating}
                             data-cy="submit"
                         >
-                            {isUpdating ? 'Updating...' : 'Change Statement'}
+                            Change Statement
                         </button>
                     </div>
                 )}
