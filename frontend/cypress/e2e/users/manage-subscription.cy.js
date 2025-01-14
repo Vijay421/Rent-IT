@@ -118,11 +118,9 @@ describe("manage subscriptions", () => {
         cy.get("[data-cy='zipcode']").type("ABCD12");
         cy.get("[data-cy='driverid']").type("123456789");
         cy.get("[data-cy='travel-nature']").type("vakantie");
-        cy.get("[data-cy='travel-nature']").type("vakantie");
         cy.get("[data-cy='distance']").type("22");
         cy.get("[data-cy='furthest-point']").type("6");
         cy.get("[data-cy='starting-point']").type("Den Haag");
-        cy.get("[data-cy='end-point']").type("Den Haag");
         cy.get("[data-cy='end-point']").type("Den Haag");
 
         cy.get("[data-cy='submit']").click();
@@ -205,11 +203,9 @@ describe("manage subscriptions", () => {
         cy.get("[data-cy='zipcode']").type("ABCD12");
         cy.get("[data-cy='driverid']").type("123456789");
         cy.get("[data-cy='travel-nature']").type("vakantie");
-        cy.get("[data-cy='travel-nature']").type("vakantie");
         cy.get("[data-cy='distance']").type("22");
         cy.get("[data-cy='furthest-point']").type("6");
         cy.get("[data-cy='starting-point']").type("Den Haag");
-        cy.get("[data-cy='end-point']").type("Den Haag");
         cy.get("[data-cy='end-point']").type("Den Haag");
 
         cy.get("[data-cy='submit']").click();
