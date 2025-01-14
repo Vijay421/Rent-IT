@@ -1,0 +1,122 @@
+.abonnement-overzicht__main {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.abonnement-overzicht-title-box__div {
+    display: flex;
+    margin: 15px auto 0 auto;
+    background-color: whitesmoke;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.abonnement-overzicht-content-box__div {
+    display: flex;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: 3px solid black;
+    width: 75%;
+    margin: 40px auto;
+    flex-direction: column;
+}
+
+.abonnement-content-box__h2 {
+    text-align: center;
+    font-size: 2em;
+    padding: 0 3px;
+}
+
+.abonnement-content-box__div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 98%;
+    margin: 15px auto;
+    gap: 5px;
+}
+
+.abonnment-overzicht-title__h1 {
+    margin: 0 auto;
+    font-size: 2.5em;
+}
+
+.abonnement-content__div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+}
+
+.abonnement-content__p {
+    font-size: 1.5em;
+}
+
+
+.abonnement-keuren__div {
+    display: flex;
+    justify-content: space-evenly;
+    grid-template-columns: 1fr 1fr;
+}
+
+.abonnement-keuren-buttons {
+    font-size: 1.5em;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+.abonnement-keuren-goedkeur-button {
+    background-color: limegreen;
+    font-size: 1.5em;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+.abonnement-keuren-goedkeur-button:hover {
+    background-color: #49e849;
+}
+.abonnement-keuren-goedkeur-button:active {
+    background-color: #29ad29;
+}
+
+.abonnement-keuren-afkeur-button{
+    background-color: red;
+    font-size: 1.5em;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+.abonnement-keuren-afkeur-button:hover {
+    background-color: #ff4949;
+}
+.abonnement-keuren-afkeur-button:active {
+    background-color: #c70000;
+}
+
+.abonnement-keuren-confirm-button {
+    font-size: 1.5em;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+.reden-textarea-class {
+    height: 40px;
+    resize: none;
+    font-size: 1.1em;
+}
+
+#abonnement-keuren-status__span {
+    display: flex;
+    margin: 0 auto;
+    font-size: 1.5em;
+    font-weight: bold;
+}
