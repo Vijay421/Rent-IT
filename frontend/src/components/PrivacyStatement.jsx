@@ -34,6 +34,7 @@ export default function PrivacyStatement() {
     };
 
     async function handlePrivacyButtonClick() {
+        // setIsUpdating(true);
         try {
             const response = await fetch('https://localhost:53085/api/PrivacyStatement', {
                 method: 'PUT',
@@ -59,6 +60,10 @@ export default function PrivacyStatement() {
             setIsUpdating(false);
         }
     }
+
+    // if (isLoading) {
+    //     return <p>Loading privacy statement...</p>;
+    // }
 
     return (
         <main className="Main-Content">
