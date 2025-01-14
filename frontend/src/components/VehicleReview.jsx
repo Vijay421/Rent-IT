@@ -21,8 +21,9 @@ export default function VehicleReview({ data }) {
             if(response.ok){
                 alert("Voertuig is geaccepteerd!");
                 const element = document.createElement("a");
-                const email = new Blob([`Dit hoort een email te zijn met informatie over ${data.merk} ${data.type}`], {type: 'text/plain'});
-                email.href = element;
+                const email = new Blob([`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`], {type: 'text/plain'});
+                element.href = URL.createObjectURL(email);
+                element.download = "bevestigingsemail.txt";
                 document.body.appendChild(element);
                 element.click();
             } 
