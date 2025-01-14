@@ -33,28 +33,12 @@ function FrontofficeIntake() {
         }
         fetchVehicles();
     }, []);
-    // const filteredVehicles = vehicles.filter((vehicle) => {
-    //     if (isGeschiedenis !== "ja" && vehicle.status.toLowerCase() !== "inname") return false;
-    // });
-    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
-    const Openstaand = () =>{
-        return (
-            sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                sortedVehicles.map((vehicle) => {
-                    return (
-                        <VehicleReview
-                            key={vehicle.id}
-                            data={vehicle}
-                        />
-                    );
-                }
-            )
-        )
-    }
+    const filteredVehicles = vehicles.filter((vehicle) => {
+        if (isGeschiedenis !== "ja" && vehicle.status.toLowerCase() !== "verhuurbaar") return false;
+        return true;
+    });
+    const sortedVehicles = filteredVehicles.sort((a, b) => {return a.prijs - b.prijs;});
 
-    const Geschiedenis = () =>{
-        return(<h1>test test</h1>)
-    }
     return (
         <main className="content">
             <div className="divMain">
@@ -65,8 +49,16 @@ function FrontofficeIntake() {
                     <option value="ja">Geschiedenis</option>
                 </select>
                 <div>
-                    {isGeschiedenis == "ja" && <Geschiedenis />}
-                    {isGeschiedenis == "nee" && <Openstaand />}
+                    {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                        sortedVehicles.map((vehicle) => {
+                            return (
+                                <VehicleReview
+                                    key={vehicle.id}
+                                    data={vehicle}
+                                />
+                            );
+                        }
+                    )}
                 </div>
             </div>
         </main>
