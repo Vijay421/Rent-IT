@@ -33,7 +33,9 @@ function FrontofficeIntake() {
         }
         fetchVehicles();
     }, []);
-
+    // const filteredVehicles = vehicles.filter((vehicle) => {
+    //     if (isGeschiedenis !== "ja" && vehicle.status.toLowerCase() !== "inname") return false;
+    // });
     const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
     const Openstaand = () =>{
         return (
