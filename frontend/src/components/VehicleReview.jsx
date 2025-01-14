@@ -18,7 +18,15 @@ export default function VehicleReview({ data }) {
                     'content-type': 'application/json'
                 },
             });
-            if(response.ok) alert("Voertuig is geaccepteerd!");
+            if(response.ok){
+                alert("Voertuig is geaccepteerd!");
+                const element = document.createElement("a");
+                const email = new Blob(["Dit hoort een email te zijn!"], {type: 'text/plain'});
+                email.href = element;
+                email.setAttribute("download", "image.png"); //or any other extension
+                document.body.appendChild(element);
+                element.click();
+            } 
             // else alert(response);
         }
         catch (e) {
