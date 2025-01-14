@@ -1,5 +1,5 @@
 import '../styles/SubscriptionRequest.css';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Profile/ProfilePageBase.module.css";
 
 function SubscriptionRequest() {
@@ -12,6 +12,19 @@ function SubscriptionRequest() {
     const [subscriptionType, setSubscriptionType] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const form = useRef(null);
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const naamObj = await getBedrijfsnaam();
+                setBedrijfsnaam(naamObj.bedrijfsnaam);
+            } catch(e) {
+                console.error(e);
+            }
+        };
+
+        getData();
+    }, []);
 
     // Checks if a number consists of 12 digits.
     const kvkRegex = /^[0-9]{12}$/;
@@ -251,6 +264,25 @@ async function sendSubRequest(payload) {
         return await response.json();
     } catch (error) {
         console.error('error when requesting the rent history request, or parsing the response:', error);
+        throw error;
+    }
+}
+
+async function getBedrijfsnaam() {
+    try {
+        const response = await fetch('https://localhost:53085/api/HuurBeheerder/bedrijfsnaam', {
+            method: 'GET',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('error when requesting the company\'s name, or parsing the response:', error);
         throw error;
     }
 }
