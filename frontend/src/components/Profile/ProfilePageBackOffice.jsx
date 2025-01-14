@@ -9,7 +9,7 @@ function ProfilePageBackOffice() {
             <ProfilePageLinkButton link="/huuraanvraag-beoordelen" text="Huuraanvragen beoordelen"/>
             <ProfilePageLinkButton link="/voertuigoverzicht" text="Voertuigoverzicht"/>
             <ProfilePageLinkButton link="/verhuurde-voertuigen" text="Verhuurde voertuigen"/>
-            <ProfilePageLinkButton data-cy="voertuig-staten-button" link="/voertuig-staten" text="Voertuig staten"/>
+            <ProfilePageLinkButton link="/voertuig-staten" text="Voertuig staten"/>
         </ProfilePageBase>
     );
 }
