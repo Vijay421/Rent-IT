@@ -25,6 +25,11 @@ namespace backend.Models
         [MinLength(2)]
         public required string Soort { get; set; } // pay as you go / prepaid
 
+        public bool? Geaccepteerd { get; set; }
+
+        [StringLength(100, MinimumLength = 2)]
+        public string? Reden { get; set; }
+
         public Abonnement()
         {
             ZakelijkeHuurders = new List<ZakelijkeHuurder>();
