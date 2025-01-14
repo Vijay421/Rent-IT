@@ -117,6 +117,7 @@ function SubscriptionRequest() {
                         minLength="2"
                         maxLength="50"
                         required
+                        disabled
                         onChange={handleBedrijfsnaam}
                         data-cy="company-name"
                     />

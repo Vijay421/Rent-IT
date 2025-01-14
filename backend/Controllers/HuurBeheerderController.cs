@@ -23,5 +23,7 @@ namespace backend.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _userManager = userManager;
         }
+
+        /*public */
     }
 }
