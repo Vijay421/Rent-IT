@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../styles/VehicleReview.css";
+import downloadFile from "../scripts/downloadFile.js";
+// import { RemoveSelectedVehicle } from '../components/FrontofficeIntake.jsx'
 
 export default function VehicleReview({ data }) {
     const [foto, setFoto] = useState(null);
@@ -20,12 +22,8 @@ export default function VehicleReview({ data }) {
             });
             if(response.ok){
                 alert("Voertuig is geaccepteerd!");
-                const element = document.createElement("a");
-                const email = new Blob([`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`], {type: 'text/plain'});
-                element.href = URL.createObjectURL(email);
-                element.download = "bevestigingsemail.txt";
-                document.body.appendChild(element);
-                element.click();
+                RemoveSelectedVehicle(data.id);
+                downloadFile(`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`, "bevestigingsemail.txt")
             } 
             // else alert(response);
         }
