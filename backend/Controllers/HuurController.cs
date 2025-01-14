@@ -182,12 +182,12 @@ public class HuurController : ControllerBase
             }
 
             // Explicit check, which has to happen because Geaccepteerd is nullable.
-            var accpeted = user.ZakelijkeHuurder.Abonnement.Geaccepteerd;
-            if (accpeted == null)
+            var accepted = user.ZakelijkeHuurder.Abonnement.Geaccepteerd;
+            if (accepted == null)
             {
                 return Unauthorized("Het gekoppelde abonnement is (nog) niet goed gekeurd");
             }
-            if (accpeted == false)
+            if (accepted == false)
             {
                 return Unauthorized("Kan geen voertuig huren met een afgekeurd abonnement.");
             }
