@@ -5,7 +5,7 @@ import VehicleReview from "./VehicleReview.jsx";
 
 function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
-    const [isGeschiedenis, setView] = useState([]);
+    const [isGeschiedenis, setView] = useState(["nee"]);
     const [vehicles, setVehicles] = useState([]);
     if (userRole === null) {
         return <Navigate to='/'/>
