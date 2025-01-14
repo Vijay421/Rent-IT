@@ -152,6 +152,8 @@ describe("manage subscriptions", () => {
         cy.get("[data-cy='submit']").click();
         cy.get("[data-cy='confirm']").click();
 
+        // TODO: this will fail, but when backoffice can approve the request then this will succeed.
+        // So, wait for the approve functionality then update this test.
         cy.wait("@submitForm").then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
         });
