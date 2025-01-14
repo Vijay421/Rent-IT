@@ -237,7 +237,7 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
 
             <button onClick={handleSave} data-cy="save" >Opslaan</button>
             <button onClick={() => handleDeleteSubscription(subId)} data-cy="delete-subscription" >Verwijder abonnement</button>
-            <button onClick={() => navigate("/abonnement", { state: { pageData: data } })}>Aanpassen</button>
+            <button onClick={() => navigate("/abonnement", { state: { pageData: data } })} data-cy="edit-subscription">Aanpassen</button>
         </div>
     );
 }

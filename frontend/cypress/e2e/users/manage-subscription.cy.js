@@ -26,7 +26,7 @@ describe("manage subscriptions", () => {
         });
     });
 
-    it("should allow zakelijke beheerders to create subscriptions, add a renter to them, and delete the subscription", () => {
+    it("should allow zakelijke beheerders to create subscriptions, update subscriptions, add a renter to them, and delete the subscription", () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
         cy.visit("http://localhost:5173/login");
 
@@ -46,9 +46,6 @@ describe("manage subscriptions", () => {
 
         cy.get("a[href='/abonnement']").click();
 
-        // cy.get("[data-cy='address']").type("cy-test-address");
-        // cy.get("[data-cy='company-number']").type("271549821111");
-        // cy.get("[data-cy='max-renters']").type("20");
         cy.get("[data-cy='end-date']").type("2026-01-01");
         cy.get("[data-cy='subscription-name']").type("cy-test-subscription-name");
         cy.get("[data-cy='pay-as-you-go']").click();
@@ -59,9 +56,39 @@ describe("manage subscriptions", () => {
             expect(interception.response.statusCode).to.equal(201);
         });
 
+
+        cy.log("update subscription");
         cy.intercept("GET", "https://localhost:53085/api/Abonnement/company").as("getSubscriptionsRequest");
-        cy.intercept("GET", "https://localhost:53085/api/User/huurders").as("getRentersRequest");
+        cy.intercept("GET", "https://localhost:53085/api/HuurBeheerder/bedrijf").as("getCompanyRequest");
+
+        cy.intercept("PUT", "https://localhost:53085/api/Abonnement/*").as("updateSubscriptionRequest");
+
+        cy.get("a[href='/profiel']").click();
+        cy.get("a[href='/abonnementen']").click();
+        
+        cy.wait('@getSubscriptionsRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(200);
+        });
+
+        cy.get("[data-cy='edit-subscription']").last().click();
+
+        cy.wait('@getCompanyRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(200);
+        });
+
+        cy.get("[data-cy='end-date']").type("2026-01-02");
+        cy.get("[data-cy='subscription-name']").type("-updated");
+        cy.get("[data-cy='prepaid']").click();
+
+        cy.get("[data-cy='submit']").click();
+
+        cy.wait('@updateSubscriptionRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(204);
+        });
+
+
         cy.intercept("PUT", "https://localhost:53085/api/Abonnement/renters/*").as("updateRentersRequest");
+        cy.intercept("GET", "https://localhost:53085/api/User/huurders").as("getRentersRequest");
         cy.log("add renter to subscription");
 
         cy.get("a[href='/profiel']").click();
