@@ -129,6 +129,7 @@ export default function VoertuigStaten() {
                 <div className="staten-filter-ophaaldatum__div">
                     <label htmlFor="staten-ophaaldatum__input">Startperiode:</label>
                     <input
+                        data-cy='staten-start-datum-input'
                         type='date'
                         id='staten-ophaaldatum__input'
                         className='verhuurde-dates-class'
@@ -139,6 +140,7 @@ export default function VoertuigStaten() {
                 <div className="staten-filter-inleverdatum__div">
                     <label htmlFor="staten-inleverdatum__input">Eindperiode:</label>
                     <input
+                        data-cy='staten-eind-datum-input'
                         type='date'
                         id='staten-inleverdatum__input'
                         className='staten-dates-class'
@@ -147,8 +149,9 @@ export default function VoertuigStaten() {
                 </div>
 
                 <div className="staten-filter-voertuig-staat__div">
-                    <label htmlFor="staten-voertuig-staat__select">Huurder:</label>
+                    <label htmlFor="staten-voertuig-staat__select">Staat:</label>
                     <select
+                        data-cy='staat-filter-select'
                         id='staten-voertuig-staat__select'
                         className='staten-filters-class'
                         value={staat}
@@ -164,6 +167,7 @@ export default function VoertuigStaten() {
 
                 <div className="staten-filter-reset-filters__div">
                     <button
+                        data-cy='staten-reset-filter-button'
                         id="staten-reset-filters__button"
                         onClick={onResetFiltersButtonClick}
                     >
@@ -172,17 +176,19 @@ export default function VoertuigStaten() {
                 </div>
             </div>
 
-            <div id="staten-voertuig-box__div">
+            <div data-cy="staten-voertuig-box" id="staten-voertuig-box__div">
                 {filteredData.length > 0 ? (
                     filteredData.map((item, index) => (
                         <div key={index} className="staten-voertuig__div">
                             <div className="staten-voertuig-data">
                                 <p className="staten-voertuig-info__p"><b>Voertuig:</b> {item.merk} {item.type}</p>
                                 <p className="staten-voertuig-info__p"><b>Kenteken:</b> {item.kenteken}</p>
+                                <p className="staten-voertuig-info__p"><b>Huurperiode:</b> {item.startDatum} - {item.eindDatum}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
                                 {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 187 to 197*/}
                                 <select
+                                    data-cy='voertuig-status-select'
                                     id="staten-voertuig-status__select"
                                     value={optimisticStatuses[item.id] || item.status}
                                     onChange={(e) => handleVoertuigStatusChange(e, item)}
