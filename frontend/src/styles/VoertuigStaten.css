@@ -85,12 +85,11 @@
 }
 
 .staten-voertuig-data {
-    width: 60%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    padding-left: 5px;
+    padding: 0 15px;
 }
 
 .staten-voertuig-info__p {
@@ -98,7 +97,7 @@
 }
 
 .staten-voertuig-status__div {
-    width: 40%;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;

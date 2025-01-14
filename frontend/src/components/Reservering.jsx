@@ -125,7 +125,7 @@ function ContainerContent(props) {
                 </div>
                 <div className='reservering-container-action-buttons__div'>
                     <button className='action-container__button' onClick={handleWijzigenButtonClick}>Wijzigen</button>
-                    <button className='action-container__button' onClick={handleAnnulerenButtonClick}>Annuleren</button>
+                    <button className='action-container__button' onClick={handleAnnulerenButtonClick} data-cy="annuleren">Annuleren</button>
                 </div>
             </div>
         </>
