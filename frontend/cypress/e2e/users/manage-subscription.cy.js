@@ -46,8 +46,8 @@ describe("manage subscriptions", () => {
 
         cy.get("a[href='/abonnement']").click();
 
-        cy.get("[data-cy='address']").type("cy-test-address");
-        cy.get("[data-cy='company-number']").type("271549821111");
+        // cy.get("[data-cy='address']").type("cy-test-address");
+        // cy.get("[data-cy='company-number']").type("271549821111");
         // cy.get("[data-cy='max-renters']").type("20");
         cy.get("[data-cy='end-date']").type("2026-01-01");
         cy.get("[data-cy='subscription-name']").type("cy-test-subscription-name");

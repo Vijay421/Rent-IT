@@ -24,7 +24,7 @@ namespace backend.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("bedrijfsnaam")]
+        [HttpGet("bedrijf")]
         public async Task<ActionResult<string>> GetBedrijfsnaam()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -48,7 +48,12 @@ namespace backend.Controllers
             _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
             _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
 
-            return Ok(new { Bedrijfsnaam = user.Huurbeheerder.Bedrijf.Name });
+            return Ok(new
+            {
+                Bedrijfsnaam = user.Huurbeheerder.Bedrijf.Name,
+                Kvk = user.Huurbeheerder.Bedrijf.KvK_nummer,
+                Adres = user.Huurbeheerder.Bedrijf.Address,
+            });
         }
     }
 }

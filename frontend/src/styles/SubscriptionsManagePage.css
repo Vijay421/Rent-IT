@@ -9,7 +9,7 @@
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
     height: auto;
-    width: 66.5vw;
+    width: 80%;
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 10px 0;
@@ -22,7 +22,7 @@
     border: 2px solid black;
     min-height: 35em;
     height: auto;
-    width: 66.5vw;
+    width: 80%;
     margin-bottom: 30px;
 }
 
@@ -32,13 +32,17 @@
     font-weight: bold;
 }
 
+.subs__box {
+    margin-bottom: 10px;
+}
+
 .subs__item {
     margin: 15px auto;
-    width: max(150px,62vw);
+    width: 80%;
     border-radius: 5px;
     background-color: #f1f1f1;
     border: 2px solid black;
-    padding: 10px 0;
+    padding: 15px;
 }
 
 .subs__item-label {

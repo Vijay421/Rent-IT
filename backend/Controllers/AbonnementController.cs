@@ -330,6 +330,7 @@ public class AbonnementController : ControllerBase
         abonnement.Prijs_per_maand = abonnementDTO.Prijs_per_maand ?? abonnement.Prijs_per_maand;
         abonnement.Einddatum = abonnementDTO.Einddatum ?? abonnement.Einddatum;
         abonnement.Soort = abonnementDTO.Soort ?? abonnement.Soort;
+        abonnement.Max_huurders = abonnementDTO.Max_huurders ?? abonnement.Max_huurders;
 
         _context.Entry(abonnement).State = EntityState.Modified;
 
