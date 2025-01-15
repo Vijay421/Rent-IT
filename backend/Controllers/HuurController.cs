@@ -185,7 +185,7 @@ public class HuurController : ControllerBase
             var accepted = user.ZakelijkeHuurder.Abonnement.Geaccepteerd;
             if (accepted == null)
             {
-                return Unauthorized("Het gekoppelde abonnement is (nog) niet goed gekeurd");
+                return Unauthorized("Het gekoppelde abonnement is (nog) niet goed gekeurd.");
             }
             if (accepted == false)
             {
