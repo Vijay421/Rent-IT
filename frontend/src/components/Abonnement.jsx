@@ -1,5 +1,6 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
+import downloadFile from "../scripts/downloadFile";
 
 export default function Abonnement({data, onUpdate}) {
     const statusText = document.getElementById("abonnement-keuren-status__span");
@@ -21,6 +22,9 @@ export default function Abonnement({data, onUpdate}) {
             },
             body: JSON.stringify(payload)
         });
+
+        const contents = getEmailContents(payload.geaccepteerd, payload.naam, payload.reden);
+        downloadFile(contents, "abonnementkeuring.txt");
 
         if (response.ok) {
             statusText.style.display = 'flex';
@@ -182,3 +186,26 @@ PropTypes.Abonnement = {
     geaccepteerd: PropTypes.bool.isRequired,
     reden: PropTypes.string.isRequired
 };
+
+/**
+ * Returns the email contents of the confirmation email.
+ * 
+ * @param {boolean} accepted 
+ * @param {string} subName 
+ * @returns string
+ */
+function getEmailContents(accepted, subName, reason) {
+    const review = accepted ? "goed" : "af";
+    const extra = accepted ? "U kunt nu voertuigen huren met dit abonnement!" : `De reden hiervoor is: ${reason}` ;
+
+    const contents = `Geachte heer/mevrouw,
+
+Bij deze is abonnement: '${subName}' ${review}gekeurd.
+${extra}
+
+Met vriendelijke groet,
+
+Rent-IT
+`
+    return contents;
+}
