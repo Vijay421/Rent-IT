@@ -49,6 +49,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 0 auto;
+    column-gap: 200px;
 }
 
 .abonnement-content__p {

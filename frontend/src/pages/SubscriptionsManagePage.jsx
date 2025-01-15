@@ -30,7 +30,7 @@ export default function SubscriptionsManagePage() {
                 <main className="subs__page">
                     <h1 className="subs__title">Abonnementen</h1>
 
-                    <div className="subs__subs">
+                    <div className="subs__subs" data-cy='subs-subs'>
                         {
                             subs.map((data, key) => (
                                 <Subscription key={key} data={data} renters={renters} subId={data.id} setSubs={setSubs} initialRenters={data.zakelijkeHuurders} beheederNaam={userName} />

@@ -113,39 +113,41 @@ export default function Abonnement({data, onUpdate}) {
     return (
         <div key={data.id} className="abonnement-content-box__div">
             <h2 className='abonnement-content-box__h2'>{data.naam}</h2>
-            <div className='abonnement-content__div'>
-                <p className='abonnement-content__p' id='abonnement-content-prijs'><b>Prijs per
+            <div className='abonnement-content__div' data-cy='abonnement-content-div'>
+                <p className='abonnement-content__p' id='abonnement-content-prijs' data-cy='abonnement-content-ppm'><b>Prijs per
                     maand:</b> € {data.prijsPerMaand.toFixed(2)}</p>
-                <p className='abonnement-content__p' id='abonnement-content-soort'>
+                <p className='abonnement-content__p' id='abonnement-content-soort' data-cy='abonnement-content-soort'>
                     <b>Soort
                         abonnement:</b> {data.soort === "pay_as_you_go" ? "Pay as you go" : "Prepaid"}
                 </p>
-                <p className='abonnement-content__p' id='abonnement-content-eindDatum'><b>Eind
+                <p className='abonnement-content__p' id='abonnement-content-eindDatum' data-cy='abonnement-content-einddatum'><b>Eind
                     datum:</b> {data.einddatum}</p>
-                <p className='abonnement-content__p' id='abonnement-content-maxHuurders'><b>Max
+                <p className='abonnement-content__p' id='abonnement-content-maxHuurders' data-cy='abonnement-content-maxHuurders'><b>Max
                     huurders:</b> {data.maxHuurders}</p>
-                {/*if true print "Goedgekeurd" if false print "afgekeurd" if null print "nog niet beoordeeld"*/}
-                <p className='abonnement-content__p' id='abonnement-content-geaccepteerd'><b>Status:</b> {data.geaccepteerd === null ? "Nog niet beoordeeld" : data.geaccepteerd ? "Goedgekeurd" : "Afgekeurd"}</p>
-                <p className='abonnement-content__p' id='abonnement-content-reden'><b>Reden:</b> {data.reden}</p>
+                <p className='abonnement-content__p' id='abonnement-content-geaccepteerd' data-cy='abonnement-content-geaccepteerd'><b>Status:</b> {data.geaccepteerd === null ? "Nog niet beoordeeld" : data.geaccepteerd ? "Goedgekeurd" : "Afgekeurd"}</p>
+                <p className='abonnement-content__p' id='abonnement-content-reden' data-cy='abonnement-content-reden'><b>Reden:</b> {data.reden}</p>
             </div>
             <div className="abonnement-keuren__div">
 
                 <button onClick={() => onGoedkeurenButtonClick(data)}
                         className='abonnement-keuren-goedkeur-button'
-                        id={`abonnement-keuren-goedkeuren__button-${data.id}`}>Goedkeuren
+                        id={`abonnement-keuren-goedkeuren__button-${data.id}`}
+                        data-cy='abonnement-keuren-goedkeuren-button'>Goedkeuren
                 </button>
 
                 <button
                     onClick={() => onAfkeurenButtonClick(data.id)}
                     className="abonnement-keuren-afkeur-button"
                     id={`abonnement-keuren-afkeuren__button-${data.id}`}
+                    data-cy='abonnement-keuren-afkeuren-button'
                 >
                     Afkeuren
                 </button>
 
                 <button style={{display: "none"}} onClick={() => onConfirmButtonClick(data)}
                         className='abonnement-keuren-confirm-button'
-                        id={`abonnement-keuren-confirm__button-${data.id}`}>Confirm
+                        id={`abonnement-keuren-confirm__button-${data.id}`}
+                        data-cy='abonnement-keuren-confirm-button'>Confirm
                 </button>
 
                 <textarea
@@ -156,6 +158,7 @@ export default function Abonnement({data, onUpdate}) {
                     onChange={(e) => setReden(e.target.value)}
                     value={reden}
                     style={{display: "none", overflow: "hidden"}}
+                    data-cy='abonnement-keuren-textarea'
                 ></textarea>
 
                 <button style={{display: "none"}} onClick={() => onTerugButtonClick(data)}

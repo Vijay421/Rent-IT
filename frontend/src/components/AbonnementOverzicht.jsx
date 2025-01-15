@@ -35,7 +35,7 @@ export default function AbonnementOverzicht() {
 
     return (
         <main className='abonnement-overzicht__main'>
-            <div className="abonnement-overzicht-content-box__div">
+            <div className="abonnement-overzicht-content-box__div" data-cy='abonnement-overzicht-content-box'>
                 <h1 className='abonnment-overzicht-title__h1'>Abonnementsoverzicht / Abonnement beoordeling</h1>
                 <span id='abonnement-keuren-status__span' style={{display: 'none'}}></span>
                 {
