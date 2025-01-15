@@ -49,6 +49,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 0 auto;
+    column-gap: 200px;
 }
 
 .abonnement-content__p {
@@ -100,6 +101,7 @@
     background-color: #c70000;
 }
 
+.abonnement-keuren-terug-button,
 .abonnement-keuren-confirm-button {
     font-size: 1.5em;
     margin: 5px 0;
