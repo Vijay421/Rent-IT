@@ -5,9 +5,8 @@ import VehicleReview from "./VehicleReview.jsx";
 
 function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
-    const [isGeschiedenis, setView] = useState(["nee"]);
+    const [isGeschiedenis, setView] = useState("nee");
     const [vehicles, setVehicles] = useState([]);
-    // const selectElement = useRef(null);
     
     if (userRole === null) {
         return <Navigate to='/'/>
@@ -41,16 +40,6 @@ function FrontofficeIntake() {
     });
     const sortedVehicles = filteredVehicles.sort((a, b) => {return a.prijs - b.prijs;});
 
-    function RemoveSelectedVehicle(id) {
-        setVehicles((oldVehicles) => {
-            const copy = [...oldVehicles];
-            const filtered = copy.filter(Id => Id !== id);
-            return filtered;
-        });
-    
-        // selectElement.current.selectedIndex = 0;
-    }
-
     return (
         <main className="content">
             <div className="divMain">
@@ -67,7 +56,7 @@ function FrontofficeIntake() {
                                 <VehicleReview
                                     key={vehicle.id}
                                     data={vehicle}
-                                    // function={RemoveSelectedVehicle()}
+                                    setVehicles={setVehicles}
                                 />
                             );
                         }

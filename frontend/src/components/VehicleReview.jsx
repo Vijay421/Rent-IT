@@ -1,9 +1,8 @@
 import { useState } from "react";
 import "../styles/VehicleReview.css";
 import downloadFile from "../scripts/downloadFile.js";
-// import { RemoveSelectedVehicle } from '../components/FrontofficeIntake.jsx'
 
-export default function VehicleReview({ data }) {
+export default function VehicleReview({ data, setVehicles }) {
     const [foto, setFoto] = useState(null);
     const [beschrijving, setBeschrijving] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -22,7 +21,7 @@ export default function VehicleReview({ data }) {
             });
             if(response.ok){
                 alert("Voertuig is geaccepteerd!");
-                RemoveSelectedVehicle(data.id);
+                updateVehicles(data.id, "Verhuurbaar");
                 downloadFile(`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`, "bevestigingsemail.txt")
             } 
             // else alert(response);
@@ -32,7 +31,28 @@ export default function VehicleReview({ data }) {
         }
     }
 
-    async function handleWeigeren(){       
+    function updateVehicles(id, status) {
+        setVehicles((old) => {
+            const copy = [...old];
+
+            const vehicles = copy.filter(vehicle => vehicle.id === id);
+            if (vehicles.length > 1) {
+                return copy;
+            }
+            const vehicle = vehicles[0];
+            vehicle.status = status;
+
+            return copy;
+        });
+    }
+
+    async function handleWeigeren(){
+        if (beschrijving.length < 5) {
+            setConfirmationMessage("De beschrijving moet langer zijn dan 4 characters.");
+            setMessageType('error');
+            return;
+        }
+
         if (beschrijving && foto) {
             const schadeClaim = {
                 Voertuig: data,
@@ -44,6 +64,8 @@ export default function VehicleReview({ data }) {
                 setConfirmationMessage("");
                 await voertuigWeigeren(schadeClaim);
                 alert("Voertuig is succcesvol geweigerd!");
+
+                updateVehicles(data.id, "Onverhuurbaar");
             }
             catch (e) {
                 window.alert(e);
