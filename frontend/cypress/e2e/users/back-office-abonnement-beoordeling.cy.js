@@ -18,27 +18,27 @@ describe("Back office employees can assess subscriptions", () => {
         cy.get("a[href='/abonnement']").click();
         cy.log("to /abonnement page");
 
-        cy.get("[data-cy='company-name']").type("testcompany1");
-        cy.get("[data-cy='address']").type("testaddress1");
-        cy.get("[data-cy='company-number']").type("123123123123");
+        // cy.get("[data-cy='company-name']").type("testcompany1");
+        // cy.get("[data-cy='address']").type("testaddress1");
+        // cy.get("[data-cy='company-number']").type("123123123123");
         cy.get("[data-cy='max-renters']").type("12");
         cy.get("[data-cy='end-date']").type("2025-06-25");
         cy.get("[data-cy='subscription-name']").type("testsubscription1");
         cy.get("[data-cy='prepaid']").click();
         cy.get("[data-cy='submit']").click();
 
-        cy.get("[data-cy='company-name']").clear().type("testcompany2");
-        cy.get("[data-cy='address']").clear().type("testaddress2");
-        cy.get("[data-cy='company-number']").clear().type("456456456456");
+        // cy.get("[data-cy='company-name']").clear().type("testcompany2");
+        // cy.get("[data-cy='address']").clear().type("testaddress2");
+        // cy.get("[data-cy='company-number']").clear().type("456456456456");
         cy.get("[data-cy='max-renters']").clear().type("15");
         cy.get("[data-cy='end-date']").clear().type("2025-10-14");
         cy.get("[data-cy='subscription-name']").clear().type("testsubscription2");
         cy.get("[data-cy='pay-as-you-go']").click();
         cy.get("[data-cy='submit']").click();
 
-        cy.get("[data-cy='company-name']").clear().type("testcompany3");
-        cy.get("[data-cy='address']").clear().type("testaddress3");
-        cy.get("[data-cy='company-number']").clear().type("789789789789");
+        // cy.get("[data-cy='company-name']").clear().type("testcompany3");
+        // cy.get("[data-cy='address']").clear().type("testaddress3");
+        // cy.get("[data-cy='company-number']").clear().type("789789789789");
         cy.get("[data-cy='max-renters']").clear().type("3");
         cy.get("[data-cy='end-date']").clear().type("2025-04-01");
         cy.get("[data-cy='subscription-name']").clear().type("testsubscription3");
@@ -66,7 +66,7 @@ describe("Back office employees can assess subscriptions", () => {
         cy.log("to /abonnementsoverzicht page");
 
         cy.wait("@getAbonnementen");
-        //
+
         cy.log("Check if all abonnementen are present");
         cy.get("[data-cy='abonnement-overzicht-content-box']").children().should("have.length", 6);
 
