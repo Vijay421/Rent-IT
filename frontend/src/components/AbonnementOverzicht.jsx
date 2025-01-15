@@ -19,10 +19,16 @@ export default function AbonnementOverzicht() {
         });
         const data = await response.json();
         setAbonnementen(data);
-        console.log(data);
     }
 
-    // Check if an abonnement has already been accepted (or not) and dont display if so
+    const updateAbonnement = (updatedAbonnement) => {
+        setAbonnementen((prevAbonnementen) =>
+            prevAbonnementen.map((abonnement) =>
+                abonnement.id === updatedAbonnement.id ? updatedAbonnement : abonnement
+            )
+        );
+    };
+
     const filteredAbonnementen = abonnementen.filter((abonnement) => {
         return abonnement.geaccepteerd === null;
     });
@@ -30,11 +36,11 @@ export default function AbonnementOverzicht() {
     return (
         <main className='abonnement-overzicht__main'>
             <div className="abonnement-overzicht-content-box__div">
-                <h1 className='abonnment-overzicht-title__h1'>Abonnementsoverzicht</h1>
+                <h1 className='abonnment-overzicht-title__h1'>Abonnementsoverzicht / Abonnement beoordeling</h1>
                 <span id='abonnement-keuren-status__span' style={{display: 'none'}}></span>
                 {
-                    filteredAbonnementen && filteredAbonnementen
-                        .map((abonnement, key) => <Abonnement key={key} data={abonnement}/>)
+                    filteredAbonnementen && abonnementen
+                        .map((abonnement, key) => <Abonnement onUpdate={updateAbonnement} key={key} data={abonnement}/>)
                 }
             </div>
         </main>
