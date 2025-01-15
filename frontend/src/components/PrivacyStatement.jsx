@@ -30,7 +30,6 @@ export default function PrivacyStatement() {
     };
 
     async function handlePrivacyButtonClick() {
-        // setIsUpdating(true);
         try {
             const response = await fetch('https://localhost:53085/api/PrivacyStatement', {
                 method: 'PUT',
@@ -64,7 +63,7 @@ export default function PrivacyStatement() {
                     <div className="backoffice-medewerker__Content">
                         <textarea
                             className="privacy-input"
-                            placeholder="Enter the new privacy policy text here..."
+                            placeholder="Vul de nieuwe privacy statement hier in..."
                             value={newPrivacyStatement}
                             onChange={handleInputChange}
                             rows="6"
