@@ -216,7 +216,7 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
                 </div>
                 <div className="subs-zakelijke-huurders">
                     <div className="zakelijke-huurders-container__div">
-                        <p className="subs__item-label">Zakelijke huurders</p>
+                        <p className="subs__item-label">Gebruikers toevoegen aan abonnement</p>
                         <input
                             list={userSearchId}
                             onChange={(e) => setSearchedEmail(e.target.value)}
