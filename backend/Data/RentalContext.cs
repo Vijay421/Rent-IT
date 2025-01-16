@@ -43,6 +43,12 @@ namespace backend.Data
                 .HasForeignKey(z => z.AbonnementId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<Huuraanvraag>()
+                .HasOne(h => h.Voertuig)
+                .WithMany(v => v.HuurAanvragen)
+                .HasForeignKey(h => h.VoertuigId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
 
 /*
