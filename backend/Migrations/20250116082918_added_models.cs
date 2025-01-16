@@ -45,7 +45,7 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KvK_nummer = table.Column<int>(type: "int", nullable: false),
+                    KvK_nummer = table.Column<long>(type: "bigint", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Domein = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },

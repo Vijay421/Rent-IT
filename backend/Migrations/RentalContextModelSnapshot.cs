@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8a3772a7-22b7-48e6-b3fa-64feb9024984",
+                            Id = "3cfdc6b5-e314-4dc9-ba5c-a01a91e05351",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f0d38323-95f9-467e-b2e4-7cc8f546f152",
+                            Id = "04699415-4bfc-448b-b949-b25abeffac6e",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "8e6e0e22-3b27-43fb-8c92-292f1e30b6f7",
+                            Id = "ea0b071a-1b4e-40c4-ae7b-3387b50271b0",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "1f79e728-1017-4e46-91c3-c37adfeed9c4",
+                            Id = "891aa721-acc0-4aa8-b80a-fff643b066c0",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "05ca4174-b818-497c-8f3b-bb9e5d350974",
+                            Id = "62f52acd-e40c-4885-94d1-44cb187e9cab",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "5b890112-3bb3-420c-8185-a8979bf09dfe",
+                            Id = "9ed33130-369c-41e4-a173-1083e4dda77c",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -257,8 +257,8 @@ namespace backend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("KvK_nummer")
-                        .HasColumnType("int");
+                    b.Property<long>("KvK_nummer")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()

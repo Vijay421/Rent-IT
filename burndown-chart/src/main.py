@@ -41,6 +41,7 @@ def get_sprint_data() -> pd.DataFrame:
         { "sprint": 4, "done": 0 },
         { "sprint": 5, "done": 1 },
         { "sprint": 6, "done": 11 },
+        { "sprint": 7, "done": 14 },
     ]
 
     planned = [
@@ -50,6 +51,7 @@ def get_sprint_data() -> pd.DataFrame:
         { "sprint": 4, "done": 6 },
         { "sprint": 5, "done": 8 },
         { "sprint": 6, "done": 12 },
+        { "sprint": 7, "done": 17 },
     ]
 
     actual_df = pd.DataFrame(actual)

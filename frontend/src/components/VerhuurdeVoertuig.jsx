@@ -30,10 +30,17 @@ export default function VerhuurdeVoertuig() {
 
     useEffect(() => {
         const getData = async () => {
-            const vehicles = await fetchVehicles();
-            setVehicles(vehicles);
+            const fetchData = await fetchVehicles();
+            setVehicles(fetchData);
         };
         getData();
+
+        //Fetch interval - 5 seconds
+        const intervalId = setInterval(() => {
+            getData();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     async function fetchVehicles() {
@@ -186,7 +193,7 @@ export default function VerhuurdeVoertuig() {
 
                             if (voertuig.soort === "Auto") {
                                 return (
-                                    <div className="vehicleAutoBox" key={voertuig.id}>
+                                    <div className="vehicleAutoBox" key={voertuig.id} data-cy="vehicle">
                                         <DisplayAutoBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>
@@ -203,7 +210,7 @@ export default function VerhuurdeVoertuig() {
 
                             if (voertuig.soort === "Camper") {
                                 return (
-                                    <div className="vehicleCamperBox" key={voertuig.id}>
+                                    <div className="vehicleCamperBox" key={voertuig.id} data-cy="vehicle">
                                         <DisplayCamperBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>
@@ -220,7 +227,7 @@ export default function VerhuurdeVoertuig() {
 
                             if (voertuig.soort === "Caravan") {
                                 return (
-                                    <div className="vehicleCaravanBox" key={voertuig.id}>
+                                    <div className="vehicleCaravanBox" key={voertuig.id} data-cy="vehicle">
                                         <DisplayCaravanBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>

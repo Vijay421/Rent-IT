@@ -8,7 +8,7 @@ namespace backend.Models
         public required int Id { get; set; }
         public int? HuurbeheerderId { get; set; }
 
-        public List<ZakelijkeHuurder> ZakelijkeHuurders {  get; set; }
+        public List<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
 
 
         [StringLength(50, MinimumLength = 2)]

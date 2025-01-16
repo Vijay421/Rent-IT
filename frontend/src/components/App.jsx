@@ -25,6 +25,8 @@ import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 import ReserveringPage from "../pages/ReserveringPage.jsx";
 import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
 import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
+import VoertuigStatenPage from "../pages/VoertuigStatenPage.jsx";
+import PrivacyPage from "../pages/PrivacyPage.jsx";
 
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
@@ -58,6 +60,8 @@ function App() {
                 <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
                 <Route path="/frontoffice/uitgave" element= {<FrontofficeExpenditurePage/>}/>
 
+                <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
+                <Route path="/privacy" element=                 {<PrivacyPage/>}/>
             </Routes>
         </Router>
     );

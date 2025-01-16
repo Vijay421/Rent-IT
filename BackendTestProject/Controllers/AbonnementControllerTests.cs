@@ -85,12 +85,12 @@ namespace BackendTestProject.Controllers
         }
 
         [Fact]
-        public async Task UpdateRenters_ShouldNotAddRentersToSubscription_WhenTheRenterDoesNotBelongToTheCompanyOfTheZakelijkeBeheerder()
+        public async Task UpdateRenters_ShouldNotAddRentersToSubscription_WhenTheRenterDoesNotHaveTheCompanyDomainInEmail()
         {
             // Arrange
             var controller = new AbonnementController(_createContext(), _mockUserManager.Object)
             {
-                ControllerContext = CreateMockControllerContext("zakelijke_beheerder", "1"),
+                ControllerContext = _controllerContext,
             };
 
             // Act

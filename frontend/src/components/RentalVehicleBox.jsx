@@ -86,7 +86,9 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}
-                    id='rental-vehicle-huur-box__button'>
+                    id='rental-vehicle-huur-box__button'
+                    data-cy="rent"
+                >
                     Huur
                 </button>
             </div>
@@ -180,7 +182,9 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
                     <p className='rental-vehicle-kosten__p'>per dag</p>
                     <button
                         onClick={checkDatumFields}
-                        id='rental-vehicle-huur-box__button'>
+                        id='rental-vehicle-huur-box__button'
+                        data-cy="rent"
+                    >
                         Huur
                     </button>
                 </div>
@@ -273,7 +277,9 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}
-                    id='rental-vehicle-huur-box__button'>
+                    id='rental-vehicle-huur-box__button'
+                    data-cy="rent"
+                >
                     Huur
                 </button>
             </div>
