@@ -7,6 +7,7 @@ function ProfilePageBackOffice() {
         <ProfilePageBase>
             <ProfilePageLinkButton link="/account-instellingen" text="Account instellingen aanpassen"/>
             <ProfilePageLinkButton link="/huuraanvraag-beoordelen" text="Huuraanvragen beoordelen"/>
+            <ProfilePageLinkButton link="/abonnementsoverzicht" text="Abonnementsoverzicht"/>
             <ProfilePageLinkButton link="/voertuigoverzicht" text="Voertuigoverzicht"/>
             <ProfilePageLinkButton link="/verhuurde-voertuigen" text="Verhuurde voertuigen"/>
             <ProfilePageLinkButton link="/voertuig-staten" text="Voertuig staten"/>

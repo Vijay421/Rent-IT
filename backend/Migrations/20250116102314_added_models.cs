@@ -234,7 +234,9 @@ namespace backend.Migrations
                     Prijs_per_maand = table.Column<double>(type: "float", nullable: false),
                     Max_huurders = table.Column<int>(type: "int", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
-                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Geaccepteerd = table.Column<bool>(type: "bit", nullable: true),
+                    Reden = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {

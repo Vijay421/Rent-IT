@@ -27,6 +27,7 @@ import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
 import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
 import VoertuigStatenPage from "../pages/VoertuigStatenPage.jsx";
 import PrivacyPage from "../pages/PrivacyPage.jsx";
+import AbonnementOverzichtPage from "../pages/AbonnementOverzichtPage.jsx";
 
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
@@ -62,6 +63,7 @@ function App() {
 
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
+                <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>
             </Routes>
         </Router>
     );

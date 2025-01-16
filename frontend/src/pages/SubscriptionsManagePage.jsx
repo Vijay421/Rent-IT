@@ -5,6 +5,7 @@ import "../styles/SubscriptionsManagePage.css";
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext.jsx";
 import downloadFile from "../scripts/downloadFile.js";
+import { useNavigate } from "react-router-dom";
 
 export default function SubscriptionsManagePage() {
     const [subs, setSubs] = useState([]);
@@ -30,7 +31,7 @@ export default function SubscriptionsManagePage() {
                 <main className="subs__page">
                     <h1 className="subs__title">Abonnementen</h1>
 
-                    <div className="subs__subs">
+                    <div className="subs__subs" data-cy='subs-subs'>
                         {
                             subs.map((data, key) => (
                                 <Subscription key={key} data={data} renters={renters} subId={data.id} setSubs={setSubs} initialRenters={data.zakelijkeHuurders} beheederNaam={userName} />
@@ -55,6 +56,8 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
     const [rentersToDelete, setRentersToDelete] = useState([]);
     const [searchedEmail, setSearchedEmail] = useState("");
     const selectElement = useRef(null);
+
+    const navigate = useNavigate();
 
     const userSearchId = `users-list-${subId}`;
 
@@ -153,71 +156,110 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
 
     return (
         <div className="subs__item">
-            <p className="subs__item-label">Naam</p>
-            <p>{data.naam}</p>
+            <div className="subs__box">
+                <p className="subs__item-label">Naam</p>
+                <p>{data.naam}</p>
+            </div>
 
-            <p className="subs__item-label">Prijs per maand</p>
-            <p>{data.prijsPerMaand}</p>
+            <div className="subs__box">
+                <p className="subs__item-label">Prijs per maand</p>
+                <p>{data.prijsPerMaand}</p>
+            </div>
 
-            <p className="subs__item-label">Maximaal aantal huurder</p>
-            <p>{data.maxHuurders}</p>
+            <div className="subs__box">
+                <p className="subs__item-label">Maximaal aantal huurder</p>
+                <p>{data.maxHuurders}</p>
+            </div>
 
-            <p className="subs__item-label">Einddatum</p>
-            <p>{data.einddatum}</p>
+            <div className="subs__box">
+                <p className="subs__item-label">Einddatum</p>
+                <p>{data.einddatum}</p>
+            </div>
 
-            <p className="subs__item-label">Soort</p>
-            <p>{data.soort}</p>
+            <div className="subs__box">
+                <p className="subs__item-label">Soort</p>
+                <p>{data.soort}</p>
+            </div>
 
-            <p className="subs__item-label">Zakelijke huurders</p>
-            <input
-                list={userSearchId}
-                onChange={(e) => setSearchedEmail(e.target.value)}
-                onKeyUp={handleEmailSearch}
-                data-cy="user-search"
-            />
-            <datalist id={userSearchId}>
-                <>
+            <div className="subs__box">
+                <p className="subs__item-label">Status</p>
+                <p>{getStatusText(data.geaccepteerd)}</p>
+            </div>
+
+            <div className="subs__box">
+                <p className="subs__item-label">Zakelijke huurders</p>
+                <input
+                    list={userSearchId}
+                    onChange={(e) => setSearchedEmail(e.target.value)}
+                    onKeyUp={handleEmailSearch}
+                    data-cy="user-search"
+                    placeholder="Voer het emailadres in"
+                />
+                <datalist id={userSearchId}>
+                    <>
+                        {
+                            renters.map((data, key) => (
+                                <option key={key} value={data.email}>{data.email}</option>
+                            ))
+                        }
+                    </>
+                </datalist>
+
+                <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
+                    <option value={null}>Geen</option>
                     {
                         renters.map((data, key) => (
-                            <option key={key} value={data.email}>{data.email}</option>
+                            <option key={key} value={data.id}>{data.userName}</option>
                         ))
                     }
-                </>
-            </datalist>
+                </select>
 
-            <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
-                <option value={null}>Geen</option>
                 {
-                    renters.map((data, key) => (
-                        <option key={key} value={data.id}>{data.userName}</option>
-                    ))
+                    selectedRenters.length === 0 ? <></> : (
+                        <>
+                            <p className="subs__item-label">Geselecteerd</p>
+                            <ul>
+                                {
+                                    renters
+                                        .filter(renter => selectedRenters.includes(renter.id))
+                                        .map((data, key) => (
+                                            <li key={key} className="subs__item-renter">
+                                                <p>{ data.userName }</p>
+                                                <button onClick={() => RemoveSelectedRenter(data.id)} data-cy="remove" >Verwijder</button>
+                                            </li>
+                                        ))
+                                }
+                            </ul>
+                        </>
+                    )
                 }
-            </select>
-
-            {
-                selectedRenters.length === 0 ? <></> : (
-                    <>
-                        <p className="subs__item-label">Geselecteerd</p>
-                        <ul>
-                            {
-                                renters
-                                    .filter(renter => selectedRenters.includes(renter.id))
-                                    .map((data, key) => (
-                                        <li key={key} className="subs__item-renter">
-                                            <p>{ data.userName }</p>
-                                            <button onClick={() => RemoveSelectedRenter(data.id)} data-cy="remove" >Verwijder</button>
-                                        </li>
-                                    ))
-                            }
-                        </ul>
-                    </>
-                )
-            }
+            </div>
 
             <button onClick={handleSave} data-cy="save" >Opslaan</button>
             <button onClick={() => handleDeleteSubscription(subId)} data-cy="delete-subscription" >Verwijder abonnement</button>
+            <button onClick={() => navigate("/abonnement", { state: { pageData: data } })} data-cy="edit-subscription">Aanpassen</button>
         </div>
     );
+}
+
+/**
+ * Returns a string containing the correct status message,
+ * which should be used to display the status in the ui.
+ * 
+ * @param {string} status 
+ * @returns string
+ */
+function getStatusText(status) {
+    switch (status) {
+        case true:
+            return "geaccepteerd";
+
+        case false:
+            return "niet geaccepteerd";
+
+        default:
+            return "in behandeling";
+    }
 }
 
 /**

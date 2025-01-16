@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3cfdc6b5-e314-4dc9-ba5c-a01a91e05351",
+                            Id = "c9b6aa59-b3c5-4adb-98f0-7d336656d193",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "04699415-4bfc-448b-b949-b25abeffac6e",
+                            Id = "b1113ce4-d801-4d72-b39f-44905fe42d3d",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "ea0b071a-1b4e-40c4-ae7b-3387b50271b0",
+                            Id = "ca787a82-c4c2-4862-9bf3-b75c59938883",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "891aa721-acc0-4aa8-b80a-fff643b066c0",
+                            Id = "3fad4c7c-b23d-4d72-856f-01f7fb66a6f0",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "62f52acd-e40c-4885-94d1-44cb187e9cab",
+                            Id = "81aac873-1825-4d26-9778-11e2263cad12",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "9ed33130-369c-41e4-a173-1083e4dda77c",
+                            Id = "1c26b629-fe21-4e69-aec3-e924802ab896",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -204,6 +204,9 @@ namespace backend.Migrations
                     b.Property<DateOnly>("Einddatum")
                         .HasColumnType("date");
 
+                    b.Property<bool?>("Geaccepteerd")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
@@ -217,6 +220,10 @@ namespace backend.Migrations
 
                     b.Property<double>("Prijs_per_maand")
                         .HasColumnType("float");
+
+                    b.Property<string>("Reden")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Soort")
                         .IsRequired()
