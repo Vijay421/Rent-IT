@@ -23,5 +23,37 @@ namespace backend.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _userManager = userManager;
         }
+
+        [HttpGet("bedrijf")]
+        public async Task<ActionResult<string>> GetBedrijfsnaam()
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+
+            if (user.Huurbeheerder == null)
+            {
+                return Unauthorized("Incorrecte gebruiker");
+            }
+
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+            _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
+
+            return Ok(new
+            {
+                Bedrijfsnaam = user.Huurbeheerder.Bedrijf.Name,
+                Kvk = user.Huurbeheerder.Bedrijf.KvK_nummer,
+                Adres = user.Huurbeheerder.Bedrijf.Address,
+            });
+        }
     }
 }

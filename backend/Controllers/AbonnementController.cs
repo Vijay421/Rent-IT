@@ -37,7 +37,9 @@ public class AbonnementController : ControllerBase
                 PrijsPerMaand = a.Prijs_per_maand,
                 MaxHuurders = a.Max_huurders,
                 Einddatum = a.Einddatum,
-                Soort = a.Soort
+                Soort = a.Soort,
+                Geaccepteerd = a.Geaccepteerd,
+                Reden = a.Reden,
             })
             .ToListAsync();
     }
@@ -55,7 +57,9 @@ public class AbonnementController : ControllerBase
             PrijsPerMaand = abonnement.Prijs_per_maand,
             MaxHuurders = abonnement.Max_huurders,
             Einddatum = abonnement.Einddatum,
-            Soort = abonnement.Soort
+            Soort = abonnement.Soort,
+            Geaccepteerd = abonnement.Geaccepteerd,
+            Reden = abonnement.Reden,
         };
     }
 
@@ -84,6 +88,8 @@ public class AbonnementController : ControllerBase
             Max_huurders = abonnementDTO.Max_huurders,
             Einddatum = abonnementDTO.Einddatum,
             Soort = abonnementDTO.Soort,
+            Geaccepteerd = null,
+            Reden = null,
         };
 
         _context.Abonnementen.Add(abonnement);
@@ -159,6 +165,8 @@ public class AbonnementController : ControllerBase
                 Soort = a.Soort,
                 ZakelijkeHuurders = a.ZakelijkeHuurders
                         .Select(z => z.User.Id).ToList(),
+                Geaccepteerd = a.Geaccepteerd,
+                Reden = a.Reden,
             }
             )
             .ToListAsync();
@@ -322,6 +330,9 @@ public class AbonnementController : ControllerBase
         abonnement.Prijs_per_maand = abonnementDTO.Prijs_per_maand ?? abonnement.Prijs_per_maand;
         abonnement.Einddatum = abonnementDTO.Einddatum ?? abonnement.Einddatum;
         abonnement.Soort = abonnementDTO.Soort ?? abonnement.Soort;
+        abonnement.Max_huurders = abonnementDTO.Max_huurders ?? abonnement.Max_huurders;
+        abonnement.Geaccepteerd = abonnementDTO.Geaccepteerd ?? abonnement.Geaccepteerd;
+        abonnement.Reden = abonnementDTO.Reden ?? abonnement.Reden;
 
         _context.Entry(abonnement).State = EntityState.Modified;
 

@@ -26,6 +26,7 @@ import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
 import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
 import VoertuigStatenPage from "../pages/VoertuigStatenPage.jsx";
 import PrivacyPage from "../pages/PrivacyPage.jsx";
+import AbonnementOverzichtPage from "../pages/AbonnementOverzichtPage.jsx";
 
 function App() {
     return (
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
+                <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>
             </Routes>
         </Router>
     );

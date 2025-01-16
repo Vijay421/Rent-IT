@@ -1,28 +1,38 @@
 import '../styles/SubscriptionRequest.css';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Profile/ProfilePageBase.module.css";
+import { useLocation } from 'react-router-dom';
 
 function SubscriptionRequest() {
+    const location = useLocation();
+    const pageData = location.state?.pageData;
+    console.log(location.state?.pageData);
+    const mode = pageData ? "update" : "create";
+
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
     const [adress, setAdress] = useState("");
     const [kvkNumber, setKvkNumber] = useState("");
-    const [maxSubs, setMaxSubs] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [subName, setSubName] = useState("");
-    const [subscriptionType, setSubscriptionType] = useState("");
+    const [maxSubs, setMaxSubs] = useState(pageData?.maxHuurders ? pageData?.maxHuurders : "");
+    const [endDate, setEndDate] = useState(pageData?.einddatum ? pageData?.einddatum : "");
+    const [subName, setSubName] = useState(pageData?.naam ? pageData?.naam : "");
+    const [subscriptionType, setSubscriptionType] = useState(pageData?.soort ? pageData?.soort : "");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const form = useRef(null);
 
-    // Checks if a number consists of 12 digits.
-    const kvkRegex = /^[0-9]{12}$/;
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const bedrijf = await getBedrijf();
+                setAdress(bedrijf.adres);
+                setBedrijfsnaam(bedrijf.bedrijfsnaam);
+                setKvkNumber(bedrijf.kvk);
+            } catch(e) {
+                console.error(e);
+            }
+        };
 
-    function handleBedrijfsnaam(e) {
-        setBedrijfsnaam(e.target.value);
-    }
-
-    function handleAdress(e) {
-        setAdress(e.target.value);
-    }
+        getData();
+    }, []);
 
     function handleSubscriptionType(e) {
         const value = e.target.value;
@@ -48,26 +58,12 @@ function SubscriptionRequest() {
             }
         }
 
-        if (!kvkRegex.test(kvkNumber)) {
-            window.alert("Kvk moet uit 12 cijfers bestaan");
-            return;
-        }
-
-        const kvkNumberValidated = Number(kvkNumber);
-        if (isNaN(kvkNumber)) {
-            window.alert("Kvk moet een getal zijn");
-            return;
-        }
-
         // Don't submit when the form is invalid.
         if (!form.current.checkValidity()) {
             return;
         }
 
         if (
-            bedrijfsnaam &&
-            adress &&
-            kvkNumberValidated &&
             maxSubs &&
             endDate &&
             subName &&
@@ -75,16 +71,17 @@ function SubscriptionRequest() {
         ) {
             const payload = {
                 naam: subName,
-                bedrijfsnaam,
-                adres: adress,
-                kvk_nummer: kvkNumberValidated,
                 max_huurders: maxSubs,
                 einddatum: endDate,
                 soort: subscriptionType,
             };
     
             try {
-                await sendSubRequest(payload);
+                if (mode === "create") {
+                    await sendSubRequest(payload);
+                } else if (mode === "update") {
+                    await updateSubRequest(payload, pageData?.id);
+                }
                 setConfirmationMessage("Uw abonnementhouders aanvraag is verzonden!");
             } catch {
                 window.alert("Error tijdens het versturen van de aanvraag");
@@ -112,12 +109,9 @@ function SubscriptionRequest() {
                         id="abonnement__bedrijfsnaam"
                         className="bedrijfsnaam__text"
                         type="text"
-                        placeholder="Vul hier uw bedrijfsnaam in voor het aanvragen van een abonnement."
+                        placeholder="Bedrijfsnaam"
                         value={bedrijfsnaam}
-                        minLength="2"
-                        maxLength="50"
-                        required
-                        onChange={handleBedrijfsnaam}
+                        disabled
                         data-cy="company-name"
                     />
                     <label htmlFor="adress" className="form__text">Adres:</label>
@@ -129,8 +123,7 @@ function SubscriptionRequest() {
                         value={adress}
                         minLength="2"
                         maxLength="50"
-                        required
-                        onChange={handleAdress}
+                        disabled
                         data-cy="address"
                     />
                     <label htmlFor="kvk-number" className="form__text">KVK-nummer:</label>
@@ -138,15 +131,9 @@ function SubscriptionRequest() {
                         id="abonnement__kvk-number"
                         className="kvk-number__text"
                         type="number"
-                        placeholder="Vul hier uw KVK-nummer in voor het aanvragen van een abonnement."
+                        placeholder="Kvk."
                         value={kvkNumber}
-                        required
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            if (/^\d*$/.test(value)) {
-                                setKvkNumber(value);
-                            }
-                        }}
+                        disabled
                         data-cy="company-number"
                     />
 
@@ -175,6 +162,7 @@ function SubscriptionRequest() {
                         className="abonnement__end-date"
                         type="date"
                         required
+                        value={endDate}
                         onChange={(e) => {
                             setEndDate(e.target.value)
                         }}
@@ -189,6 +177,7 @@ function SubscriptionRequest() {
                         minLength="2"
                         maxLength="50"
                         placeholder="Vul hier de naam voor het  abonnement."
+                        value={subName}
                         required
                         onChange={(e) => {
                             setSubName(e.target.value)
@@ -199,10 +188,10 @@ function SubscriptionRequest() {
                     <label htmlFor="subscription-type" className="form__text">Type Abonnement:</label>
                     <div className="radio-group" onChange={handleSubscriptionType}>
                         <label>
-                            <input type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" data-cy="pay-as-you-go" required/> Pay as you go
+                            <input defaultChecked={pageData?.soort === "pay_as_you_go"} type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" data-cy="pay-as-you-go" required/> Pay as you go
                         </label>
                         <label>
-                            <input type="radio" id="Prepaid" name="subscriptionType" value="prepaid" data-cy="prepaid"/> Prepaid
+                            <input defaultChecked={pageData?.soort === "prepaid"} type="radio" id="Prepaid" name="subscriptionType" value="prepaid" data-cy="prepaid"/> Prepaid
                         </label>
                     </div>
                 </div>
@@ -250,6 +239,54 @@ async function sendSubRequest(payload) {
         return await response.json();
     } catch (error) {
         console.error('error when requesting the rent history request, or parsing the response:', error);
+        throw error;
+    }
+}
+
+/**
+ * Will try to update the subscription with the given id.
+ * 
+ * @param {Object} payload 
+ * @param {number} id 
+ */
+async function updateSubRequest(payload, id) {
+    try {
+        await fetch(`https://localhost:53085/api/Abonnement/${id}`, {
+            method: 'PUT',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+    } catch (error) {
+        console.error('error when updating a subscription, or parsing the response:', error);
+        throw error;
+    }
+}
+
+/**
+ * Returns data from the company of the current logged-in huurbeheerder.
+ * 
+ * @returns Object
+ */
+async function getBedrijf() {
+    try {
+        const response = await fetch('https://localhost:53085/api/HuurBeheerder/bedrijf', {
+            method: 'GET',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('error when requesting the company\'s name, or parsing the response:', error);
         throw error;
     }
 }
