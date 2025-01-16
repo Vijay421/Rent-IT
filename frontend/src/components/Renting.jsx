@@ -281,7 +281,7 @@ function Renting() {
             <div className="divMargin"></div>
             <div className="divMain">
                 {sortedVehicles.length === 0 ? (
-                    <span id="divMain-no-content__span">
+                    <span id="divMain-no-content__span" data-cy="no-vehicles-text">
                 Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
             </span>
                 ) : userRole !== "zakelijke_huurder" ? (
