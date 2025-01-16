@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json.Serialization;
 
 namespace backend.Models;
 
@@ -53,7 +54,7 @@ public class Voertuig
 
     public DateOnly? VerwijderdDatum { get; set; }
 
-
+    [JsonIgnore]
     public List<Huuraanvraag>? HuurAanvragen { get; set; }
 
     public Voertuig (int id, string merk, string type, string kenteken, string kleur, int aanschafjaar, string soort, string opmerking,
