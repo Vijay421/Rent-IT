@@ -95,7 +95,8 @@ namespace backend.Migrations
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prijs = table.Column<double>(type: "float", nullable: false),
                     StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
-                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
+                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    VerwijderdDatum = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,7 +152,7 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     ZakelijkeHuurder = table.Column<int>(type: "int", nullable: true),
-                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    VoertuigId = table.Column<int>(type: "int", nullable: true),
                     Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Wettelijke_naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -178,7 +179,7 @@ namespace backend.Migrations
                         column: x => x.VoertuigId,
                         principalTable: "Voertuigen",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

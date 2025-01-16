@@ -274,5 +274,57 @@ namespace backend.Controllers
 
             return Ok(users);
         }
+
+        /// <summary>
+        /// Returns the rent history of the current logged-in user.
+        /// </summary>
+        [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
+        [HttpGet("rent-history")]
+        public async Task<ActionResult<IEnumerable<HuuraanvraagGeschiedenisDTO>>> GetRentHistory()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+            await _context.Entry(user).Reference(u => u.ZakelijkeHuurder).LoadAsync();
+            if (user.ParticuliereHuurder == null && user.ZakelijkeHuurder == null)
+            {
+                return Ok(new Huuraanvraag[] { });
+            }
+
+            var pId = user.ParticuliereHuurder?.Id;
+            var zId = user.ZakelijkeHuurder?.Id;
+
+            var huuraanvragen = await _context
+                .Huuraanvragen
+                .Where(h => h.ParticuliereHuurderId == pId || h.ZakelijkeHuurder == zId)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var huuraanvragenDTOs = huuraanvragen.Select(h => new HuuraanvraagGeschiedenisDTO
+            {
+                Startdatum = h.Startdatum,
+                Einddatum = h.Einddatum,
+                Reisaard = h.Reisaard,
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kenteken = h.Voertuig.Kenteken,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Soort = h.Voertuig.Soort,
+                Prijs = h.Voertuig.Prijs,
+            });
+
+            return Ok(huuraanvragenDTOs);
+        }
     }
 }
