@@ -13,6 +13,7 @@ namespace backend.DTOs
 
         [Range(1, 1000)]
         public required int Max_huurders { get; set; }
+        public required DateOnly Startdatum { get; set; }
         public required DateOnly Einddatum { get; set; }
         public required string Soort { get; set; } // pay as you go / prepaid
     }

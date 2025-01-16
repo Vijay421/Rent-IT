@@ -8,27 +8,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class added_seeding_data : Migration
+    public partial class addedseedingdata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
                 table: "Abonnementen",
-                columns: new[] { "Id", "Einddatum", "Geaccepteerd", "HuurbeheerderId", "Max_huurders", "Naam", "Prijs_per_maand", "Reden", "Soort" },
-                values: new object[] { 1, new DateOnly(2026, 1, 1), null, null, 10, "abbo", 12.199999999999999, null, "prepaid" });
+                columns: new[] { "Id", "Einddatum", "Geaccepteerd", "HuurbeheerderId", "Max_huurders", "Naam", "Prijs_per_maand", "Reden", "Soort", "Startdatum" },
+                values: new object[] { 1, new DateOnly(2026, 1, 1), null, null, 10, "abbo", 12.199999999999999, null, "prepaid", new DateOnly(2025, 5, 12) });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0985a118-7759-4cf4-b9f2-b29087d1a247", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
-                    { "25995955-a4b5-4b10-8e5e-a47b7f8dce53", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
-                    { "3e22c81c-fed9-4211-b8ce-a74f1dfb823b", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
-                    { "5c9fd841-75b4-469d-a6cd-831cb4b21f43", null, "admin", "ADMIN" },
-                    { "8c0aba69-353d-4fa9-a628-dfd7cc1e79b9", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
-                    { "d151c634-0f0d-4074-9382-d81d3eaddf24", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" }
+                    { "05cb68f6-e46c-48e0-ba04-ce2ea2936b7b", null, "frontoffice_medewerker", "FRONTOFFICE_MEDEWERKER" },
+                    { "301727da-a6c6-4e25-85f8-611472b4e80d", null, "backoffice_medewerker", "BACKOFFICE_MEDEWERKER" },
+                    { "3ce3efd2-77a1-41a5-a163-7e322ae2de15", null, "zakelijke_beheerder", "ZAKELIJKE_BEHEERDER" },
+                    { "9d1ed3fe-5dbd-4cfd-8100-64b724069246", null, "particuliere_huurder", "PARTICULIERE_HUURDER" },
+                    { "c2b35cab-f0b0-4f42-a8b0-a449118655c7", null, "zakelijke_huurder", "ZAKELIJKE_HUURDER" },
+                    { "fbad59b0-115a-4f4e-a679-0c2277111209", null, "admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -57,32 +57,32 @@ namespace backend.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "0985a118-7759-4cf4-b9f2-b29087d1a247");
+                keyValue: "05cb68f6-e46c-48e0-ba04-ce2ea2936b7b");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "25995955-a4b5-4b10-8e5e-a47b7f8dce53");
+                keyValue: "301727da-a6c6-4e25-85f8-611472b4e80d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "3e22c81c-fed9-4211-b8ce-a74f1dfb823b");
+                keyValue: "3ce3efd2-77a1-41a5-a163-7e322ae2de15");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5c9fd841-75b4-469d-a6cd-831cb4b21f43");
+                keyValue: "9d1ed3fe-5dbd-4cfd-8100-64b724069246");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8c0aba69-353d-4fa9-a628-dfd7cc1e79b9");
+                keyValue: "c2b35cab-f0b0-4f42-a8b0-a449118655c7");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d151c634-0f0d-4074-9382-d81d3eaddf24");
+                keyValue: "fbad59b0-115a-4f4e-a679-0c2277111209");
 
             migrationBuilder.DeleteData(
                 table: "Voertuigen",

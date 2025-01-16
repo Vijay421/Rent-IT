@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250114095050_added_models")]
-    partial class added_models
+    [Migration("20250116101045_added-models")]
+    partial class addedmodels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,6 +193,9 @@ namespace backend.Migrations
                     b.Property<string>("Soort")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Startdatum")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class added_models : Migration
+    public partial class addedmodels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -191,6 +191,7 @@ namespace backend.Migrations
                     Naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Prijs_per_maand = table.Column<double>(type: "float", nullable: false),
                     Max_huurders = table.Column<int>(type: "int", nullable: false),
+                    Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Soort = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Geaccepteerd = table.Column<bool>(type: "bit", nullable: true),

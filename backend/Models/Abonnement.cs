@@ -20,6 +20,8 @@ namespace backend.Models
         [Range(1, 1000)]
         public required int Max_huurders { get; set; }
 
+        public required DateOnly Startdatum { get; set; }
+        
         public required DateOnly Einddatum { get; set; }
 
         [MinLength(2)]
