@@ -1,7 +1,7 @@
 import '../styles/SubscriptionRequest.css';
 import { useEffect, useRef, useState } from "react";
 import styles from "./Profile/ProfilePageBase.module.css";
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
 function SubscriptionRequest() {
     const location = useLocation();

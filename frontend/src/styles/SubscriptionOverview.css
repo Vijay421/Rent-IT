@@ -1,0 +1,65 @@
+.subs_overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 3em;
+}
+
+
+.overview_sub{
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    width: 40vw;
+    margin-top:0.5%;
+    padding-bottom: 0.5%;
+    text-align: center;    
+}
+
+.overview_title{
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.button {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 90%;
+    height: 40px;
+    font-size: 1.3rem;
+    border-radius: 0.5vw;
+    border: transparent;
+    margin-top: 20px;
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: var(--tertiary-color);
+}
+
+@media only screen and (max-width: 600px) {
+    .subs_overview {
+        flex-direction: column;
+    }
+
+    .overview_sub{
+        width: 100%;
+    }
+}
+
+.prijs__text {
+    font-size: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.horizontal-line {
+    border: none;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+

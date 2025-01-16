@@ -74,14 +74,14 @@
     font-weight: bold;
 }
 
-label {
+.formGroup label {
     text-align: left;
     margin-bottom: 5px;
 }
 
-input,
-select,
-textarea {
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
     width: 100%;
     max-width: 625px;
     min-width: 250px;
@@ -92,7 +92,7 @@ textarea {
     font-size: 1rem;
 }
 
-textarea {
+.formGroup textarea {
     resize: vertical;
     height: 100px;
 }

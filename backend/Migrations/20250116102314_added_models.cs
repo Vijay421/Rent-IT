@@ -92,7 +92,7 @@ namespace backend.Migrations
                     Aanschafjaar = table.Column<int>(type: "int", nullable: false),
                     Soort = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Opmerking = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prijs = table.Column<double>(type: "float", nullable: false),
                     StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
                     EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
@@ -175,6 +175,48 @@ namespace backend.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Huuraanvragen_Voertuigen_VoertuigId",
+                        column: x => x.VoertuigId,
+                        principalTable: "Voertuigen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schadeclaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    Datum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Beschrijving = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Foto = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schadeclaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Schadeclaims_Voertuigen_VoertuigId",
+                        column: x => x.VoertuigId,
+                        principalTable: "Voertuigen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Voertuigregistraties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    Inname = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Voertuigregistraties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Voertuigregistraties_Voertuigen_VoertuigId",
                         column: x => x.VoertuigId,
                         principalTable: "Voertuigen",
                         principalColumn: "Id",
@@ -459,6 +501,16 @@ namespace backend.Migrations
                 column: "BedrijfId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Schadeclaims_VoertuigId",
+                table: "Schadeclaims",
+                column: "VoertuigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Voertuigregistraties_VoertuigId",
+                table: "Voertuigregistraties",
+                column: "VoertuigId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ZakelijkeHuurders_AbonnementId",
                 table: "ZakelijkeHuurders",
                 column: "AbonnementId");
@@ -489,6 +541,12 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Huuraanvragen");
+
+            migrationBuilder.DropTable(
+                name: "Schadeclaims");
+
+            migrationBuilder.DropTable(
+                name: "Voertuigregistraties");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

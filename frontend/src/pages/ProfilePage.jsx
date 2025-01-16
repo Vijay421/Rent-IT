@@ -8,14 +8,14 @@ import ProfilePageFrontOffice from "../components/Profile/ProfilePageFrontOffice
 import ProfilePageBackOffice from "../components/Profile/ProfilePageBackOffice.jsx";
 import {useContext} from "react";
 import { UserContext } from "../components/UserContext.jsx";
+import  { Navigate } from 'react-router-dom';
 
 export default function ProfilePage() {
     const { userRole } = useContext(UserContext);
     console.log(userRole);
 
     if (userRole === null) {
-        // TODO: redirect to index page, because user is not logged in.
-        console.log('user is null');
+        return <Navigate to='/'/>
     }
 
     return (
