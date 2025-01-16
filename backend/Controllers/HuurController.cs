@@ -204,11 +204,11 @@ public class HuurController : ControllerBase
         if (huuraanvraagDto.VoertuigId > 0)
         {
             var vehicle = await _context.Voertuigen.FindAsync(huuraanvraagDto.VoertuigId);
-            if (vehicle == null)
+            if (vehicle == null || vehicle.VerwijderdDatum != null)
             {
-                return BadRequest("Voertuig niet gevonden.");
+                return NotFound("Voertuig niet gevonden.");
             }
-            
+
             vehicle.Status = "Onverhuurbaar";
             _context.Voertuigen.Update(vehicle);
         }

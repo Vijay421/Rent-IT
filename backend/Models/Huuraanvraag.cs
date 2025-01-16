@@ -12,8 +12,7 @@ namespace backend.Models
         public int? ParticuliereHuurderId { get; set; }
         public int? ZakelijkeHuurder { get; set; }
 
-        [Required]
-        public int VoertuigId { get; set; }
+        public int? VoertuigId { get; set; }
 
         public Voertuig? Voertuig { get; set; }
 
