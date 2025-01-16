@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import { useEffect, useRef, useState } from "react";
@@ -60,6 +62,10 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
     const navigate = useNavigate();
 
     const userSearchId = `users-list-${subId}`;
+
+    const amountOfDays = Math.floor((new Date(data.einddatum) - new Date(data.startdatum)) / (1000 * 60 * 60 * 24));
+    const amountOfMonths = Math.floor(amountOfDays / 30);
+    const leftOverDays = amountOfDays % 30;
 
     function handleSelectedRenter(e) {
         const id = e.target.value;
@@ -155,110 +161,143 @@ function Subscription({ data, renters, subId, setSubs, initialRenters, beheederN
     }
 
     return (
-        <div className="subs__item">
-            <div className="subs__box">
-                <p className="subs__item-label">Naam</p>
-                <p>{data.naam}</p>
-            </div>
+        <>
+            <div className="subs-container__div">
+                <div className="subs__item">
+                    <div className="subs__box">
+                        <p className="subs__item-label">Naam</p>
+                        <p>{data.naam}</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Prijs per maand</p>
-                <p>{data.prijsPerMaand}</p>
-            </div>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Soort</p>
+                        <p>{data.soort === "pay_as_you_go" ? "Pay as you go" : "Prepaid"}</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Maximaal aantal huurder</p>
-                <p>{data.maxHuurders}</p>
-            </div>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Startdatum</p>
+                        <p>{data.startdatum}</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Einddatum</p>
-                <p>{data.einddatum}</p>
-            </div>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Einddatum</p>
+                        <p>{data.einddatum}</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Soort</p>
-                <p>{data.soort}</p>
-            </div>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Prijs per maand</p>
+                        <p>€ {data.soort === "pay_as_you_go"
+                            ?
+                            (data.maxHuurders * 30).toFixed(2)
+                            :
+                            (data.maxHuurders * 25).toFixed(2)
+                        }</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Status</p>
-                <p>{getStatusText(data.geaccepteerd)}</p>
-            </div>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Totale prijs</p>
+                        <p>€ {data.soort === "pay_as_you_go"
+                            ?
+                            ((data.maxHuurders * amountOfMonths * 30) + (data.maxHuurders * leftOverDays * (30 / 30))).toFixed(2)
+                            :
+                            ((data.maxHuurders * amountOfMonths * 25) + (data.maxHuurders * leftOverDays * (25 / 30))).toFixed(2)
+                        }</p>
+                    </div>
 
-            <div className="subs__box">
-                <p className="subs__item-label">Zakelijke huurders</p>
-                <input
-                    list={userSearchId}
-                    onChange={(e) => setSearchedEmail(e.target.value)}
-                    onKeyUp={handleEmailSearch}
-                    data-cy="user-search"
-                    placeholder="Voer het emailadres in"
-                />
-                <datalist id={userSearchId}>
-                    <>
-                        {
-                            renters.map((data, key) => (
-                                <option key={key} value={data.email}>{data.email}</option>
-                            ))
-                        }
-                    </>
-                </datalist>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Maximaal aantal huurders</p>
+                        <p>{data.maxHuurders}</p>
+                    </div>
 
-                <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
-                    <option value={null}>Geen</option>
-                    {
-                        renters.map((data, key) => (
-                            <option key={key} value={data.id}>{data.userName}</option>
-                        ))
-                    }
-                </select>
-
-                {
-                    selectedRenters.length === 0 ? <></> : (
-                        <>
-                            <p className="subs__item-label">Geselecteerd</p>
-                            <ul>
+                    <div className="subs__box">
+                        <p className="subs__item-label">Status</p>
+                        <p>{getStatusText(data.geaccepteerd)}</p>
+                    </div>
+                </div>
+                <div className="subs-zakelijke-huurders">
+                    <div className="zakelijke-huurders-container__div">
+                        <p className="subs__item-label">Gebruikers toevoegen aan abonnement</p>
+                        <input
+                            list={userSearchId}
+                            onChange={(e) => setSearchedEmail(e.target.value)}
+                            onKeyUp={handleEmailSearch}
+                            data-cy="user-search"
+                            placeholder="Voer het emailadres in"
+                        />
+                        <datalist id={userSearchId}>
+                            <>
                                 {
-                                    renters
-                                        .filter(renter => selectedRenters.includes(renter.id))
-                                        .map((data, key) => (
-                                            <li key={key} className="subs__item-renter">
-                                                <p>{ data.userName }</p>
-                                                <button onClick={() => RemoveSelectedRenter(data.id)} data-cy="remove" >Verwijder</button>
-                                            </li>
-                                        ))
+                                    renters.map((data, key) => (
+                                        <option key={key} value={data.email}>{data.email}</option>
+                                    ))
                                 }
-                            </ul>
-                        </>
-                    )
-                }
-            </div>
+                            </>
+                        </datalist>
 
-            <button onClick={handleSave} data-cy="save" >Opslaan</button>
-            <button onClick={() => handleDeleteSubscription(subId)} data-cy="delete-subscription" >Verwijder abonnement</button>
-            <button onClick={() => navigate("/abonnement", { state: { pageData: data } })} data-cy="edit-subscription">Aanpassen</button>
-        </div>
+                        <select ref={selectElement} onChange={handleSelectedRenter} data-cy="select-renter">
+                            <option value={null}>Geen</option>
+                            {
+                                renters.map((data, key) => (
+                                    <option key={key} value={data.id}>{data.userName}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                    <div className="selected-huurders-container__div">
+                    {
+                        selectedRenters.length === 0 ? <></> : (
+                            <>
+                                <p className="subs__item-label">Geselecteerd</p>
+                                <ul>
+                                    {
+                                        renters
+                                            .filter(renter => selectedRenters.includes(renter.id))
+                                            .map((data, key) => (
+                                                <li key={key} className="subs__item-renter">
+                                                    <p>{data.userName}</p>
+                                                    <button onClick={() => RemoveSelectedRenter(data.id)}
+                                                            data-cy="remove">Verwijder
+                                                    </button>
+                                                </li>
+                                            ))
+                                    }
+                                </ul>
+                            </>
+                        )
+                    }
+                    </div>
+                </div>
+
+                <div className='subs-action-buttons__div'>
+                    <button onClick={handleSave} data-cy="save">Opslaan</button>
+                    <button onClick={() => handleDeleteSubscription(subId)} data-cy="delete-subscription">Verwijder abonnement
+                    </button>
+                    <button onClick={() => navigate("/abonnement", {state: {pageData: data}})}
+                            data-cy="edit-subscription">Aanpassen
+                    </button>
+                </div>
+            </div>
+        </>
     );
 }
 
 /**
  * Returns a string containing the correct status message,
  * which should be used to display the status in the ui.
- * 
+ *
  * @param {string} status 
  * @returns string
  */
 function getStatusText(status) {
     switch (status) {
         case true:
-            return "geaccepteerd";
+            return "Geaccepteerd";
 
         case false:
-            return "niet geaccepteerd";
+            return "Niet geaccepteerd";
 
         default:
-            return "in behandeling";
+            return "In behandeling";
     }
 }
 

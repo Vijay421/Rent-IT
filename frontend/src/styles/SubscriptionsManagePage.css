@@ -9,7 +9,7 @@
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
     height: auto;
-    width: 80%;
+    width: 25%;
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 10px 0;
@@ -19,10 +19,11 @@
 .subs__subs {
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
-    border: 2px solid black;
-    min-height: 35em;
+    border: 3px solid black;
+    border-radius: 6px;
+    min-height: 5em;
     height: auto;
-    width: 80%;
+    width: 60%;
     margin-bottom: 30px;
 }
 
@@ -33,25 +34,95 @@
 }
 
 .subs__box {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.subs-container__div {
+    border: 2px solid black;
+    background-color: #f1f1f1;
+    width: 98%;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    margin: 8px auto;
 }
 
 .subs__item {
-    margin: 15px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
     width: 80%;
     border-radius: 5px;
-    background-color: #f1f1f1;
-    border: 2px solid black;
     padding: 15px;
+    gap: 6px;
+    font-size: 1.3em;
 }
 
 .subs__item-label {
     color: dimgray;
     margin-top: 5px;
+    text-align: center;
 }
 
 .subs__item-renter {
     display: flex;
+}
+
+.subs-zakelijke-huurders {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70%;
+    font-size: 1.25em;
+}
+
+.selected-huurders-container__div,
+.zakelijke-huurders-container__div {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.zakelijke-huurders-container__div {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.zakelijke-huurders-container__div input {
+    width: 55%;
+    font-size: 0.75em;
+}
+
+.zakelijke-huurders-container__div select {
+    width: 30%;
+    font-size: 0.75em;
+}
+
+.selected-huurders-container__div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subs__item-renter {
+    gap: 5px;
+}
+
+.subs__item-renter button {
+    font-size: 0.75em;
+}
+
+.subs-action-buttons__div {
+    display: inline-flex;
+    margin: 10px auto;
+    gap: 2vw;
+    justify-content: space-evenly;
+}
+
+.subs-action-buttons__div button {
+    font-size: 1.3em;
 }
 
 @media only screen and (max-width: 400px) {

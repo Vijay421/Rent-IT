@@ -17,18 +17,21 @@ describe("Back office employees can assess subscriptions", () => {
         cy.log("to /abonnement page");
 
         cy.get("[data-cy='max-renters']").type("12");
+        cy.get("[data-cy='start-date']").type("2025-05-12");
         cy.get("[data-cy='end-date']").type("2025-06-25");
         cy.get("[data-cy='subscription-name']").type("testsubscription1");
         cy.get("[data-cy='prepaid']").click();
         cy.get("[data-cy='submit']").click();
 
         cy.get("[data-cy='max-renters']").clear().type("15");
+        cy.get("[data-cy='start-date']").type("2025-02-01");
         cy.get("[data-cy='end-date']").clear().type("2025-10-14");
         cy.get("[data-cy='subscription-name']").clear().type("testsubscription2");
         cy.get("[data-cy='pay-as-you-go']").click();
         cy.get("[data-cy='submit']").click();
 
         cy.get("[data-cy='max-renters']").clear().type("3");
+        cy.get("[data-cy='start-date']").type("2025-02-21");
         cy.get("[data-cy='end-date']").clear().type("2025-04-01");
         cy.get("[data-cy='subscription-name']").clear().type("testsubscription3");
         cy.get("[data-cy='prepaid']").click();

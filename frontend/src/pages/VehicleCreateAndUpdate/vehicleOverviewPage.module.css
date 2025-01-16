@@ -79,18 +79,18 @@
     margin-bottom: 5px;
 }
 
-.formGroup input,
-.formGroup select,
-.formGroup textarea {
-    width: 100%;
-    max-width: 625px;
-    min-width: 250px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1rem;
-}
+/*input,*/
+/*select,*/
+/*textarea {*/
+/*    width: 100%;*/
+/*    max-width: 625px;*/
+/*    min-width: 250px;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    box-sizing: border-box;*/
+/*    font-size: 1rem;*/
+/*}*/
 
 .formGroup textarea {
     resize: vertical;

@@ -53,7 +53,7 @@ namespace BackendTestProject.Controllers
 
             _context.Users.Add(new User { Id = "2", Email = "zuser2@google.com", ZakelijkeHuurder = zakelijkeHuurder1 });
             _context.Users.Add(new User { Id = "3", Email = "zuser2@otherCompany.com", ZakelijkeHuurder = zakelijkeHuurder2 });
-            _context.Abonnementen.Add(new Abonnement { Id = 1, HuurbeheerderId = 1, Naam = "A name", Prijs_per_maand = 50.0, Max_huurders = 20, Einddatum = new DateOnly(9999, 1, 1), Soort = "prepaid" });
+            _context.Abonnementen.Add(new Abonnement { Id = 1, HuurbeheerderId = 1, Naam = "A name", Prijs_per_maand = 50.0, Max_huurders = 20, Startdatum = new DateOnly(9998, 1, 1), Einddatum = new DateOnly(9999, 1, 1), Soort = "prepaid" });
             _context.SaveChanges();
 
             var store = new Mock<IUserStore<User>>();
