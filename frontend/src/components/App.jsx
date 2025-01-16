@@ -13,6 +13,7 @@ import VehicleCreateAndUpdate from "../pages/VehicleCreateAndUpdate";
 
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
+import SubscriptionOverviewPage from "../pages/SubscriptionOverviewPage.jsx";
 
 import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
@@ -27,6 +28,9 @@ import VerhuurdeVoertuigPage from "../pages/VerhuurdeVoertuigPage.jsx";
 import VoertuigStatenPage from "../pages/VoertuigStatenPage.jsx";
 import PrivacyPage from "../pages/PrivacyPage.jsx";
 import AbonnementOverzichtPage from "../pages/AbonnementOverzichtPage.jsx";
+
+import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
+import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
 
 function App() {
     return (
@@ -54,6 +58,9 @@ function App() {
                 <Route path="/reserveringen" element=           {<ReserveringPage/>}/>
                 <Route path="/reservering-wijziging" element=   {<ReserveringWijzigingPage/>}/>
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
+                <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
+                <Route path="/frontoffice/uitgave" element= {<FrontofficeExpenditurePage/>}/>
+
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
                 <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>

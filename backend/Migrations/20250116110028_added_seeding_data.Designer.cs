@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    partial class RentalContextModelSnapshot : ModelSnapshot
+    [Migration("20250116110028_added_seeding_data")]
+    partial class added_seeding_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,37 +54,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fbad59b0-115a-4f4e-a679-0c2277111209",
+                            Id = "5bf2ccca-e980-468f-9c54-fddd2a08765c",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "301727da-a6c6-4e25-85f8-611472b4e80d",
+                            Id = "b7add1de-42c5-480e-abbe-085ad4a9c739",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "05cb68f6-e46c-48e0-ba04-ce2ea2936b7b",
+                            Id = "6747f0cd-fd93-4984-9e13-f1a3b8d88e58",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "3ce3efd2-77a1-41a5-a163-7e322ae2de15",
+                            Id = "30b84234-9aee-4b4d-b4ed-586e86408b52",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "c2b35cab-f0b0-4f42-a8b0-a449118655c7",
+                            Id = "fecfa64a-032b-4410-a630-931fa2d3a270",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "9d1ed3fe-5dbd-4cfd-8100-64b724069246",
+                            Id = "fdff1e3b-e3b7-418b-b5c0-c9cb0499ddc6",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -229,9 +232,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("Startdatum")
-                        .HasColumnType("date");
-
                     b.HasKey("Id");
 
                     b.HasIndex("HuurbeheerderId");
@@ -246,8 +246,7 @@ namespace backend.Migrations
                             Max_huurders = 10,
                             Naam = "abbo",
                             Prijs_per_maand = 12.199999999999999,
-                            Soort = "prepaid",
-                            Startdatum = new DateOnly(2025, 5, 12)
+                            Soort = "prepaid"
                         });
                 });
 

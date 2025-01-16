@@ -6,6 +6,8 @@
 # local config file
 local_config.json
 
+/privacyStatement.txt
+
 # dotenv files
 .env
 

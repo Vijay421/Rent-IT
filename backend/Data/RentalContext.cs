@@ -16,6 +16,7 @@ namespace backend.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Abonnement> Abonnementen { get; set; }
         public DbSet<Huuraanvraag> Huuraanvragen{ get; set; }
+        public DbSet<Schadeclaim> Schadeclaims{ get; set; }
         public DbSet<BackOfficeMedewerker> BackOfficeMedewerkers { get; set; }
         public DbSet<FrontOfficeMedewerker> FrontOfficeMedewerkers { get; set; }
         public DbSet<ParticuliereHuurder> ParticuliereHuurders { get; set; }
@@ -23,6 +24,7 @@ namespace backend.Data
         public DbSet<Huurbeheerder> Huurbeheerders { get; set; }
         public DbSet<Voertuig> Voertuigen { get; set; }
         public DbSet<Bedrijf> Bedrijven { get; set; }
+        public DbSet<Voertuigregistratie> Voertuigregistraties { get; set; }
 
         public RentalContext(DbContextOptions<RentalContext> contextOptions, IConfiguration configuration, IServiceProvider serviceProvider) : base(contextOptions)
         {
@@ -39,6 +41,12 @@ namespace backend.Data
                 .HasOne(z => z.Abonnement)
                 .WithMany(a => a.ZakelijkeHuurders)
                 .HasForeignKey(z => z.AbonnementId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Huuraanvraag>()
+                .HasOne(h => h.Voertuig)
+                .WithMany(v => v.HuurAanvragen)
+                .HasForeignKey(h => h.VoertuigId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/

@@ -2,7 +2,7 @@
 
 namespace backend.Models
 {
-    public class Schadeclaim
+    public class SchadeclaimDTO
     {
         public int Id { get; set; }
         [Required]

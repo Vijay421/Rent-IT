@@ -150,7 +150,6 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
     return true;
 }
 
-// TODO: handle server errors.
 /**
  * Will attempt to get the rent history from the server.
  * 
@@ -158,7 +157,7 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
  */
 async function getRentHistory() {
     try {
-        const response = await fetch('https://localhost:53085/api/ParticuliereUser/rent-history', {
+        const response = await fetch('https://localhost:53085/api/User/rent-history', {
             method: 'GET',
     
             // TODO: change to 'same-origin' when in production.
