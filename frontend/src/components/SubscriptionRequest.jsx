@@ -243,7 +243,7 @@ function SubscriptionRequest() {
                     </p>
                     <p className='totale-prijs__p' id='totale-prijs-desc__p'>
                         Totaal = maximum huurders x aantal dagen
-                        x {subscriptionType === "pay_as_you_go" ? "€ 30" : "€ 25"}
+                        x {subscriptionType === "pay_as_you_go" ? "€ 1" : "€ 0.83"}
                     </p>
                 </div>
                 {confirmationMessage && (
