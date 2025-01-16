@@ -51,37 +51,37 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fbad59b0-115a-4f4e-a679-0c2277111209",
+                            Id = "c5f6d9b9-3603-4190-8e75-5f18cd73cf30",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "301727da-a6c6-4e25-85f8-611472b4e80d",
+                            Id = "acf53c0d-0255-4116-b312-c3effbeea262",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "05cb68f6-e46c-48e0-ba04-ce2ea2936b7b",
+                            Id = "60dd67e7-cb77-43c9-afa3-60bb23365fa3",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "3ce3efd2-77a1-41a5-a163-7e322ae2de15",
+                            Id = "e748e103-b16e-4ea4-a2e1-4c20b34e487c",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "c2b35cab-f0b0-4f42-a8b0-a449118655c7",
+                            Id = "b2079f70-d7ec-434e-837c-5fabfb65bf40",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "9d1ed3fe-5dbd-4cfd-8100-64b724069246",
+                            Id = "cc43faae-0a2d-42e0-8383-e1cd9faa4bfd",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
