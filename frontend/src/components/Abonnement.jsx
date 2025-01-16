@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {useState} from "react";
 import PropTypes from "prop-types";
 import downloadFile from "../scripts/downloadFile";
@@ -5,6 +7,10 @@ import downloadFile from "../scripts/downloadFile";
 export default function Abonnement({data, onUpdate}) {
     const statusText = document.getElementById("abonnement-keuren-status__span");
     const [reden, setReden] = useState("");
+
+    const amountOfDays = Math.floor((new Date(data.einddatum) - new Date(data.startdatum)) / (1000 * 60 * 60 * 24));
+    const amountOfMonths = Math.floor(amountOfDays / 30);
+    const leftOverDays = amountOfDays % 30;
 
     async function saveAbonnement(payload) {
         const goedkeurenButton = document.getElementById(`abonnement-keuren-goedkeuren__button-${payload.id}`);
@@ -118,18 +124,44 @@ export default function Abonnement({data, onUpdate}) {
         <div key={data.id} className="abonnement-content-box__div">
             <h2 className='abonnement-content-box__h2'>{data.naam}</h2>
             <div className='abonnement-content__div' data-cy='abonnement-content-div'>
-                <p className='abonnement-content__p' id='abonnement-content-prijs' data-cy='abonnement-content-ppm'><b>Prijs per
-                    maand:</b> € {data.prijsPerMaand.toFixed(2)}</p>
                 <p className='abonnement-content__p' id='abonnement-content-soort' data-cy='abonnement-content-soort'>
-                    <b>Soort
-                        abonnement:</b> {data.soort === "pay_as_you_go" ? "Pay as you go" : "Prepaid"}
+                    <b>Soort abonnement:</b> {data.soort === "pay_as_you_go" ? "Pay as you go" : "Prepaid"}
                 </p>
-                <p className='abonnement-content__p' id='abonnement-content-eindDatum' data-cy='abonnement-content-einddatum'><b>Eind
-                    datum:</b> {data.einddatum}</p>
-                <p className='abonnement-content__p' id='abonnement-content-maxHuurders' data-cy='abonnement-content-maxHuurders'><b>Max
+
+                <p className='abonnement-content__p' id='abonnement-content-maxHuurders'
+                   data-cy='abonnement-content-maxHuurders'><b>Max
                     huurders:</b> {data.maxHuurders}</p>
-                <p className='abonnement-content__p' id='abonnement-content-geaccepteerd' data-cy='abonnement-content-geaccepteerd'><b>Status:</b> {data.geaccepteerd === null ? "Nog niet beoordeeld" : data.geaccepteerd ? "Goedgekeurd" : "Afgekeurd"}</p>
-                <p className='abonnement-content__p' id='abonnement-content-reden' data-cy='abonnement-content-reden'><b>Reden:</b> {data.reden}</p>
+
+
+                <p className='abonnement-content__p' id='abonnement-content-startDatum'
+                   data-cy='abonnement-content-startdatum'><b>Eind
+                    datum:</b> {data.startdatum}</p>
+
+                <p className='abonnement-content__p' id='abonnement-content-eindDatum'
+                   data-cy='abonnement-content-einddatum'><b>Eind
+                    datum:</b> {data.einddatum}</p>
+
+                <p className='abonnement-content__p' id='abonnement-content-prijs' data-cy='abonnement-content-ppm'><b>Prijs
+                    per maand:</b> € {data.soort === "pay_as_you_go"
+                    ?
+                    (data.maxHuurders * 30).toFixed(2)
+                    :
+                    (data.maxHuurders * 25).toFixed(2)
+                }</p>
+
+                <p className='abonnement-content__p' id='abonnement-content-totale-prijs' data-cy='abonnement-content-totale'><b>Totale prijs:</b> € {data.soort === "pay_as_you_go"
+                    ?
+                    ((data.maxHuurders * amountOfMonths * 30) + (data.maxHuurders * leftOverDays * (30 / 30))).toFixed(2)
+                    :
+                    ((data.maxHuurders * amountOfMonths * 25) + (data.maxHuurders * leftOverDays * (25 / 30))).toFixed(2)
+                }</p>
+
+                <p className='abonnement-content__p' id='abonnement-content-geaccepteerd'
+                   data-cy='abonnement-content-geaccepteerd'>
+                    <b>Status:</b> {data.geaccepteerd === null ? "Nog niet beoordeeld" : data.geaccepteerd ? "Goedgekeurd" : "Afgekeurd"}
+                </p>
+                <p className='abonnement-content__p' id='abonnement-content-reden' data-cy='abonnement-content-reden'>
+                    <b>Reden:</b> {data.reden}</p>
             </div>
             <div className="abonnement-keuren__div">
 
