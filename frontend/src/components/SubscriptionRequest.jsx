@@ -1,7 +1,7 @@
 import '../styles/SubscriptionRequest.css';
 import { useEffect, useRef, useState } from "react";
 import styles from "./Profile/ProfilePageBase.module.css";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 function SubscriptionRequest() {
     const location = useLocation();
@@ -9,15 +9,21 @@ function SubscriptionRequest() {
     console.log(location.state?.pageData);
     const mode = pageData ? "update" : "create";
 
+
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
     const [adress, setAdress] = useState("");
     const [kvkNumber, setKvkNumber] = useState("");
     const [maxSubs, setMaxSubs] = useState(pageData?.maxHuurders ? pageData?.maxHuurders : "");
+    const [startDate, setStartDate] = useState(pageData?.startdatum ? pageData?.startdatum : "");
     const [endDate, setEndDate] = useState(pageData?.einddatum ? pageData?.einddatum : "");
     const [subName, setSubName] = useState(pageData?.naam ? pageData?.naam : "");
     const [subscriptionType, setSubscriptionType] = useState(pageData?.soort ? pageData?.soort : "");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const form = useRef(null);
+
+    const amountOfDays = Math.floor((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24));
+    const amountOfMonths = Math.floor(amountOfDays / 30);
+    const leftOverDays = amountOfDays % 30;
 
     useEffect(() => {
         const getData = async () => {
@@ -47,6 +53,17 @@ function SubscriptionRequest() {
     }
 
     async function handleSubmit() {
+        if (startDate !== "") {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Beginning of the day.
+            const startDateObj = new Date(startDate);
+
+            if (startDateObj < today) {
+                window.alert("Startdatum kan niet eerder zijn dan vandaag");
+                return;
+            }
+        }
+
         if (endDate !== "") {
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Beginning of the day.
@@ -65,6 +82,7 @@ function SubscriptionRequest() {
 
         if (
             maxSubs &&
+            startDate &&
             endDate &&
             subName &&
             subscriptionType
@@ -72,6 +90,7 @@ function SubscriptionRequest() {
             const payload = {
                 naam: subName,
                 max_huurders: maxSubs,
+                startdatum: startDate,
                 einddatum: endDate,
                 soort: subscriptionType,
             };
@@ -95,7 +114,8 @@ function SubscriptionRequest() {
 
     return (
         <main className={styles.MainDiv}>
-            <p className="MainDiv__Text">Vul hieronder de gegevens in om een abonnement aan te vragen.</p>
+            <h1 className="MainDiv__h1">Abonnementsaanvraag</h1>
+            <h2 className="MainDiv__h2">Vul hieronder de gegevens in om een abonnement aan te vragen.</h2>
 
             <form
                 ref={form}
@@ -156,6 +176,19 @@ function SubscriptionRequest() {
                         data-cy="max-renters"
                     />
 
+                    <label htmlFor="abonnement__start-date" className="form__text">Startdatum:</label>
+                    <input
+                        id="abonnement__start-date"
+                        className="abonnement__start-date"
+                        type="date"
+                        required
+                        value={startDate}
+                        onChange={(e) => {
+                            setStartDate(e.target.value);
+                        }}
+                        data-cy="start-date"
+                    />
+
                     <label htmlFor="abonnement__end-date" className="form__text">Einddatum:</label>
                     <input
                         id="abonnement__end-date"
@@ -164,7 +197,7 @@ function SubscriptionRequest() {
                         required
                         value={endDate}
                         onChange={(e) => {
-                            setEndDate(e.target.value)
+                            setEndDate(e.target.value);
                         }}
                         data-cy="end-date"
                     />
@@ -180,20 +213,38 @@ function SubscriptionRequest() {
                         value={subName}
                         required
                         onChange={(e) => {
-                            setSubName(e.target.value)
+                            setSubName(e.target.value);
                         }}
                         data-cy="subscription-name"
                     />
 
-                    <label htmlFor="subscription-type" className="form__text">Type Abonnement:</label>
+                    <label htmlFor="subscription-type" className="form__text" id='type-abonnement__label'>Type
+                        Abonnement:</label>
                     <div className="radio-group" onChange={handleSubscriptionType}>
                         <label>
-                            <input defaultChecked={pageData?.soort === "pay_as_you_go"} type="radio" id="PayAsYouGo" name="subscriptionType" value="pay_as_you_go" data-cy="pay-as-you-go" required/> Pay as you go
+                            <input defaultChecked={pageData?.soort === "pay_as_you_go"} type="radio" id="PayAsYouGo"
+                                   name="subscriptionType" value="pay_as_you_go" data-cy="pay-as-you-go" required/> Pay
+                            as you go
                         </label>
                         <label>
-                            <input defaultChecked={pageData?.soort === "prepaid"} type="radio" id="Prepaid" name="subscriptionType" value="prepaid" data-cy="prepaid"/> Prepaid
+                            <input defaultChecked={pageData?.soort === "prepaid"} type="radio" id="Prepaid"
+                                   name="subscriptionType" value="prepaid" data-cy="prepaid"/> Prepaid
                         </label>
                     </div>
+
+                    <p className="totale-prijs__p" id='totale-prijs__p'>
+                        <b>Totale prijs:</b> € {
+                        startDate && endDate
+                            ? subscriptionType === "pay_as_you_go"
+                                ? ((maxSubs * amountOfMonths * 30) + (maxSubs * leftOverDays * (30 / 30))).toFixed(2)
+                                : ((maxSubs * amountOfMonths * 25) + (maxSubs * leftOverDays * (25 / 30))).toFixed(2)
+                            : "0.00"
+                    }
+                    </p>
+                    <p className='totale-prijs__p' id='totale-prijs-desc__p'>
+                        Totaal = maximum huurders x aantal dagen
+                        x {subscriptionType === "pay_as_you_go" ? "€ 30" : "€ 25"}
+                    </p>
                 </div>
                 {confirmationMessage && (
                     <p
@@ -203,7 +254,7 @@ function SubscriptionRequest() {
                                 : "error"
                         }`}
                     >
-                        {confirmationMessage}
+                    {confirmationMessage}
                     </p>
                 )}
 
