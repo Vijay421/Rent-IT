@@ -13,7 +13,7 @@
 
 .MainDiv {
     background-color: var(--main-color);
-    width: 50%;
+    width: 30%;
     height: auto;
     margin: 25px auto;
     display: flex;
@@ -24,9 +24,10 @@
     border-radius: 10px;
 }
 
-.MainDiv-TextWelkom {
-    margin: 0 0 1em 0;
+.MainDivTextWelkom {
+    margin: 20px 0;
     text-align: center;
+    font-size: 2em;
 }
 
 
