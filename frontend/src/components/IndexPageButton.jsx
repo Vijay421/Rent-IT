@@ -1,10 +1,7 @@
 import '../styles/IndexPageButton.css';
-import {Link, useNavigate} from "react-router-dom";
-import {useContext} from "react";
-import {AuthContext} from "./AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 function IndexPageButton() {
-    const { isLoggedIn } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
