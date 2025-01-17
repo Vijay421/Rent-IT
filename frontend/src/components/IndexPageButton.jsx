@@ -6,22 +6,35 @@ function IndexPageButton() {
         <div className="Content">
             <div className="MainDivLeft">
                 <div className="ParticulierDiv">
-                    <h1 className="ParticulierH1">Particulier</h1>
+                    <pre className="ParticulierH1">Start met huren!</pre>
+                </div>
+                <div className="infoDivLeft">
+                    <pre className="infoDivLeft__Text">Huur nu zonder account!</pre>
                 </div>
                 <Link to='/huur-overzicht'>
                     <div className="ButtonDivLeft">
-                        <h1 className="BottomDivLeftHuren">Huren</h1>
+                        <pre className="BottomDivLeftHuren">Huren</pre>
                     </div>
                 </Link>
             </div>
             <div className="MainDivRight">
                 <div className="ZakelijkDiv">
-                    <h1 className="ZakelijkH1">Zakelijk</h1>
+                    <h1 className="ZakelijkH1">Registreren!</h1>
                 </div>
-
-                <Link to='/huur-overzicht'>
-                    <div className="ButtonDivRight">
-                        <h1 className="BottomDivRightHuren">Huren</h1>
+                <div className="infoDivRight__Top">
+                    <pre className="infoDivRight__Text">Registreer als particuliere huurder. Hierbij krijgt u toegang tot een persoonlijk huur dashboard.</pre>
+                </div>
+                <div className="infoDivRight__Bottom">
+                    <pre className="infoDivRight__Text">Registreer als bedrijf. Hierbij kunt u werknemers toevoegen aan een abonnement.</pre>
+                </div>
+                <Link to='/registreren'>
+                    <div className="ButtonDivRight__Particulier">
+                        <pre className="BottomDivRightRegistreren">Als Particulier</pre>
+                    </div>
+                </Link>
+                <Link to='/*'>
+                    <div className="ButtonDivRight__Bedrijfsaccount">
+                        <pre className="BottomDivRightRegistreren">Als Bedrijf</pre>
                     </div>
                 </Link>
             </div>
