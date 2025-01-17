@@ -13,7 +13,6 @@ import VehicleCreateAndUpdate from "../pages/VehicleCreateAndUpdate";
 
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
-import SubscriptionOverviewPage from "../pages/SubscriptionOverviewPage.jsx";
 
 import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
