@@ -283,6 +283,7 @@ namespace backend.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BackOfficeId = table.Column<int>(type: "int", nullable: true),
                     FrontOfficeId = table.Column<int>(type: "int", nullable: true),
+                    BedrijfId = table.Column<int>(type: "int", nullable: true),
                     ZakelijkeHuurderId = table.Column<int>(type: "int", nullable: true),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
@@ -308,6 +309,11 @@ namespace backend.Migrations
                         name: "FK_AspNetUsers_BackOfficeMedewerkers_BackOfficeId",
                         column: x => x.BackOfficeId,
                         principalTable: "BackOfficeMedewerkers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Bedrijven_BedrijfId",
+                        column: x => x.BedrijfId,
+                        principalTable: "Bedrijven",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_FrontOfficeMedewerkers_FrontOfficeId",
@@ -457,6 +463,11 @@ namespace backend.Migrations
                 name: "IX_AspNetUsers_BackOfficeId",
                 table: "AspNetUsers",
                 column: "BackOfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_BedrijfId",
+                table: "AspNetUsers",
+                column: "BedrijfId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_FrontOfficeId",

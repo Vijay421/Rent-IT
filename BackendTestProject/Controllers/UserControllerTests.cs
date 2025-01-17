@@ -11,6 +11,7 @@ using Moq;
 using backend.DTOs;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Http;
+using backend.Models.Rollen;
 
 namespace BackendTestProject.Controllers
 {

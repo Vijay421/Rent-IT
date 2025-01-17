@@ -34,6 +34,11 @@ namespace backend.Data
                 },
                 new IdentityRole
                 {
+                    Name = "bedrijf",
+                    NormalizedName = "BEDRIJF",
+                },
+                new IdentityRole
+                {
                     Name = "zakelijke_huurder",
                     NormalizedName = "ZAKELIJKE_HUURDER",
                 },
