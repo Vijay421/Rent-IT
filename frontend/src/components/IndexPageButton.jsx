@@ -32,7 +32,7 @@ function IndexPageButton() {
                         <pre className="BottomDivRightRegistreren">Als Particulier</pre>
                     </div>
                 </Link>
-                <Link to='/*'>
+                <Link to='/registreren/bedrijf'>
                     <div className="ButtonDivRight__Bedrijfsaccount">
                         <pre className="BottomDivRightRegistreren">Als Bedrijf</pre>
                     </div>
