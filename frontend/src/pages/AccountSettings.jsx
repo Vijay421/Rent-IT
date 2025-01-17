@@ -149,7 +149,7 @@ export default function AccountSettings() {
                     </div>
 
                     <div className='settings__input-box'>
-                        <label htmlFor="password">Wachtwoord:</label>
+                        <label htmlFor="password">Nieuw wachtwoord:</label>
                         <input
                             id="password"
                             className='settings__input-field'
@@ -194,9 +194,9 @@ export default function AccountSettings() {
                     ) }
 
                     <nav className='settings__nav'>
-                        <button onClick={submit} className='settings__button' data-cy='submit'>Update</button>
 
                         <div className='settings_delete-buttons'>
+                            <button onClick={submit} className='settings__button settings__button--update' data-cy='submit'>Update</button>
                             <button onClick={handleDeleteAccount} className='settings__button settings__button--delete' data-cy='delete'>{deleteConfig.text}</button>
 
                             { deleteConfig.clickedDelete && <button onClick={handleWontDelete} className='settings__button settings__button--dont-delete'>Niet verwijderen</button> }
