@@ -39,28 +39,28 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>
             <div className="rental-vehicle-data__div">
-                <h3 className='rental-vehicle-auto__h3' data-cy="brand-type">{data.merk} {data.type}</h3>
+                <h2 className='rental-vehicle-auto__h3' data-cy="brand-type">{data.merk} {data.type}</h2>
                 <div className="rental-vehicle-data-columns__div">
                     <div className="rental-vehicle-data-column1__div">
-                        <p className='rental-vehicle-title__p'>Kenteken</p>
-                        <p className='rental-vehicle-info__p'>{data.kenteken}</p>
-                        <p className='rental-vehicle-title__p'>Kleur</p>
-                        <p className='rental-vehicle-info__p'>{data.kleur}</p>
-                        <p className='rental-vehicle-title__p'>Aanschafjaar</p>
-                        <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
+                        <h3 className='rental-vehicle-title__p'>Kenteken</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
+                        <h3 className='rental-vehicle-title__p'>Kleur</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
+                        <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
                     </div>
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
-                        <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
+                        <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
+                        <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
 
-                        <p className='rental-vehicle-title__p'>Soort</p>
-                        <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
+                        <h3 className='rental-vehicle-title__p'>Soort</h3>
+                        <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
                     </div>
                 </div>
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p
+                <h2
                     className='rental-vehicle-huurprijs__p'
                     onMouseEnter={() => {
                         setShowPopup(true);
@@ -82,7 +82,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                             Borg: €500
                         </span>
                     )}
-                </p>
+                </h2>
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}
@@ -137,28 +137,28 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     <div className="rental-vehicle-data-columns__div">
                         <div className="rental-vehicle-data-column1__div">
-                            <p className='rental-vehicle-title__p'>Kenteken</p>
-                            <p className='rental-vehicle-info__p'>{data.kenteken}</p>
+                            <h3 className='rental-vehicle-title__p'>Kenteken</h3>
+                            <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
 
-                            <p className='rental-vehicle-title__p'>Kleur</p>
-                            <p className='rental-vehicle-info__p'>{data.kleur}</p>
+                            <h3 className='rental-vehicle-title__p'>Kleur</h3>
+                            <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
 
-                            <p className='rental-vehicle-title__p'>Aanschafjaar</p>
-                            <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
+                            <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
+                            <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
                         </div>
 
                         <div className="rental-vehicle-data-column2__div">
-                            <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
-                            <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
+                            <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
+                            <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
 
-                            <p className='rental-vehicle-title__p'>Soort</p>
-                            <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
+                            <h3 className='rental-vehicle-title__p'>Soort</h3>
+                            <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
                         </div>
                     </div>
                 </div>
 
                 <div className='rental-vehicle-huur-box__div'>
-                    <p
+                    <h2
                         className='rental-vehicle-huurprijs__p'
                         onMouseEnter={() => {
                             setShowPopup(true);
@@ -178,7 +178,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
                             Borg: €750
                         </span>
                         )}
-                    </p>
+                    </h2>
                     <p className='rental-vehicle-kosten__p'>per dag</p>
                     <button
                         onClick={checkDatumFields}
@@ -232,28 +232,28 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                 <div className="rental-vehicle-data-columns__div">
                     <div className="rental-vehicle-data-column1__div">
-                        <p className='rental-vehicle-title__p'>Kenteken</p>
-                        <p className='rental-vehicle-info__p'>{data.kenteken}</p>
+                        <h3 className='rental-vehicle-title__p'>Kenteken</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
 
-                        <p className='rental-vehicle-title__p'>Kleur</p>
-                        <p className='rental-vehicle-info__p'>{data.kleur}</p>
+                        <h3 className='rental-vehicle-title__p'>Kleur</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
 
-                        <p className='rental-vehicle-title__p'>Aanschafjaar</p>
-                        <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
+                        <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
+                        <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
-                        <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
+                        <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
+                        <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
 
-                        <p className='rental-vehicle-title__p'>Soort</p>
-                        <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
+                        <h3 className='rental-vehicle-title__p'>Soort</h3>
+                        <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
                     </div>
                 </div>
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p
+                <h2
                     className='rental-vehicle-huurprijs__p'
                     onMouseEnter={() => {
                         setShowPopup(true);
@@ -273,7 +273,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
                         Borg: €1500
                     </span>
                     )}
-                </p>
+                </h2>
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}

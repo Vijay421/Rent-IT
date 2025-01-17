@@ -129,7 +129,7 @@ function Renting() {
     return (
         <div className="content">
             <div className="divTop">
-                <p className="divTop-header-Text-Huren">Filters</p>
+                <h1 className="divTop-header-Text-Huren">Filters</h1>
 
                 <div className="rowDivs">
                     <div className="divTop-divSelect-Voertuig">
@@ -234,7 +234,7 @@ function Renting() {
 
                     <div className="divTop-divSelect-Beschikbaarheid">
                         <div className="divTop-divSelect-Beschikbaarheid-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Beschikbaarheid: </label>
+                            <label htmlFor="options" className="dropdown-label">Status: </label>
                             <select
                                 id="options"
                                 name="options"

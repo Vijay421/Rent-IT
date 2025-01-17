@@ -80,10 +80,15 @@
     text-align: center;
 }
 
-.rowDivs, .rowDivs2 {
+.rowDivs, .rowDivs2, .rowDivs3 {
     display: grid; /* Align child divs horizontally */
     justify-content: space-between; /* Spread divs evenly */
     grid-template-columns: repeat(3, 1fr); /* 3 columns with equal width */
+    font-size: 1.25em;
+}
+
+.divTop-reset-filters__button {
+    font-size: 0.7em;
 }
 
 .rowDivs3 {
@@ -96,6 +101,21 @@
     height: 2em;
     flex: 1; /* Make divs equal width */
     text-align: center;
+}
+.divTop-divSelect-inleverDatum div input,
+.divTop-divSelect-ophaalDatum div input {
+    width: 140px;
+}
+
+.divTop-divSelect-ophaalDatum div input,
+.divTop-divSelect-inleverDatum div input,
+.divTop-divSelect-merk-dropdown,
+.divTop-divSelect-prijs-dropdown,
+.divTop-divSelect-beschikbaarheid-dropdown,
+.divTop-divSelect-sorteren-dropdown,
+.divTop-divSelect-Voertuig div select {
+    height: 26px;
+    font-size: 0.9em;
 }
 
 .divTop-divSelect-Merk, .divTop-divSelect-Prijs, .divTop-divSelect-Beschikbaarheid {
