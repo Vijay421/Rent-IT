@@ -13,7 +13,6 @@ import VehicleCreateAndUpdate from "../pages/VehicleCreateAndUpdate";
 
 import SubscriptionRequestPage from "../pages/SubscriptionRequestPage.jsx";
 import SubscriptionsManagePage from "../pages/SubscriptionsManagePage.jsx";
-import SubscriptionOverviewPage from "../pages/SubscriptionOverviewPage.jsx";
 
 import RentingSubmitPage from "../pages/RentingSubmitPage.jsx";
 import RentHistory from "../pages/RentHistory.jsx";
@@ -31,6 +30,7 @@ import AbonnementOverzichtPage from "../pages/AbonnementOverzichtPage.jsx";
 
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
+import RegisterAsCompanyPage from "../pages/RegisterAsCompanyPage.jsx";
 
 function App() {
     return (
@@ -38,6 +38,7 @@ function App() {
             <Routes>
                 <Route path="/" element=                        {<IndexPage />} />
                 <Route path="/registreren" element=             {<RegisterPage/>} />
+                <Route path="/registreren/bedrijf" element=     {<RegisterAsCompanyPage/>} />
                 <Route path="/medewerker-aanmaken" element=     {<RegisterPage/>} />
                 <Route path="/medewerkersoverzicht" element=    {<EmployeeOverviewPage/>} />
                 <Route path="/login" element=                   {<LoginPage/>} />
@@ -59,7 +60,7 @@ function App() {
                 <Route path="/reservering-wijziging" element=   {<ReserveringWijzigingPage/>}/>
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
                 <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
-                <Route path="/frontoffice/uitgave" element= {<FrontofficeExpenditurePage/>}/>
+                <Route path="/frontoffice/uitgave" element=     {<FrontofficeExpenditurePage/>}/>
 
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
