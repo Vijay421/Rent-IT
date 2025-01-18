@@ -36,12 +36,18 @@
 }
 
 .verhuurde-filter-box__div div label {
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
 .verhuurde-filter-box__div div select {
     width: 100px;
+    font-size: 1.2em;
+}
+
+.verhuurde-filter-box__div div input {
+    width: 145px;
+    font-size: 1.2em;
 }
 
 .verhuurde-filter-datums__div {

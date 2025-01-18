@@ -24,6 +24,19 @@
     border-radius: 10px;
 }
 
+.MainProfileDiv {
+    background-color: var(--main-color);
+    width: 440px;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
 .MainDivTextWelkom {
     margin: 20px 0;
     text-align: center;

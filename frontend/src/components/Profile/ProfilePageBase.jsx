@@ -6,7 +6,7 @@ function ProfilePageBase({children}) {
 
     const {userName} = useContext(UserContext);
     return (
-        <div className={styles.MainDiv}>
+        <div className={styles.MainProfileDiv}>
             <p className={styles.MainDivTextWelkom} id='profiel-base-title'>Welkom {userName}.</p>
             {children}
         </div>
