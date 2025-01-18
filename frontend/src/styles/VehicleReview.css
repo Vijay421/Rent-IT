@@ -1,16 +1,17 @@
 .voertuigTab {
     display: flex;
     flex-direction: column;
-    max-width: 600px; /* Limit the width for better layout scaling */
-    margin: 0 auto; /* Center the tab */
-    padding: 1rem; /* Add consistent spacing around the tab */
-    box-sizing: border-box; /* Ensure padding is included in size calculations */
+    max-width: 96%;
+    margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .voertuigTab__text {
     text-align: left;
     margin-top: 10px;
-    font-size: 1rem; /* Scalable font size */
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
 .voertuigTab__inputs {
@@ -22,7 +23,7 @@
 
 .voertuigTab__inputs input,
 .voertuigTab__inputs button {
-    font-size: 0.8rem; /* Reduced font size */
+    font-size: 1rem; /* Reduced font size */
     text-align: center;
     flex: 1 1 auto;
     box-sizing: border-box;
