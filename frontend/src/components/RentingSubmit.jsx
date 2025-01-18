@@ -230,9 +230,7 @@ function RentingSubmit() {
                     </p>
                 )}
 
-                <div className="submit-button">
                     <button onClick={handleSubmit} data-cy="submit" className="submit-button__button">Volgende pagina</button>
-                </div>
             </div>
         </main>
     );

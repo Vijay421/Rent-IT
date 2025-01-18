@@ -38,6 +38,11 @@
     margin-top: 20px;
 }
 
+.submit-button__button {
+    margin: 15px 0;
+}
+
+.submit-button__button,
 .submit-button {
     background-color: var(--secondary-color);
     color: #FFFFFF;
@@ -68,7 +73,6 @@
 .confirmation-message.error {
     color: darkred;
 }
-
 
 @media only screen and (max-width: 1111px) {
     .submit-button__button {
