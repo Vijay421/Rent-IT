@@ -34,9 +34,17 @@
     grid-area: details;
 }
 
+.rent-history-item__vehicle-details p,
+.rent-history-item__vehicle-period p,
+.rent-history-item__vehicle-cost-title {
+    font-size: 1.2em;
+}
+
+
 .rent-history-item__vehicle-title {
     color: dimgray;
     margin-top: 5px;
+    font-weight: bold;
 }
 
 .rent-history-item__vehicle-title--first {
@@ -56,7 +64,7 @@
 }
 .rent-history-item__vehicle-cost {
     font-weight: bold;
-    font-size: 25px;
+    font-size: 3em;
 }
 
 @media only screen and (max-width: 980px) {

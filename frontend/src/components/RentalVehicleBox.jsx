@@ -39,22 +39,22 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>
             <div className="rental-vehicle-data__div">
-                <h2 className='rental-vehicle-auto__h3' data-cy="brand-type">{data.merk} {data.type}</h2>
+                <h3 className='rental-vehicle-auto__h3' data-cy="brand-type">{data.merk} {data.type}</h3>
                 <div className="rental-vehicle-data-columns__div">
                     <div className="rental-vehicle-data-column1__div">
-                        <h3 className='rental-vehicle-title__p'>Kenteken</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
-                        <h3 className='rental-vehicle-title__p'>Kleur</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
-                        <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
+                        <p className='rental-vehicle-title__p'>Kenteken</p>
+                        <p className='rental-vehicle-info__p'>{data.kenteken}</p>
+                        <p className='rental-vehicle-title__p'>Kleur</p>
+                        <p className='rental-vehicle-info__p'>{data.kleur}</p>
+                        <p className='rental-vehicle-title__p'>Aanschafjaar</p>
+                        <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
                     </div>
                     <div className="rental-vehicle-data-column2__div">
-                        <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
-                        <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
+                        <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
+                        <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
 
-                        <h3 className='rental-vehicle-title__p'>Soort</h3>
-                        <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
+                        <p className='rental-vehicle-title__p'>Soort</p>
+                        <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                             Verzekering: €75<br/>
                             Belasting: €37<br/>
                             Benzine: €43<br/>
@@ -137,22 +137,22 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     <div className="rental-vehicle-data-columns__div">
                         <div className="rental-vehicle-data-column1__div">
-                            <h3 className='rental-vehicle-title__p'>Kenteken</h3>
-                            <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
+                            <p className='rental-vehicle-title__p'>Kenteken</p>
+                            <p className='rental-vehicle-info__p'>{data.kenteken}</p>
 
-                            <h3 className='rental-vehicle-title__p'>Kleur</h3>
-                            <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
+                            <p className='rental-vehicle-title__p'>Kleur</p>
+                            <p className='rental-vehicle-info__p'>{data.kleur}</p>
 
-                            <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
-                            <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
+                            <p className='rental-vehicle-title__p'>Aanschafjaar</p>
+                            <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
                         </div>
 
                         <div className="rental-vehicle-data-column2__div">
-                            <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
-                            <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
+                            <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
+                            <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
 
-                            <h3 className='rental-vehicle-title__p'>Soort</h3>
-                            <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
+                            <p className='rental-vehicle-title__p'>Soort</p>
+                            <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                         {showPopup && (
                             <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                             Verzekering: €65<br/>
                             Belasting: €62<br/> {/*21%*/}
                             Benzine: €0<br/>
@@ -232,22 +232,22 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                 <div className="rental-vehicle-data-columns__div">
                     <div className="rental-vehicle-data-column1__div">
-                        <h3 className='rental-vehicle-title__p'>Kenteken</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.kenteken}</h3>
+                        <p className='rental-vehicle-title__p'>Kenteken</p>
+                        <p className='rental-vehicle-info__p'>{data.kenteken}</p>
 
-                        <h3 className='rental-vehicle-title__p'>Kleur</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.kleur}</h3>
+                        <p className='rental-vehicle-title__p'>Kleur</p>
+                        <p className='rental-vehicle-info__p'>{data.kleur}</p>
 
-                        <h3 className='rental-vehicle-title__p'>Aanschafjaar</h3>
-                        <h3 className='rental-vehicle-info__p'>{data.aanschafjaar}</h3>
+                        <p className='rental-vehicle-title__p'>Aanschafjaar</p>
+                        <p className='rental-vehicle-info__p'>{data.aanschafjaar}</p>
                     </div>
 
                     <div className="rental-vehicle-data-column2__div">
-                        <h3 className='rental-vehicle-title__p'>Beschikbaarheid</h3>
-                        <h3 className='rental-vehicle-info__p' data-cy="status">{data.status}</h3>
+                        <p className='rental-vehicle-title__p'>Beschikbaarheid</p>
+                        <p className='rental-vehicle-info__p' data-cy="status">{data.status}</p>
 
-                        <h3 className='rental-vehicle-title__p'>Soort</h3>
-                        <h3 className='rental-vehicle-info__p' data-cy="kind">{data.soort}</h3>
+                        <p className='rental-vehicle-title__p'>Soort</p>
+                        <p className='rental-vehicle-info__p' data-cy="kind">{data.soort}</p>
                     </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                        Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                        Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                         Verzekering: €75<br/>
                         Belasting: €37<br/> {/*21%*/}
                         Benzine: €60<br/>

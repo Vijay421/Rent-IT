@@ -1,8 +1,10 @@
 import "../styles/RentHistoryItem.css";
 import Temp from '../assets/toyota-corolla.png';
+import {useState} from "react";
 
 
 export default function RentHistoryItem({ data }) {
+    const [showPopup, setShowPopup] = useState(false);
     const altImageName = `${data.merk} ${data.type}`;
 
     return (
@@ -37,7 +39,24 @@ export default function RentHistoryItem({ data }) {
 
             <div className="rent-history-item__vehicle-costs">
                 <p className="rent-history-item__vehicle-cost-title rent-history-item__vehicle-title rent-history-item__vehicle-title--first">Kosten</p>
-                <p className="rent-history-item__vehicle-cost">€{data.prijs.toFixed(2)}*</p>
+                <p className="rent-history-item__vehicle-cost"
+                   onMouseEnter={() => {
+                       setShowPopup(true);
+                   }}
+                   onMouseLeave={() => {
+                       setShowPopup(false);
+                   }}>
+                    €{data.prijs.toFixed(2)}*
+                    {showPopup && (
+                    <span className='rental-vehicle-huurprijs-popup__span'>
+                            Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
+                            Verzekering: €75<br/>
+                            Belasting: €37<br/>
+                            Benzine: €43<br/>
+                            Kilometervergoeding: €0.31/km<br/>
+                            Borg: €500
+                        </span>
+                )}</p>
             </div>
         </div>
     );
