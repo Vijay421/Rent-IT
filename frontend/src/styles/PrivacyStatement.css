@@ -1,6 +1,7 @@
 .Main-Content {
     height: 90vh;
     display: flex;
+    margin: 0 auto;
     place-items: center;
 }
 
@@ -30,9 +31,17 @@
 
 .privacy-input {
     height: 40px;
+    display: flex;
+    margin: 0 auto;
+    resize: vertical;
+}
+
+.privacy-statement-title__h1 {
+    margin-bottom: 10px;
 }
 
 .change-privacy-statement__button {
+    display: flex;
     background-color: var(--secondary-color);
     color: white;
     font-weight: bold;
@@ -43,7 +52,8 @@
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 5px;
+    margin: 15px auto 0 auto;
+    justify-content: center;
 }
 
 .change-privacy-statement__button:hover {
