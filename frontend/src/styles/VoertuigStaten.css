@@ -36,12 +36,17 @@
 }
 
 .staten-filter-box__div div label {
-    font-size: 1.2em;
+    font-size: 1.25em;
     font-weight: bold;
+}
+
+.staten-filter-box__div div input {
+    font-size: 1em;
 }
 
 .staten-filter-box__div div select {
     width: 100px;
+    font-size: 1.1em;
 }
 
 .staten-filter-reset-filters__div button,
@@ -109,6 +114,8 @@
 
 #staten-voertuig-status__select {
     width: 250px;
+    height: 30px;
+    font-size: 1.1em;
 }
 
 .no-voertuigen-text {
