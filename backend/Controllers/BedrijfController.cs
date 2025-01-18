@@ -74,13 +74,13 @@ namespace backend.Controllers
             {
                 if (result.Errors.Any(e => e.Code == "DuplicateUserName"))
                 {
-                    return BadRequest($"Naam '{bedrijfDTO.UserName}' is al in gebruikt");
+                    return Conflict($"Naam '{bedrijfDTO.UserName}' is al in gebruikt");
                 }
 
                 var passwordErrors = result.Errors.Where(e => e.Code.StartsWith("Password"));
                 if (passwordErrors.Any())
                 {
-                    return BadRequest($"Ongeldig wachtwoord: het moet minimaal 1 hoofdletter, een getal en een niet alfanumeriek character bevatten");
+                    return Conflict($"Ongeldig wachtwoord: het moet minimaal 1 hoofdletter, een getal en een niet alfanumeriek character bevatten");
                 }
 
                 var errorMsg = string.Join(", ", result.Errors.Select(e => e.Description));

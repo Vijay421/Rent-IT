@@ -188,7 +188,7 @@ namespace backend.Controllers
                     user.Bedrijf.Address = updateUserDTO.CompanyAddress ?? user.Bedrijf.Address;
                     user.Bedrijf.KvK_nummer= updateUserDTO.CompanyNumber ?? user.Bedrijf.KvK_nummer;
                     user.Bedrijf.PhoneNumber = updateUserDTO.CompanyPhoneNumber ?? user.Bedrijf.PhoneNumber;
-                    user.Bedrijf.Domein = updateUserDTO.Domein?? user.Bedrijf.Domein;
+                    user.Bedrijf.Domein = updateUserDTO.Domein ?? user.Bedrijf.Domein;
                 }
             }
 

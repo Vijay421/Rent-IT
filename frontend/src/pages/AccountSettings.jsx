@@ -52,7 +52,7 @@ export default function AccountSettings() {
             companyAddress: nullOrStr(companyAddress),
             companyNumber: nullOrStr(companyNumber),
             companyPhoneNumber: nullOrStr(companyPhoneNumber),
-            domain: nullOrStr(domain),
+            domein: nullOrStr(domain),
         };
 
         let payloadHasValues = false;
