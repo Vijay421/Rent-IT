@@ -240,7 +240,7 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(CreateZakelijkeBeheerder), new { id = newUser.Id }, new { Id = newUser.Id, UserName = newUser.UserName });
         }
 
-        [HttpGet("zakelijke_huurders")]
+        [HttpGet("zakelijke_beheerders")]
         public async Task<ActionResult> GetHuurBeheerders()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
