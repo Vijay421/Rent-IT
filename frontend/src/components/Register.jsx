@@ -181,7 +181,7 @@ export default function Register() {
                 </form>
 
                 <nav className="register-box__hyperlinks">
-                    <Link to="/login">Heb je al een account? Klik hier om in te loggen</Link>
+                    <Link to="/login">Heeft u al een account? Klik hier om in te loggen</Link>
                 </nav>
             </div>
         </main>
