@@ -1,5 +1,5 @@
 .register-page {
-    height: 90vh;
+    height: 85vh;
     display: flex;
     place-items: center;
 }
@@ -10,7 +10,7 @@
     display: flex;
     place-items: center;
     flex-direction: column;
-    min-width: 300px;
+    min-width: 340px;
     padding-bottom: 30px;
     border-radius: 20px;
     width: 25%;
