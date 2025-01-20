@@ -2,13 +2,14 @@
     margin-bottom: 1em;
     text-decoration: none;
     color: inherit;
+    width: 96%;
+    background-color: red;
 }
 
 .LinkDiv {
     background-color: var(--secondary-color);
     border-radius: 5px;
     padding: 0.5em;
-    width: 24em;
     height: 1.75em;
     font-size: 1em;
     text-align: center;

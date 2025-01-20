@@ -26,7 +26,8 @@
 
 .MainProfileDiv {
     background-color: var(--main-color);
-    width: 440px;
+    min-width: 340px;
+    width: 25%;
     height: auto;
     margin: 25px auto;
     display: flex;

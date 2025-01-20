@@ -5,7 +5,7 @@ function ProfilePageParticulier() {
 
     return (
         <ProfilePageBase>
-            <ProfilePageLinkButton link="/account-instellingen" text="Account instellingen aanpassen"/>
+            <ProfilePageLinkButton link="/account-instellingen" text="Instelligen aanpassen"/>
             <ProfilePageLinkButton link="/abonnementen-overzicht" text="Neem zakelijk abonnement"/>
             <ProfilePageLinkButton link="/huur-overzicht" text="Voertuig huren"/>
             <ProfilePageLinkButton link="/reserveringen" text="Reserveringen"/>
