@@ -77,7 +77,6 @@
     margin: 5px 0;
     border-radius: 8px;
     border: 1px solid black;
-    padding: 5px 10px;
 }
 .abonnement-keuren-goedkeur-button:hover {
     background-color: #49e849;
@@ -92,7 +91,6 @@
     margin: 5px 0;
     border-radius: 8px;
     border: 1px solid black;
-    padding: 5px 10px;
 }
 .abonnement-keuren-afkeur-button:hover {
     background-color: #ff4949;
@@ -121,4 +119,32 @@
     margin: 0 auto;
     font-size: 1.5em;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 1120px) {
+
+    .abonnment-overzicht-title__h1 {
+        text-align: center;
+    }
+
+    #abonnement-keuren-status__span {
+        text-align: center;
+    }
+
+    .abonnement-content__div {
+        display: flex;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .abonnement-keuren__div {
+        gap: 10px;
+    }
+
+    .abonnement-keuren__div button {
+        width: auto;
+        padding: 8px;
+        font-size: 1.2em;
+        margin: auto auto 5px auto;
+    }
 }
