@@ -67,8 +67,7 @@ export default function PrivacyStatement() {
                             placeholder="Vul de nieuwe privacy statement hier in..."
                             value={newPrivacyStatement}
                             onChange={handleInputChange}
-                            rows="6"
-                            cols="50"
+                            cols="30"
                         ></textarea>
                         <button
                             className="change-privacy-statement__button"
