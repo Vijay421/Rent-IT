@@ -95,5 +95,9 @@ describe("manage subscriptions", () => {
         cy.wait("@registerHuurderRequest").then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
         });
+
+        cy.deleteUser(COMPANY.username, COMPANY.password);
+        cy.deleteUser(BEHEERDER.username, BEHEERDER.password);
+        cy.deleteUser(HUURDER.username, HUURDER.password);
     });
 });
