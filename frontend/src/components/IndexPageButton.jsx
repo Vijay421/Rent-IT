@@ -11,7 +11,6 @@ function IndexPageButton() {
             <h2 className='index-page-title-desc__h2'>Huur zonder gedoe een voertuig, wanneer u maar wilt.</h2>
             <div className="Content">
                 <div className="MainDivLeft">
-                    <img src="../assets/Car1.webp" alt="aa"/>
                     <div className="ParticulierDiv">
                         <h3 className="ParticulierH1">Voertuig huren</h3>
                     </div>
