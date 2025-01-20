@@ -1,0 +1,49 @@
+.zb-rent-history__main {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.zb-filter-bar__div {
+    background-color: whitesmoke;
+    width: 66.5vw;
+    display: flex;
+    margin: auto;
+    border: 3px solid black;
+    border-radius: 8px;
+    flex-direction: column;
+}
+
+.zb-filter-bar-title__h1 {
+    margin: 0 auto;
+}
+
+.zb-filter-bar-filter-box__div {
+    display: flex;
+    margin: 0 auto;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.zb-filter-bar-filter-box__div div label {
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.zb-filter-bar-filter-box__div div input,
+.zb-filter-bar-filter-box__div div select {
+    font-size: 1.1em;
+    width: 100px;
+}
+
+
+.zb-rent-history-box__div {
+    display: flex;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: 3px solid black;
+    width: 80%;
+    margin: 0 auto;
+}
+

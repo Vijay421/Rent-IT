@@ -23,6 +23,7 @@ import ConfirmationPage from "../pages/ConfirmationPage.jsx";
 import RentingPaymentPage from "../pages/RentingPaymentPage.jsx";
 import ReserveringPage from "../pages/ReserveringPage.jsx";
 import ReserveringWijzigingPage from "../pages/ReserveringWijzigingPage.jsx";
+import ZbRentHistoryPage from "../pages/ZbRentHistoryPage.jsx";
 
 function App() {
     return (
@@ -53,6 +54,7 @@ function App() {
                 <Route path="/huur-betaling" element={<RentingPaymentPage/>}/>
                 <Route path="/reserveringen" element={<ReserveringPage/>}/>
                 <Route path="/reservering-wijziging" element={<ReserveringWijzigingPage/>}/>
+                <Route path="/zb-huurgeschiedenis" element={<ZbRentHistoryPage/>}/>
             </Routes>
         </Router>
     );
