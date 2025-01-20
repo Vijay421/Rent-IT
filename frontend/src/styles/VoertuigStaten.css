@@ -78,14 +78,15 @@
     margin: auto;
     gap: 10px;
     width: 67.5%;
-    padding: 10px 0;
+    padding: 8px 0;
 }
 
 .staten-voertuig__div {
     display: flex;
-    width: 97%;
+    width: 98%;
     margin: 0 auto;
     border: 2px solid black;
+    border-radius: 6px;
     background-color: #c8d8e4;
 }
 
@@ -113,7 +114,9 @@
 }
 
 #staten-voertuig-status__select {
-    width: 250px;
+    width: 200px;
+    height: 30px;
+    font-size: 1.1em;
     height: 30px;
     font-size: 1.1em;
 }
@@ -123,4 +126,20 @@
     margin: 0 auto;
     font-size: 1.5em;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 1111px) {
+    .staten-voertuig__div {
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+    }
+
+    #staten-voertuig-status__select {
+        margin: 5px 0;
+    }
+
+    .staten-voertuig__div div {
+        flex-direction: column;
+    }
 }
