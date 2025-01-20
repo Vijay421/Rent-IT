@@ -6,6 +6,15 @@
     height: 100vh;
 }
 
+.MainDiv__h1 {
+    margin-top: 5px;
+}
+
+.MainDiv__h2 {
+    font-weight: normal;
+    font-size: 1.25em;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -13,17 +22,21 @@
     justify-content: center;
     width: 100%;
     max-width: 600px;
-    margin: 2em auto;
+    margin: 0.5em auto;
 }
 
 .form-group label {
     margin-bottom: 10px;
 }
 
-.bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__end-date, .abonnement__naam {
+#type-abonnement__label {
+    margin: 0;
+}
+
+.bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__start-date, .abonnement__end-date, .abonnement__naam {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -49,6 +62,14 @@
 
 input[type="radio"] {
     margin-right: 5px;
+}
+
+#totale-prijs__p {
+    font-size: 1.75em;
+}
+
+#totale-prijs-desc__p {
+    font-size: 1.1em;
 }
 
 .submit-button {
@@ -85,6 +106,8 @@ input[type="radio"] {
 
 .confirmation-message {
     margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .confirmation-message.success {
@@ -97,7 +120,7 @@ input[type="radio"] {
 
 
 @media only screen and (max-width: 950px) {
-    .bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__end-date, .abonnement__naam {
+    .bedrijfsnaam__text, .adress__text, .kvk-number__text, .abonnement__max-number, .abonnement__start-date ,.abonnement__end-date, .abonnement__naam {
         width: 80%;
     }
 }

@@ -24,8 +24,8 @@ namespace backend.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("zakelijke-huurders")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetZakelijkeHuurders()
+        [HttpGet("bedrijf")]
+        public async Task<ActionResult<string>> GetBedrijfsnaam()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -38,33 +38,22 @@ namespace backend.Controllers
             {
                 return NotFound("Kan de gebruiker niet vinden");
             }
-
             _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+
             if (user.Huurbeheerder == null)
             {
                 return Unauthorized("Incorrecte gebruiker");
             }
 
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
             _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
-            if (user.Huurbeheerder.Bedrijf == null)
+
+            return Ok(new
             {
-                return UnprocessableEntity("Huidige gebruiker is niet gekoppeld aan een bedrijf");
-            }
-
-            var domein = user.Huurbeheerder.Bedrijf.Domein;
-
-            var huurders = await _context
-                .Users
-                .Include(u => u.ZakelijkeHuurder)
-                .Where(u => u.ZakelijkeHuurder.HuurbeheerderId == user.Huurbeheerder.Id && u.Email.Contains(domein))
-                .Select(u => new UserDTO
-                {
-                    Id = u.Id,
-                    UserName = u.UserName,
-                })
-                .ToListAsync();
-
-            return Ok(huurders);
+                Bedrijfsnaam = user.Huurbeheerder.Bedrijf.Name,
+                Kvk = user.Huurbeheerder.Bedrijf.KvK_nummer,
+                Adres = user.Huurbeheerder.Bedrijf.Address,
+            });
         }
     }
 }

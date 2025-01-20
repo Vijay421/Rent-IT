@@ -200,7 +200,7 @@ export default function ConfirmationBox() {
                 <h3 className='confirmation-button-box__h3'>Ik (huurder) bevestig hierbij dat alle hierboven weergegeven
                     gegevens correct zijn en ga akkoord met het verzenden van dit verzoek en het openen van de
                     betaalpagina.</h3>
-                <button onClick={handleAkkoordButtonClick} className='confirmation-button-box__button'>Akkoord</button>
+                <button onClick={handleAkkoordButtonClick} data-cy="confirm" className='confirmation-button-box__button'>Akkoord</button>
                 <span id='confirmation-button-box-status__span'></span>
             </div>
         </div>

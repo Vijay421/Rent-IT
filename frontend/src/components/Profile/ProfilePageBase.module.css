@@ -13,7 +13,7 @@
 
 .MainDiv {
     background-color: var(--main-color);
-    width: 60.5%;
+    width: 50%;
     height: auto;
     margin: 25px auto;
     display: flex;

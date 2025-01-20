@@ -137,7 +137,7 @@ namespace backend.Data
             {
                 Name = "Google LLC",
                 Address = "Claude Debussylaan Etage, Md, Amsterdam 1082 15E 34",
-                KvK_nummer = 34198589,
+                KvK_nummer = 341985891111,
                 PhoneNumber = "423432423",
                 Domein = "google.com"
             };
@@ -306,7 +306,7 @@ namespace backend.Data
                 UserName = "f-user",
                 Email = "fuser@user.com",
                 EmailConfirmed = true,
-                FrontofficeIntake = frontoffice,
+                Frontoffice = frontoffice,
             };
             var result = await userManager.CreateAsync(fUser, "Qwerty123!");
 

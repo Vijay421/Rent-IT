@@ -154,7 +154,7 @@ export default function Register() {
                                 placeholder='Vul hier je adres in'
                                 minLength='5'
                                 maxLength='255'
-                                data-cy='adres'
+                                data-cy='address'
                                 required
                                 value={address}
                                 onChange={handleAddress}
@@ -181,7 +181,7 @@ export default function Register() {
                 </form>
 
                 <nav className="register-box__hyperlinks">
-                    <Link to="/login">Heb je al een account? Klik hier om in te loggen</Link>
+                    <Link to="/login">Heeft u al een account? Klik hier om in te loggen</Link>
                 </nav>
             </div>
         </main>

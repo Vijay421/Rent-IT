@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250108111505_added_models")]
+    [Migration("20250116142252_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -169,6 +169,9 @@ namespace backend.Migrations
                     b.Property<DateOnly>("Einddatum")
                         .HasColumnType("date");
 
+                    b.Property<bool?>("Geaccepteerd")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
@@ -183,9 +186,16 @@ namespace backend.Migrations
                     b.Property<double>("Prijs_per_maand")
                         .HasColumnType("float");
 
+                    b.Property<string>("Reden")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Soort")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Startdatum")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -206,8 +216,13 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("KvK_nummer")
-                        .HasColumnType("int");
+                    b.Property<string>("Domein")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("KvK_nummer")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -282,7 +297,7 @@ namespace backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("Relational:JsonPropertyName", "verwachte_km");
 
-                    b.Property<int>("VoertuigId")
+                    b.Property<int?>("VoertuigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Wettelijke_naam")
@@ -357,9 +372,6 @@ namespace backend.Migrations
                     b.Property<int?>("FrontOfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FrontofficeIntakeId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("HuurbeheerderId")
                         .HasColumnType("int");
 
@@ -406,7 +418,7 @@ namespace backend.Migrations
 
                     b.HasIndex("BackOfficeId");
 
-                    b.HasIndex("FrontofficeIntakeId");
+                    b.HasIndex("FrontOfficeId");
 
                     b.HasIndex("HuurbeheerderId");
 
@@ -481,6 +493,9 @@ namespace backend.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<DateOnly?>("VerwijderdDatum")
+                        .HasColumnType("date");
+
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
@@ -541,7 +556,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BedrijfId")
+                    b.Property<int>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("Bedrijfsrol")
@@ -666,10 +681,9 @@ namespace backend.Migrations
                         .HasForeignKey("ParticuliereHuurderId");
 
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
-                        .WithMany()
+                        .WithMany("HuurAanvragen")
                         .HasForeignKey("VoertuigId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Voertuig");
                 });
@@ -691,9 +705,9 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("BackOfficeId");
 
-                    b.HasOne("backend.Rollen.FrontOfficeMedewerker", "FrontofficeIntake")
+                    b.HasOne("backend.Rollen.FrontOfficeMedewerker", "Frontoffice")
                         .WithMany()
-                        .HasForeignKey("FrontofficeIntakeId");
+                        .HasForeignKey("FrontOfficeId");
 
                     b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany()
@@ -709,7 +723,7 @@ namespace backend.Migrations
 
                     b.Navigation("BackOffice");
 
-                    b.Navigation("FrontofficeIntake");
+                    b.Navigation("Frontoffice");
 
                     b.Navigation("Huurbeheerder");
 
@@ -731,20 +745,27 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Bedrijf", null)
+                    b.HasOne("backend.Models.Bedrijf", "Bedrijf")
                         .WithMany("Huurbeheerders")
-                        .HasForeignKey("BedrijfId");
+                        .HasForeignKey("BedrijfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bedrijf");
                 });
 
             modelBuilder.Entity("backend.Rollen.ZakelijkeHuurder", b =>
                 {
-                    b.HasOne("backend.Models.Abonnement", null)
+                    b.HasOne("backend.Models.Abonnement", "Abonnement")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("AbonnementId");
+                        .HasForeignKey("AbonnementId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("backend.Rollen.Huurbeheerder", null)
                         .WithMany("ZakelijkeHuurders")
                         .HasForeignKey("HuurbeheerderId");
+
+                    b.Navigation("Abonnement");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
@@ -755,6 +776,11 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Bedrijf", b =>
                 {
                     b.Navigation("Huurbeheerders");
+                });
+
+            modelBuilder.Entity("backend.Models.Voertuig", b =>
+                {
+                    b.Navigation("HuurAanvragen");
                 });
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>

@@ -109,7 +109,7 @@ namespace backend.Controllers
                 Email = createEmployeeDTO.Email.ToLower().Trim(),
                 PhoneNumber = createEmployeeDTO.PhoneNumber.Trim(),
                 BackOffice = backoffice,
-                FrontofficeIntake = frontoffice,
+                Frontoffice = frontoffice,
             };
 
             var result = await _userManager.CreateAsync(user, createEmployeeDTO.Password.Trim());

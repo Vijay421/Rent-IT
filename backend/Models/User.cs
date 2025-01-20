@@ -11,7 +11,7 @@ namespace backend.Models
         public BackOfficeMedewerker? BackOffice { get; set; }
 
         public int? FrontOfficeId { get; set; }
-        public FrontOfficeMedewerker? FrontofficeIntake { get; set; }
+        public FrontOfficeMedewerker? Frontoffice { get; set; }
 
         public int? ZakelijkeHuurderId { get; set; }
         public ZakelijkeHuurder? ZakelijkeHuurder { get; set; }

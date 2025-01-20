@@ -1,0 +1,119 @@
+.voertuig-staten-page__main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px auto;
+    gap: 15px;
+}
+
+.staten-pagina-title__h1 {
+    margin: 0 auto;
+    background-color: whitesmoke;
+    padding: 5px 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.staten-filter-box__div {
+    display: flex;
+    gap: 20px;
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: whitesmoke;
+    width: 64.5%;
+    height: auto;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 20px;
+}
+
+.staten-filter-box__div div {
+    display: flex;
+    margin: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.staten-filter-box__div div label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.staten-filter-box__div div select {
+    width: 100px;
+}
+
+.staten-filter-reset-filters__div button,
+.staten-filter-download-button__div button {
+    width: auto;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.5em;
+}
+
+.staten-filter-reset-filters__div button {
+    background-color: red;
+}
+.staten-filter-reset-filters__div button:hover {
+    background-color: #DC0000FF;
+}
+.staten-filter-reset-filters__div button:active {
+    background-color: #9B0000FF;
+}
+
+#staten-voertuig-box__div {
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    border: 3px solid black;
+    border-radius: 8px;
+    min-height: 550px;
+    margin: auto;
+    gap: 10px;
+    width: 67.5%;
+    padding: 10px 0;
+}
+
+.staten-voertuig__div {
+    display: flex;
+    width: 97%;
+    margin: 0 auto;
+    border: 2px solid black;
+    background-color: #c8d8e4;
+}
+
+.staten-voertuig-data {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.staten-voertuig-info__p {
+    font-size: 1.2em;
+}
+
+.staten-voertuig-status__div {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.staten-voertuig-status__div p {
+    font-size: 1.4em;
+}
+
+#staten-voertuig-status__select {
+    width: 250px;
+}
+
+.no-voertuigen-text {
+    display: flex;
+    margin: 0 auto;
+    font-size: 1.5em;
+    font-weight: bold;
+}

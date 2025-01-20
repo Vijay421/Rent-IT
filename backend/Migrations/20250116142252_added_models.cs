@@ -45,8 +45,9 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KvK_nummer = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    KvK_nummer = table.Column<long>(type: "bigint", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Domein = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +95,8 @@ namespace backend.Migrations
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prijs = table.Column<double>(type: "float", nullable: false),
                     StartDatum = table.Column<DateOnly>(type: "date", nullable: false),
-                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false)
+                    EindDatum = table.Column<DateOnly>(type: "date", nullable: false),
+                    VerwijderdDatum = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,7 +131,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Bedrijfsrol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    BedrijfId = table.Column<int>(type: "int", nullable: true)
+                    BedrijfId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +140,8 @@ namespace backend.Migrations
                         name: "FK_Huurbeheerders_Bedrijven_BedrijfId",
                         column: x => x.BedrijfId,
                         principalTable: "Bedrijven",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,7 +152,7 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     ZakelijkeHuurder = table.Column<int>(type: "int", nullable: true),
-                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    VoertuigId = table.Column<int>(type: "int", nullable: true),
                     Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Wettelijke_naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -176,7 +179,7 @@ namespace backend.Migrations
                         column: x => x.VoertuigId,
                         principalTable: "Voertuigen",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,8 +234,11 @@ namespace backend.Migrations
                     Naam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Prijs_per_maand = table.Column<double>(type: "float", nullable: false),
                     Max_huurders = table.Column<int>(type: "int", nullable: false),
+                    Startdatum = table.Column<DateOnly>(type: "date", nullable: false),
                     Einddatum = table.Column<DateOnly>(type: "date", nullable: false),
-                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Soort = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Geaccepteerd = table.Column<bool>(type: "bit", nullable: true),
+                    Reden = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -261,7 +267,8 @@ namespace backend.Migrations
                         name: "FK_ZakelijkeHuurders_Abonnementen_AbonnementId",
                         column: x => x.AbonnementId,
                         principalTable: "Abonnementen",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_ZakelijkeHuurders_Huurbeheerders_HuurbeheerderId",
                         column: x => x.HuurbeheerderId,
@@ -276,7 +283,6 @@ namespace backend.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BackOfficeId = table.Column<int>(type: "int", nullable: true),
                     FrontOfficeId = table.Column<int>(type: "int", nullable: true),
-                    FrontofficeIntakeId = table.Column<int>(type: "int", nullable: true),
                     ZakelijkeHuurderId = table.Column<int>(type: "int", nullable: true),
                     ParticuliereHuurderId = table.Column<int>(type: "int", nullable: true),
                     HuurbeheerderId = table.Column<int>(type: "int", nullable: true),
@@ -304,8 +310,8 @@ namespace backend.Migrations
                         principalTable: "BackOfficeMedewerkers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_FrontOfficeMedewerkers_FrontofficeIntakeId",
-                        column: x => x.FrontofficeIntakeId,
+                        name: "FK_AspNetUsers_FrontOfficeMedewerkers_FrontOfficeId",
+                        column: x => x.FrontOfficeId,
                         principalTable: "FrontOfficeMedewerkers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -453,9 +459,9 @@ namespace backend.Migrations
                 column: "BackOfficeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_FrontofficeIntakeId",
+                name: "IX_AspNetUsers_FrontOfficeId",
                 table: "AspNetUsers",
-                column: "FrontofficeIntakeId");
+                column: "FrontOfficeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_HuurbeheerderId",

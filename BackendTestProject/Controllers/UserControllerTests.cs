@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BackendTestProject.Controllers
 {
-    public class HuurBeheerderControllerTests
+    public class UserControllerTests
     {
         private SqliteConnection _connection;
         private DbContextOptions<RentalContext> _contextOptions;
@@ -23,7 +23,7 @@ namespace BackendTestProject.Controllers
         private Mock<UserManager<User>> _mockUserManager;
         private ControllerContext _controllerContext;
 
-        public HuurBeheerderControllerTests()
+        public UserControllerTests()
         {
             _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
@@ -74,13 +74,13 @@ namespace BackendTestProject.Controllers
         public async Task GetZakelijkeHuurders_ShouldRentersFromCurrentZakelijkeBeheerder()
         {
             // Arrange
-            var controller = new HuurBeheerderController(_createContext(), _mockUserManager.Object)
+            var controller = new UserController(null, _mockUserManager.Object, _createContext())
             {
                 ControllerContext = _controllerContext,
             };
 
             // Act
-            var actionResult = await controller.GetZakelijkeHuurders();
+            var actionResult = await controller.GetRenters();
 
             // Assert
             var result = Assert.IsType<OkObjectResult>(actionResult.Result);

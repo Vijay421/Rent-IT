@@ -28,20 +28,23 @@ public class VoertuigController : ControllerBase
     public async Task<List<Voertuig>> GetAllCars()
     {
        
-        var cars = await _context.Voertuigen.ToListAsync();
+        var vehicles = await _context
+            .Voertuigen
+            .Where(v => v.VerwijderdDatum == null)
+            .ToListAsync();
 
         var role = User.FindFirstValue(ClaimTypes.Role);
         if (role == null)
         {
-            return cars;
+            return vehicles;
         }
 
         if (role == "zakelijke_huurder")
         {
-            return cars.Where(c => c.Soort == "Auto").ToList();
+            return vehicles.Where(c => c.Soort == "Auto").ToList();
         }
 
-        return cars;
+        return vehicles;
     }
 //    [HttpGet]
 //     public async Task<List<Voertuig>> GetAllCarsFrontOffice()
@@ -67,14 +70,14 @@ public class VoertuigController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Voertuig>> GetOneCar(int id)
     {
-        var car = await _context.Voertuigen.FindAsync(id);
+        var vehicle = await _context.Voertuigen.FindAsync(id);
 
-        if (car == null)
+        if (vehicle == null)
         {
             return NotFound();
         }
 
-        return car;
+        return vehicle;
     }
 
 
@@ -193,6 +196,10 @@ public class VoertuigController : ControllerBase
         return Ok(voertuig);
     }
 
+    /// <summary>
+    /// Will soft delete the vehicle, which means that the vehicle will be excluded from renting but its data is available in the database.
+    /// </summary>
+    /// <param name="id"></param>
     [Authorize(Roles = "backoffice_medewerker")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
@@ -200,7 +207,10 @@ public class VoertuigController : ControllerBase
         var voertuig = await _context.Voertuigen.FindAsync(id);
         if (voertuig == null) return NotFound();
 
-        _context.Remove(voertuig);
+        if (voertuig.VerwijderdDatum != null) return NoContent();
+
+        voertuig.VerwijderdDatum = DateOnly.FromDateTime(DateTime.Now);
+        _context.Entry(voertuig).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
         return NoContent();

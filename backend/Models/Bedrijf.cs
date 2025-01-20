@@ -17,7 +17,7 @@ namespace backend.Models
 
         [MinLength(2)]
         [Required]
-        public int KvK_nummer { get; set; }
+        public long KvK_nummer { get; set; }
 
         [MinLength(2)]
         [Required]

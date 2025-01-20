@@ -36,12 +36,14 @@
 
 /* Red for error messages */
 .confirmationMessage.error {
-    color: red;
+    color: rgb(194, 0, 0);
+    font-weight: bold;
 }
 
 /* Green for success messages */
 .confirmationMessage.success {
     color: darkgreen;
+    font-weight: bold;
 }
 
 /* Media Query for Small Screens */

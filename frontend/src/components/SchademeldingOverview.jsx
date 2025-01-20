@@ -1,12 +1,16 @@
 import "../styles/SchademeldingOverview.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
-import SchademeldingReview from "./SchademeldingOverview.jsx";
+import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
     const [schadeclaims, setSchadeclaims] = useState([]);
-
+    const {view, setView} = useState([]);
+    
+    if (userRole === null) {
+        return <Navigate to='/'/>
+    }
     useEffect(() => {
         async function fetchVehicles() {
             // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie & Schadeclaims)
@@ -36,6 +40,13 @@ function SchademeldingOverview() {
     return (
         <main className="content">
             <div className="divMain">
+                <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
+                <label className='label' htmlFor="select-input">Possible values:</label>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                    <option>Not defined</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
                 <div>
                     <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
                     <button>Voeg nieuwe schadeclaim toe</button>
@@ -45,6 +56,7 @@ function SchademeldingOverview() {
                                 <SchademeldingReview
                                     key={schadeclaim.id}
                                     data={schadeclaim}
+                                    setSchadeclaims={setSchadeclaims}
                                 />
                             );
                         })

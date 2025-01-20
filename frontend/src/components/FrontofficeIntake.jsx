@@ -5,8 +5,12 @@ import VehicleReview from "./VehicleReview.jsx";
 
 function FrontofficeIntake() {
     const { userRole } = useContext(UserContext);
+    const [isGeschiedenis, setView] = useState("nee");
     const [vehicles, setVehicles] = useState([]);
-
+    
+    if (userRole === null) {
+        return <Navigate to='/'/>
+    }
     useEffect(() => {
         async function fetchVehicles() {
             // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)
@@ -30,12 +34,21 @@ function FrontofficeIntake() {
         }
         fetchVehicles();
     }, []);
-
-    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
+    const filteredVehicles = vehicles.filter((vehicle) => {
+        if (isGeschiedenis !== "ja" && vehicle.status.toLowerCase() !== "verhuurbaar") return false;
+        return true;
+    });
+    const sortedVehicles = filteredVehicles.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (
         <main className="content">
             <div className="divMain">
+                <h1 className="divMain__text__FrontOffice">Frontoffice Intake</h1>
+                <label className='divMain__text__subText' htmlFor="select-input">Possible values:</label>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                    <option value="nee">Openstaand</option>
+                    <option value="ja">Geschiedenis</option>
+                </select>
                 <div>
                     <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
                     
@@ -45,10 +58,11 @@ function FrontofficeIntake() {
                                 <VehicleReview
                                     key={vehicle.id}
                                     data={vehicle}
+                                    setVehicles={setVehicles}
                                 />
                             );
-                        })
-                    }
+                        }
+                    )}
                 </div>
             </div>
         </main>
