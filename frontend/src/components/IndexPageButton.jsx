@@ -11,6 +11,7 @@ function IndexPageButton() {
             <h2 className='index-page-title-desc__h2'>Huur zonder gedoe een voertuig, wanneer u maar wilt.</h2>
             <div className="Content">
                 <div className="MainDivLeft">
+                    <img src="../assets/Car1.webp" alt="aa"/>
                     <div className="ParticulierDiv">
                         <h3 className="ParticulierH1">Voertuig huren</h3>
                     </div>
@@ -19,7 +20,7 @@ function IndexPageButton() {
                     </div>
                     <div className="ParticulierDiv3">
                         <button onClick={() => navigate("/huur-overzicht", {})} className="ButtonDivLeft">
-                            <h5 className="BottomDivLeftHuren">Huren</h5>
+                            Huren
                         </button>
                     </div>
                 </div>
@@ -34,7 +35,7 @@ function IndexPageButton() {
                     </div>
                     <div className="ZakelijkDiv3">
                         <button onClick={() => navigate("/*", {})} className="ButtonDivRight">
-                            <h5 className="BottomDivRightHuren">Zakelijk account aanvragen</h5>
+                            Zakelijk account aanvragen
                         </button>
                     </div>
                 </div>
