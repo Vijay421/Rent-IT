@@ -24,13 +24,12 @@
     border: 2px solid black;
     min-height: 35em;
     height: auto;
-    width: 66.5vw;
+    width: 66.5%;
     margin-bottom: 30px;
 }
 
 .notifications-page__notification {
-    margin: 12px auto;
-    width: 95%;
+    margin: 8px;
     border-radius: 5px;
     background-color: #f1f1f1;
     border: 2px solid black;
