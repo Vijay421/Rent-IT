@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar.jsx";
 import Footer from "../../components/Footer.jsx";
 import { useEffect, useState } from "react";
 import pageStyles from "./page.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeeOverviewPage() {
     const [employees, setEmployees] = useState([]);
@@ -50,6 +51,7 @@ export default function EmployeeOverviewPage() {
 
 function Employee({ data, setEmployees }) {
     const [confirmDelete, setConfigDelete] = useState(false);
+    const navigate = useNavigate();
 
     async function handleUnlockEmployee(id) {
         try {
@@ -106,6 +108,13 @@ function Employee({ data, setEmployees }) {
                 {isLockedout(data.lockoutEnd) && (
                     <button className={pageStyles.lockout} onClick={() => handleUnlockEmployee(data.id)} data-cy="unblock">Deblokkeren</button>
                 ) }
+
+                <button
+                    onClick={() => navigate("/account-instellingen", {state: {employeeData: data}})}
+                    data-cy="edit"
+                >
+                    Aanpassen
+                </button>
 
                 { !confirmDelete && <button data-cy="delete" data-user-name={data.userName} onClick={() => setConfigDelete(true)}>Verwijderen</button> }
 

@@ -1,12 +1,16 @@
-import {useState, useRef, useContext} from 'react';
+import {useState, useRef, useContext, useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/AccountSettings.css';
 import getResponseClass from '../scripts/getResponseClass';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../components/UserContext';
 
 export default function AccountSettings() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const employeeData = location.state?.employeeData;
+    const mode = employeeData !== undefined ? "employee" : "regular" ;
+
     const { userRole } = useContext(UserContext);
     const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker" || userRole === "admin";
 
@@ -16,6 +20,7 @@ export default function AccountSettings() {
     const [username, setUsername] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [address, setAddress] = useState(null);
+    const [role, setRole] = useState("");
     const [deleteConfig, setDeleteConfig] = useState({
         clickedDelete: false,
         text: "Verwijder account",
@@ -25,6 +30,16 @@ export default function AccountSettings() {
         isError: null,
     });
     const form = useRef(null);
+
+    useEffect(() => {
+        if (mode === "employee") {
+            setRole(employeeData.role);
+        }
+    }, []);
+    
+    function handleRole(e) {
+        setRole(e.target.value);
+    }
 
     async function submit() {
         // Don't submit when the form is invalid.
@@ -40,6 +55,7 @@ export default function AccountSettings() {
             username: username === "" ? null : username,
             phoneNumber: phoneNumber === "" ? null : phoneNumber,
             address: address === "" ? null : address,
+            role: role === "" ? null : role,
         };
 
         let payloadHasValues = false;
@@ -50,7 +66,7 @@ export default function AccountSettings() {
             }
         }
 
-        payload.id = userClaims.userId;
+        payload.id = mode === "regular" ? userClaims.userId : employeeData.id;
 
         if (!payloadHasValues) {
             setResponse({
@@ -68,7 +84,7 @@ export default function AccountSettings() {
             return;
         }
 
-        await updateSettings(payload, setResponse);
+        await updateSettings(payload, setResponse, mode);
     }
 
     async function handleDeleteAccount() {
@@ -193,6 +209,23 @@ export default function AccountSettings() {
                         </div>
                     ) }
 
+                    { mode === "employee" && (
+                        <div className='settings__input-box'>
+                            <label htmlFor="role">Rol:</label>
+                            <select
+                                name="role"
+                                id="role"
+                                data-cy='role'
+                                className='settings__input-field'
+                                value={role}
+                                onChange={handleRole}
+                            >
+                                <option value="backoffice_medewerker">Back office</option>
+                                <option value="frontoffice_medewerker">Front office</option>
+                            </select>
+                        </div>
+                    ) }
+
                     <nav className='settings__nav'>
                         <button onClick={submit} className='settings__button' data-cy='submit'>Update</button>
 
@@ -222,7 +255,7 @@ export default function AccountSettings() {
  * @param {string | null} payload.address
  * @param {Function} setResponse
  */
-async function updateSettings(payload, setResponse) {
+async function updateSettings(payload, setResponse, mode) {
     const request = {
         method: 'PUT',
         credentials: 'include', // TODO: change to 'same-origin' when in production.
@@ -233,9 +266,11 @@ async function updateSettings(payload, setResponse) {
     };
 
     try {
-        const response = await fetch(`https://localhost:53085/api/User/${payload.id}`, request);
+        const url = mode === "regular" ? `https://localhost:53085/api/User/${payload.id}` : `https://localhost:53085/api/Admin/employee/${payload.id}` ;
+        const response = await fetch(url, request);
 
         switch (response.status) {
+            case 204:
             case 200:
                 setResponse({
                     msg: 'de instellingen zijn geüpdated',

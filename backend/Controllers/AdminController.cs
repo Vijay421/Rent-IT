@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using backend.Rollen;
 using System;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, backoffice_medewerker")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -145,6 +146,89 @@ namespace backend.Controllers
                 UserName = user.UserName,
                 Role = createEmployeeDTO.Role,
             });
+        }
+
+        [HttpPut("employee/{id}")]
+        public async Task<ActionResult> UpdateEmployee(string id, UpdateEmployeeDTO updateEmployeeDTO)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Geen gebruiker gevonden");
+            }
+
+            if (updateEmployeeDTO.Password != null)
+            {
+                if (updateEmployeeDTO.CurrentPassword == null)
+                {
+                    return UnprocessableEntity("Vul het huidige wachtwoord in");
+                }
+
+                var pasChangeResult = await _userManager.ChangePasswordAsync(user, updateEmployeeDTO.CurrentPassword, updateEmployeeDTO.Password);
+                if (!pasChangeResult.Succeeded)
+                {
+                    return UnprocessableEntity("Incorrect wachtwoord");
+                }
+            }
+
+            user.UserName = updateEmployeeDTO.UserName ?? user.UserName;
+            user.Email = updateEmployeeDTO.Email ?? user.Email;
+            user.PhoneNumber = updateEmployeeDTO.PhoneNumber ?? user.PhoneNumber;
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            _context.Entry(user).Reference(u => u.BackOffice).Load();
+            _context.Entry(user).Reference(u => u.Frontoffice).Load();
+
+            var isFrontOffice = await _userManager.IsInRoleAsync(user, "frontoffice_medewerker");
+            if (updateEmployeeDTO.Role == "backoffice_medewerker" && isFrontOffice)
+            {
+                await _userManager.AddToRoleAsync(user, updateEmployeeDTO.Role);
+                await _userManager.RemoveFromRoleAsync(user, "frontoffice_medewerker");
+
+                if (user.Frontoffice != null)
+                {
+                    _context.FrontOfficeMedewerkers.Remove(user.Frontoffice);
+                }
+
+                if (user.BackOffice == null)
+                {
+                    var backOffice = new BackOfficeMedewerker();
+                    _context.BackOfficeMedewerkers.Add(backOffice);
+                    await _context.SaveChangesAsync();
+
+                    user.BackOffice = backOffice;
+                }
+
+                _context.Entry(user).State = EntityState.Modified;
+            }
+
+            var isBackOffice = await _userManager.IsInRoleAsync(user, "backoffice_medewerker");
+            if (updateEmployeeDTO.Role == "frontoffice_medewerker" && isBackOffice)
+            {
+                await _userManager.AddToRoleAsync(user, updateEmployeeDTO.Role);
+                await _userManager.RemoveFromRoleAsync(user, "backoffice_medewerker");
+
+                if (user.BackOffice != null)
+                {
+                    _context.BackOfficeMedewerkers.Remove(user.BackOffice);
+                }
+
+                if (user.Frontoffice == null)
+                {
+                    var frontOffice = new FrontOfficeMedewerker();
+                    _context.FrontOfficeMedewerkers.Add(frontOffice);
+                    await _context.SaveChangesAsync();
+
+                    user.Frontoffice = frontOffice;
+                }
+
+                _context.Entry(user).State = EntityState.Modified;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

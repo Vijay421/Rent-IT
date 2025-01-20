@@ -77,7 +77,7 @@ namespace backend.Controllers
             }
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "admin")
+            if (role == "admin" || role == "backoffice_medewerker")
             {
                 if (id == null)
                 {
