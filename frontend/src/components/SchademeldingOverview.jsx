@@ -5,7 +5,7 @@ import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
-    // const [isGeschiedenis, setView] = useState("nee");
+    const [isGeschiedenis, setView] = useState("nee");
     const [schadeclaims, setSchadeclaims] = useState([]);
     
     if (userRole === null) {
@@ -43,15 +43,13 @@ function SchademeldingOverview() {
     return (
         <main className="content">
             <div className="divMain">
-                <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
-                <label className='label' htmlFor="select-input">Possible values:</label>
-                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
-                    <option>Not defined</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
+                <select id="select-input" value={"Selecteer"} onChange={(e) => setView(e.target?.value)}>
+                    <option hidden selected disabled value="">Selecteer</option>
+                    <option value="nee">Openstaand</option>
+                    <option value="ja">Geschiedenis</option>
                 </select>
                 <div>
-                    <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
                     <button>Voeg nieuwe schadeclaim toe</button>
                     {sortedSchadeclaims.length === 0 ? (<p>Geen schadeclaims aanwezig</p>) :
                         sortedSchadeclaims.map((schadeclaim) => {

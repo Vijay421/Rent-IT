@@ -45,9 +45,9 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     return (
         <div className="voertuigTab">
             <p className="voertuigTab__text">
-                {data.merk} {data.type} - {data.kenteken}
+                {/* {data.merk} {data.type} - {data.kenteken} */}
                 {/* {data.foto} */}
-                {/* {data.beschrijving} */}
+                {data.beschrijving}
             </p>
             <div className="voertuigTab__inputs">
                 <select /* defaultValue={data.status} */>
