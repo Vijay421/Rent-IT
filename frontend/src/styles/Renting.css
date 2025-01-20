@@ -23,7 +23,7 @@
     background-color: #c8d8e4;
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    height: auto;
+    height: 160px;
     width: 66.5vw;
     border-radius: 8px;
 
@@ -80,21 +80,58 @@
     text-align: center;
 }
 
-.rowDivs, .rowDivs2, .rowDivs3 {
+.rowDivs {
     display: grid; /* Align child divs horizontally */
     justify-content: space-between; /* Spread divs evenly */
-    grid-template-columns: repeat(3, 1fr); /* 3 columns with equal width */
+    /*grid-template-columns: repeat(3, 1fr);*/
+    grid-template-areas:
+        "voertuig ophaalDatum inleverDatum"
+        "merk prijs beschikbaarheid"
+        "searchBar searchBar searchBar";
     font-size: 1.25em;
+    margin: 0 10px;
 }
 
 .divTop-reset-filters__button {
     font-size: 0.7em;
 }
 
-.rowDivs3 {
+.divTop-divSelect-Voertuig {
+    grid-area: voertuig;
+}
+
+.divTop-divSelect-ophaalDatum {
+    grid-area: ophaalDatum;
+}
+
+.divTop-divSelect-inleverDatum {
+    grid-area: inleverDatum;
+}
+
+.divTop-divSelect-Merk {
+    grid-area: merk;
+}
+
+.divTop-divSelect-Prijs {
+    grid-area: prijs;
+}
+
+.divTop-divSelect-Beschikbaarheid {
+    grid-area: beschikbaarheid;
+}
+
+.divTop-search-bar-container {
+    grid-area: searchBar;
     display: flex;
-    justify-content: space-evenly;
-    height: 40px;
+    flex-wrap: wrap;
+}
+
+.divTop-divSelect-Sorteren-dropdown-container {
+    grid-area: sorteren;
+}
+
+.divTop-reset-filters__button {
+    grid-area: reset;
 }
 
 .divTop-divSelect-Voertuig, .divTop-divSelect-ophaalDatum, .divTop-divSelect-inleverDatum {
@@ -180,20 +217,39 @@
         margin: 3dvh 0;
     }
 
-    .divLeft {
-        display: none;
-    }
-
     .divTop {
-        gap: 15px;
+        height: 230px;
     }
 
     .rowDivs {
-        flex-direction: row;
+        grid-template-areas:
+            "voertuig merk"
+            "ophaalDatum inleverDatum"
+            "prijs beschikbaarheid"
+            "searchBar searchBar";
     }
 
     .divTop-search-bar__input {
         width: 80%;
+    }
+
+    .divTop-search-bar-container {
+        gap: 10px;
+    }
+
+    .divTop-divSelect-Voertuig {
+        height: 2em;
+    }
+
+    .divTop-divSelect-ophaalDatum, .divTop-divSelect-inleverDatum {
+        height: auto;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 777px) {
+    .divTop {
+        height: 250px;
     }
 }
 
@@ -201,13 +257,24 @@
     .divTop-header-Text-Huren {
         text-align: center;
     }
-    .rowDivs, .rowDivs2 {
-        display: flex;
-        flex-direction: column;
+
+    .divTop {
         height: auto;
-        width: 20%;
         align-items: center;
-        margin: 0 auto;
+    }
+
+    .rowDivs {
+        display: grid;
+        grid-template-areas:
+            "voertuig"
+            "merk"
+            "ophaalDatum"
+            "inleverDatum"
+            "prijs"
+            "beschikbaarheid"
+            "searchBar";
+        align-items: center;
+        margin: 0 auto 10px auto;
     }
 
     #options {
@@ -229,6 +296,8 @@
 
     .divTop-reset-filters__button {
         margin-top: 5px;
+        height: 30px;
+        font-size: 0.8em;
     }
 
     .rowDivs3 {
