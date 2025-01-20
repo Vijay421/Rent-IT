@@ -2,7 +2,6 @@ import styles from "./profile/ProfilePageBase.module.css";
 import {useState} from "react";
 import "../styles/RentingSubmit.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import {RentalAutoBox, RentalCamperBox, RentalCaravanBox} from "./RentalVehicleBox.jsx";
 import {DisplayAutoBox, DisplayCamperBox, DisplayCaravanBox} from "./DisplayVehicleBox.jsx";
 
 function RentingSubmit() {

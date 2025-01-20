@@ -23,7 +23,6 @@ export default function ConfirmationBox() {
 
         const payload = {
             id: 0, /*huuraanvraag id*/
-            //particuliereHuurderId: 1, /*has to be modified later so store the current users account Id*/
             voertuigId: vehicleData.id, /*selected vehicles id*/
             startdatum: startDatum,
             einddatum: eindDatum,
@@ -56,7 +55,7 @@ export default function ConfirmationBox() {
                 statusText.style.display = 'block';
 
                 setTimeout(() => {
-                    navigate("/huur-betaling", {state: {user: userData, vehicle: vehicleData} });
+                    navigate("/huur-betaling", {state: { vehicleData, userData, startDatum, eindDatum } });
                 },3000);
             } else {
                 const errorMsg = await response.text();
