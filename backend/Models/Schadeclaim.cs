@@ -8,7 +8,7 @@ namespace backend.Models
         [Required]
         public required Voertuig Voertuig { get; set; }
         [Required]
-        public DateTime Datum {get;set;}
+        public DateTime? Datum {get;set;}
         [Required]
         [MinLength(5)]
         public required string Beschrijving {get;set;}

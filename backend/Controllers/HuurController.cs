@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
-[Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
+[Authorize(Roles = "particuliere_huurder, zakelijke_huurder, backoffice_medewerker")]
 [ApiController]
 [Route("api/[controller]")]
 public class HuurController : ControllerBase
@@ -23,11 +23,15 @@ public class HuurController : ControllerBase
         _userManager = userManager;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
-    // {
-    //     return await _context.Huuraanvragen.ToListAsync();
-    // }
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
+    {
+        var huuraanvragen = await _context.Huuraanvragen
+            .Include(h => h.Voertuig)
+            .ToListAsync();
+
+        return Ok(huuraanvragen);
+    }
     
     
     [HttpGet]
@@ -171,9 +175,21 @@ public class HuurController : ControllerBase
                 return Unauthorized("Incorrecte gebruiker");
             }
 
-            if (user.ZakelijkeHuurder.AbonnementId == null)
+            _context.Entry(user.ZakelijkeHuurder).Reference((z => z.Abonnement)).Load();
+            if (user.ZakelijkeHuurder.Abonnement == null)
             {
                 return Unauthorized("U bent niet gekoppeld aan een abonnementen. Bij problemen vraag, uw huurbeheerder om hulp.");
+            }
+
+            // Explicit check, which has to happen because Geaccepteerd is nullable.
+            var accepted = user.ZakelijkeHuurder.Abonnement.Geaccepteerd;
+            if (accepted == null)
+            {
+                return Unauthorized("Het gekoppelde abonnement is (nog) niet goed gekeurd.");
+            }
+            if (accepted == false)
+            {
+                return Unauthorized("Kan geen voertuig huren met een afgekeurd abonnement.");
             }
         }
         else
@@ -188,11 +204,11 @@ public class HuurController : ControllerBase
         if (huuraanvraagDto.VoertuigId > 0)
         {
             var vehicle = await _context.Voertuigen.FindAsync(huuraanvraagDto.VoertuigId);
-            if (vehicle == null)
+            if (vehicle == null || vehicle.VerwijderdDatum != null)
             {
-                return BadRequest("Voertuig niet gevonden.");
+                return NotFound("Voertuig niet gevonden.");
             }
-            
+
             vehicle.Status = "Onverhuurbaar";
             _context.Voertuigen.Update(vehicle);
         }

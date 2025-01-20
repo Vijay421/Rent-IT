@@ -7,6 +7,7 @@ function ProfilePageZakelijk() {
         <ProfilePageBase>
             <ProfilePageLinkButton link="/account-instellingen" text="Account instellingen aanpassen"/>
             <ProfilePageLinkButton link="/huur-overzicht" text="Voertuig huren"/>
+            <ProfilePageLinkButton link="/huur-geschiedenis" text="Huurgeschiedenis"/>
             <ProfilePageLinkButton link="/reserveringen" text="Reserveringen"/>
         </ProfilePageBase>
     );

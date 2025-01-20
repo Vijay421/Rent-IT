@@ -17,13 +17,16 @@ namespace backend.Models
 
         [MinLength(2)]
         [Required]
-        public int KvK_nummer { get; set; }
+        public long KvK_nummer { get; set; }
 
         [MinLength(2)]
         [Required]
         public string? PhoneNumber { get; set; }
 
         public List<Huurbeheerder> Huurbeheerders { get; set; }
+
+        [StringLength(50, MinimumLength = 2)]
+        public string Domein { get; set; }
 
         public Bedrijf()
         {

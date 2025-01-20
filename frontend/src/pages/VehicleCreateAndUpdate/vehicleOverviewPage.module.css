@@ -74,25 +74,25 @@
     font-weight: bold;
 }
 
-label {
+.formGroup label {
     text-align: left;
     margin-bottom: 5px;
 }
 
-input,
-select,
-textarea {
-    width: 100%;
-    max-width: 625px;
-    min-width: 250px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1rem;
-}
+/*input,*/
+/*select,*/
+/*textarea {*/
+/*    width: 100%;*/
+/*    max-width: 625px;*/
+/*    min-width: 250px;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    box-sizing: border-box;*/
+/*    font-size: 1rem;*/
+/*}*/
 
-textarea {
+.formGroup textarea {
     resize: vertical;
     height: 100px;
 }

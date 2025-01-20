@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import RentHistoryItem from "../components/RentHistoryItem.jsx";
 import "../styles/RentHistory.css";
+import downloadFile from "../scripts/downloadFile.js";
 
 export default function RentHistory() {
     const [vehicleType, setVehicleType] = useState("");
@@ -67,12 +68,7 @@ export default function RentHistory() {
         }
 
         const contents = JSON.stringify(filteredVehicles);
-        const blob = new Blob([contents], { type: "text/json" });
-        const link = document.createElement("a");
-
-        link.href = URL.createObjectURL(blob);
-        link.download = "voertuigen.json";
-        link.click();
+        downloadFile(contents, "voertuigen.json", "text/json");
     }
 
     return (
@@ -154,7 +150,6 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
     return true;
 }
 
-// TODO: handle server errors.
 /**
  * Will attempt to get the rent history from the server.
  * 
@@ -162,7 +157,7 @@ function filterVehicle(vehicle, vehicleType, retrieveDate, handInDate) {
  */
 async function getRentHistory() {
     try {
-        const response = await fetch('https://localhost:53085/api/ParticuliereUser/rent-history', {
+        const response = await fetch('https://localhost:53085/api/User/rent-history', {
             method: 'GET',
     
             // TODO: change to 'same-origin' when in production.

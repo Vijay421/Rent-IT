@@ -225,5 +225,106 @@ namespace backend.Controllers
                 Role = User.FindFirstValue(ClaimTypes.Role),
             });
         }
+
+        /// <summary>
+        /// Returns users who are renters.
+        /// </summary>
+        [Authorize(Roles = "zakelijke_beheerder")]
+        [HttpGet("huurders")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetRenters()
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+            if (user.Huurbeheerder == null)
+            {
+                return Unauthorized("Incorrecte gebruiker");
+            }
+
+            _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
+            if (user.Huurbeheerder.Bedrijf == null)
+            {
+                return UnprocessableEntity("Huidige gebruiker is niet gekoppeld aan een bedrijf");
+            }
+
+            var domein = user.Huurbeheerder.Bedrijf.Domein;
+
+            var users = await _context
+                .Users
+                .Include(u => u.ParticuliereHuurder)
+                .Include(u => u.ZakelijkeHuurder)
+                .Where(u => (u.ParticuliereHuurder != null || u.ZakelijkeHuurder != null) && u.Email.Contains(domein))
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    Email = u.Email,
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+        /// <summary>
+        /// Returns the rent history of the current logged-in user.
+        /// </summary>
+        [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
+        [HttpGet("rent-history")]
+        public async Task<ActionResult<IEnumerable<HuuraanvraagGeschiedenisDTO>>> GetRentHistory()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            await _context.Entry(user).Reference(u => u.ParticuliereHuurder).LoadAsync();
+            await _context.Entry(user).Reference(u => u.ZakelijkeHuurder).LoadAsync();
+            if (user.ParticuliereHuurder == null && user.ZakelijkeHuurder == null)
+            {
+                return Ok(new Huuraanvraag[] { });
+            }
+
+            var pId = user.ParticuliereHuurder?.Id;
+            var zId = user.ZakelijkeHuurder?.Id;
+
+            var huuraanvragen = await _context
+                .Huuraanvragen
+                .Where(h => h.ParticuliereHuurderId == pId || h.ZakelijkeHuurder == zId)
+                .Include(h => h.Voertuig)
+                .ToListAsync();
+
+            var huuraanvragenDTOs = huuraanvragen.Select(h => new HuuraanvraagGeschiedenisDTO
+            {
+                Startdatum = h.Startdatum,
+                Einddatum = h.Einddatum,
+                Reisaard = h.Reisaard,
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kenteken = h.Voertuig.Kenteken,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Soort = h.Voertuig.Soort,
+                Prijs = h.Voertuig.Prijs,
+            });
+
+            return Ok(huuraanvragenDTOs);
+        }
     }
 }

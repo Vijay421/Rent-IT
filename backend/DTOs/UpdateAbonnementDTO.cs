@@ -14,5 +14,7 @@ namespace backend.DTOs
         public int? Max_huurders { get; set; }
         public DateOnly? Einddatum { get; set; }
         public string? Soort { get; set; }
+        public bool? Geaccepteerd { get; set; }
+        public string? Reden { get; set; }
     }
 }

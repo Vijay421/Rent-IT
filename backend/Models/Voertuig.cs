@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json.Serialization;
 
 namespace backend.Models;
 
@@ -40,8 +41,6 @@ public class Voertuig
     public string Opmerking { get; set; }
     
     [Required]
-    [MinLength(2)]
-    [MaxLength(50)]
     public string Status { get; set; }
     
     [Required]
@@ -52,8 +51,14 @@ public class Voertuig
     
     [Required]
     public DateOnly EindDatum { get; set; }
+
+    public DateOnly? VerwijderdDatum { get; set; }
+
+    [JsonIgnore]
+    public List<Huuraanvraag>? HuurAanvragen { get; set; }
+
     public Voertuig (int id, string merk, string type, string kenteken, string kleur, int aanschafjaar, string soort, string opmerking,
-        string status, double prijs, DateOnly startDatum, DateOnly eindDatum)
+        string status, double prijs, DateOnly startDatum, DateOnly eindDatum, DateOnly? verwijderdDatum)
     {
         Id = id;
         Merk = merk;
@@ -67,6 +72,8 @@ public class Voertuig
         Prijs = prijs;
         StartDatum = startDatum;
         EindDatum = eindDatum;
+        VerwijderdDatum = verwijderdDatum;
+        HuurAanvragen = new List<Huuraanvraag> ();
     }
     
     public Voertuig() {}

@@ -1,10 +1,12 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using backend.Rollen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Claims;
 
 namespace backend.Controllers;
@@ -34,8 +36,11 @@ public class AbonnementController : ControllerBase
                 Naam = a.Naam,
                 PrijsPerMaand = a.Prijs_per_maand,
                 MaxHuurders = a.Max_huurders,
+                Startdatum = a.Startdatum,
                 Einddatum = a.Einddatum,
-                Soort = a.Soort
+                Soort = a.Soort,
+                Geaccepteerd = a.Geaccepteerd,
+                Reden = a.Reden,
             })
             .ToListAsync();
     }
@@ -52,8 +57,11 @@ public class AbonnementController : ControllerBase
             Naam = abonnement.Naam,
             PrijsPerMaand = abonnement.Prijs_per_maand,
             MaxHuurders = abonnement.Max_huurders,
+            Startdatum = abonnement.Startdatum,
             Einddatum = abonnement.Einddatum,
-            Soort = abonnement.Soort
+            Soort = abonnement.Soort,
+            Geaccepteerd = abonnement.Geaccepteerd,
+            Reden = abonnement.Reden,
         };
     }
 
@@ -80,8 +88,11 @@ public class AbonnementController : ControllerBase
             //Prijs_per_maand = abonnementDTO.Prijs_per_maand,
             Prijs_per_maand = 100.0,
             Max_huurders = abonnementDTO.Max_huurders,
+            Startdatum = abonnementDTO.Startdatum,
             Einddatum = abonnementDTO.Einddatum,
             Soort = abonnementDTO.Soort,
+            Geaccepteerd = null,
+            Reden = null,
         };
 
         _context.Abonnementen.Add(abonnement);
@@ -148,15 +159,19 @@ public class AbonnementController : ControllerBase
             .Include(a => a.ZakelijkeHuurders)
             .ThenInclude(z => z.User)
             .Select(a => new AbonnementPerZakelijkeHuurderDTO
-                {
-                    Id = a.Id,
-                    Naam = a.Naam,
-                    PrijsPerMaand = a.Prijs_per_maand,
-                    MaxHuurders = a.Max_huurders,
-                    Einddatum = a.Einddatum,
-                    Soort = a.Soort,
-                    ZakelijkeHuurders = a.ZakelijkeHuurders.Select(z => z.User.Id).ToList(),
-                }
+            {
+                Id = a.Id,
+                Naam = a.Naam,
+                PrijsPerMaand = a.Prijs_per_maand,
+                MaxHuurders = a.Max_huurders,
+                Einddatum = a.Einddatum,
+                Startdatum = a.Startdatum,
+                Soort = a.Soort,
+                ZakelijkeHuurders = a.ZakelijkeHuurders
+                        .Select(z => z.User.Id).ToList(),
+                Geaccepteerd = a.Geaccepteerd,
+                Reden = a.Reden,
+            }
             )
             .ToListAsync();
 
@@ -185,6 +200,13 @@ public class AbonnementController : ControllerBase
             return Unauthorized("Incorrecte gebruiker");
         }
 
+        _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
+        if (user.Huurbeheerder.Bedrijf == null)
+        {
+            return UnprocessableEntity("Huidige gebruiker is niet gekoppeld aan een bedrijf");
+        }
+        var domein = user.Huurbeheerder.Bedrijf.Domein;
+
         var abonnement = await _context.Abonnementen.FindAsync(abonnementId);
         if (abonnement == null)
         {
@@ -192,37 +214,79 @@ public class AbonnementController : ControllerBase
         }
         _context.Entry(abonnement).Collection(a => a.ZakelijkeHuurders).Load();
 
-        _context.Entry(user.Huurbeheerder).Collection(z => z.ZakelijkeHuurders).Load();
+        var newRenters = await _context
+            .Users
+            .Where(u => renters.Contains(u.Id))
+            .Include(u => u.ParticuliereHuurder)
+            .Include(u => u.ZakelijkeHuurder)
+            .ThenInclude(z => z.Abonnement)
+            .Where(u => u.ParticuliereHuurder != null || u.ZakelijkeHuurder != null)
+            .ToListAsync();
 
-        foreach (var zakelijkeHuurder in user.Huurbeheerder.ZakelijkeHuurders)
+        var subscribedRenters = newRenters
+            .Where(u => (u.ZakelijkeHuurder?.Abonnement != null && u.ZakelijkeHuurder.Abonnement.Id != abonnement.Id))
+            .Select(u => u.UserName)
+            .ToList();
+        if (subscribedRenters.Count > 0)
         {
-            _context.Entry(zakelijkeHuurder)
-                .Reference(z => z.User)
-                .Load();
+            var names = string.Join(", ", subscribedRenters);
+            return BadRequest($"De volgende huurders hebben al een abonnement, huurders: {names}");
         }
 
-        foreach (var renter in renters)
+        if (newRenters.Count() > abonnement.Max_huurders)
         {
-            var isRenterOfUser = user
-                .Huurbeheerder
-                .ZakelijkeHuurders
-                .Any(z => z.User.Id == renter);
+            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {newRenters.Count()}");
+        }
 
-            if (!isRenterOfUser)
+        var noDomainInEmail = newRenters.Where(u => renters.Contains(u.Id)).Any(u => !u.Email.Contains(domein));
+        if (noDomainInEmail)
+        {
+            return BadRequest($"Kan geen huurder toevoegen die geen '{domein}' als domein heeft in het emailadres");
+        }
+
+        var zakelijkeRenters = newRenters.Select(r => r.ZakelijkeHuurder).Where(z => z != null).ToList();
+        var convertedRenter = new List<ZakelijkeHuurder>();
+        foreach (var renter in newRenters)
+        {
+            var renterEntry = _context.Entry(renter);
+            renterEntry.Reference(r => r.ParticuliereHuurder).Load();
+
+            if (renter.ParticuliereHuurder != null)
             {
-                return BadRequest($"Zakelijke huurder met id '{renter}' hoort niet bij de huidige beheerder");
+                _context.ParticuliereHuurders.Remove(renter.ParticuliereHuurder);
+            }
+
+            var hasPRole = await _userManager.IsInRoleAsync(renter, "particuliere_huurder");
+            if (hasPRole)
+            {
+                await _userManager.RemoveFromRoleAsync(renter, "particuliere_huurder");
+                await _userManager.AddToRoleAsync(renter, "zakelijke_huurder");
+                
+                var zakelijkeHuurder = new ZakelijkeHuurder 
+                {
+                    HuurbeheerderId = user.HuurbeheerderId,
+                    AbonnementId = abonnement.Id,
+                    Abonnement = abonnement,
+
+                    // TODO: somehow get this from the user (it could be optional, but required when renting).
+                    Factuuradres = "Hierzo", 
+                };
+                renter.ZakelijkeHuurder = zakelijkeHuurder;
+                renterEntry.State = EntityState.Modified;
+
+                convertedRenter.Add(zakelijkeHuurder);
             }
         }
 
-        var huurders = await _context.ZakelijkeHuurders.Where(z => renters.Contains(z.User.Id)).ToListAsync();
-        if (huurders.Count() > abonnement.Max_huurders)
+        if (convertedRenter.Count > 0)
         {
-            return BadRequest($"Maximum aantal huurders overschreden, maximum: {abonnement.Max_huurders}, geselecteerd aantal huurders: {huurders.Count()}");
+            await _context.ZakelijkeHuurders.AddRangeAsync(convertedRenter);
+            await _context.SaveChangesAsync();
         }
 
-        abonnement.ZakelijkeHuurders = huurders;
+        zakelijkeRenters.AddRange(convertedRenter);
+        abonnement.ZakelijkeHuurders = zakelijkeRenters;
         _context.Entry(abonnement).State = EntityState.Modified;
-
         try
         {
             _context.Update(abonnement);
@@ -270,6 +334,9 @@ public class AbonnementController : ControllerBase
         abonnement.Prijs_per_maand = abonnementDTO.Prijs_per_maand ?? abonnement.Prijs_per_maand;
         abonnement.Einddatum = abonnementDTO.Einddatum ?? abonnement.Einddatum;
         abonnement.Soort = abonnementDTO.Soort ?? abonnement.Soort;
+        abonnement.Max_huurders = abonnementDTO.Max_huurders ?? abonnement.Max_huurders;
+        abonnement.Geaccepteerd = abonnementDTO.Geaccepteerd ?? abonnement.Geaccepteerd;
+        abonnement.Reden = abonnementDTO.Reden ?? abonnement.Reden;
 
         _context.Entry(abonnement).State = EntityState.Modified;
 
@@ -297,6 +364,8 @@ public class AbonnementController : ControllerBase
     {
         var abonnement = await _context.Abonnementen.FindAsync(id);
         if (abonnement == null) return NotFound();
+
+        //var huuders = _context.ZakelijkeHuurders.Where(z => z.AbonnementId == id);
 
         _context.Remove(abonnement);
 

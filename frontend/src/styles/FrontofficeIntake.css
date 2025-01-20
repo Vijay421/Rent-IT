@@ -1,0 +1,29 @@
+.content {
+    display: grid;
+    width: 100%;
+    margin: 3dvh 0 3em;
+}
+
+.divMain {
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    width: 66.5vw;
+    border-radius: 8px;
+}
+
+.voertuigTab{
+    border: 1px solid gray
+}
+
+.divMain__text__subText {
+    align-self: center;
+}
+.divMain__text__FrontOffice {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+}

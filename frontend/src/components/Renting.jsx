@@ -141,6 +141,7 @@ function Renting() {
                                 className="divTop-divSelect-voertuig-dropdown"
                                 value={selectedVoertuigSoort} // Controlled component
                                 onChange={handleVoertuigChange} // Event handler
+                                data-cy="kind-filter"
                             >
                                 {userRole !== "zakelijke_huurder" ? (
                                     <>
@@ -166,7 +167,7 @@ function Renting() {
                             id="date-picker-start"
                             className="date-input"
                             value={selectedDateStartDatum}
-                        onChange={handleDateChangeStartDatum}
+                            onChange={handleDateChangeStartDatum}
                         />
                         </div>
                     </div>
@@ -195,6 +196,7 @@ function Renting() {
                                 className="divTop-divSelect-merk-dropdown"
                                 value={selectedMerkSoort}
                                 onChange={handleMerkChange}
+                                data-cy="brand-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="toyota">Toyota</option>
@@ -220,6 +222,7 @@ function Renting() {
                                 className="divTop-divSelect-prijs-dropdown"
                                 value={selectedPrijsSoort}
                                 onChange={handlePrijsChange}
+                                data-cy="price-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="low">0-50</option>
@@ -238,6 +241,7 @@ function Renting() {
                                 className="divTop-divSelect-beschikbaarheid-dropdown"
                                 value={selectedBeschikbaarheidSoort}
                                 onChange={handleBeschikbaarheidChange}
+                                data-cy="availability-filter"
                             >
                                 <option value="alles">Alles</option>
                                 <option value="Verhuurbaar">Beschikbaar</option>
@@ -249,7 +253,7 @@ function Renting() {
 
                 <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
-                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar'/>
+                        <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar' data-cy="search-bar" />
 
                         <div className="divTop-divSelect-Sorteren-dropdown-container">
                             <label htmlFor="options" className="dropdown-label">Sorteren: </label>
@@ -259,6 +263,7 @@ function Renting() {
                                 className="divTop-divSelect-sorteren-dropdown"
                                 value={selectedSorterenSoort}
                                 onChange={handleSorterenChange}
+                                data-cy="sort-filter"
                             >
                                 <option value="geen">Geen</option>
                                 <option value="oplopend">Oplopend</option>
@@ -266,7 +271,7 @@ function Renting() {
                             </select>
                         </div>
 
-                        <button className='divTop-reset-filters__button' onClick={onResetFiltersButtonClick}>Reset
+                        <button className='divTop-reset-filters__button' data-cy="reset-button" onClick={onResetFiltersButtonClick}>Reset
                             filters
                         </button>
                     </div>
@@ -276,7 +281,7 @@ function Renting() {
             <div className="divMargin"></div>
             <div className="divMain">
                 {sortedVehicles.length === 0 ? (
-                    <span id="divMain-no-content__span">
+                    <span id="divMain-no-content__span" data-cy="no-vehicles-text">
                 Selecteer hierboven een startdatum en einddatum. Als er een voertuig beschikbaar is, wordt dit hier weergegeven.
             </span>
                 ) : userRole !== "zakelijke_huurder" ? (
