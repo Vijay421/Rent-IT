@@ -5,8 +5,8 @@ import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
+    // const [isGeschiedenis, setView] = useState("nee");
     const [schadeclaims, setSchadeclaims] = useState([]);
-    const {view, setView} = useState([]);
     
     if (userRole === null) {
         return <Navigate to='/'/>
@@ -34,7 +34,10 @@ function SchademeldingOverview() {
         }
         fetchVehicles();
     }, []);
-
+    // const filteredSchadeclaims = schadeclaims.filter((schadeclaim) => {
+    //     if (isGeschiedenis !== "ja" && schadeclaim.status.toLowerCase() !== "verhuurbaar") return false;
+    //     return true;
+    // });
     const sortedSchadeclaims = schadeclaims.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (

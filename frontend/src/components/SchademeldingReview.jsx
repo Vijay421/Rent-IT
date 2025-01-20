@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/SchademeldingReview.css";
 
-export default function SchadeclaimReview({ data }) {
+export default function SchadeclaimReview({ data, setSchadeclaims }) {
     const [opmerkingen, setOpmerkingen] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
@@ -17,12 +17,29 @@ export default function SchadeclaimReview({ data }) {
                     'content-type': 'application/json'
                 },
             });
-            if(response.ok) alert("Voertuig is geaccepteerd!");
+            if(response.ok){
+                alert("Voertuig is geaccepteerd!");
+                updateSchadeclaims(data.id);
+            } 
             // else alert(response);
         }
         catch (e) {
             alert(e);
         }
+    }
+
+    function updateSchadeclaims(id) {
+        setSchadeclaims((old) => {
+            const copy = [...old];
+
+            const schadeclaims = copy.filter(vehicle => vehicle.id === id);
+            if (schadeclaims.length > 1) {
+                return copy;
+            }
+            const schadeclaim = schadeclaims[0];
+
+            return copy;
+        });
     }
    
     return (
