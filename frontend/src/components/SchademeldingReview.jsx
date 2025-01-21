@@ -8,11 +8,12 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
 
     async function handleUpdate(){
         const schadeClaim = {
-            beschrijving: beschrijving,
+            
+            opmerkingen: opmerkingen,
         };
         try{
             setConfirmationMessage("");
-            await updateSchadeclaim(schadeclaim);
+            await updateSchadeclaim(schadeClaim);
             alert("Voertuig is geaccepteerd!");
             updateSchadeclaimsLijst(data.id);
         }
