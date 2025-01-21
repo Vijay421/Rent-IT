@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/RentRquest.css";
+import "../styles/RentRequest.css";
 
                 export default function RentRequest({ data, setRequests, index }) {
                     const [shouldReview, setShouldReview] = useState(false);
@@ -123,7 +123,7 @@ import "../styles/RentRquest.css";
                 <p>{data.vereiste_bestemming}</p>
 
                 <p className="rent-request__label">Verwachte kilometers</p>
-                <p>{data.verwachte_km}km</p>
+                <p>{data.verwachte_km} km</p>
             </div>
 
             <div className="rent-request__vehicle rent-request__box">
@@ -154,14 +154,14 @@ import "../styles/RentRquest.css";
 
             <div className="rent-request__status rent-request__box">
                 <h3>Status</h3>
-                <p>{getStatusString(data.geaccepteerd)}</p>
+                <p>{getStatusString(data.geaccepteerd) === "niet beoordeeld" ? "Niet beoordeeld" : getStatusString(data.geaccepteerd) === "geaccepteerd" ? "Geaccepteerd" : "Geweigerd"}</p>
                 {getReasonElement(data.reden)}
             </div>
 
             <div className="rent-request__review">
                 {
                     shouldReview === false ? (
-                        <button onClick={handleShouldReview}>Beoordelen</button>
+                        <button className='rent-request-beoordelen__button' onClick={handleShouldReview}>Beoordelen</button>
                     ) : (
                         <div className="rent-request__review--buttons">
                             <button className="rent-request__review--back" onClick={handleBackButton}>Terug</button>

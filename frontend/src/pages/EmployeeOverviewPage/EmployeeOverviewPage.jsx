@@ -117,12 +117,21 @@ function Employee({ data, setEmployees }) {
                     Aanpassen
                 </button>
 
-                { !confirmDelete && <button data-cy="delete" data-user-name={data.userName} onClick={() => setConfigDelete(true)}>Verwijderen</button> }
+                { !confirmDelete && (
+                    <button
+                        className={pageStyles.medewerkerOverzichtVerwijderen__button}
+                        data-cy="delete"
+                        data-user-name={data.userName}
+                        onClick={() => setConfigDelete(true)}
+                        >
+                            Verwijderen
+                        </button>
+                ) }
 
                 { confirmDelete && (
                     <>
-                        <button data-cy="will-delete" data-user-name={data.userName} onClick={() => {handleDeleteUser(data.id)}}>Daadwerkelijk verwijderen</button>
-                        <button data-cy="will-not-delete" data-user-name={data.userName} onClick={() => setConfigDelete(false)}>Niet verwijderen</button>
+                        <button className={pageStyles.medewerkerOverzichtVerwijderen__button} data-cy="will-delete" data-user-name={data.userName} onClick={() => {handleDeleteUser(data.id)}}>Daadwerkelijk verwijderen</button>
+                        <button className={pageStyles.medewerkerOverzichtVerwijderen__button} data-cy="will-not-delete" data-user-name={data.userName} onClick={() => setConfigDelete(false)}>Niet verwijderen</button>
                     </>
                 ) }
             </div>

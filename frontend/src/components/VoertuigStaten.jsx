@@ -186,7 +186,7 @@ export default function VoertuigStaten() {
                                 <p className="staten-voertuig-info__p"><b>Huurperiode:</b> {item.startDatum} - {item.eindDatum}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
-                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 187 to 197*/}
+                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 189 to 199*/}
                                 <select
                                     data-cy='voertuig-status-select'
                                     id="staten-voertuig-status__select"

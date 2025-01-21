@@ -66,7 +66,7 @@ export default function Register() {
     return (
         <main className='register-page'>
             <div className='register-box'>
-                <h1 className='register-box__text'>Registeren</h1>
+                <h1 className='register-box__text'>Registreren</h1>
 
                 { response.isError === null ? <></> : <p className={'register-box__response-text ' + responseClass}>{ response.msg }</p> }
 

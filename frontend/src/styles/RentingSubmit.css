@@ -1,7 +1,39 @@
+.SubmitMainDiv {
+    background-color: var(--main-color);
+    width: 40%;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.TopDiv {
+    background-color: var(--main-color);
+    width: 66.5%;
+    height: auto;
+    margin: 25px auto 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.FormWrapper {
+    flex-direction: column;
+    margin: 0 auto 0 3.5%;
+        width: 96%;
+}
+
 .label {
-    margin-top: 12px;
     margin-right: auto;
     font-size: min(20px ,4.5vw);
+    font-weight: bold;
 }
 
 #top-div__div {
@@ -10,21 +42,22 @@
 
 .main-div-form__text {
     margin-top: 10px;
-    font-size: min(28px ,5vw);
+    font-size: min(36px ,5vw);
     padding: 0 5px;
     text-align: center;
 }
 
-.FormWrapper {
+.akkord-container__div {
     display: flex;
-    flex-direction: column;
     align-items: center;
     width: 90%;
     margin: 0 auto;
+    gap: 5px;
 }
 
 .renting-submit-form {
-    width: 100%;
+    width: 96%;
+    margin-right: auto;
     height: 24px;
     font-size: 1.1em;
 }
@@ -33,40 +66,32 @@
     margin-top: 20px;
 }
 
-.submit-button {
-    margin-bottom: 1em;
-    text-decoration: none;
-    color: inherit;
-    margin-top: 20px;
-    width: 80%;
-}
-
-.submit-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
 .submit-button__button {
+    margin: 15px 0;
+}
+
+.submit-button__button,
+.submit-button {
     background-color: var(--secondary-color);
     color: #FFFFFF;
-    font-size: 1.25em;
+    font-size: 1.3em;
+    font-weight: bold;
     border-radius: 8px;
-    width: 20%;
+    width: auto;
     height: 50px;
-    text-decoration: none;
+    padding: 0 10px;
+    align-items: center;
     transition: background-color 0.3s ease;
-    margin: 0 auto;
-    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.submit-button__button:hover {
+.submit-button:hover {
     background-color: var(--tertiary-color);
 }
 
 .confirmation-message {
     margin-top: 20px;
+    text-align: center;
 }
 
 .confirmation-message.success {
@@ -77,9 +102,14 @@
     color: darkred;
 }
 
-
 @media only screen and (max-width: 1111px) {
-    .submit-button__button {
-        width: 170px;
+    .SubmitMainDiv {
+        width: 66%;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .SubmitMainDiv {
+        width: 90%;
     }
 }

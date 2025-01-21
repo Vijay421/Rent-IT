@@ -2,21 +2,25 @@
     margin-bottom: 1em;
     text-decoration: none;
     color: inherit;
+    width: 96%;
 }
 
 .LinkDiv {
     background-color: var(--secondary-color);
     border-radius: 5px;
     padding: 0.5em;
-    width: 20em;
+    height: 1.75em;
+    font-size: 1em;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: 1px solid black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .LinkDivText {
     color: #FFFFFF;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
 .LinkDiv:hover {

@@ -1,8 +1,9 @@
 import '../styles/ConfirmationBox.css';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function ConfirmationBox() {
     const location = useLocation();
+    const navigate = useNavigate();
     const { vehicleData, userData, startDatum, eindDatum } = location.state;
 
     const amountOfDays = Math.floor((new Date(eindDatum) - new Date(startDatum)) / (1000 * 60 * 60 * 24));
@@ -22,7 +23,6 @@ export default function ConfirmationBox() {
 
         const payload = {
             id: 0, /*huuraanvraag id*/
-            //particuliereHuurderId: 1, /*has to be modified later so store the current users account Id*/
             voertuigId: vehicleData.id, /*selected vehicles id*/
             startdatum: startDatum,
             einddatum: eindDatum,
@@ -54,10 +54,9 @@ export default function ConfirmationBox() {
                 statusText.textContent = 'Uw verzoek is succesvol verzonden.\r\n U wordt nu doorgestuurd naar de betaalpagina.';
                 statusText.style.display = 'block';
 
-                // setTimeout(() => {
-                    // TODO: redirect to the page with it exists.
-                    // navigate("/betaling", data);
-                // },3000);
+                setTimeout(() => {
+                    navigate("/huur-betaling", {state: { vehicleData, userData, startDatum, eindDatum } });
+                },3000);
             } else {
                 const errorMsg = await response.text();
                 statusText.style.color = 'red';
