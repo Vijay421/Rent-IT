@@ -8,6 +8,7 @@ using static BackendTestProject.MockUtils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using backend.Models.Rollen;
 
 namespace BackendTestProject.Controllers
 {

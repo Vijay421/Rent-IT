@@ -46,7 +46,8 @@ describe("manage subscriptions", () => {
 
         cy.get("a[href='/abonnement']").click();
 
-        cy.get("[data-cy='end-date']").type("2026-01-01");
+        cy.get("[data-cy='start-date']").type("2026-01-01");
+        cy.get("[data-cy='end-date']").type("2027-01-01");
         cy.get("[data-cy='subscription-name']").type("cy-test-subscription-name");
         cy.get("[data-cy='pay-as-you-go']").click();
 

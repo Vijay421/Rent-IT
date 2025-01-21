@@ -9,6 +9,7 @@ export default function AccountSettings() {
     const navigate = useNavigate();
     const { userRole } = useContext(UserContext);
     const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker" || userRole === "admin";
+    const isBedrijf = userRole === "bedrijf";
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -26,6 +27,12 @@ export default function AccountSettings() {
     });
     const form = useRef(null);
 
+    const [companyName, setCompanyName] = useState(null);
+    const [companyAddress, setCompanyAddress] = useState(null);
+    const [companyNumber, setCompanyNumber] = useState(null);
+    const [companyPhoneNumber, setCompanyPhoneNumber] = useState(null);
+    const [domain, setDomain] = useState(null);
+
     async function submit() {
         // Don't submit when the form is invalid.
         if (!form.current.checkValidity()) {
@@ -40,6 +47,12 @@ export default function AccountSettings() {
             username: username === "" ? null : username,
             phoneNumber: phoneNumber === "" ? null : phoneNumber,
             address: address === "" ? null : address,
+
+            companyName: nullOrStr(companyName),
+            companyAddress: nullOrStr(companyAddress),
+            companyNumber: nullOrStr(companyNumber),
+            companyPhoneNumber: nullOrStr(companyPhoneNumber),
+            domein: nullOrStr(domain),
         };
 
         let payloadHasValues = false;
@@ -193,6 +206,81 @@ export default function AccountSettings() {
                         </div>
                     ) }
 
+                    { isBedrijf && (
+                        <>
+                            <div className='settings__input-box'>
+                                <label htmlFor="company-name">Bedrijfsnaam:</label>
+                                <input
+                                    id="company-name"
+                                    className='settings__input-field'
+                                    inputMode="text"
+                                    placeholder='Vul hier de bedrijfsnaam in'
+                                    minLength='2'
+                                    maxLength='50'
+                                    onChange={e => setCompanyName(e.target.value.length === 0 ? null : e.target.value)}
+                                    data-cy='company-name'
+                                />
+                            </div>
+
+                            <div className='settings__input-box'>
+                                <label htmlFor="company-address">Bedrijfsadres:</label>
+                                <input
+                                    id="company-address"
+                                    className='settings__input-field'
+                                    inputMode="text"
+                                    placeholder='Vul hier het bedrijfsadres in'
+                                    minLength='8'
+                                    maxLength='50'
+                                    onChange={e => setCompanyAddress(e.target.value.length === 0 ? null : e.target.value)}
+                                    data-cy='company-address'
+                                />
+                            </div>
+
+                            <div className='settings__input-box'>
+                                <label htmlFor="company-number">KVK-nummer:</label>
+                                <input
+                                    id="company-number"
+                                    className='settings__input-field'
+                                    inputMode="text"
+                                    placeholder='Vul hier het KVK-nummer in'
+                                    minLength='8'
+                                    maxLength='8'
+                                    onChange={e => setCompanyNumber(e.target.value.length === 0 ? null : e.target.value)}
+                                    data-cy='company-number'
+                                />
+                            </div>
+
+                            <div className='settings__input-box'>
+                                <label htmlFor="company-phone-number">Bedrijfstelefoonnummer:</label>
+                                <input
+                                    id="company-phone-number"
+                                    className='settings__input-field'
+                                    inputMode="tel"
+                                    placeholder='Vul hier het bedrijfstelefoonnummer in'
+                                    minLength='2'
+                                    maxLength='50'
+                                    onChange={e => setCompanyPhoneNumber(e.target.value.length === 0 ? null : e.target.value)}
+                                    data-cy='company-phone-number'
+                                />
+                            </div>
+
+                            <div className='settings__input-box'>
+                                <label htmlFor="domain">Domein:</label>
+                                <input
+                                    id="domain"
+                                    className='settings__input-field'
+                                    inputMode="text"
+                                    placeholder={'Bijv. \'google.com\''}
+                                    minLength='2'
+                                    maxLength='50'
+                                    onChange={e => setDomain(e.target.value.length === 0 ? null : e.target.value)}
+                                    data-cy='domain'
+                                />
+                            </div>
+                        </>
+                    )}
+
+
                     <nav className='settings__nav'>
 
                         <div className='settings_delete-buttons'>
@@ -206,6 +294,16 @@ export default function AccountSettings() {
             </main>
         </>
     );
+}
+
+/**
+ * Will return `null` if the given string is empty, otherwise the value itself is returned.
+ * 
+ * @param {string} value 
+ * @returns 
+ */
+function nullOrStr(value) {
+    return value === "" ? null : value;
 }
 
 /**
