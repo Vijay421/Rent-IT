@@ -6,6 +6,7 @@ function NavButton(props) {
 
     return (
         <button
+            data-cy={props.cy ? props.cy : null}
             onClick={(e) => {
                 if (props.onClick) {
                     props.onClick(e);

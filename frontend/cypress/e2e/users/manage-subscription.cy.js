@@ -64,7 +64,7 @@ describe("manage subscriptions", () => {
 
         cy.intercept("PUT", "https://localhost:53085/api/Abonnement/*").as("updateSubscriptionRequest");
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/abonnementen']").click();
         
         cy.wait('@getSubscriptionsRequest').then((interception) => {
@@ -92,7 +92,7 @@ describe("manage subscriptions", () => {
         cy.intercept("GET", "https://localhost:53085/api/User/huurders").as("getRentersRequest");
         cy.log("add renter to subscription");
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/abonnementen']").click();
 
         cy.wait('@getSubscriptionsRequest').then((interception) => {
@@ -175,7 +175,7 @@ describe("manage subscriptions", () => {
         cy.intercept("PUT", "https://localhost:53085/api/Abonnement/renters/*").as("updateRentersRequest");
         cy.log("remove renter from subscription");
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/abonnementen']").click();
 
         cy.get("[data-cy='remove']").last().click();

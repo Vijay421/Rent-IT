@@ -34,7 +34,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
     };
 
     return (
-        <div className='rental-vehicle-box__div' data-cy="vehicle">
+        <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
             <div className='rental-vehicle-image__div'>
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>
@@ -127,7 +127,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
     };
 
         return (
-            <div className='rental-vehicle-box__div' data-cy="vehicle">
+            <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
                 <div className='rental-vehicle-image__div'>
                     <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
                 </div>
@@ -222,7 +222,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
     };
 
     return (
-        <div className='rental-vehicle-box__div' data-cy="vehicle">
+        <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
             <div className='rental-vehicle-image__div'>
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>

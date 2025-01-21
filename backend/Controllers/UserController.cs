@@ -62,14 +62,14 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Allows admins to delete users.
+        /// Allows admins and back office to delete users.
         /// Other users can only delete themselves.
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id?}")]
         public async Task<ActionResult> Delete(string? id = null)
         {
-            string userToDelete;
+            string? userToDelete = null;
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUserId == null)
             {
@@ -77,7 +77,7 @@ namespace backend.Controllers
             }
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "admin" || role == "backoffice_medewerker")
+            if (role == "admin")
             {
                 if (id == null)
                 {
@@ -85,14 +85,33 @@ namespace backend.Controllers
                 }
 
                 userToDelete = id;
-            } else
+            }
+
+            if (role == "backoffice_medewerker")
             {
-                if (currentUserId != id && id != null)
+                if (id == null)
                 {
-                    return NotFound("Kan de gebruiker niet vinden");
+                    userToDelete = currentUserId;
+                } else
+                {
+                    userToDelete = id;
                 }
 
+            }
+
+            if (role != "admin" && role != "backoffice_medewerker")
+            {
+/*                if (currentUserId != id || id != null)
+                {
+                    return NotFound("Kan de gebruiker niet vinden");
+                }*/
+
                 userToDelete = currentUserId;
+            }
+
+            if (userToDelete == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
             }
 
             var user = await _userManager.FindByIdAsync(userToDelete);

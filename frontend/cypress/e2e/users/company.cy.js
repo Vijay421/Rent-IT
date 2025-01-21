@@ -77,7 +77,7 @@ describe("manage subscriptions", () => {
         });
 
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/registreren/huurder']").click();
         cy.intercept("POST", "https://localhost:53085/api/Bedrijf/zakelijke_huurder").as("registerHuurderRequest");
 
