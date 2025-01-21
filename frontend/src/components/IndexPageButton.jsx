@@ -15,7 +15,7 @@ function IndexPageButton() {
                         <h3 className="ParticulierH1">Voertuig huren</h3>
                     </div>
                     <div className='ParticulierDiv2'>
-                        <h4>Wilt u een van onze voertuigen huren? Klik op de onderstaande knop om het huurproces te starten!</h4>
+                        <h4>Wilt u een van onze voertuigen huren en heeft u geen account? Geen account nodig! Klik gewoon op de onderstaande knop om het huurproces te starten!</h4>
                     </div>
                     <div className="ParticulierDiv3">
                         <button onClick={() => navigate("/huur-overzicht", {})} className="ButtonDivLeft">
@@ -33,8 +33,12 @@ function IndexPageButton() {
                         <h4>Bent u een bedrijf dat voertuigen wil verhuren voor hun werknemers? Klik op de onderstaande knop om het aanvraagproces voor een zakelijk account te starten!</h4>
                     </div>
                     <div className="ZakelijkDiv3">
-                        <button onClick={() => navigate("/*", {})} className="ButtonDivRight">
+                        <button onClick={() => navigate("/registreren", {})} className="ButtonDivRight">
                             Zakelijk account aanvragen
+                        </button>
+
+                        <button onClick={() => navigate("/registreren/bedrijf", {})} className="ButtonDivRight">
+                            Bedrijfsaccount aanvragen
                         </button>
                     </div>
                 </div>

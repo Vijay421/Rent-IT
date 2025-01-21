@@ -1,5 +1,4 @@
 .register-page {
-    height: 85vh;
     display: flex;
     place-items: center;
 }
@@ -15,9 +14,8 @@
     border-radius: 20px;
     width: 25%;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid black
+    margin: 30px auto;
+    border: 3px solid black
 }
 
 /*Large text at the top of the register box*/
