@@ -10,10 +10,9 @@
         "title title title title title"
         "vehicle-filter retrieve-filter hand-in-filter reset download"
     ;
-    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
+    flex-wrap: wrap;
     justify-content: center;
-
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
@@ -35,16 +34,19 @@
 
 .rent-history__filter-reset {
     grid-area: reset;
-    max-width: 200px;
+    max-width: 100px;
+    font-size: 1.2em;
 }
 
 .rent-history__filter-download {
     grid-area: download;
-    max-width: 200px;
+    max-width: 100px;
+    font-size: 1.2em;
 }
 
 .rent-history__filter-label {
     margin-right: 5px;
+    font-size: 1.2em;
 }
 
 .rent-history__filter-vehicle {
@@ -53,6 +55,12 @@
 
 .rent-history__filter-retrieve {
     grid-area: retrieve-filter;
+}
+
+#rent-history-vehicle-type,
+#rent-history-hand-in-data,
+#rent-history-retrieve-date {
+    font-size: 1.2em;
 }
 
 .rent-history__filter-hand-in {
@@ -69,7 +77,7 @@
     background-color: var(--main-color);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-    min-height: 35em;
+    min-height: 15em;
     height: auto;
     width: 66.5vw;
     margin-bottom: 30px;

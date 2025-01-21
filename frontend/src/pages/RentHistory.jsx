@@ -83,7 +83,7 @@ export default function RentHistory() {
                     <div className="rent-history__filter-vehicle rent-history__filter-item">
                         <label htmlFor="rent-history-vehicle-type" className="rent-history__filter-label">Voertuig</label>
                         <select ref={selectvehicleType} id="rent-history-vehicle-type" onChange={handleVehicleType}>
-                            <option value="alles">Alle soorten voertuigen</option>
+                            <option value="alles">Alle soorten</option>
                             <option value="auto">Auto</option>
                             <option value="camper">Camper</option>
                             <option value="caravan">Caraven</option>

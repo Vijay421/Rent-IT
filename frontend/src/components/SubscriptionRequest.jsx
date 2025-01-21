@@ -113,7 +113,7 @@ function SubscriptionRequest() {
 
 
     return (
-        <main className={styles.MainDiv}>
+        <main className="MainDiv">
             <h1 className="MainDiv__h1">Abonnementsaanvraag</h1>
             <h2 className="MainDiv__h2">Vul hieronder de gegevens in om een abonnement aan te vragen.</h2>
 
@@ -157,7 +157,7 @@ function SubscriptionRequest() {
                         data-cy="company-number"
                     />
 
-                    <label htmlFor="abonnement__max-number" className="form__text">Maximum huurder:</label>
+                    <label htmlFor="abonnement__max-number" className="form__text">Maximum huurders:</label>
                     <input
                         id="abonnement__max-number"
                         className="abonnement__max-number"

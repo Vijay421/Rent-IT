@@ -129,12 +129,12 @@ function Renting() {
     return (
         <div className="content">
             <div className="divTop">
-                <p className="divTop-header-Text-Huren">Filters</p>
+                <h1 className="divTop-header-Text-Huren">Filters</h1>
 
                 <div className="rowDivs">
                     <div className="divTop-divSelect-Voertuig">
                         <div className="divTop-divSelect-Voertuig-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Voertuig: </label>
+                            <label htmlFor="options" className="dropdown-label">Voertuig:</label>
                             <select
                                 id="options"
                                 name="options"
@@ -161,7 +161,7 @@ function Renting() {
 
                     <div className="divTop-divSelect-ophaalDatum">
                         <div className="divTop-divSelect-ophaalDatum-datePicker-container">
-                            <label htmlFor="date-picker-start" className="date-label-ophaalDatum">Startdatum: </label>
+                            <label htmlFor="date-picker-start" className="date-label-ophaalDatum">Startdatum:</label>
                             <input
                             type="date"
                             id="date-picker-start"
@@ -174,7 +174,7 @@ function Renting() {
 
                     <div className="divTop-divSelect-inleverDatum">
                         <div className="divTop-divSelect-inleverDatum-datePicker-container">
-                            <label htmlFor="date-picker-end" className="date-label-inleverDatum">Einddatum: </label>
+                            <label htmlFor="date-picker-end" className="date-label-inleverDatum">Einddatum:</label>
                             <input
                                 type="date"
                                 id="date-picker-end"
@@ -184,12 +184,10 @@ function Renting() {
                             />
                         </div>
                     </div>
-                </div>
 
-                <div className="rowDivs2">
                     <div className="divTop-divSelect-Merk">
                         <div className="divTop-divSelect-Merk-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Merk: </label>
+                            <label htmlFor="options" className="dropdown-label">Merk:</label>
                             <select
                                 id="options"
                                 name="options"
@@ -215,7 +213,7 @@ function Renting() {
 
                     <div className="divTop-divSelect-Prijs">
                         <div className="divTop-divSelect-Prijs-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Prijs: </label>
+                            <label htmlFor="options" className="dropdown-label">Prijs:</label>
                             <select
                                 id="options"
                                 name="options"
@@ -234,7 +232,7 @@ function Renting() {
 
                     <div className="divTop-divSelect-Beschikbaarheid">
                         <div className="divTop-divSelect-Beschikbaarheid-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Beschikbaarheid: </label>
+                            <label htmlFor="options" className="dropdown-label">Status:</label>
                             <select
                                 id="options"
                                 name="options"
@@ -249,14 +247,11 @@ function Renting() {
                             </select>
                         </div>
                     </div>
-                </div>
-
-                <div className="rowDivs3">
                     <div className="divTop-search-bar-container">
                         <input className="divTop-search-bar__input" type="search" value={searchText} onChange={handleSearchFieldChange} placeholder='Search bar' data-cy="search-bar" />
 
                         <div className="divTop-divSelect-Sorteren-dropdown-container">
-                            <label htmlFor="options" className="dropdown-label">Sorteren: </label>
+                            <label htmlFor="options" className="dropdown-label">Sorteren:</label>
                             <select
                                 id="options"
                                 name="options"
@@ -274,7 +269,7 @@ function Renting() {
                         <button className='divTop-reset-filters__button' data-cy="reset-button" onClick={onResetFiltersButtonClick}>Reset
                             filters
                         </button>
-                    </div>
+                </div>
                 </div>
             </div>
 

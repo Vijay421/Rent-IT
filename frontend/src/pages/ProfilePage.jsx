@@ -16,7 +16,7 @@ export default function ProfilePage() {
     console.log(userRole);
 
     if (userRole === null) {
-        return <Navigate to='/'/>
+        return <Navigate to='/'/>;
     }
 
     return (

@@ -1,6 +1,7 @@
 .Main-Content {
     height: 90vh;
     display: flex;
+    margin: 0 auto;
     place-items: center;
 }
 
@@ -11,11 +12,9 @@
     display: flex;
     place-items: center;
     flex-direction: column;
-    min-width: 300px;
-    max-width: 600px;
-    padding: 20px;
-    border-radius: 20px;
-    width: 50%;
+    width: max(290px, 35%);
+    padding: 0 10px 10px 10px;
+    border-radius: 15px;
     height: auto;
     margin: 0 auto;
     border: 2px solid black;
@@ -26,24 +25,36 @@
 
 .backoffice-medewerker__Content {
     margin-top: 30px;
+    width: 100%;
 }
 
 .privacy-input {
     height: 40px;
+    display: flex;
+    margin: 0 auto;
+    resize: vertical;
+    width: max(285px, 90%);
+}
+
+.privacy-statement-title__h1 {
+    margin: 10px 0;
 }
 
 .change-privacy-statement__button {
+    display: flex;
     background-color: var(--secondary-color);
     color: white;
     font-weight: bold;
     border-radius: 5px;
     padding: 0.5em;
     width: 200px;
-    height: 30px;
+    height: 40px;
+    font-size: 1.1em;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 5px;
+    margin: 10px auto;
+    justify-content: center;
 }
 
 .change-privacy-statement__button:hover {

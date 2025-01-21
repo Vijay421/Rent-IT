@@ -9,10 +9,11 @@
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
     border: 2px solid black;
     height: auto;
-    width: 66.5vw;
+    width: auto;
+    border-radius: 16px;
     margin-top: 30px;
     margin-bottom: 20px;
-    padding: 10px 0;
+    padding: 10px 20px;
     text-align: center;
 }
 
@@ -23,23 +24,26 @@
     border: 2px solid black;
     min-height: 35em;
     height: auto;
-    width: 66.5vw;
+    width: 66.5%;
     margin-bottom: 30px;
 }
 
 .notifications-page__notification {
-    margin: 15px auto;
-    width: max(150px,62vw);
+    margin: 8px;
     border-radius: 5px;
     background-color: #f1f1f1;
     border: 2px solid black;
     padding: 10px;
 }
 
-.notifications-page__label {
-    color: dimgray;
-    margin-top: 5px;
+.notifications-page__titel {
+    font-size: 1.3em;
+    font-weight: bold;
     margin-bottom: 2px;
+}
+
+.notifications-page__melding {
+    font-size: 1.1em;
 }
 
 @media only screen and (max-width: 500px) {

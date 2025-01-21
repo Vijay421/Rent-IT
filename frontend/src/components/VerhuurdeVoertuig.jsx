@@ -143,8 +143,8 @@ export default function VerhuurdeVoertuig() {
                         onChange={(e) => setHuurder(e.target.value)}
                     >
                         <option value="Alles">Alles</option>
-                        {renters.map(renter => (
-                            <option key={renter} value={renter}>
+                        {renters.map((renter, index) => (
+                            <option key={`${renter}-${index}`} value={renter}>
                                 {renter}
                             </option>
                         ))}
@@ -188,12 +188,12 @@ export default function VerhuurdeVoertuig() {
             <div className="verhuurde-voertuig-box__div">
                 {
                     filteredVehicles
-                        .map((vehicle) => {
+                        .map((vehicle, index) => {
                             const voertuig = vehicle.voertuig;
 
                             if (voertuig.soort === "Auto") {
                                 return (
-                                    <div className="vehicleAutoBox" key={voertuig.id} data-cy="vehicle">
+                                    <div className="vehicleAutoBox" key={index} data-cy="vehicle">
                                         <DisplayAutoBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>
@@ -210,7 +210,7 @@ export default function VerhuurdeVoertuig() {
 
                             if (voertuig.soort === "Camper") {
                                 return (
-                                    <div className="vehicleCamperBox" key={voertuig.id} data-cy="vehicle">
+                                    <div className="vehicleCamperBox" key={index} data-cy="vehicle">
                                         <DisplayCamperBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>
@@ -227,7 +227,7 @@ export default function VerhuurdeVoertuig() {
 
                             if (voertuig.soort === "Caravan") {
                                 return (
-                                    <div className="vehicleCaravanBox" key={voertuig.id} data-cy="vehicle">
+                                    <div className="vehicleCaravanBox" key={index} data-cy="vehicle">
                                         <DisplayCaravanBox data={voertuig} huurButtonStatus={false} onHuur={() => {
                                         }}/>
                                         <div className='verhuurde-voertuig-box-huurinformatie__div'>
