@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../styles/FrontofficeUitgave.css';
 
 export default function ExpenditureReview({ vehicle, customer }) {
     const [beschrijving, setBeschrijving] = useState('');

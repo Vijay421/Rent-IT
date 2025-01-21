@@ -1,5 +1,5 @@
 import '../styles/PrivacyStatement.css';
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { UserContext } from "./UserContext.jsx";
 
 export default function PrivacyStatement() {
@@ -57,6 +57,7 @@ export default function PrivacyStatement() {
     return (
         <main className="Main-Content">
             <pre className="PrivacyStatement__div">
+                <h1 className='privacy-statement-title__h1'>Privacybeleid</h1>
                 {privacyStatement}
 
                 {userRole === 'backoffice_medewerker' && (
@@ -66,8 +67,7 @@ export default function PrivacyStatement() {
                             placeholder="Vul de nieuwe privacy statement hier in..."
                             value={newPrivacyStatement}
                             onChange={handleInputChange}
-                            rows="6"
-                            cols="50"
+                            cols="30"
                         ></textarea>
                         <button
                             className="change-privacy-statement__button"
