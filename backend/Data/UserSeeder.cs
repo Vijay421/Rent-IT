@@ -4,6 +4,7 @@ using backend.Models;
 using backend.Rollen;
 using Microsoft.Extensions.Configuration;
 using System.Net;
+using backend.Models.Rollen;
 
 namespace backend.Data
 {
