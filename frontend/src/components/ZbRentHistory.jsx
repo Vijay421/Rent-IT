@@ -1,61 +1,128 @@
 import '../styles/ZbRentHistory.css';
 import EmployeeBox from "./EmployeeBox.jsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 export default function ZbRentHistory() {
-const [data, setData] = useState([]);
-const [werknemer, setWerknemer] = useState();
-const [startDatum, setStartDatum] = useState();
-const [eindDatum, setEindDatum] = useState();
-const [sorteren, setSorteren] = useState();
-
+    const [data, setData] = useState([]);
+    const [werknemer, setWerknemer] = useState("alles");
+    const [startDatum, setStartDatum] = useState("");
+    const [eindDatum, setEindDatum] = useState("");
 
     useEffect(() => {
         fetchZakelijkeHuurders();
     }, []);
 
     async function fetchZakelijkeHuurders() {
-        const response = await fetch(`https://localhost:53085/api/HuurBeheerder/werknemer_geschiedenis`, {
-            method: 'GET',
-            // TODO: change to 'same-origin' when in production.
-            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-            headers: {
-                'content-type': 'application/json'
-            },
-        });
+        try {
+            const response = await fetch(`https://localhost:53085/api/HuurBeheerder/werknemer_geschiedenis`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
 
-        const jsonify = await response.json();
-        setData(jsonify);
-        console.log(data);
+            const jsonify = await response.json();
+            setData(jsonify);
+        } catch (error) {
+            console.error("Failed to fetch data:", error);
+        }
     }
 
-    const downloadCSV = () => { //modified ChatGPT code
-        // const headers = ['Merk', 'Type', 'Kenteken', 'Kleur', 'Aanschafjaar', 'Soort', 'Status','Wettelijke_naam', 'Start Datum', 'Eind Datum'];
-        // const rows = filteredVehicles.map(vehicle => [
-        //     vehicle.voertuig?.merk,
-        //     vehicle.voertuig?.type,
-        //     vehicle.voertuig?.kenteken,
-        //     vehicle.voertuig?.kleur,
-        //     vehicle.voertuig?.aanschafjaar,
-        //     vehicle.voertuig?.soort,
-        //     vehicle.voertuig?.status,
-        //     vehicle.wettelijke_naam,
-        //     vehicle.voertuig.startDatum,
-        //     vehicle.voertuig.eindDatum,
-        // ]);
+    const calculateCosts = (record) => {
+        const amountOfDays = Math.floor(
+            (new Date(record.einddatum) - new Date(record.startdatum)) / (1000 * 60 * 60 * 24)
+        );
 
-        // const csvContent = [
-        //     headers.join(','),
-        //     ...rows.map(row => row.join(',')),
-        // ].join('\n');
+        const carPrice = record.voertuig?.prijs * amountOfDays || 0;
+        const insurance = record.voertuig?.soort === "Auto" ?
+            15.50 * amountOfDays
+            :
+            record.voertuig?.soort === "Caravan" ?
+                22 * amountOfDays
+                :
+                0;
+        const fuel = record.voertuig?.soort === "Auto" ?
+            50
+            :
+            record.voertuig?.soort === "Caravan" ?
+                0
+                :
+                100;
+        const kmCharge = 0.23 * record.verwachte_km || 0;
+        const deposit = record.voertuig?.soort === "Auto" ?
+            400
+            :
+            record.voertuig?.soort === "Caravan" ?
+                750
+                :
+                1500;
+        const tax = (carPrice + insurance + kmCharge) * 0.21 || 0;
+        const korting = 0; // TODO: Add business logic for korting if required.
+        const totalCost = carPrice + insurance + fuel + kmCharge + deposit + tax - korting;
 
-        // const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        //
-        // const link = document.createElement('a');
-        // link.href = URL.createObjectURL(blob);
-        // link.download = 'verhuurde_voertuigen.csv';
-        // link.click();
+        return {
+            carPrice,
+            insurance,
+            fuel,
+            kmCharge,
+            deposit,
+            tax,
+            korting,
+            totalCost,
+        };
     };
+
+    const downloadCSV = () => {
+        const headers = [
+            'Medewerker',
+            'Voertuig',
+            'Kenteken',
+            'Soort',
+            'Startdatum',
+            'Einddatum',
+            'Kosten p/m',
+            'Totale kosten',
+        ];
+
+        const rows = filteredHuuraanvragen.map((record) => {
+            const costs = calculateCosts(record);
+            return [
+                record.wettelijke_naam,
+                record.voertuig?.merk + " " + record.voertuig?.type,
+                record.voertuig?.kenteken,
+                record.voertuig?.soort,
+                record.startdatum,
+                record.einddatum,
+                record.voertuig?.prijs.toFixed(2),
+                costs.totalCost.toFixed(2),
+            ];
+        });
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(row => row.join(',')),
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'werknemer_huurgeschiedenis.csv';
+        link.click();
+    };
+
+    const filteredHuuraanvragen = data.filter((emp) => {
+        if (werknemer !== 'alles' && emp.wettelijke_naam !== werknemer) {
+            return false;
+        }
+        if (startDatum && emp.startdatum < startDatum) {
+            return false;
+        }
+        if (eindDatum && emp.einddatum > eindDatum) {
+            return false;
+        }
+        return true;
+    });
 
     return (
         <main className='zb-rent-history__main'>
@@ -73,23 +140,10 @@ const [sorteren, setSorteren] = useState();
                         >
                             <option value="alles">Alles</option>
                             {
-                                /*list of workers*/
+                                [...new Set(data.map((emp) => emp.wettelijke_naam))].map((uniqueName, key) => (
+                                    <option key={key} value={uniqueName}>{uniqueName}</option>
+                                ))
                             }
-                        </select>
-                    </div>
-
-                    <div className="zb-filter-bar-sorteren-filter__div">
-                        <label htmlFor="sorteren-select" className='filter-bar-dropdown__label'>Sorteren: </label>
-                        <select
-                            id='sorteren-select'
-                            className='sorteren-selects'
-                            value={sorteren}
-                            onChange={(e) => setSorteren(e.target.value)}
-
-                        >
-                            <option value="geen">Geen</option>
-                            <option value="oplopend">Oplopend</option>
-                            <option value="aflopend">Aflopend</option>
                         </select>
                     </div>
 
@@ -137,9 +191,11 @@ const [sorteren, setSorteren] = useState();
             </div>
 
             <div className="zb-rent-history-box__div">
-                {data.map((emp, key) => {
-                    return <EmployeeBox key={key} data={emp}/>;
-                })}
+                {
+                    filteredHuuraanvragen.map((emp, key) => (
+                        <EmployeeBox key={key} data={emp}/>
+                    ))
+                }
             </div>
         </main>
     );
