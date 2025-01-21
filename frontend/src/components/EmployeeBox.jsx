@@ -5,12 +5,43 @@ export default function EmployeeBox() {
 
 
     return (
-        <div>
-            test
-        </div>
+        <main className='employee-box__main'>
+            <h2 className='employee-box-title__h2'>employee name</h2>
+            <div className="employee-box-details__div">
+                <div className="employee-box-voertuig-details__div">
+                    <div className="employee-box-voertuig__div">
+                        <p className="employee-box-voertuig-title__p">Voertuig</p>
+                        <p className="employee-box-voertuig-data__p">toyota corolla</p>
+                    </div>
+
+                    <div className="employee-box-kenteken__div">
+                        <p className="employee-box-voertuig-title__p">Kenteken</p>
+                        <p className="employee-box-voertuig-data__p">AB-123-CD</p>
+                    </div>
+
+                    <div className="employee-box-soort__div">
+                        <p className="employee-box-voertuig-title__p">Soort</p>
+                        <p className="employee-box-voertuig-data__p">Auto</p>
+                    </div>
+                </div>
+
+                <div className="employee-box-huurperiode-details__div">
+                    <div className="employee-box-huurperiode__div">
+                        <p className="employee-box-huurperiode-title__p">Huurperiode</p>
+                        <p className="employee-box-huurperiode-data__p">01-01-2025 - 03-01-2025</p>
+                    </div>
+                </div>
+
+                <div className="employee-box-kosten-details__div">
+                    <p className="employee-box-kosten-title__p">Kosten</p>
+                    <div className="employee-box-totaal__div">
+                        <p className="employee-box-kosten-data__p">€ 51 p/dag</p>
+                        <p className="employee-box-kosten-data__p">€ 5100.00*</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     );
 }
 
-PropTypes.EmployeeBox = {
-
-};
+PropTypes.EmployeeBox = {};

@@ -1,0 +1,67 @@
+.employee-box__main {
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+.employee-box-title__h2 {
+    font-size: 1.75em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.employee-box-details__div {
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-box-voertuig-details__div,
+.employee-box-huurperiode-details__div {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.employee-box-kosten-details__div {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.employee-box-totaal__div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.employee-box-voertuig-title__p {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.employee-box-voertuig-data__p {
+    font-size: 1.3em;
+}
+
+.employee-box-huurperiode-title__p {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.employee-box-huurperiode-data__p {
+    font-size: 1.3em;
+}
+
+.employee-box-kosten-title__p {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.employee-box-kosten-data__p {
+    font-size: 1.5em;
+}
