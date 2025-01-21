@@ -135,13 +135,7 @@ const [sorteren, setSorteren] = useState();
             </div>
 
             <div className="zb-rent-history-box__div">
-                <EmployeeBox/>
-                <EmployeeBox/>
-                <EmployeeBox/>
-                <EmployeeBox/>
-                <EmployeeBox/>
-                <EmployeeBox/>
-                <EmployeeBox/>
+                {/*<EmployeeBox/>*/}
             </div>
         </main>
     );
