@@ -50,13 +50,12 @@
 .akkord-container__div {
     display: flex;
     align-items: center;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     gap: 5px;
 }
 
 .renting-submit-form {
-    width: 96%;
     margin-right: auto;
     height: 24px;
     font-size: 1.1em;
