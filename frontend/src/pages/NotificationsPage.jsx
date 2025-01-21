@@ -27,11 +27,9 @@ export default function NotificationsPage() {
                     {
                         notifications.map((data, key) => (
                             <div className="notifications-page__notification" key={key}>
-                                <p className="notifications-page__label">Titel</p>
-                                <p>{data.titel}</p>
+                                <h2 className='notifications-page__titel'>{data.titel}</h2>
 
-                                <p className="notifications-page__label">Melding</p>
-                                <p>{data.melding}</p>
+                                <p className='notifications-page__melding'>{data.melding}</p>
                             </div>
                         ))
                     }

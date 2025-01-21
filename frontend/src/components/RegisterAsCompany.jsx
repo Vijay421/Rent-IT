@@ -54,22 +54,20 @@ export default function RegisterAsCompany() {
         }
         if (kvkNummer.length !== 12) {
             window.alert ("Uw Kwk-nummer moet 12 tekens lang zijn.");
+            return;
         }
 
-        //TODO:
-        // const payload = {
-        //     name: username,
-        //     email,
-        //     password,
-        //     bedrijfsnaam,
-        //     address: adres.length === 0 ? null : adres,
-        //     kvkNummer,
-        //     phoneNumber,
-        //     domein,
-        // };
-        // await register(payload, setResponse, userRole);
-
-        console.log("Temporary");
+        const payload = {
+            bedrijfsnaam,
+            address: adres.length === 0 ? null : adres,
+            kvk_nummer: kvkNummer,
+            phoneNumber,
+            domein,
+            username,
+            email,
+            password,
+        };
+        await register(payload);
     }
 
     return (
@@ -163,8 +161,8 @@ export default function RegisterAsCompany() {
                             placeholder='Vul hier uw KVK-nummer in'
                             value={kvkNummer}
                             onChange={handleKvkNummer}
-                            minLength='8'
-                            maxLength='8'
+                            minLength='12'
+                            maxLength='12'
                             data-cy='kvk-nummer'
                             required
                             pattern="[0-9]*"
@@ -225,4 +223,46 @@ export default function RegisterAsCompany() {
             </div>
         </main>
 );
+}
+
+/**
+ * Tries to create a company on the server.
+ * 
+ * @param {Object} payload 
+ * @returns 
+ */
+async function register(payload) {
+    try {
+        const response = await fetch('https://localhost:53085/api/Bedrijf', {
+            method: 'POST',
+    
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        switch (response.status) {
+            case 201:
+            case 200:
+                window.alert("Het bedrijf is aangemaakt!");
+                break;
+
+            case 422:
+            case 409:
+                const error = await response.text();
+                window.alert(`Kon het bedrijf niet aanmaken: ${error}`);
+                break;
+
+            default:
+                window.alert("Error tijdens het aanmaken");
+                break;
+        }
+    } catch (error) {
+        console.error('error when creating a company, or parsing the response:', error);
+        window.alert("Error tijdens het aanmaken");
+        throw error;
+    }
 }

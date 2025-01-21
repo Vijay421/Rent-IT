@@ -31,6 +31,8 @@ import AbonnementOverzichtPage from "../pages/AbonnementOverzichtPage.jsx";
 import FrontofficeIntakePage from "../pages/FrontofficeIntakePage.jsx";
 import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx";
 import RegisterAsCompanyPage from "../pages/RegisterAsCompanyPage.jsx";
+import RegisterHuurbeheerderPage from "../pages/RegisterHuurbeheerderPage.jsx";
+import RegisterZakelijkeHuurderPage from "../pages/RegisterZakelijkeHuurderPage.jsx";
 import ZbRentHistoryPage from "../pages/ZbRentHistoryPage.jsx";
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
                 <Route path="/" element=                        {<IndexPage />} />
                 <Route path="/registreren" element=             {<RegisterPage/>} />
                 <Route path="/registreren/bedrijf" element=     {<RegisterAsCompanyPage/>} />
+                <Route path="/registreren/huurbeheerder" element=     {<RegisterHuurbeheerderPage/>} />
+                <Route path="/registreren/huurder" element=     {<RegisterZakelijkeHuurderPage/>} />
                 <Route path="/medewerker-aanmaken" element=     {<RegisterPage/>} />
                 <Route path="/medewerkersoverzicht" element=    {<EmployeeOverviewPage/>} />
                 <Route path="/login" element=                   {<LoginPage/>} />
@@ -62,7 +66,6 @@ function App() {
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
                 <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
                 <Route path="/frontoffice/uitgave" element=     {<FrontofficeExpenditurePage/>}/>
-
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
                 <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>

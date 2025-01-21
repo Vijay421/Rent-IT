@@ -77,7 +77,7 @@ namespace backend.Controllers
             }
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "admin")
+            if (role == "admin" || role == "backoffice_medewerker")
             {
                 if (id == null)
                 {
@@ -179,6 +179,19 @@ namespace backend.Controllers
                 }
             }
 
+            if (role == "bedrijf")
+            {
+                await _context.Entry(user).Reference(u => u.Bedrijf).LoadAsync();
+                if (user.Bedrijf != null)
+                {
+                    user.Bedrijf.Name = updateUserDTO.CompanyName?? user.Bedrijf.Name;
+                    user.Bedrijf.Address = updateUserDTO.CompanyAddress ?? user.Bedrijf.Address;
+                    user.Bedrijf.KvK_nummer= updateUserDTO.CompanyNumber ?? user.Bedrijf.KvK_nummer;
+                    user.Bedrijf.PhoneNumber = updateUserDTO.CompanyPhoneNumber ?? user.Bedrijf.PhoneNumber;
+                    user.Bedrijf.Domein = updateUserDTO.Domein ?? user.Bedrijf.Domein;
+                }
+            }
+
             if (updateUserDTO.Password != null)
             {
                 if (updateUserDTO.CurrentPassword == null)
@@ -259,7 +272,7 @@ namespace backend.Controllers
 
             var domein = user.Huurbeheerder.Bedrijf.Domein;
 
-            var users = await _context
+            var huurders = await _context
                 .Users
                 .Include(u => u.ParticuliereHuurder)
                 .Include(u => u.ZakelijkeHuurder)
@@ -272,7 +285,7 @@ namespace backend.Controllers
                 })
                 .ToListAsync();
 
-            return Ok(users);
+            return Ok(huurders);
         }
 
         /// <summary>
