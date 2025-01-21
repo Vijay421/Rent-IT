@@ -83,6 +83,7 @@ function Employee({ data, setEmployees }) {
 
         setEmployees((old) => {
             const copy = [...old];
+            setConfigDelete(false);
             return copy.filter((employee) => employee.id !== id);
         });
     }
