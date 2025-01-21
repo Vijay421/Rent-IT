@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace backend.Controllers;
-[Authorize(Roles = "frontoffice_medewerker")]
+// [Authorize(Roles = "frontoffice_medewerker")]
 [Route("api/[controller]")]
 [ApiController]
 public class SchadeclaimController : ControllerBase

@@ -6,29 +6,41 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
 
-    async function voertuigReparatieZetten(){
-        try {
-            const response = await fetch(`https://localhost:53085/api/Schadeclaim/voertuig-accepteren/${data.id}`, {
-                method: 'PUT',
-        
-                // TODO: change to 'same-origin' when in production.
-                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-                headers: {
-                    'content-type': 'application/json'
-                },
-            });
-            if(response.ok){
-                alert("Voertuig is geaccepteerd!");
-                updateSchadeclaims(data.id);
-            } 
-            // else alert(response);
+    async function handleUpdate(){
+        const schadeClaim = {
+            beschrijving: beschrijving,
+        };
+        try{
+            setConfirmationMessage("");
+            await updateSchadeclaim(schadeclaim);
+            alert("Voertuig is geaccepteerd!");
+            updateSchadeclaimsLijst(data.id);
         }
-        catch (e) {
-            alert(e);
+        catch (e){
+            
         }
     }
 
-    function updateSchadeclaims(id) {
+    /**
+    * @param {Object} payload 
+    * @returns {Object}
+    */
+    async function updateSchadeclaim(payload){
+        const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
+            method: 'PUT',
+            
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+
+        });
+        return await response.json();
+    }
+
+    function updateSchadeclaimsLijst(id) {
         setSchadeclaims((old) => {
             const copy = [...old];
 
@@ -46,13 +58,15 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
         <div className="voertuigTab">
             <p className="voertuigTab__text">
                 {/* {data.merk} {data.type} - {data.kenteken} */}
-                {/* {data.foto} */}
-                {data.beschrijving}
+                {data.beschrijving} - {new Date(data.datum).toLocaleDateString()}
             </p>
+            <img>{/* {data.foto} */}</img>
             <div className="voertuigTab__inputs">
                 <select /* defaultValue={data.status} */>
-                    <option value="">In reparatie</option>
-                    <option value="">Afgehandeld</option>
+                    <option value="0">Onverhuurbaar</option>
+                    <option value="1">Verhuurbaar</option>
+                    <option value="2">In reparatie</option>
+                    <option value="3">Geblokkeerd</option>
                 </select>
                 
                 <input
@@ -61,7 +75,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                     value={opmerkingen}
                     onChange={(e) => setOpmerkingen(e.target.value)}
                 />
-                <button onClick={voertuigReparatieZetten}>In reparatie zetten</button>
+                <button onClick={updateSchadeclaim}>Update</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
@@ -72,10 +86,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     );
 }
 
-// /**
-// * @param {Object} payload 
-// * @returns {Object}
-// */
+
 // async function voertuigWeigeren(payload) {
 //     const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
 //         method: 'POST',
@@ -91,25 +102,3 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
 // }
 
 
-
-    // async function handleWeigeren(){       
-    //     if (beschrijving && foto) {
-    //         const schadeClaim = {
-    //             Voertuig: data,
-    //             beschrijving: beschrijving,
-    //             foto: foto ? URL.createObjectURL(foto) : null,
-    //         };
-    //         try {
-    //             setConfirmationMessage("");
-    //             await voertuigWeigeren(schadeClaim);
-    //             alert("Voertuig is succcesvol geweigerd!");
-    //         }
-    //         catch (e) {
-    //             window.alert(e);
-    //         }
-    //     }
-    //     else {
-    //         setConfirmationMessage("Vul alstublieft alle velden in.");
-    //         setMessageType('error');
-    //     }
-    // }
