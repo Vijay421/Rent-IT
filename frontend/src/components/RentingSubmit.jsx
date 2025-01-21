@@ -1,4 +1,3 @@
-import styles from "./profile/ProfilePageBase.module.css";
 import {useState} from "react";
 import "../styles/RentingSubmit.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -60,13 +59,13 @@ function RentingSubmit() {
 
     return (
         <main>
-            <div className={styles.TopDiv} id='top-div__div'>
+            <div className='TopDiv' id='top-div__div'>
                 {vehicleData.soort === "Auto" && <DisplayAutoBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum} huurButtonStatus={false} onHuur={() => {}}/>}
                 {vehicleData.soort === "Caravan" && <DisplayCaravanBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum} huurButtonStatus={false} onHuur={() => {}}/>}
                 {vehicleData.soort === "Camper" && <DisplayCamperBox data={vehicleData} nieuwStartDatum={startDatum} nieuwEindDatum={eindDatum} huurButtonStatus={false} onHuur={() => {}}/>}
             </div>
 
-            <div className="MainDiv">
+            <div className="SubmitMainDiv">
                 <h1 className="main-div-form__text">
                     Vul hieronder de gegevens in om een abonnement aan te vragen.
                 </h1>

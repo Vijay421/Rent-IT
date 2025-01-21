@@ -1,9 +1,36 @@
-.MainDiv {
+.SubmitMainDiv {
+    background-color: var(--main-color);
     width: 40%;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.TopDiv {
+    background-color: var(--main-color);
+    width: 66.5%;
+    height: auto;
+    margin: 25px auto 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.FormWrapper {
+    flex-direction: column;
+    margin: 0 auto 0 3.5%;
+        width: 96%;
 }
 
 .label {
-    margin-top: 12px;
     margin-right: auto;
     font-size: min(20px ,4.5vw);
     font-weight: bold;
@@ -29,7 +56,8 @@
 }
 
 .renting-submit-form {
-    width: 100%;
+    width: 96%;
+    margin-right: auto;
     height: 24px;
     font-size: 1.1em;
 }
@@ -75,13 +103,13 @@
 }
 
 @media only screen and (max-width: 1111px) {
-    .MainDiv {
-        width: 65%;
+    .SubmitMainDiv {
+        width: 66%;
     }
 }
 
 @media only screen and (max-width: 660px) {
-    .MainDiv {
+    .SubmitMainDiv {
         width: 90%;
     }
 }
