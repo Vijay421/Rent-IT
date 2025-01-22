@@ -52,8 +52,6 @@ namespace BackendTestProject.IntegrationTests
             var zakelijkeHuurdersGetResponse = await client.GetAsync("/api/Bedrijf/zakelijke_beheerders");
             var zakelijkeHuurders = await zakelijkeHuurdersGetResponse.Content.ReadFromJsonAsync<List<GetBeheerderDTO>>();
 
-            var bedrijfDeleteResponse = await client.DeleteAsync("/api/Bedrijf");
-
             // Assert
             Assert.Equal(HttpStatusCode.Created, bedrijfCreateResponse.StatusCode);
             Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
