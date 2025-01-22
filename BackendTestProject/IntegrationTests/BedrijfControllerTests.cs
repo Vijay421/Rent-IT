@@ -1,26 +1,8 @@
 ﻿using backend;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using backend.Controllers;
 using System.Net.Http.Json;
-using backend.Data;
-using backend.Models;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using static BackendTestProject.MockUtils;
-using Microsoft.AspNetCore.Identity;
-using Moq;
-using backend.Models.Rollen;
-using backend.Rollen;
 using backend.DTOs;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Net;
 
 namespace BackendTestProject.IntegrationTests
 {
@@ -34,18 +16,53 @@ namespace BackendTestProject.IntegrationTests
         }
 
         [Fact]
-        public async Task Example_Integration_Test()
+        public async Task BedrijfController_AddZakelijkeBeheerderAndHuurderToCompany()
         {
             // Arrange
             var client = _factory.CreateClient();
+            var bedrijf = new CreateBedrijfDTO
+            {
+                BedrijfsNaam = "mock-bedrijf",
+                Address = "Mock address",
+                KvK_nummer = 111111111111,
+                PhoneNumber = "42432432432",
+                Domein = "mock.com",
+                UserName = "mock-bedrijf",
+                Email = "mock@mock.com",
+                Password = "Qwerty123!",
+            };
+            var beheerder = new CreateHuurbeheerderDTO
+            {
+                Name = "mock-beheerder",
+                Email = "beheer@mock.com",
+                Password = "Qwerty123!",
+                PhoneNumber = "432423432",
+                Bedrijfsrol = "voertuigbeheerder",
+            };
 
             // Act
-            var response = await client.GetAsync("/api/Voertuig");
+            var bedrijfCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf", bedrijf);
+            var loginResponse = await client.PostAsJsonAsync("/auth/login?useCookies=true&useSessionCookies=true", new
+            {
+                Email = "mock-bedrijf",
+                Password = "Qwerty123!",
+            });
+            var zakelijkeHuurderCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_beheerder", beheerder);
+
+            var zakelijkeHuurdersGetResponse = await client.GetAsync("/api/Bedrijf/zakelijke_beheerders");
+            var zakelijkeHuurders = await zakelijkeHuurdersGetResponse.Content.ReadFromJsonAsync<List<GetBeheerderDTO>>();
+
+            var bedrijfDeleteResponse = await client.DeleteAsync("/api/Bedrijf");
 
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-            Assert.Equal("application/json; charset=utf-8",
-                response.Content.Headers.ContentType.ToString());
+            Assert.Equal(HttpStatusCode.Created, bedrijfCreateResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, zakelijkeHuurderCreateResponse.StatusCode);
+
+            Assert.Equal(HttpStatusCode.OK, zakelijkeHuurdersGetResponse.StatusCode);
+
+            var containsCreatedHuurbeheerder = zakelijkeHuurders.Any(h => h.UserName == beheerder.Name);
+            Assert.True(containsCreatedHuurbeheerder);
         }
     }
 }

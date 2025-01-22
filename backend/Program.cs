@@ -33,6 +33,9 @@ public class Program
 
             var testApp = builder.Build();
             testApp.MapControllers();
+
+            testApp.MapGroup("/auth").MapIdentityApi<User>();
+
             testApp.Run();
 
             return;

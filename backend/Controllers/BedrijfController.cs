@@ -241,7 +241,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("zakelijke_beheerders")]
-        public async Task<ActionResult> GetHuurBeheerders()
+        public async Task<ActionResult<GetBeheerderDTO>> GetHuurBeheerders()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
