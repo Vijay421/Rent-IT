@@ -20,12 +20,23 @@ export default function EmployeeBox({data}) {
                 <div className="employee-box-voertuig-details__div">
                     <div className="employee-box-voertuig__div">
                         <p className="employee-box-voertuig-title__p">Voertuig</p>
-                        <p className="employee-box-voertuig-data__p">{data.voertuig.merk}</p>
+                        <p className="employee-box-voertuig-data__p">{data.voertuig.merk} {data.voertuig.type}</p>
                     </div>
 
                     <div className="employee-box-kenteken__div">
                         <p className="employee-box-voertuig-title__p">Kenteken</p>
                         <p className="employee-box-voertuig-data__p">{data.voertuig.kenteken}</p>
+                    </div>
+
+                    <div className="employee-box-kenteken__div">
+                        <p className="employee-box-voertuig-title__p">Kleur</p>
+                        <p className="employee-box-voertuig-data__p">{data.voertuig.kleur}</p>
+                    </div>
+
+                    <div className="employee-box-kenteken__div">
+                        <p className="employee-box-voertuig-title__p">Aanschafjaar
+                        </p>
+                        <p className="employee-box-voertuig-data__p">{data.voertuig.aanschafjaar}</p>
                     </div>
 
                     <div className="employee-box-soort__div">
