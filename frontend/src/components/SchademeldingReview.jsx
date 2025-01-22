@@ -6,40 +6,49 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
 
+    async function handleCreate(){
+        if (beschrijving.length < 5) {
+            setConfirmationMessage("De beschrijving moet langer zijn dan 4 characters.");
+            setMessageType('error');
+            return;
+        }
+
+        if (beschrijving && foto) {
+            const schadeClaim = {
+                Voertuig: data,
+                beschrijving: beschrijving,
+                datum: new Date(),
+                foto: foto ? URL.createObjectURL(foto) : null,
+            };
+            try {
+                setConfirmationMessage("");
+                await createSchadeclaim(schadeClaim);
+                alert("Voertuig is succcesvol geweigerd!");
+            }
+            catch (e) {
+                window.alert(e);
+            }
+        }
+        else {
+            setConfirmationMessage("Vul alstublieft alle velden in.");
+            setMessageType('error');
+        }
+    }
     async function handleUpdate(){
         const schadeClaim = {
-            
             opmerkingen: opmerkingen,
         };
         try{
             setConfirmationMessage("");
             await updateSchadeclaim(schadeClaim);
-            alert("Voertuig is geaccepteerd!");
+            alert("Schadeclaim is geupdate!");
             updateSchadeclaimsLijst(data.id);
         }
-        catch (e){
-            
+        catch (e){            
+            window.alert(e);
         }
     }
 
-    /**
-    * @param {Object} payload 
-    * @returns {Object}
-    */
-    async function updateSchadeclaim(payload){
-        const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
-            method: 'PUT',
-            
-            // TODO: change to 'same-origin' when in production.
-            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(payload),
-
-        });
-        return await response.json();
-    }
 
     function updateSchadeclaimsLijst(id) {
         setSchadeclaims((old) => {
@@ -87,19 +96,36 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     );
 }
 
+/**
+* @param {Object} payload 
+* @returns {Object}
+*/
+async function updateSchadeclaim(payload){
+    const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
+        method: 'PUT',
+        
+        // TODO: change to 'same-origin' when in production.
+        credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(payload),
 
-// async function voertuigWeigeren(payload) {
-//     const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
-//         method: 'POST',
+    });
+    return await response.json();
+}
+async function createSchadeclaim(payload) {
+    const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
+        method: 'POST',
 
-//         // TODO: change to 'same-origin' when in production.
-//         credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-//         headers: {
-//             'content-type': 'application/json'
-//         },
-//         body: JSON.stringify(payload),
-//     });
-//     return await response.json();
-// }
+        // TODO: change to 'same-origin' when in production.
+        credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+    return await response.json();
+}
 
 
