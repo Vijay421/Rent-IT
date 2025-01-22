@@ -15,7 +15,7 @@
 
 .abonnement-overzicht-content-box__div {
     display: flex;
-    background-color: whitesmoke;
+    background-color: var(--main-color);
     border-radius: 8px;
     border: 3px solid black;
     width: 75%;
@@ -31,6 +31,7 @@
 
 .abonnement-content-box__div {
     display: flex;
+    background-color: whitesmoke;
     flex-direction: column;
     justify-content: space-between;
     border: 2px solid black;

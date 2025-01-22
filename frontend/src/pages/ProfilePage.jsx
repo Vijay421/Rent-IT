@@ -10,10 +10,11 @@ import ProfilePageBedrijf from "../components/Profile/ProfilePageBedrijf.jsx";
 import {useContext} from "react";
 import { UserContext } from "../components/UserContext.jsx";
 import  { Navigate } from 'react-router-dom';
+import ProfileInfoBox from "../components/Profile/ProfileInfoBox.jsx";
+import '../styles/Profile.css';
 
 export default function ProfilePage() {
     const { userRole } = useContext(UserContext);
-    console.log(userRole);
 
     if (userRole === null) {
         return <Navigate to='/'/>;
@@ -22,28 +23,31 @@ export default function ProfilePage() {
     return (
         <>
             <Navbar />
-            {userRole === "particuliere_huurder" && (
-                <ProfilePageParticulier role="Particuliere Huurder" />
-            )}
-            {userRole === "zakelijke_huurder" && (
-                <ProfilePageZakelijk role="Zakelijke Huurder" />
-            )}
-            {userRole === "zakelijke_beheerder" && (
-                <ProfilePageZakelijkeBeheerder role="Zakelijke Beheerder" />
-            )}
-            {userRole === "admin" && (
-                <ProfilePageAdmin role="Admin" />
-            )}
-            {userRole === "frontoffice_medewerker" && (
-                <ProfilePageFrontOffice role="Frontoffice Medewerker" />
-            )}
-            {userRole === "backoffice_medewerker" && (
-                <ProfilePageBackOffice role="Backoffice Medewerker" />
-            )}
-            {userRole === "bedrijf" && (
-                <ProfilePageBedrijf role="Bedrijf" />
-            )}
-            {!userRole && <p>Loading user role...</p>}
+            <main className="profile-base__main">
+                <ProfileInfoBox/>
+                {userRole === "particuliere_huurder" && (
+                    <ProfilePageParticulier role="Particuliere Huurder" />
+                )}
+                {userRole === "zakelijke_huurder" && (
+                    <ProfilePageZakelijk role="Zakelijke Huurder" />
+                )}
+                {userRole === "zakelijke_beheerder" && (
+                    <ProfilePageZakelijkeBeheerder role="Zakelijke Beheerder" />
+                )}
+                {userRole === "admin" && (
+                    <ProfilePageAdmin role="Admin" />
+                )}
+                {userRole === "frontoffice_medewerker" && (
+                    <ProfilePageFrontOffice role="Frontoffice Medewerker" />
+                )}
+                {userRole === "backoffice_medewerker" && (
+                    <ProfilePageBackOffice role="Backoffice Medewerker" />
+                )}
+                {userRole === "bedrijf" && (
+                    <ProfilePageBedrijf role="Bedrijf" />
+                )}
+                {!userRole && <p>Loading user role...</p>}
+            </main>
             <Footer />
         </>
     );
