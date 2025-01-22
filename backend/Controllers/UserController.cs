@@ -248,6 +248,24 @@ namespace backend.Controllers
                     user.Bedrijf.Domein = updateUserDTO.Domein ?? user.Bedrijf.Domein;
                 }
             }
+            
+            if (role == "zakelijke_beheerder")
+            {
+                await _context.Entry(user).Reference(u => u.Huurbeheerder).LoadAsync();
+                if (user.Huurbeheerder != null)
+                {
+                    user.Huurbeheerder.Bedrijfsrol = updateUserDTO.Bedrijfsrol ?? user.Huurbeheerder.Bedrijfsrol;
+                }
+            }
+
+            if (role == "zakelijke_huurder")
+            {
+                await _context.Entry(user).Reference(u => u.ZakelijkeHuurder).LoadAsync();
+                if (user.ZakelijkeHuurder != null)
+                {
+                    user.ZakelijkeHuurder.Factuuradres = updateUserDTO.Factuuradres ?? user.ZakelijkeHuurder.Factuuradres;
+                }
+            }
 
             if (updateUserDTO.Password != null)
             {
