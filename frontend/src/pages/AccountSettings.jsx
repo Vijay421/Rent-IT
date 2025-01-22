@@ -12,8 +12,10 @@ export default function AccountSettings() {
     const mode = employeeData !== undefined ? "employee" : "regular" ;
 
     const { userRole } = useContext(UserContext);
-    const isMedewerker = userRole === "backoffice_medewerker" || userRole === "frontoffice_medewerker" || userRole === "admin";
     const isBedrijf = userRole === "bedrijf";
+    const isPHuurder = userRole === "particuliere_huurder";
+    const isZHuurder = userRole === "zakelijke_huurder";
+    const isZBeheerder = userRole === "zakelijke_beheerder";
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -21,6 +23,8 @@ export default function AccountSettings() {
     const [username, setUsername] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [address, setAddress] = useState(null);
+    const [factuuradres, setFactuuradres] = useState(null);
+    const [bedrijfsrol, setBedrijfsrol] = useState(null);
     const [role, setRole] = useState("");
     const [deleteConfig, setDeleteConfig] = useState({
         clickedDelete: false,
@@ -68,6 +72,8 @@ export default function AccountSettings() {
             companyNumber: nullOrStr(companyNumber),
             companyPhoneNumber: nullOrStr(companyPhoneNumber),
             domein: nullOrStr(domain),
+            factuuradres: nullOrStr(factuuradres),
+            bedrijfsrol: nullOrStr(bedrijfsrol),
         };
 
         let payloadHasValues = false;
@@ -205,7 +211,10 @@ export default function AccountSettings() {
                         />
                     </div>
 
-                    { !isMedewerker && (
+
+
+
+                    { isPHuurder && (
                         <div className='settings__input-box'>
                             <label htmlFor="address">Adres:</label>
                             <input
@@ -219,7 +228,9 @@ export default function AccountSettings() {
                                 data-cy='address'
                             />
                         </div>
-                    ) }
+                    )}
+
+
 
                     { mode === "employee" && (
                         <div className='settings__input-box'>
@@ -237,6 +248,9 @@ export default function AccountSettings() {
                             </select>
                         </div>
                     ) }
+
+
+
                     { isBedrijf && (
                         <>
                             <div className='settings__input-box'>
@@ -312,13 +326,51 @@ export default function AccountSettings() {
                     )}
 
 
+                    { isZHuurder && (
+                        <div className='settings__input-box'>
+                            <label htmlFor="domain">Factuuradres:</label>
+                            <input
+                                id="factuur"
+                                className='settings__input-field'
+                                inputMode="text"
+                                placeholder={'Vul hier je factuuradres in'}
+                                minLength='2'
+                                maxLength='50'
+                                onChange={e => setFactuuradres(e.target.value.length === 0 ? null : e.target.value)}
+                                data-cy='factuuradres'
+                            />
+                        </div>
+                    )}
+
+                    { isZBeheerder && (
+                        <div className='settings__input-box'>
+                            <label htmlFor="domain">Bedrijfsrol:</label>
+                            <input
+                                id="bedrijfsrol"
+                                className='settings__input-field'
+                                inputMode="text"
+                                placeholder={'Vul hier je bedrijfsrol in'}
+                                minLength='2'
+                                maxLength='50'
+                                onChange={e => setBedrijfsrol(e.target.value.length === 0 ? null : e.target.value)}
+                                data-cy='bedrijfsrol'
+                            />
+                        </div>
+                    )}
+
+
                     <nav className='settings__nav'>
 
                         <div className='settings_delete-buttons'>
-                            <button onClick={submit} className='settings__button settings__button--update' data-cy='submit'>Update</button>
-                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete' data-cy='delete'>{deleteConfig.text}</button>
+                            <button onClick={submit} className='settings__button settings__button--update'
+                                    data-cy='submit'>Update
+                            </button>
+                            <button onClick={handleDeleteAccount} className='settings__button settings__button--delete'
+                                    data-cy='delete'>{deleteConfig.text}</button>
 
-                            { deleteConfig.clickedDelete && <button onClick={handleWontDelete} className='settings__button settings__button--dont-delete'>Niet verwijderen</button> }
+                            {deleteConfig.clickedDelete && <button onClick={handleWontDelete}
+                                                                   className='settings__button settings__button--dont-delete'>Niet
+                                verwijderen</button>}
                         </div>
                     </nav>
                 </form>

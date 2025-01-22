@@ -11,7 +11,7 @@ function Renting() {
     const [selectedDateEindDatum, setSelectedDateEindDatum] = useState("");
     const [selectedMerkSoort, setSelectedMerkSoort] = useState("alles");
     const [selectedPrijsSoort, setSelectedPrijsSoort] = useState("alles");
-    const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("alles");
+    const [selectedBeschikbaarheidSoort, setSelectedBeschikbaarheidSoort] = useState("Verhuurbaar");
     const [selectedSorterenSoort, setSelectedSorterenSoort] = useState("geen");
     const [vehicles, setVehicles] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -76,7 +76,7 @@ function Renting() {
         setSelectedVoertuigSoort("alles");
         setSelectedMerkSoort("alles");
         setSelectedPrijsSoort("alles");
-        setSelectedBeschikbaarheidSoort("alles");
+        setSelectedBeschikbaarheidSoort("Verhuurbaar");
         setSelectedDateStartDatum("");
         setSelectedDateEindDatum("");
         setSelectedSorterenSoort("geen");
@@ -241,8 +241,8 @@ function Renting() {
                                 onChange={handleBeschikbaarheidChange}
                                 data-cy="availability-filter"
                             >
-                                <option value="alles">Alles</option>
                                 <option value="Verhuurbaar">Beschikbaar</option>
+                                <option value="alles">Alles</option>
                                 <option value="Onverhuurbaar">Onbeschikbaar</option>
                             </select>
                         </div>

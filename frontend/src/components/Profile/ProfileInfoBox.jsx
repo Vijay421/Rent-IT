@@ -54,7 +54,7 @@ export default function ProfileInfoBox() {
                 <>
                     <div className="profile-info-abonnement-container">
                         <p className="profile-info-title__p">Abonnement:</p>
-                        <p className="profile-info-data__p">{data.zhuurderAbonnement}</p>
+                        <p className="profile-info-data__p">{data.zhuurderAbonnement ?? "Geen"}</p>
                     </div>
 
                     <div className="profile-info-factuuradres-container">
