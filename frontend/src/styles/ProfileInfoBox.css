@@ -6,6 +6,11 @@
     width: min(60%, 1000px);
     font-size: 1.75em;
     border-radius: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 5px;
 }
 
 .profile-info-box__div div {

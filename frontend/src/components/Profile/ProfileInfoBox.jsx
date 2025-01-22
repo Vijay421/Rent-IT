@@ -80,14 +80,29 @@ export default function ProfileInfoBox() {
 
             {userRole === "bedrijf" && (
                 <>
-                    <div className="profile-info-bedrijf-container">
-                        <p className="profile-info-title__p">Bedrijf:</p>
-                        <p className="profile-info-data__p">{data.zbeheerderBedrijf}</p>
+                    <div className="profile-info-bedrijfnaam-container">
+                        <p className="profile-info-title__p">Bedrijfsnaam:</p>
+                        <p className="profile-info-data__p">{data.bedrijfName}</p>
                     </div>
 
-                    <div className="profile-info-bedrijfsrol-container">
-                        <p className="profile-info-title__p">Bedrijfsrol:</p>
-                        <p className="profile-info-data__p">{data.zbeheerderBedrijfsrol}</p>
+                    <div className="profile-info-bedrijfadres-container">
+                        <p className="profile-info-title__p">Bedrijfsadres:</p>
+                        <p className="profile-info-data__p">{data.bedrijfAddress}</p>
+                    </div>
+
+                    <div className="profile-info-bedrijfKVK-container">
+                        <p className="profile-info-title__p">KVK-nummer:</p>
+                        <p className="profile-info-data__p">{data.bedrijfKVKNumber}</p>
+                    </div>
+
+                    <div className="profile-info-bedrijftelefoonnummer-container">
+                        <p className="profile-info-title__p">Bedrijfstelnr.:</p>
+                        <p className="profile-info-data__p">{data.bedrijfPhoneNumber}</p>
+                    </div>
+
+                    <div className="profile-info-bedrijfdomein-container">
+                        <p className="profile-info-title__p">Domein:</p>
+                        <p className="profile-info-data__p">{data.bedrijfDomein}</p>
                     </div>
                 </>
             )}
