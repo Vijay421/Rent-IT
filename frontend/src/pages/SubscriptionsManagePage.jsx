@@ -17,10 +17,14 @@ export default function SubscriptionsManagePage() {
     useEffect(() => {
         const getData = async () => {
             const userSubs = await getSubsFromCurrentUser();
+            console.log("getSubsFromCurrentUser ");
+            console.log(userSubs);
             setSubs(userSubs);
 
             const userRenters = await getRentersFromCurrentUser();
             setRenters(userRenters);
+            console.log("getRentersFromCurrentUser");
+            console.log(userRenters);
         };
 
         getData();

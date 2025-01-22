@@ -134,7 +134,7 @@ export default function Abonnement({data, onUpdate}) {
 
 
                 <p className='abonnement-content__p' id='abonnement-content-startDatum'
-                   data-cy='abonnement-content-startdatum'><b>Eind
+                   data-cy='abonnement-content-startdatum'><b>Start
                     datum:</b> {data.startdatum}</p>
 
                 <p className='abonnement-content__p' id='abonnement-content-eindDatum'

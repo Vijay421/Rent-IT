@@ -139,7 +139,7 @@ function RentingSubmit() {
                         onChange={(e) => setRijbewijsnummer(e.target.value)}
                         maxLength='10'
                         onKeyDown={(e) => {
-                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                 e.preventDefault();
                             }
                         }}
@@ -173,7 +173,7 @@ function RentingSubmit() {
                         minLength='0'
                         maxLength='5'
                         onKeyDown={(e) => {
-                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                 e.preventDefault();
                             }
                         }}
