@@ -15,8 +15,30 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
         builder.Services.AddDbContext<RentalContext>();
+
+        // Setup for integration tests.
+        if (builder.Environment.IsEnvironment("Test"))
+        {
+            builder.Services.AddControllers();
+
+            builder.Services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>() // This codes originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-8.0#add-role-services-to-identity
+                .AddEntityFrameworkStores<RentalContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddIdentityApiEndpoints<User>();
+
+            AddLocalConfig(builder);
+
+            var testApp = builder.Build();
+            testApp.MapControllers();
+            testApp.Run();
+
+            return;
+        }
+
+        builder.Services.AddAuthorization(); // Originates from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0#add-identity-services-to-the-container
 
         // TODO: add identity settings from: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-9.0
 
