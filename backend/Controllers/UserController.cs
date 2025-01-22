@@ -112,7 +112,6 @@ namespace backend.Controllers
                 ZhuurderFactuurAddress = user.ZakelijkeHuurder?.Factuuradres ?? null,
         
                 PhuurderAddress = user.ParticuliereHuurder?.Address ?? null,
-                PhuurderHuuraanvragen = user.ParticuliereHuurder?.Huuraanvragen ?? null,
         
                 ZbeheerderBedrijfsrol = user.Huurbeheerder?.Bedrijfsrol ?? null,
                 ZbeheerderBedrijf = user.Huurbeheerder?.Bedrijf?.Name ?? null,  
