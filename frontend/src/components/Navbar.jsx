@@ -23,7 +23,7 @@ function Navbar() {
             {isLoggedIn ? (
                 <ul className='navbar__login-box__button'>
                     <NavButton className="navbar__login-box__button" link="/" title="Logout" onClick={logout}></NavButton>
-                    <NavButton className="navbar__login-box__button" link="/profiel" title="Profiel"></NavButton>
+                    <NavButton className="navbar__login-box__button" link="/profiel" title="Profiel" cy="profile-button"></NavButton>
                 </ul>
             ) : (
                 <ul className='navbar__login-box__button'>

@@ -55,5 +55,54 @@ namespace backend.Controllers
                 Adres = user.Huurbeheerder.Bedrijf.Address,
             });
         }
+        
+        [HttpGet("werknemer_geschiedenis")]
+        public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvraagGeschiedenis()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("Kan de gebruiker niet vinden");
+            }
+
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+            if (user.Huurbeheerder == null)
+            {
+                return Unauthorized("Incorrecte gebruiker");
+            }
+
+            var huurbeheerderId = user.Huurbeheerder.Id;
+            
+            var zakelijkeHuurders = await _context.ZakelijkeHuurders
+                .Include(zh => zh.Abonnement)
+                .Where(zh => zh.HuurbeheerderId == huurbeheerderId)
+                .ToListAsync();
+
+            if (!zakelijkeHuurders.Any())
+            {
+                return NotFound("Geen zakelijke huurders gevonden voor de huurbeheerder");
+            }
+            
+            var zakelijkeHuurderIds = zakelijkeHuurders.Select(zh => zh.Id).ToList();
+
+            var huuraanvragen = await _context.Huuraanvragen
+                .Where(ha => zakelijkeHuurderIds.Contains(ha.ZakelijkeHuurder ?? 0))
+                .Include(ha => ha.Voertuig)
+                .OrderByDescending(ha => ha.VeranderDatum)
+                .ToListAsync();
+
+            if (!huuraanvragen.Any())
+            {
+                return NotFound("Geen huuraanvragen gevonden voor de zakelijke huurders");
+            }
+
+            return Ok(huuraanvragen);
+        }
     }
 }

@@ -1,0 +1,93 @@
+.zb-rent-history__main {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.zb-filter-bar__div {
+    background-color: whitesmoke;
+    width: 66.5%;
+    display: flex;
+    margin: auto;
+    border: 3px solid black;
+    border-radius: 8px;
+    flex-direction: column;
+}
+
+.zb-filter-bar-title__h1 {
+    margin: 0 auto;
+    font-size: min(5.25vw, 36px);
+}
+
+.zb-filter-bar-filter-box__div {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.zb-filter-bar-filter-box__div div label {
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.zb-filter-bar-filter-box__div div select {
+    font-size: 1.1em;
+}
+
+.zb-filter-bar-filter-box__div div input {
+    font-size: 1.1em;
+    width: 80px;
+}
+
+#verhuurde-download_button {
+    border: 1px solid black;
+    color: whitesmoke;
+    background-color: forestgreen;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+#verhuurde-download_button:hover {
+    background-color: limegreen;
+}
+#verhuurde-download_button:active {
+    background-color: darkgreen;
+}
+
+
+.zb-rent-history-box__div {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 8px;
+    background-color: var(--main-color);
+    border-radius: 12px;
+    border: 3px solid black;
+    width: 80%;
+    margin: 0 auto;
+    padding: 5px 0;
+    min-height: 50px;
+}
+
+@media only screen and (max-width: 1600px) {
+    .zb-rent-history-box__div {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media only screen and (max-width: 1300px) {
+    .zb-rent-history-box__div {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .zb-rent-history-box__div {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media only screen and (max-width: 700px) {
+    .zb-rent-history-box__div {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
