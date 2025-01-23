@@ -20,34 +20,19 @@ namespace BackendTestProject.IntegrationTests
         {
             // Arrange
             var client = _factory.CreateClient();
-            var bedrijf = new CreateBedrijfDTO
-            {
-                BedrijfsNaam = "mock-bedrijf",
-                Address = "Mock address",
-                KvK_nummer = 111111111111,
-                PhoneNumber = "42432432432",
-                Domein = "mock.com",
-                UserName = "mock-bedrijf",
-                Email = "mock@mock.com",
-                Password = "Qwerty123!",
-            };
-            var beheerder = new CreateHuurbeheerderDTO
-            {
-                Name = "mock-beheerder",
-                Email = "beheer@mock.com",
-                Password = "Qwerty123!",
-                PhoneNumber = "432423432",
-                Bedrijfsrol = "voertuigbeheerder",
-            };
+            var bedrijf = new CreateBedrijfDTO { BedrijfsNaam = "test-bedrijf", Address = "Test address", KvK_nummer = 111111111111, PhoneNumber = "42432432432", Domein = "test.com", UserName = "test-bedrijf", Email = "test@test.com", Password = "Qwerty123!", };
+            var beheerder = new CreateHuurbeheerderDTO { Name = "test-beheerder", Email = "beheer@test.com", Password = "Qwerty123!", PhoneNumber = "432423432", Bedrijfsrol = "voertuigbeheerder", };
+            var huurder = new CreateZakelijkeHuurderDTO { Name = "test-huurder", Email = "huurder@test.com", Password = "Qwerty123!", PhoneNumber = "4324232", Address = "Een test adres", Factuuradres = "Test factuur adres", HuurbeheerderId = 1 };
 
             // Act
             var bedrijfCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf", bedrijf);
             var loginResponse = await client.PostAsJsonAsync("/auth/login?useCookies=true&useSessionCookies=true", new
             {
-                Email = "mock-bedrijf",
+                Email = "test-bedrijf",
                 Password = "Qwerty123!",
             });
-            var zakelijkeHuurderCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_beheerder", beheerder);
+            var BeheerderCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_beheerder", beheerder);
+            var zakelijkeHuurdersCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_huurder", huurder);
 
             var zakelijkeHuurdersGetResponse = await client.GetAsync("/api/Bedrijf/zakelijke_beheerders");
             var zakelijkeHuurders = await zakelijkeHuurdersGetResponse.Content.ReadFromJsonAsync<List<GetBeheerderDTO>>();
@@ -55,7 +40,8 @@ namespace BackendTestProject.IntegrationTests
             // Assert
             Assert.Equal(HttpStatusCode.Created, bedrijfCreateResponse.StatusCode);
             Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
-            Assert.Equal(HttpStatusCode.Created, zakelijkeHuurderCreateResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, BeheerderCreateResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, zakelijkeHuurdersCreateResponse.StatusCode);
 
             Assert.Equal(HttpStatusCode.OK, zakelijkeHuurdersGetResponse.StatusCode);
 

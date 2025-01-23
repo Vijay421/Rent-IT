@@ -241,7 +241,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("zakelijke_beheerders")]
-        public async Task<ActionResult<GetBeheerderDTO>> GetHuurBeheerders()
+        public async Task<ActionResult<IEnumerable<GetBeheerderDTO>>> GetHuurBeheerders()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -284,7 +284,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("zakelijke_huurder")]
-        public async Task<ActionResult> CreateZakelijkeHuurder(CreateZakelijkeHuurderDTO huurderDTO)
+        public async Task<ActionResult<UserDTO>> CreateZakelijkeHuurder(CreateZakelijkeHuurderDTO huurderDTO)
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -383,7 +383,7 @@ namespace backend.Controllers
                 return BadRequest("Kan de gebruikern niet aanmaken");
             }
 
-            return CreatedAtAction(nameof(CreateZakelijkeHuurder), new { id = user.Id }, new { Id = user.Id, UserName = user.UserName });
+            return CreatedAtAction(nameof(CreateZakelijkeHuurder), new { id = user.Id }, new UserDTO { Id = user.Id, UserName = user.UserName });
         }
     }
 }
