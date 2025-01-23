@@ -90,6 +90,7 @@ function Renting() {
         if (selectedPrijsSoort !== "alles" && (vehicle.prijs > 100 || vehicle.prijs < 51) && selectedPrijsSoort === "mid") return false;
         if (selectedPrijsSoort !== "alles" && vehicle.prijs < 101 && selectedPrijsSoort === "high") return false;
         if (selectedBeschikbaarheidSoort !== "alles" && vehicle.status !== selectedBeschikbaarheidSoort) return false;
+        if (vehicle.status === "Geblokkeerd") return false;
         if (selectedDateStartDatum && selectedDateStartDatum < vehicle.startDatum) return false;
         if (selectedDateEindDatum && selectedDateEindDatum > vehicle.eindDatum) return false;
         if (
