@@ -477,7 +477,9 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_HuurbeheerderId",
                 table: "AspNetUsers",
-                column: "HuurbeheerderId");
+                column: "HuurbeheerderId",
+                unique: true,
+                filter: "[HuurbeheerderId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParticuliereHuurderId",
