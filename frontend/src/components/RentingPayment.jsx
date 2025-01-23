@@ -1,4 +1,3 @@
-import styles from "./profile/ProfilePageBase.module.css";
 import { useState } from "react";
 import "../styles/RentingPayment.css";
 import {useLocation} from "react-router-dom";
@@ -95,7 +94,7 @@ function RentingSubmit() {
                     </div>
                 </div>
 
-                <div className="akkord-container__div">
+                <div className="payment-akkord-container__div">
                     <input id='akkord-input' type="checkbox" checked={checkboxCheck} onChange={handleCheckboxChange}></input>
 
                     <label htmlFor="akkord-input" id='akkord-label'>Ik ga akkoord met de bovenstaande kosten en ga akkoord dat ik word doorgestuurd naar een betaalservice om de kosten te betalen.</label>
