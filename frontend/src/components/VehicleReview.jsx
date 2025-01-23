@@ -59,6 +59,7 @@ export default function VehicleReview({ data, setVehicles }) {
                 beschrijving: beschrijving,
                 datum: new Date(),
                 foto: foto ? URL.createObjectURL(foto) : null,
+                status: "In behandeling",
             };
             try {
                 setConfirmationMessage("");

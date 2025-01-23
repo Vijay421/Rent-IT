@@ -19,6 +19,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                 beschrijving: beschrijving,
                 datum: new Date(),
                 foto: foto ? URL.createObjectURL(foto) : null,
+                status: status,
             };
             try {
                 setConfirmationMessage("");
@@ -67,16 +68,17 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     return (
         <div className="voertuigTab">
             <p className="voertuigTab__text">
-                {/* {data.merk} {data.type} - {data.kenteken} */}
+                {data.Voertuig}
+            </p>
+            <p>
                 {data.beschrijving} - {new Date(data.datum).toLocaleDateString()}
             </p>
             <img>{/* {data.foto} */}</img>
             <div className="voertuigTab__inputs">
                 <select /* defaultValue={data.status} */>
-                    <option value="0">Onverhuurbaar</option>
-                    <option value="1">Verhuurbaar</option>
-                    <option value="2">In reparatie</option>
-                    <option value="3">Geblokkeerd</option>
+                    <option value="0">In behandeling</option>
+                    <option value="1">In reparatie</option>
+                    <option value="2">Afgehandeld</option>
                 </select>
                 
                 <input
