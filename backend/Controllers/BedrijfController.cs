@@ -161,7 +161,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("zakelijke_beheerder")]
-        public async Task<ActionResult> CreateZakelijkeBeheerder(CreateHuurbeheerderDTO beheerderDTO)
+        public async Task<ActionResult<UserDTO>> CreateZakelijkeBeheerder(CreateHuurbeheerderDTO beheerderDTO)
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
@@ -199,12 +199,13 @@ namespace backend.Controllers
                 return UnprocessableEntity($"E-mail: '{beheerderDTO.Email}' is al in gebruik");
             }
 
+            Huurbeheerder? huurBeheerder = null;
             var result = await _userManager.CreateAsync(newUser, beheerderDTO.Password.Trim());
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, "zakelijke_beheerder");
 
-                var huurBeheerder = new Huurbeheerder
+                huurBeheerder = new Huurbeheerder
                 {
                     Id = 0, // The orm will define the id for us.
                     Bedrijfsrol = beheerderDTO.Bedrijfsrol,
@@ -237,7 +238,7 @@ namespace backend.Controllers
                 return BadRequest("Kan de gebruikern niet aanmaken");
             }
 
-            return CreatedAtAction(nameof(CreateZakelijkeBeheerder), new { id = newUser.Id }, new { Id = newUser.Id, UserName = newUser.UserName });
+            return CreatedAtAction(nameof(CreateZakelijkeBeheerder), new { id = newUser.Id }, new UserDTO { Id = newUser.Id, UserName = newUser.UserName, HuurbeheederId = huurBeheerder.Id });
         }
 
         [HttpGet("zakelijke_beheerders")]

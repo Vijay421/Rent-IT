@@ -1,17 +1,10 @@
 ﻿using backend.Data;
-using backend.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BackendTestProject
 {
@@ -23,7 +16,7 @@ namespace BackendTestProject
         {
             builder.ConfigureServices(services =>
             {
-/*                var dbContextDescriptor = services.SingleOrDefault(
+                var dbContextDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
                         typeof(DbContextOptions<RentalContext>));
 
@@ -38,30 +31,21 @@ namespace BackendTestProject
                 services.RemoveAll(typeof(DbContextOptions<RentalContext>));
                 services.RemoveAll(typeof(RentalContext));
 
-                // Create open SqliteConnection so EF won't automatically close it.
-                services.AddSingleton<DbConnection>(container =>
+                // Get a unique in memory database for each integration test.
+                var guid = Guid.NewGuid().ToString();
+                services.AddDbContext<RentalContext>(options =>
                 {
-                    var connection = new SqliteConnection("DataSource=:memory:");
-                    connection.Open();
-
-                    return connection;
+                    options.UseSqlServer($"Server=(localdb)\\MSSQLLocalDB;Database=RentIT_Test-{guid};Trusted_Connection=True;");
                 });
 
-                *//*services.RemoveAll(typeof(DbContextOptions<RentalContext>));*//*
-
-                services.AddDbContext<RentalContext>((container, options) =>
-                {
-                    var connection = container.GetRequiredService<DbConnection>();
-                    options.UseSqlite(connection);
-                });*/
-
                 var serviceProvider = services.BuildServiceProvider();
-                var scope = serviceProvider.CreateScope();
-                var context = scope.ServiceProvider.GetService<RentalContext>();
-
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
-                context.SaveChanges();
+                using (var scope = serviceProvider.CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetRequiredService<RentalContext>();
+                    context.Database.EnsureDeleted();
+                    context.Database.Migrate();
+                    context.SaveChanges();
+                }
             });
 
             builder.UseEnvironment("Test");

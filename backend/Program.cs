@@ -29,12 +29,14 @@ public class Program
 
             builder.Services.AddIdentityApiEndpoints<User>();
 
-            AddLocalConfig(builder);
+            /*AddLocalConfig(builder);*/
 
             var testApp = builder.Build();
             testApp.MapControllers();
 
             testApp.MapGroup("/auth").MapIdentityApi<User>();
+
+            await SeedUsers(testApp, true);
 
             testApp.Run();
 

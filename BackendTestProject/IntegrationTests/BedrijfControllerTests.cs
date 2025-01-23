@@ -22,7 +22,7 @@ namespace BackendTestProject.IntegrationTests
             var client = _factory.CreateClient();
             var bedrijf = new CreateBedrijfDTO { BedrijfsNaam = "test-bedrijf", Address = "Test address", KvK_nummer = 111111111111, PhoneNumber = "42432432432", Domein = "test.com", UserName = "test-bedrijf", Email = "test@test.com", Password = "Qwerty123!", };
             var beheerder = new CreateHuurbeheerderDTO { Name = "test-beheerder", Email = "beheer@test.com", Password = "Qwerty123!", PhoneNumber = "432423432", Bedrijfsrol = "voertuigbeheerder", };
-            var huurder = new CreateZakelijkeHuurderDTO { Name = "test-huurder", Email = "huurder@test.com", Password = "Qwerty123!", PhoneNumber = "4324232", Address = "Een test adres", Factuuradres = "Test factuur adres", HuurbeheerderId = 1 };
+            /*var huurder = new CreateZakelijkeHuurderDTO { Name = "test-huurder", Email = "huurder@test.com", Password = "Qwerty123!", PhoneNumber = "4324232", Address = "Een test adres", Factuuradres = "Test factuur adres", HuurbeheerderId = 1 };*/
 
             // Act
             var bedrijfCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf", bedrijf);
@@ -32,6 +32,11 @@ namespace BackendTestProject.IntegrationTests
                 Password = "Qwerty123!",
             });
             var BeheerderCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_beheerder", beheerder);
+            var beheerderDTO = await BeheerderCreateResponse.Content.ReadFromJsonAsync<UserDTO>();
+            Assert.NotNull(beheerderDTO);
+            Assert.NotNull(beheerderDTO.HuurbeheederId);
+
+            var huurder = new CreateZakelijkeHuurderDTO { Name = "test-huurder", Email = "huurder@test.com", Password = "Qwerty123!", PhoneNumber = "4324232", Address = "Een test adres", Factuuradres = "Test factuur adres", HuurbeheerderId = (int) beheerderDTO.HuurbeheederId };
             var zakelijkeHuurdersCreateResponse = await client.PostAsJsonAsync("/api/Bedrijf/zakelijke_huurder", huurder);
 
             var zakelijkeHuurdersGetResponse = await client.GetAsync("/api/Bedrijf/zakelijke_beheerders");
