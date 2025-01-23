@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/SchademeldingReview.css";
 
 export default function SchadeclaimReview({ data, setSchadeclaims }) {
+    const [status, setStatus] = useState("");
     const [opmerkingen, setOpmerkingen] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
@@ -17,8 +18,8 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
             const schadeClaim = {
                 Voertuig: data,
                 beschrijving: beschrijving,
-                datum: new Date(),
-                foto: foto ? URL.createObjectURL(foto) : null,
+                datum: data.datum,
+                foto: foto ? new URL(`${process.env.PUBLIC_URL}/img/${foto}`) : null,
                 status: status,
             };
             try {
@@ -74,9 +75,9 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
             <p>
                 {data.beschrijving} - {new Date(data.datum).toLocaleDateString()}
             </p>
-            <img>{/* {data.foto} */}</img>
+            {/* <img src={`${process.env.PUBLIC_URL}/img/${data.foto}`}></img> */}
             <div className="voertuigTab__inputs">
-                <select /* defaultValue={data.status} */>
+                <select onChange={(e) => setStatus(e.target.value)}>
                     <option value="0">In behandeling</option>
                     <option value="1">In reparatie</option>
                     <option value="2">Afgehandeld</option>
@@ -88,7 +89,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                     value={opmerkingen}
                     onChange={(e) => setOpmerkingen(e.target.value)}
                 />
-                <button onClick={updateSchadeclaim}>Update</button>
+                <button onClick={handleUpdate}>Update</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
