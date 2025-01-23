@@ -61,6 +61,63 @@ namespace backend.Controllers
             });
         }
 
+        [HttpGet("profiel")]
+        public async Task<ActionResult> Profile()
+        {
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId == null)
+            {
+                return Unauthorized("Kan gebruiker niet vinden");
+            }
+
+            var user = await _userManager.FindByIdAsync(CurrentUserId);
+            if (user == null)
+            {
+                return NotFound("Kan gebruiker niet vinden");
+            }
+
+            _context.Entry(user).Reference(u => u.ParticuliereHuurder).Load();
+            
+            _context.Entry(user).Reference(u => u.ZakelijkeHuurder).Load();
+            if (user.ZakelijkeHuurder != null)
+            {
+                _context.Entry(user.ZakelijkeHuurder).Reference(h => h.Abonnement).Load();
+            }
+            
+            _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+            if (user.Huurbeheerder != null)
+            {
+                _context.Entry(user.Huurbeheerder).Reference(h => h.Bedrijf).Load();
+            }
+            
+            _context.Entry(user).Reference(u => u.Bedrijf).Load();
+            
+            _context.Entry(user).Reference(u => u.BackOffice).Load();
+            
+            _context.Entry(user).Reference(u => u.Frontoffice).Load();
+
+            return Ok(new
+            {
+                UserName = user.UserName ?? null,
+                Email = user.Email ?? null,
+                PhoneNumber = user.PhoneNumber ?? null,
+        
+                BedrijfName = user.Bedrijf?.Name ?? null,
+                BedrijfAddress = user.Bedrijf?.Address ?? null,
+                BedrijfKVKNumber = user.Bedrijf?.KvK_nummer ?? null,
+                BedrijfPhoneNumber = user.Bedrijf?.PhoneNumber ?? null,
+                BedrijfDomein = user.Bedrijf?.Domein ?? null,
+        
+                ZhuurderAbonnement = user.ZakelijkeHuurder?.Abonnement?.Naam ?? null,
+                ZhuurderFactuurAddress = user.ZakelijkeHuurder?.Factuuradres ?? null,
+        
+                PhuurderAddress = user.ParticuliereHuurder?.Address ?? null,
+        
+                ZbeheerderBedrijfsrol = user.Huurbeheerder?.Bedrijfsrol ?? null,
+                ZbeheerderBedrijf = user.Huurbeheerder?.Bedrijf?.Name ?? null,  
+            });
+        }
+        
         /// <summary>
         /// Allows admins and back office to delete users.
         /// Other users can only delete themselves.
@@ -208,6 +265,24 @@ namespace backend.Controllers
                     user.Bedrijf.KvK_nummer= updateUserDTO.CompanyNumber ?? user.Bedrijf.KvK_nummer;
                     user.Bedrijf.PhoneNumber = updateUserDTO.CompanyPhoneNumber ?? user.Bedrijf.PhoneNumber;
                     user.Bedrijf.Domein = updateUserDTO.Domein ?? user.Bedrijf.Domein;
+                }
+            }
+            
+            if (role == "zakelijke_beheerder")
+            {
+                await _context.Entry(user).Reference(u => u.Huurbeheerder).LoadAsync();
+                if (user.Huurbeheerder != null)
+                {
+                    user.Huurbeheerder.Bedrijfsrol = updateUserDTO.Bedrijfsrol ?? user.Huurbeheerder.Bedrijfsrol;
+                }
+            }
+
+            if (role == "zakelijke_huurder")
+            {
+                await _context.Entry(user).Reference(u => u.ZakelijkeHuurder).LoadAsync();
+                if (user.ZakelijkeHuurder != null)
+                {
+                    user.ZakelijkeHuurder.Factuuradres = updateUserDTO.Factuuradres ?? user.ZakelijkeHuurder.Factuuradres;
                 }
             }
 

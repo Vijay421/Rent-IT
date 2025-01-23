@@ -42,6 +42,16 @@ namespace backend.DTOs
         [StringLength(50, MinimumLength = 2)]
         public string? Domein { get; set; }
         // Company fields END
+        
+        // Only used by: zakelijke_huurder
+        [MinLength(2)]
+        public string? Factuuradres { get; set; }
+        
+        // Only used by: huurbeheerders
+        [MinLength(2)]
+        [StringLength(50, MinimumLength = 2)]
+        public string? Bedrijfsrol { get; set; }
+        
 
         public bool HasData()
         {
@@ -55,7 +65,9 @@ namespace backend.DTOs
                 CompanyAddress != null ||
                 CompanyNumber != null ||
                 CompanyPhoneNumber != null ||
-                Domein != null;
+                Domein != null ||
+                Factuuradres != null ||
+                Bedrijfsrol != null;
         }
     }
 }

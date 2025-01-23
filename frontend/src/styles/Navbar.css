@@ -27,7 +27,7 @@
     width: 100px;
     height: 40px;
     font-size: 1.3rem;
-    border-radius: 0.5vw;
+    border-radius: 6px;
     border: transparent;
     margin-left: 1vw;
 }
@@ -55,7 +55,7 @@
     width: 100px;
     height: 40px;
     font-size: 1.3rem;
-    border-radius: 1vw;
+    border-radius: 2vw;
     border: transparent;
     margin-left: 1vw;
 }
@@ -70,14 +70,18 @@
     }
 
     .navbar__navigation-buttons button {
-        width: 50px;
-        height: 35px;
+        width: 60px;
+        height: 45px;
         font-size: 0.8rem;
     }
 
+    .navbar__login-box__button {
+        margin-right: 5px;
+    }
+
     .navbar__login-box__button button {
-        width: auto;
-        height: 35px;
+        width: 60px;
+        height: 45px;
         font-size: 0.8rem;
     }
 
