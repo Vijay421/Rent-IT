@@ -70,7 +70,10 @@ namespace backend.Data
             if (_configuration != null)
             {
                 var dbUrl = _configuration.GetSection("db")["url"];
-                optionsBuilder.UseSqlServer(dbUrl);
+                if (dbUrl != null)
+                {
+                    optionsBuilder.UseSqlServer(dbUrl);
+                }
             }
         }
     }
