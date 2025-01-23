@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "../styles/SchademeldingReview.css";
+import mock from '../assets/toyota-corolla.png';
 
 export default function SchadeclaimReview({ data, setSchadeclaims }) {
     const [status, setStatus] = useState("");
     const [opmerkingen, setOpmerkingen] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
-
     async function handleCreate(){
         if (beschrijving.length < 5) {
             setConfirmationMessage("De beschrijving moet langer zijn dan 4 characters.");
@@ -70,32 +70,35 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     return (
         <div className="voertuigTab">
             <p className="voertuigTab__text">
-                {data.Voertuig}
+                {data.VoertuigId}
             </p>
             <p>
                 {data.beschrijving} - {new Date(data.datum).toLocaleDateString()}
             </p>
-            {/* <img src={`${process.env.PUBLIC_URL}/img/${data.foto}`}></img> */}
-            <div className="voertuigTab__inputs">
-                <select onChange={(e) => setStatus(e.target.value)}>
-                    <option value="0">In behandeling</option>
-                    <option value="1">In reparatie</option>
-                    <option value="2">Afgehandeld</option>
-                </select>
-                
-                <input
-                    type="text"
-                    placeholder="Opmerkingen"
-                    value={opmerkingen}
-                    onChange={(e) => setOpmerkingen(e.target.value)}
-                />
-                <button onClick={handleUpdate}>Update</button>
+            <div className="schademeldingTab">
+                Foto:<img src={mock}  className='schademelding_Foto' ></img>
+                {/* {`${process.env.PUBLIC_URL}/img/${data.foto}`} */}
+                <div className="voertuigTab__inputs">
+                    <select onChange={(e) => setStatus(e.target.value)}>
+                        <option value="0">In behandeling</option>
+                        <option value="1">In reparatie</option>
+                        <option value="2">Afgehandeld</option>
+                    </select>
+                    
+                    <input
+                        type="text"
+                        placeholder="Opmerkingen"
+                        value={opmerkingen}
+                        onChange={(e) => setOpmerkingen(e.target.value)}
+                    />
+                    <button onClick={handleUpdate}>Update</button>
+                </div>
+                {confirmationMessage && (
+                    <p className={`confirmationMessage ${messageType}`}>
+                        {confirmationMessage}
+                    </p>
+                )}
             </div>
-            {confirmationMessage && (
-                <p className={`confirmationMessage ${messageType}`}>
-                    {confirmationMessage}
-                </p>
-            )}
         </div>
     );
 }
