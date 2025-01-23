@@ -38,6 +38,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     async function handleUpdate(){
         const schadeClaim = {
             opmerkingen: opmerkingen,
+            status: status,
         };
         try{
             setConfirmationMessage("");
