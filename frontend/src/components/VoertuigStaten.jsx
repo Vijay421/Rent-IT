@@ -7,6 +7,8 @@ export default function VoertuigStaten() {
     const [ophaalDatum, setOphaalDatum] = useState("");
     const [inleverDatum, setInleverDatum] = useState("");
     const [optimisticStatuses, setOptimisticStatuses] = useState({});
+    const [comments, setComments] = useState({});
+    const [unsavedStatuses, setUnsavedStatuses] = useState({});
 
     async function fetchVehicles() {
         try {
@@ -32,7 +34,7 @@ export default function VoertuigStaten() {
         };
         getData();
 
-        //Fetch interval - 5 seconds
+        //Fetch interval - 3 seconds
         const intervalId = setInterval(() => {
             getData();
         }, 3000);
@@ -52,6 +54,14 @@ export default function VoertuigStaten() {
         if (endDate && endDate < rentalEndDate) return false;
         return true;
     });
+
+    const handleCommentChange = (e, id) => {
+        const value = e.target.value;
+        setComments((prevComments) => ({
+            ...prevComments,
+            [id]: value,
+        }));
+    };
 
     const handleOphaalDatumChange = (e) => {
         const newStartDate = e.target.value;
@@ -79,23 +89,30 @@ export default function VoertuigStaten() {
         setStaat("Alles");
     }
 
-    async function handleVoertuigStatusChange(e, item) {
+    const handleStatusChange = (e, item) => {
         const newStatus = e.target.value;
 
-        setOptimisticStatuses((prevStatuses) => ({
+        setUnsavedStatuses((prevStatuses) => ({
             ...prevStatuses,
             [item.id]: newStatus,
         }));
 
+        if (newStatus !== "Reparatie" && newStatus !== "Geblokkeerd") {
+            saveStatus(item, newStatus, "");
+        }
+    };
+
+    async function saveStatus(item, status, comment) {
         const payload = {
             ...item,
-            status: newStatus,
+            status: status,
+            opmerking: comment || "",
         };
 
         try {
             const request = {
                 method: 'PUT',
-                credentials: 'include', // TODO: change to 'same-origin' when in production.
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -109,14 +126,18 @@ export default function VoertuigStaten() {
             }
 
             console.log("Status updated");
-            return await response.json();
+            setOptimisticStatuses((prevStatuses) => ({
+                ...prevStatuses,
+                [item.id]: status,
+            }));
+            setUnsavedStatuses((prevStatuses) => {
+                const updated = { ...prevStatuses };
+                delete updated[item.id];
+                return updated;
+            });
         } catch (error) {
             console.error('Error when updating vehicle, or parsing the response:', error);
             alert("Kon het voertuig niet updaten");
-            setOptimisticStatuses((prevStatuses) => ({
-                ...prevStatuses,
-                [item.id]: item.status,
-            }));
         }
     }
 
@@ -183,23 +204,39 @@ export default function VoertuigStaten() {
                             <div className="staten-voertuig-data">
                                 <p className="staten-voertuig-info__p"><b>Voertuig:</b> {item.merk} {item.type}</p>
                                 <p className="staten-voertuig-info__p"><b>Kenteken:</b> {item.kenteken}</p>
-                                <p className="staten-voertuig-info__p"><b>Huurperiode:</b> {item.startDatum} - {item.eindDatum}</p>
+                                <p className="staten-voertuig-info__p">
+                                    <b>Huurperiode:</b> {item.startDatum} - {item.eindDatum}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
-                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 189 to 199*/}
                                 <select
                                     data-cy='voertuig-status-select'
                                     id="staten-voertuig-status__select"
-                                    value={optimisticStatuses[item.id] || item.status}
-                                    onChange={(e) => handleVoertuigStatusChange(e, item)}
+                                    value={unsavedStatuses[item.id] || item.status}
+                                    onChange={(e) => handleStatusChange(e, item)}
                                 >
-                                    <option value={item.status} selected>{item.status}</option>
-                                    {uniqueStatuses
-                                        .filter((status) => status !== item.status)
-                                        .map((status, index) => (
-                                            <option key={index} value={status}>{status}</option>
-                                        ))}
+                                    {uniqueStatuses.map((status, index) => (
+                                        <option key={index} value={status}>{status}</option>
+                                    ))}
                                 </select>
+
+                                {(unsavedStatuses[item.id] === "Reparatie" || unsavedStatuses[item.id] === "Geblokkeerd") && (
+                                    <>
+                                        <textarea
+                                            data-cy='voertuig-comment-textarea'
+                                            placeholder="Voer een opmerking in..."
+                                            value={comments[item.id] || ""}
+                                            onChange={(e) => handleCommentChange(e, item.id)}
+                                            className="voertuig-opmerking-textarea"
+                                        />
+                                        <button
+                                            data-cy='voertuig-save-button'
+                                            onClick={() => saveStatus(item, unsavedStatuses[item.id], comments[item.id])}
+                                            className="voertuig-save-button"
+                                        >
+                                            Opslaan
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     ))
