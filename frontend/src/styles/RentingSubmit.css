@@ -24,13 +24,13 @@
     border-radius: 5px;
 }
 
-.FormWrapper {
+.HuurFormWrapper {
     flex-direction: column;
     margin: 0 auto 0 3.5%;
         width: 96%;
 }
 
-.label {
+.Huurlabel {
     margin-right: auto;
     font-size: min(20px ,4.5vw);
     font-weight: bold;
@@ -50,16 +50,18 @@
 .akkord-container__div {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
     gap: 5px;
 }
 
 .renting-submit-form {
+    width: 96%;
     margin-right: auto;
     height: 24px;
     font-size: 1.1em;
 }
+
 
 .price__text {
     margin-top: 20px;
