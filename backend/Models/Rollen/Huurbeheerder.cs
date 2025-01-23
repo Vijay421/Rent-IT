@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using backend.Models;
+using backend.Models.Rollen;
 
 namespace backend.Rollen
 {
@@ -15,6 +16,8 @@ namespace backend.Rollen
 
         public int BedrijfId { get; set; }
         public Bedrijf Bedrijf { get; set; }
+
+        public User? User { get; set; }
 
         public Huurbeheerder()
         {

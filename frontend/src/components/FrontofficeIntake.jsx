@@ -43,15 +43,17 @@ function FrontofficeIntake() {
     return (
         <main className="content">
             <div className="divMain">
-                <h1 className="divMain__text__FrontOffice">Frontoffice Intake</h1>
-                <label className='divMain__text__subText' htmlFor="select-input">Possible values:</label>
-                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
-                    <option value="nee">Openstaand</option>
-                    <option value="ja">Geschiedenis</option>
-                </select>
-                <div>
-                    <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
-                    
+                <h1 className="divMain__text__FrontOffice">Voertuig intake</h1>
+
+                <div className="intake-filter-box__div">
+                    {/*<label className='divMain__text__subText' htmlFor="select-input">Possible values:</label>*/}
+                    <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                        <option value="nee">Openstaand</option>
+                        <option value="ja">Geschiedenis</option>
+                    </select>
+                </div>
+
+                <div className='intake-content-box__div'>
                     {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
                         sortedVehicles.map((vehicle) => {
                             return (

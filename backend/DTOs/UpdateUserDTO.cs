@@ -27,9 +27,35 @@ namespace backend.DTOs
         [StringLength(50, MinimumLength = 8)]
         public string? CurrentPassword { get; set; }
 
+        // Company fields START
+        [StringLength(50, MinimumLength = 2)]
+        public string? CompanyName { get; set; }
+
+        [StringLength(50, MinimumLength = 8)]
+        public string? CompanyAddress { get; set; }
+
+        public long? CompanyNumber { get; set; }
+
+        [StringLength(50, MinimumLength = 2)]
+        public string? CompanyPhoneNumber { get; set; }
+
+        [StringLength(50, MinimumLength = 2)]
+        public string? Domein { get; set; }
+        // Company fields END
+
         public bool HasData()
         {
-            return Id != null || UserName != null || Email != null || PhoneNumber != null || Password != null;
+            return 
+                Id != null || 
+                UserName != null || 
+                Email != null || 
+                PhoneNumber != null || 
+                Password != null ||
+                CompanyName != null ||
+                CompanyAddress != null ||
+                CompanyNumber != null ||
+                CompanyPhoneNumber != null ||
+                Domein != null;
         }
     }
 }

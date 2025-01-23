@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Models.Rollen;
 using backend.Rollen;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -69,7 +70,10 @@ namespace backend.Data
             if (_configuration != null)
             {
                 var dbUrl = _configuration.GetSection("db")["url"];
-                optionsBuilder.UseSqlServer(dbUrl);
+                if (dbUrl != null)
+                {
+                    optionsBuilder.UseSqlServer(dbUrl);
+                }
             }
         }
     }

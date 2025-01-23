@@ -43,7 +43,7 @@ describe("back office employees can manage vehicles", () => {
         cy.intercept("PUT", "https://localhost:53085/api/Voertuig/*").as("UpdateVehicleRequest");
         cy.log("update the vehicle");
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/voertuigoverzicht']").click();
         cy.get("[data-cy='update-vehicle']").last().click();
 
@@ -59,7 +59,7 @@ describe("back office employees can manage vehicles", () => {
         cy.intercept("DELETE", "https://localhost:53085/api/Voertuig/*").as("DeleteVehicleRequest");
         cy.log("delete the vehicle");
 
-        cy.get("a[href='/profiel']").click();
+        cy.get("[data-cy='profile-button']").click();
         cy.get("a[href='/voertuigoverzicht']").click();
 
         cy.get("[data-cy='delete-vehicle']").last().click();

@@ -179,14 +179,14 @@ export default function VoertuigStaten() {
             <div data-cy="staten-voertuig-box" id="staten-voertuig-box__div">
                 {filteredData.length > 0 ? (
                     filteredData.map((item, index) => (
-                        <div key={index} className="staten-voertuig__div">
+                        <div key={index} className="staten-voertuig__div" data-cy="vehicle" data-start-date={item.startDatum} data-end-date={item.eindDatum}>
                             <div className="staten-voertuig-data">
                                 <p className="staten-voertuig-info__p"><b>Voertuig:</b> {item.merk} {item.type}</p>
                                 <p className="staten-voertuig-info__p"><b>Kenteken:</b> {item.kenteken}</p>
                                 <p className="staten-voertuig-info__p"><b>Huurperiode:</b> {item.startDatum} - {item.eindDatum}</p>
                             </div>
                             <div className="staten-voertuig-status__div">
-                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 187 to 197*/}
+                                {/*ChatGPT code - Dynamically displaying options while avoiding duplicates line 189 to 199*/}
                                 <select
                                     data-cy='voertuig-status-select'
                                     id="staten-voertuig-status__select"

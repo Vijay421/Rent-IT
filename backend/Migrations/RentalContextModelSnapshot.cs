@@ -51,37 +51,43 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c5f6d9b9-3603-4190-8e75-5f18cd73cf30",
+                            Id = "8fa7a0a3-613a-4914-9c1b-32dd24ac868d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "acf53c0d-0255-4116-b312-c3effbeea262",
+                            Id = "ddddb548-37ef-47fb-bc6a-086e4d1889e6",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "60dd67e7-cb77-43c9-afa3-60bb23365fa3",
+                            Id = "f47d4b3b-b25b-4d7f-99e0-06163e155944",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "e748e103-b16e-4ea4-a2e1-4c20b34e487c",
+                            Id = "04df298b-e4ac-42b7-bc8f-3cc6117f503d",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "b2079f70-d7ec-434e-837c-5fabfb65bf40",
+                            Id = "17f99922-2f45-48cc-9892-f57a74f857da",
+                            Name = "bedrijf",
+                            NormalizedName = "BEDRIJF"
+                        },
+                        new
+                        {
+                            Id = "08a701df-a9d4-4a70-b6ab-0c3a2a1713b1",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "cc43faae-0a2d-42e0-8383-e1cd9faa4bfd",
+                            Id = "0b4cd768-3904-4a2b-baef-d9d4565b7234",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -251,39 +257,6 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("backend.Models.Bedrijf", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Domein")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("KvK_nummer")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bedrijven");
-                });
-
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
                 {
                     b.Property<int>("Id")
@@ -365,6 +338,39 @@ namespace backend.Migrations
                     b.ToTable("Huuraanvragen");
                 });
 
+            modelBuilder.Entity("backend.Models.Rollen.Bedrijf", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Domein")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("KvK_nummer")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bedrijven");
+                });
+
             modelBuilder.Entity("backend.Models.Schadeclaim", b =>
                 {
                     b.Property<int>("Id")
@@ -403,6 +409,9 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("BackOfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BedrijfId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -464,6 +473,8 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BackOfficeId");
+
+                    b.HasIndex("BedrijfId");
 
                     b.HasIndex("FrontOfficeId");
 
@@ -859,6 +870,10 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("BackOfficeId");
 
+                    b.HasOne("backend.Models.Rollen.Bedrijf", "Bedrijf")
+                        .WithMany()
+                        .HasForeignKey("BedrijfId");
+
                     b.HasOne("backend.Rollen.FrontOfficeMedewerker", "Frontoffice")
                         .WithMany()
                         .HasForeignKey("FrontOfficeId");
@@ -876,6 +891,8 @@ namespace backend.Migrations
                         .HasForeignKey("backend.Models.User", "ZakelijkeHuurderId");
 
                     b.Navigation("BackOffice");
+
+                    b.Navigation("Bedrijf");
 
                     b.Navigation("Frontoffice");
 
@@ -899,7 +916,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
-                    b.HasOne("backend.Models.Bedrijf", "Bedrijf")
+                    b.HasOne("backend.Models.Rollen.Bedrijf", "Bedrijf")
                         .WithMany("Huurbeheerders")
                         .HasForeignKey("BedrijfId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -927,7 +944,7 @@ namespace backend.Migrations
                     b.Navigation("ZakelijkeHuurders");
                 });
 
-            modelBuilder.Entity("backend.Models.Bedrijf", b =>
+            modelBuilder.Entity("backend.Models.Rollen.Bedrijf", b =>
                 {
                     b.Navigation("Huurbeheerders");
                 });

@@ -3,7 +3,7 @@ import NavButton from './NavButton.jsx';
 import '../styles/Navbar.css';
 import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext.jsx";
-import { useContext} from "react";
+import { useContext } from "react";
 
 function Navbar() {
 
@@ -22,23 +22,13 @@ function Navbar() {
 
             {isLoggedIn ? (
                 <ul className='navbar__login-box__button'>
-                    <Link to="/">
-                        <button onClick={logout}>Logout</button>
-                    </Link>
-                    <Link to="/profiel">
-                            <button>Profiel</button>
-                    </Link>
+                    <NavButton className="navbar__login-box__button" link="/" title="Logout" onClick={logout}></NavButton>
+                    <NavButton className="navbar__login-box__button" link="/profiel" title="Profiel" cy="profile-button"></NavButton>
                 </ul>
             ) : (
                 <ul className='navbar__login-box__button'>
-
-                    <Link to="/login">
-                        <button>Login</button>
-                    </Link>
-
-                    <Link to="/registreren">
-                        <button id='register-button__button'>Register</button>
-                    </Link>
+                    <NavButton className="navbar__login-box__button" link="/login" title="Login"></NavButton>
+                    <NavButton className="navbar__login-box__button" link="/registreren" title="Register"></NavButton>
                 </ul>
             )}
         </nav>

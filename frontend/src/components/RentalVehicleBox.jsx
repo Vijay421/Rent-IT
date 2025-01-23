@@ -34,7 +34,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
     };
 
     return (
-        <div className='rental-vehicle-box__div' data-cy="vehicle">
+        <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
             <div className='rental-vehicle-image__div'>
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>
@@ -60,7 +60,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p
+                <h2
                     className='rental-vehicle-huurprijs__p'
                     onMouseEnter={() => {
                         setShowPopup(true);
@@ -74,7 +74,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                             Verzekering: €75<br/>
                             Belasting: €37<br/>
                             Benzine: €43<br/>
@@ -82,7 +82,7 @@ export function RentalAutoBox({ data, nieuwStartDatum, nieuwEindDatum }) {
                             Borg: €500
                         </span>
                     )}
-                </p>
+                </h2>
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}
@@ -127,7 +127,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
     };
 
         return (
-            <div className='rental-vehicle-box__div' data-cy="vehicle">
+            <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
                 <div className='rental-vehicle-image__div'>
                     <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
                 </div>
@@ -158,7 +158,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
                 </div>
 
                 <div className='rental-vehicle-huur-box__div'>
-                    <p
+                    <h2
                         className='rental-vehicle-huurprijs__p'
                         onMouseEnter={() => {
                             setShowPopup(true);
@@ -170,7 +170,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                         {showPopup && (
                             <span className='rental-vehicle-huurprijs-popup__span'>
-                            Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                            Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                             Verzekering: €65<br/>
                             Belasting: €62<br/> {/*21%*/}
                             Benzine: €0<br/>
@@ -178,7 +178,7 @@ export function RentalCaravanBox({data, nieuwStartDatum, nieuwEindDatum}) {
                             Borg: €750
                         </span>
                         )}
-                    </p>
+                    </h2>
                     <p className='rental-vehicle-kosten__p'>per dag</p>
                     <button
                         onClick={checkDatumFields}
@@ -222,7 +222,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
     };
 
     return (
-        <div className='rental-vehicle-box__div' data-cy="vehicle">
+        <div className='rental-vehicle-box__div' data-cy="vehicle" data-start-date={data.startDatum} data-end-date={data.eindDatum}>
             <div className='rental-vehicle-image__div'>
                 <img src={Temp} className='rental-vehicle-image__img' alt={data.merk + " " + data.type}/>
             </div>
@@ -253,7 +253,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
             </div>
 
             <div className='rental-vehicle-huur-box__div'>
-                <p
+                <h2
                     className='rental-vehicle-huurprijs__p'
                     onMouseEnter={() => {
                         setShowPopup(true);
@@ -265,7 +265,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
 
                     {showPopup && (
                         <span className='rental-vehicle-huurprijs-popup__span'>
-                        Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
+                        Huurprijs: €{data.prijs.toFixed(2)} (Aantal dagen x €{data.prijs.toFixed(2)})<br/>
                         Verzekering: €75<br/>
                         Belasting: €37<br/> {/*21%*/}
                         Benzine: €60<br/>
@@ -273,7 +273,7 @@ export function RentalCamperBox({data, nieuwStartDatum, nieuwEindDatum}) {
                         Borg: €1500
                     </span>
                     )}
-                </p>
+                </h2>
                 <p className='rental-vehicle-kosten__p'>per dag</p>
                 <button
                     onClick={checkDatumFields}

@@ -1,7 +1,7 @@
 ﻿using backend.Rollen;
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.Models.Rollen
 {
     public class Bedrijf
     {

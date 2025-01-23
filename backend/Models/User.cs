@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using backend.Rollen;
 using System.ComponentModel.DataAnnotations.Schema;
+using backend.Models.Rollen;
 
 namespace backend.Models
 {
@@ -12,6 +13,9 @@ namespace backend.Models
 
         public int? FrontOfficeId { get; set; }
         public FrontOfficeMedewerker? Frontoffice { get; set; }
+
+        public int? BedrijfId { get; set; }
+        public Bedrijf? Bedrijf { get; set; }
 
         public int? ZakelijkeHuurderId { get; set; }
         public ZakelijkeHuurder? ZakelijkeHuurder { get; set; }

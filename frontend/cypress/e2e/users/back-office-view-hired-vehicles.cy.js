@@ -44,6 +44,7 @@ describe("Back office employees can view rented vehicles", () => {
         cy.wait("@sendRentRequest").then((i) => {
             expect(i.response.statusCode).to.equal(201);
         });
+        cy.wait(500);
 
         cy.get("button").contains("Profiel").click();
         cy.log("To /profiel page");
@@ -85,6 +86,7 @@ describe("Back office employees can view rented vehicles", () => {
         cy.wait("@sendRentRequest").then((i) => {
             expect(i.response.statusCode).to.equal(201);
         });
+        cy.wait(500);
 
         cy.get("button").contains("Logout").click();
         cy.log("Logout of particuliere huurder");
