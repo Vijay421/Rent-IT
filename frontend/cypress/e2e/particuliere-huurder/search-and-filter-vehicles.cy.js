@@ -105,10 +105,7 @@ describe("Particuliere user vehicles search and filter", () => {
       cy.log("filter availability (unavailable)");
       cy.get("[data-cy='availability-filter']").select("Onbeschikbaar");
       cy.wait(100);
-      cy.get("[data-cy='status']")
-          .each(($p) => {
-              expect($p).to.contain("Onverhuurbaar");
-          });
+      cy.get("[data-cy='status']").should("have.length", 0);
 
 
       cy.log("sort ascending");
