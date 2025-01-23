@@ -168,7 +168,7 @@ export default function RegisterAsCompany() {
                             pattern="[0-9]*"
                             inputMode="numeric"
                             onKeyDown={(e) => {
-                                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                     e.preventDefault();
                                 }
                             }}
@@ -190,7 +190,7 @@ export default function RegisterAsCompany() {
                             pattern="[0-9]*"
                             inputMode="numeric"
                             onKeyDown={(e) => {
-                                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                     e.preventDefault();
                                 }
                             }}

@@ -69,8 +69,8 @@ function RentingSubmit() {
                 <h1 className="main-div-form__text">
                     Vul hieronder de gegevens in om een abonnement aan te vragen.
                 </h1>
-                <div className="FormWrapper">
-                    <label htmlFor="form__wettelijke-naam" className="label">
+                <div className="HuurFormWrapper">
+                    <label htmlFor="form__wettelijke-naam" className="Huurlabel">
                         Wettelijke naam
                     </label>
                     <input
@@ -85,7 +85,7 @@ function RentingSubmit() {
                         data-cy="name"
                     />
 
-                    <label htmlFor="form__adres-gegevens" className="label">
+                    <label htmlFor="form__adres-gegevens" className="Huurlabel">
                         Adres
                     </label>
                     <input
@@ -99,7 +99,7 @@ function RentingSubmit() {
                         data-cy="address"
                     />
 
-                    <label htmlFor="form__stad-gegevens" className="label">
+                    <label htmlFor="form__stad-gegevens" className="Huurlabel">
                         Stad
                     </label>
                     <input
@@ -113,7 +113,7 @@ function RentingSubmit() {
                         data-cy="city"
                     />
 
-                    <label htmlFor="form__postcode-gegevens" className="label">
+                    <label htmlFor="form__postcode-gegevens" className="Huurlabel">
                         Postcode
                     </label>
                     <input
@@ -127,7 +127,7 @@ function RentingSubmit() {
                         data-cy="zipcode"
                     />
 
-                    <label htmlFor="form__rijbewijs-nummer" className="label">
+                    <label htmlFor="form__rijbewijs-nummer" className="Huurlabel">
                         Rijbewijsnummer
                     </label>
                     <input
@@ -139,14 +139,14 @@ function RentingSubmit() {
                         onChange={(e) => setRijbewijsnummer(e.target.value)}
                         maxLength='10'
                         onKeyDown={(e) => {
-                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                 e.preventDefault();
                             }
                         }}
                         data-cy="driverid"
                     />
 
-                    <label htmlFor="form__reisaard" className="label">
+                    <label htmlFor="form__reisaard" className="Huurlabel">
                         Soort reis
                     </label>
                     <input
@@ -160,7 +160,7 @@ function RentingSubmit() {
                         data-cy="travel-nature"
                     />
 
-                    <label htmlFor="form__verwachte-km" className="label">
+                    <label htmlFor="form__verwachte-km" className="Huurlabel">
                         Verwachte gereden kilometers
                     </label>
                     <input
@@ -173,14 +173,14 @@ function RentingSubmit() {
                         minLength='0'
                         maxLength='5'
                         onKeyDown={(e) => {
-                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== '+' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
                                 e.preventDefault();
                             }
                         }}
                         data-cy="distance"
                     />
 
-                    <label htmlFor="form__verste-punt" className="label">
+                    <label htmlFor="form__verste-punt" className="Huurlabel">
                         Verwachte verste punt van de reis
                     </label>
                     <input
@@ -194,7 +194,7 @@ function RentingSubmit() {
                         data-cy="furthest-point"
                     />
 
-                    <label htmlFor="form__start-punt" className="label">
+                    <label htmlFor="form__start-punt" className="Huurlabel">
                         Start punt van de reis
                     </label>
                     <input
@@ -208,7 +208,7 @@ function RentingSubmit() {
                         data-cy="starting-point"
                     />
 
-                    <label htmlFor="form__eind-punt" className="label">
+                    <label htmlFor="form__eind-punt" className="Huurlabel">
                         Eind punt van de reis
                     </label>
                     <input
