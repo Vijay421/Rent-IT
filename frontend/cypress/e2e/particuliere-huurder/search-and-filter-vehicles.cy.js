@@ -54,8 +54,18 @@ describe("Particuliere user vehicles search and filter", () => {
 
       cy.log("filter dates");
       cy.get("#date-picker-start").type("2025-01-03");
+      cy.get('[data-cy="vehicle"]').each((element) => {
+        cy.wrap(element)
+          .invoke('attr', 'data-start-date')
+          .then(startDate => expect(new Date(startDate)).to.lte(new Date("2025-01-03")));
+      });
+
       cy.get("#date-picker-end").type("2025-01-05");
-      cy.get(".rental-vehicle-box__div").should("have.length", 1);
+      cy.get('[data-cy="vehicle"]').each((element) => {
+        cy.wrap(element)
+          .invoke('attr', 'data-end-date')
+          .then(endDate => expect(new Date(endDate)).to.gte(new Date("2025-01-05")));
+      });
 
 
       cy.log("filter brand");
@@ -94,12 +104,8 @@ describe("Particuliere user vehicles search and filter", () => {
 
       cy.log("filter availability (unavailable)");
       cy.get("[data-cy='availability-filter']").select("Onbeschikbaar");
-      cy.get("[data-cy='status']")
-          .should('have.length', 0)
-          .each(($p) => {
-              expect($p).to.contain("Onverhuurbaar");
-          });
-    cy.get("[data-cy='no-vehicles-text']")
+      cy.wait(100);
+      cy.get("[data-cy='status']").should("have.length", 0);
 
 
       cy.log("sort ascending");

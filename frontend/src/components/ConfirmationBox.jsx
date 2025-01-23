@@ -56,7 +56,7 @@ export default function ConfirmationBox() {
 
                 setTimeout(() => {
                     navigate("/huur-betaling", {state: { vehicleData, userData, startDatum, eindDatum } });
-                },3000);
+                }, 500);
             } else {
                 const errorMsg = await response.text();
                 statusText.style.color = 'red';

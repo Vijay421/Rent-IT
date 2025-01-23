@@ -3,6 +3,10 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# test files
+TestResults
+coveragereport
+
 # local config file
 local_config.json
 
