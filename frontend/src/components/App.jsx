@@ -28,6 +28,7 @@ import FrontofficeExpenditurePage from "../pages/FrontofficeExpenditurePage.jsx"
 import RegisterAsCompanyPage from "../pages/RegisterAsCompanyPage.jsx";
 import RegisterHuurbeheerderPage from "../pages/RegisterHuurbeheerderPage.jsx";
 import RegisterZakelijkeHuurderPage from "../pages/RegisterZakelijkeHuurderPage.jsx";
+import ZbRentHistoryPage from "../pages/ZbRentHistoryPage.jsx";
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
                 <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>
+                <Route path="/zb-huurgeschiedenis" element=     {<ZbRentHistoryPage/>}/>
             </Routes>
         </Router>
     );

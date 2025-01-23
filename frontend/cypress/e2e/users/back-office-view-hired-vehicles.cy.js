@@ -44,6 +44,7 @@ describe("Back office employees can view rented vehicles", () => {
         cy.wait("@sendRentRequest").then((i) => {
             expect(i.response.statusCode).to.equal(201);
         });
+        cy.wait(500);
 
         cy.wait(4000);
 
@@ -87,6 +88,7 @@ describe("Back office employees can view rented vehicles", () => {
         cy.wait("@sendRentRequest").then((i) => {
             expect(i.response.statusCode).to.equal(201);
         });
+        cy.wait(500);
 
         cy.wait(4000);
 
