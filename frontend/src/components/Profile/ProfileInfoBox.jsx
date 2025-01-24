@@ -47,7 +47,7 @@ export default function ProfileInfoBox() {
 
             <div className="profile-info-phonenumber-container">
                 <p className="profile-info-title__p">Telefoonnummer:</p>
-                <p className="profile-info-data__p">+{data.phoneNumber}</p>
+                <p className="profile-info-data__p">+31 {data.phoneNumber}</p>
             </div>
 
             {userRole === "zakelijke_huurder" && (
@@ -97,7 +97,7 @@ export default function ProfileInfoBox() {
 
                     <div className="profile-info-bedrijftelefoonnummer-container">
                         <p className="profile-info-title__p">Bedrijfstelnr.:</p>
-                        <p className="profile-info-data__p">+{data.bedrijfPhoneNumber}</p>
+                        <p className="profile-info-data__p">+31 {data.bedrijfPhoneNumber}</p>
                     </div>
 
                     <div className="profile-info-bedrijfdomein-container">
