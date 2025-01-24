@@ -1,5 +1,6 @@
 ﻿using backend.Rollen;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -10,6 +11,8 @@ namespace backend.Models
 
         public List<ZakelijkeHuurder> ZakelijkeHuurders { get; set; }
 
+        [JsonIgnore]
+        public Huurbeheerder? Huurbeheerder { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
         public required string Naam { get; set; }

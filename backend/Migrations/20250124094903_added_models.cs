@@ -247,7 +247,8 @@ namespace backend.Migrations
                         name: "FK_Abonnementen_Huurbeheerders_HuurbeheerderId",
                         column: x => x.HuurbeheerderId,
                         principalTable: "Huurbeheerders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -462,7 +463,9 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_BackOfficeId",
                 table: "AspNetUsers",
-                column: "BackOfficeId");
+                column: "BackOfficeId",
+                unique: true,
+                filter: "[BackOfficeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_BedrijfId",
@@ -477,7 +480,9 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_HuurbeheerderId",
                 table: "AspNetUsers",
-                column: "HuurbeheerderId");
+                column: "HuurbeheerderId",
+                unique: true,
+                filter: "[HuurbeheerderId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParticuliereHuurderId",

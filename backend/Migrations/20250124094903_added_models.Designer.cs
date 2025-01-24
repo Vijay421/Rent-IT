@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250117092302_added_models")]
+    [Migration("20250124094903_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -419,13 +419,17 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BackOfficeId");
+                    b.HasIndex("BackOfficeId")
+                        .IsUnique()
+                        .HasFilter("[BackOfficeId] IS NOT NULL");
 
                     b.HasIndex("BedrijfId");
 
                     b.HasIndex("FrontOfficeId");
 
-                    b.HasIndex("HuurbeheerderId");
+                    b.HasIndex("HuurbeheerderId")
+                        .IsUnique()
+                        .HasFilter("[HuurbeheerderId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -674,9 +678,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
                 {
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("Abonnement")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -707,8 +714,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.HasOne("backend.Rollen.BackOfficeMedewerker", "BackOffice")
-                        .WithMany()
-                        .HasForeignKey("BackOfficeId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "BackOfficeId");
 
                     b.HasOne("backend.Models.Rollen.Bedrijf", "Bedrijf")
                         .WithMany()
@@ -719,8 +726,8 @@ namespace backend.Migrations
                         .HasForeignKey("FrontOfficeId");
 
                     b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
-                        .WithMany()
-                        .HasForeignKey("HuurbeheerderId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "HuurbeheerderId");
 
                     b.HasOne("backend.Rollen.ParticuliereHuurder", "ParticuliereHuurder")
                         .WithMany()
@@ -772,11 +779,14 @@ namespace backend.Migrations
                         .HasForeignKey("AbonnementId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Abonnement");
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
@@ -794,9 +804,16 @@ namespace backend.Migrations
                     b.Navigation("HuurAanvragen");
                 });
 
+            modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
                     b.Navigation("Abonnement");
+
+                    b.Navigation("User");
 
                     b.Navigation("ZakelijkeHuurders");
                 });
