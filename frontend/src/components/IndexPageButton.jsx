@@ -30,11 +30,11 @@ function IndexPageButton() {
                         <h3 className="ZakelijkH1">Zakelijke gebruiker</h3>
                     </div>
                     <div className='ZakelijkDiv2'>
-                        <h4>Bent u een bedrijf dat voertuigen wil verhuren voor hun werknemers? Klik op de onderstaande knop om het aanvraagproces voor een zakelijk account te starten!</h4>
+                        <h4>Bent u een bedrijf of gewoon iemand die voertuigen wil huren? Klik op de onderstaande knop om het proces van het aanmaken van een account te starten!</h4>
                     </div>
                     <div className="ZakelijkDiv3">
                         <button onClick={() => navigate("/registreren", {})} className="ButtonDivRight">
-                            Zakelijk account aanvragen
+                            Account aanmaken
                         </button>
 
                         <button onClick={() => navigate("/registreren/bedrijf", {})} className="ButtonDivRight">
