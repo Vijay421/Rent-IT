@@ -203,7 +203,7 @@ export default function AccountSettings() {
                             className='settings__input-field'
                             type="tel"
                             inputMode="numeric"
-                            placeholder='Vul hier je telefoonnummer in'
+                            placeholder='06 12345678'
                             minLength='5'
                             maxLength='15'
                             onChange={e => setPhoneNumber(e.target.value)}
