@@ -29,6 +29,7 @@ import RegisterAsCompanyPage from "../pages/RegisterAsCompanyPage.jsx";
 import RegisterHuurbeheerderPage from "../pages/RegisterHuurbeheerderPage.jsx";
 import RegisterZakelijkeHuurderPage from "../pages/RegisterZakelijkeHuurderPage.jsx";
 import ZbRentHistoryPage from "../pages/ZbRentHistoryPage.jsx";
+import NotFoundPage from "../pages/NotFoundPage.jsx";
 
 function App() {
     return (
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
                 <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>
                 <Route path="/zb-huurgeschiedenis" element=     {<ZbRentHistoryPage/>}/>
+                <Route path="*" element=                        {<NotFoundPage/>}/>
             </Routes>
         </Router>
     );
