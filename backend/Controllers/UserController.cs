@@ -177,6 +177,70 @@ namespace backend.Controllers
                 return NotFound("Kan de gebruiker niet vinden");
             }
 
+            if (role == "backoffice_medewerker")
+            {
+                var backoffice = await _context.BackOfficeMedewerkers.FindAsync(user.BackOfficeId);
+                _context.Entry(user).Reference(u => u.BackOffice).Load();
+                if (user.BackOffice != null)
+                {
+                    _context.BackOfficeMedewerkers.Remove(user.BackOffice);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            try
+            {
+                if (role == "bedrijf")
+                {
+                    var bedrijf = await _context.Bedrijven.FindAsync(user.BedrijfId);
+                    _context.Entry(user).Reference(u => u.Bedrijf).Load();
+                    if (user.Bedrijf != null)
+                    {
+                        _context.Bedrijven.Remove(user.Bedrijf);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            } catch (DbUpdateException ex)
+            {
+                return BadRequest("Kan het bedrijf niet verwijderen omdat er huurbeheerders aangekoppelt zijn. Verwijder deze eerst.");
+            }
+
+            try
+            {
+                if (role == "zakelijke_beheerder")
+                {
+                    var huurbeheerder = await _context.Bedrijven.FindAsync(user.HuurbeheerderId);
+                    _context.Entry(user).Reference(u => u.Huurbeheerder).Load();
+                    if (user.Huurbeheerder != null)
+                    {
+                        _context.Huurbeheerders.Remove(user.Huurbeheerder);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("Kan de huur beheerder niet verwijderen omdat er zakelijke klanten aangekoppelt zijn. Verwijder deze eerst.");
+            }
+
+            try
+            {
+                if (role == "zakelijke_huurder")
+                {
+                    var zakelijkeHuurder = await _context.Bedrijven.FindAsync(user.ZakelijkeHuurderId);
+                    _context.Entry(user).Reference(u => u.ZakelijkeHuurder).Load();
+                    if (user.ZakelijkeHuurder != null)
+                    {
+                        _context.ZakelijkeHuurders.Remove(user.ZakelijkeHuurder);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("Kon de gebruiker niet verwijderen.");
+            }
+
             var result = await _userManager.DeleteAsync(user);
             if (!result.Succeeded)
             {

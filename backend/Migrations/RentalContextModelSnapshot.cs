@@ -51,43 +51,43 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5f8f5ba0-e5c5-48a2-b9cd-36e10122dbd3",
+                            Id = "f9483e96-966c-49e1-9e5f-93675503abcf",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3039b092-4971-417c-a6ec-0edda6abaac6",
+                            Id = "0288980e-ee1b-45ac-af20-bc25d2a7a71d",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "7042e203-5305-4f99-b72a-fffa05651567",
+                            Id = "56dec7d1-19f2-4b84-913c-7665e1863e0c",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "9e10f3b1-ba57-4d42-a6a4-442803ecffc0",
+                            Id = "82e1671e-e1aa-44af-8e31-1b7a427d3658",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "a1ff1bb4-aa42-4b2b-842c-c8227f88d953",
+                            Id = "97a648ab-8710-4c9b-be70-c6cd5fd23e7a",
                             Name = "bedrijf",
                             NormalizedName = "BEDRIJF"
                         },
                         new
                         {
-                            Id = "5b6d3301-9c2b-4f11-8fb6-a67200a6001a",
+                            Id = "cc42b525-7ea5-41a6-879d-cc50b450734a",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "0195ac54-0268-4c11-a5f6-75097cee809a",
+                            Id = "fb63803c-82ec-4593-b9fc-175f5e3b07ae",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -472,7 +472,9 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BackOfficeId");
+                    b.HasIndex("BackOfficeId")
+                        .IsUnique()
+                        .HasFilter("[BackOfficeId] IS NOT NULL");
 
                     b.HasIndex("BedrijfId");
 
@@ -3521,9 +3523,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
                 {
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("Abonnement")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -3554,8 +3559,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.HasOne("backend.Rollen.BackOfficeMedewerker", "BackOffice")
-                        .WithMany()
-                        .HasForeignKey("BackOfficeId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "BackOfficeId");
 
                     b.HasOne("backend.Models.Rollen.Bedrijf", "Bedrijf")
                         .WithMany()
@@ -3619,11 +3624,14 @@ namespace backend.Migrations
                         .HasForeignKey("AbonnementId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Abonnement");
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
@@ -3639,6 +3647,11 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Voertuig", b =>
                 {
                     b.Navigation("HuurAanvragen");
+                });
+
+            modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
