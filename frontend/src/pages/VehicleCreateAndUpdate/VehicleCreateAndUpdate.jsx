@@ -9,17 +9,17 @@ export default function VehicleCreateAndUpdate() {
     const { mode, vehicle } = state;
     const form = useRef(null);
 
-    const [brand, setBrand] = useState("");
-    const [type, setType] = useState("");
-    const [licensePlate, setLicensePlate] = useState("");
-    const [color, setColor] = useState("");
-    const [boughtYear, setBoughtYear] = useState("");
-    const [kind, setKind] = useState("");
-    const [comment, setComment] = useState("");
-    const [status, setStatus] = useState("");
-    const [price, setPrice] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [brand, setBrand] = useState(vehicle.merk || "");
+    const [type, setType] = useState(vehicle.type || "");
+    const [licensePlate, setLicensePlate] = useState(vehicle.kenteken || "");
+    const [color, setColor] = useState(vehicle.kleur || "");
+    const [boughtYear, setBoughtYear] = useState(vehicle.aanschafjaar || "");
+    const [kind, setKind] = useState(vehicle.soort || "");
+    const [comment, setComment] = useState(vehicle.opmerking || "");
+    const [status, setStatus] = useState(vehicle.status || "");
+    const [price, setPrice] = useState(vehicle.prijs || "");
+    const [startDate, setStartDate] = useState(vehicle.startdatum || "");
+    const [endDate, setEndDate] = useState(vehicle.einddatum || "");
 
     const [formStatus, setFormStatus] = useState({ msg: "", isError: false });
 

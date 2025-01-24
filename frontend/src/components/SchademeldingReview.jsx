@@ -52,6 +52,7 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
         }
     }
 
+    
 
     function updateSchadeclaimsLijst(id) {
         setSchadeclaims((old) => {
@@ -92,7 +93,11 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                         onChange={(e) => setOpmerkingen(e.target.value)}
                     />
                     {/* TO-DO: Knop moet navigeren naar Voertuig aanpassing */}
-                    <button>Voertuig aanpassen</button>
+                    <button 
+                        onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "update", vehicle: data, } })}
+                        data-cy="update-vehicle"
+                    >Voertuig aanpassen</button>
+                    
                     <button onClick={handleUpdate}>Update</button>
                 </div>
                 {confirmationMessage && (
