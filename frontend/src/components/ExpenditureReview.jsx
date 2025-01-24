@@ -1,12 +1,15 @@
 import { useState } from "react";
 import '../styles/FrontofficeUitgave.css';
+import PropTypes from "prop-types";
 
-export default function ExpenditureReview({ vehicle, customer }) {
+export default function ExpenditureReview({ uitgave }) {
     const [beschrijving, setBeschrijving] = useState('');
     const [confirmationMessage, setConfirmationMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // 'error' or 'success'
 
-    const voertuigRegistreren = () => {
+
+    async function changeVoertuigUitgaveStatus() {
+
         if (beschrijving) {
             setConfirmationMessage('');
             alert("Voertuig is succcesvol uitgegeven!");
@@ -15,16 +18,40 @@ export default function ExpenditureReview({ vehicle, customer }) {
         } else {
             setConfirmationMessage('Please provide a description.');
             setMessageType('error');
+            return;
         }
-    };
+
+        try {
+            const response = await fetch(`https://localhost:53085/api/FrontOffice/uitgave/${uitgave.id}`, {
+                method: 'POST',
+
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                        omschrijving: beschrijving,
+                }),
+            });
+            const data = await response.json();
+            setConfirmationMessage("Expenditure successfully registered!");
+            setMessageType('success');
+            console.log(data);
+        }
+        catch (e) {
+            setConfirmationMessage(e.message);
+            setMessageType('error');
+        }
+    }
 
     return (
         <div className="voertuigTab">
             <p className="voertuigTab__text">
-                {vehicle.merk} {vehicle.type} - {vehicle.kenteken}
+                {uitgave.merk} {uitgave.type} - {uitgave.kenteken}
             </p>
             <p className="voertuigTab__text">
-                {customer ? customer.naam : 'No customer data available'}
+                {uitgave.wettelijkenaam}
             </p>
             <div className="voertuigTab__inputs">
                 <input
@@ -33,7 +60,7 @@ export default function ExpenditureReview({ vehicle, customer }) {
                     value={beschrijving}
                     onChange={(e) => setBeschrijving(e.target.value)}
                 />
-                <button onClick={voertuigRegistreren}>Registreren</button>
+                <button onClick={changeVoertuigUitgaveStatus}>Registreren</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
@@ -43,3 +70,16 @@ export default function ExpenditureReview({ vehicle, customer }) {
         </div>
     );
 }
+
+ExpenditureReview.propTypes = {
+    uitgave: PropTypes.shape({
+        merk: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        kenteken: PropTypes.string.isRequired,
+        startdatum: PropTypes.string.isRequired,
+        einddatum: PropTypes.string.isRequired,
+        wettelijkenaam: PropTypes.string.isRequired,
+        rijbewijsnummer: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired
+    }).isRequired,
+};
