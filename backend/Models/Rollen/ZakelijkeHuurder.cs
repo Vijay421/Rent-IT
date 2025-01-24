@@ -9,6 +9,7 @@ namespace backend.Rollen
         public int Id { get; set; }
 
         public User? User { get; set; }
+        public Huurbeheerder? Huurbeheerder { get; set; }
 
         public int? HuurbeheerderId { get; set; }
         public int? AbonnementId { get; set; }

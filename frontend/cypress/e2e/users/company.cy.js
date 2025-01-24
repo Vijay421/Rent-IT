@@ -19,9 +19,9 @@ const HUURDER = {
 
 describe("manage subscriptions", () => {
     before(() => {
-        cy.deleteUser(COMPANY.username, COMPANY.password);
-        cy.deleteUser(BEHEERDER.username, BEHEERDER.password);
         cy.deleteUser(HUURDER.username, HUURDER.password);
+        cy.deleteUser(BEHEERDER.username, BEHEERDER.password);
+        cy.deleteUser(COMPANY.username, COMPANY.password);
     });
 
     it("should allow companies to register an account", () => {
@@ -96,8 +96,8 @@ describe("manage subscriptions", () => {
             expect(interception.response.statusCode).to.equal(201);
         });
 
-        cy.deleteUser(COMPANY.username, COMPANY.password);
-        cy.deleteUser(BEHEERDER.username, BEHEERDER.password);
         cy.deleteUser(HUURDER.username, HUURDER.password);
+        cy.deleteUser(BEHEERDER.username, BEHEERDER.password);
+        cy.deleteUser(COMPANY.username, COMPANY.password);
     });
 });
