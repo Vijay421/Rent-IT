@@ -102,35 +102,16 @@ public class HuurController : ControllerBase
                 .ToListAsync();
         }
 
-        return Ok(huuraanvragen.Select(h => new
-        {
-            Id = h.Id,
-            Wettelijke_naam = h.Wettelijke_naam,
-            Adresgegevens = h.Adresgegevens,
-            Reisaard = h.Reisaard,
-            Verwachte_km = h.Verwachte_km,
-            Vereiste_bestemming = h.Vereiste_bestemming,
-            Startdatum = h.Startdatum,
-            Einddatum = h.Einddatum,
-            
-            Voertuig = new
-            {
-                Merk = h.Voertuig.Merk,
-                Type = h.Voertuig.Type,
-                Kleur = h.Voertuig.Kleur,
-                Aanschafjaar = h.Voertuig.Aanschafjaar,
-                Prijs = h.Voertuig.Prijs,
-            }
-        }));
+        return Ok(huuraanvragen);
     }
 
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHuuraanvraag(int id, UpdateHuuraanvraagDTO dto)
+    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag updatedHuuraanvraag)
     {
-        if (id != dto.Id)
+        if (id != updatedHuuraanvraag.Id)
         {
-            return BadRequest("ID mismatch");
+            return BadRequest();
         }
 
         var currentHuuraanvraag = await _context.Huuraanvragen
@@ -142,10 +123,10 @@ public class HuurController : ControllerBase
             return NotFound("Huuraanvraag not found");
         }
 
-        if (currentHuuraanvraag.VoertuigId != dto.VoertuigId)
+        if (currentHuuraanvraag.VoertuigId != updatedHuuraanvraag.VoertuigId)
         {
             var previousVehicle = await _context.Voertuigen.FindAsync(currentHuuraanvraag.VoertuigId);
-            var newVehicle = await _context.Voertuigen.FindAsync(dto.VoertuigId);
+            var newVehicle = await _context.Voertuigen.FindAsync(updatedHuuraanvraag.VoertuigId);
 
             if (previousVehicle != null)
             {
@@ -160,19 +141,7 @@ public class HuurController : ControllerBase
             }
         }
 
-        currentHuuraanvraag.ParticuliereHuurderId = dto.ParticuliereHuurderId;
-        currentHuuraanvraag.VoertuigId = dto.VoertuigId;
-        currentHuuraanvraag.Startdatum = dto.Startdatum;
-        currentHuuraanvraag.Einddatum = dto.Einddatum;
-        currentHuuraanvraag.Wettelijke_naam = dto.Wettelijke_naam;
-        currentHuuraanvraag.Adresgegevens = dto.Adresgegevens;
-        currentHuuraanvraag.Reisaard = dto.Reisaard;
-        currentHuuraanvraag.Vereiste_bestemming = dto.Vereiste_bestemming;
-        currentHuuraanvraag.Verwachte_km = dto.Verwachte_km;
-        currentHuuraanvraag.Geaccepteerd = dto.Geaccepteerd;
-        currentHuuraanvraag.Reden = dto.Reden;
-        currentHuuraanvraag.VeranderDatum = dto.VeranderDatum;
-        currentHuuraanvraag.Gezien = dto.Gezien;
+        _context.Entry(currentHuuraanvraag).CurrentValues.SetValues(updatedHuuraanvraag);
 
         try
         {
@@ -192,7 +161,6 @@ public class HuurController : ControllerBase
 
         return NoContent();
     }
-
 
 
     [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
