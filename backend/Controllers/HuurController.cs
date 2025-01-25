@@ -126,11 +126,11 @@ public class HuurController : ControllerBase
 
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag updatedHuuraanvraag)
+    public async Task<IActionResult> PutHuuraanvraag(int id, UpdateHuuraanvraagDTO dto)
     {
-        if (id != updatedHuuraanvraag.Id)
+        if (id != dto.Id)
         {
-            return BadRequest();
+            return BadRequest("ID mismatch");
         }
 
         var currentHuuraanvraag = await _context.Huuraanvragen
@@ -142,10 +142,10 @@ public class HuurController : ControllerBase
             return NotFound("Huuraanvraag not found");
         }
 
-        if (currentHuuraanvraag.VoertuigId != updatedHuuraanvraag.VoertuigId)
+        if (currentHuuraanvraag.VoertuigId != dto.VoertuigId)
         {
             var previousVehicle = await _context.Voertuigen.FindAsync(currentHuuraanvraag.VoertuigId);
-            var newVehicle = await _context.Voertuigen.FindAsync(updatedHuuraanvraag.VoertuigId);
+            var newVehicle = await _context.Voertuigen.FindAsync(dto.VoertuigId);
 
             if (previousVehicle != null)
             {
@@ -160,7 +160,19 @@ public class HuurController : ControllerBase
             }
         }
 
-        _context.Entry(currentHuuraanvraag).CurrentValues.SetValues(updatedHuuraanvraag);
+        currentHuuraanvraag.ParticuliereHuurderId = dto.ParticuliereHuurderId;
+        currentHuuraanvraag.VoertuigId = dto.VoertuigId;
+        currentHuuraanvraag.Startdatum = dto.Startdatum;
+        currentHuuraanvraag.Einddatum = dto.Einddatum;
+        currentHuuraanvraag.Wettelijke_naam = dto.Wettelijke_naam;
+        currentHuuraanvraag.Adresgegevens = dto.Adresgegevens;
+        currentHuuraanvraag.Reisaard = dto.Reisaard;
+        currentHuuraanvraag.Vereiste_bestemming = dto.Vereiste_bestemming;
+        currentHuuraanvraag.Verwachte_km = dto.Verwachte_km;
+        currentHuuraanvraag.Geaccepteerd = dto.Geaccepteerd;
+        currentHuuraanvraag.Reden = dto.Reden;
+        currentHuuraanvraag.VeranderDatum = dto.VeranderDatum;
+        currentHuuraanvraag.Gezien = dto.Gezien;
 
         try
         {
@@ -180,6 +192,7 @@ public class HuurController : ControllerBase
 
         return NoContent();
     }
+
 
 
     [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]
