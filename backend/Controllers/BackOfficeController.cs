@@ -29,8 +29,33 @@ namespace backend.Controllers
                 .Huuraanvragen
                 .Include(h => h.Voertuig)
                 .ToListAsync();
+            
+            if (huuraanvraagen == null || !huuraanvraagen.Any())
+            {
+                return NotFound("Geen huuraanvragen gevonden");
+            }
 
-            return Ok(huuraanvraagen);
+            return Ok(huuraanvraagen.Select(h => new
+            {
+                WettelijkeNaam = h.Wettelijke_naam,
+                Adres = h.Adresgegevens,
+                RijbewijsNummer = h.Rijbewijsnummer,
+                Reisaard = h.Reisaard,
+                VersteBestemming = h.Vereiste_bestemming,
+                VerwachteKm = h.Verwachte_km,
+        
+                Voertuig = new
+                {
+                    Naam = $"{h.Voertuig.Merk} {h.Voertuig.Type}",
+                    Soort = h.Voertuig.Soort,
+                    Status = h.Voertuig.Status,
+                    Prijs = h.Voertuig.Prijs,
+                },
+
+                StartDatum = h.Startdatum,
+                EindDatum = h.Einddatum,
+                Geaccepteerd = h.Geaccepteerd
+            }));
         }
 
         [HttpPut("huuraanvragen-beoordelen/{id}")]
