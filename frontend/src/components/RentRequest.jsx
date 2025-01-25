@@ -120,7 +120,7 @@ import "../styles/RentRequest.css";
                 <p>{data.reisaard}</p>
 
                 <p className="rent-request__label">Verste bestemming</p>
-                <p>{data.vereisteBestemming}</p>
+                <p>{data.versteBestemming}</p>
 
                 <p className="rent-request__label">Verwachte kilometers</p>
                 <p>{data.verwachteKm} km</p>
