@@ -104,13 +104,13 @@ import "../styles/RentRequest.css";
                 <h3>Huurder</h3>
 
                 <p className="rent-request__label">Wettelijke naam</p>
-                <p>{data.wettelijke_naam}</p>
+                <p>{data.wettelijkeNaam}</p>
 
                 <p className="rent-request__label">Adresgegevens</p>
-                <p>{data.adresgegevens}</p>
+                <p>{data.adresGegevens}</p>
 
                 <p className="rent-request__label">Rijbewijsnummer</p>
-                <p>{data.rijbewijsnummer}</p>
+                <p>{data.rijbewijsNummer}</p>
             </div>
 
             <div className="rent-request__trip rent-request__box">
@@ -120,17 +120,17 @@ import "../styles/RentRequest.css";
                 <p>{data.reisaard}</p>
 
                 <p className="rent-request__label">Verste bestemming</p>
-                <p>{data.vereiste_bestemming}</p>
+                <p>{data.vereisteBestemming}</p>
 
                 <p className="rent-request__label">Verwachte kilometers</p>
-                <p>{data.verwachte_km} km</p>
+                <p>{data.verwachteKm} km</p>
             </div>
 
             <div className="rent-request__vehicle rent-request__box">
                 <h3>Voertuig</h3>
 
                 <p className="rent-request__label">Naam</p>
-                <p>{data.voertuig.merk} {data.voertuig.type}</p>
+                <p>{data.voertuig.naam}</p>
 
                 <p className="rent-request__label">Soort</p>
                 <p>{data.voertuig.soort}</p>
@@ -146,10 +146,10 @@ import "../styles/RentRequest.css";
                 <h3>Huurperiode</h3>
 
                 <p className="rent-request__label">Startdatum</p>
-                <p>{data.startdatum}</p>
+                <p>{data.startDatum}</p>
 
                 <p className="rent-request__label">Einddatum</p>
-                <p>{data.einddatum}</p>
+                <p>{data.eindDatum}</p>
             </div>
 
             <div className="rent-request__status rent-request__box">
