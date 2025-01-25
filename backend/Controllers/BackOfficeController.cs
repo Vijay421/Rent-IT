@@ -54,7 +54,8 @@ namespace backend.Controllers
 
                 StartDatum = h.Startdatum,
                 EindDatum = h.Einddatum,
-                Geaccepteerd = h.Geaccepteerd
+                Geaccepteerd = h.Geaccepteerd,
+                Reden = h.Reden
             }));
         }
 
