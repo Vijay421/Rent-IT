@@ -7,7 +7,7 @@ export default function EmployeeBox({data}) {
     const carPrice = data.voertuig.prijs * amountOfDays;
     const insurance = data.voertuig.soort === "Auto" ? 15.50 * amountOfDays : data.voertuig.soort === "Caravan" ? 22 * amountOfDays : 0;
     const fuel = data.voertuig.soort === "Auto" ? 50 : data.voertuig.soort === "Caravan" ? 0 : 100;
-    const kmCharge = 0.23 * data.verwachte_km;
+    const kmCharge = 0.23 * data.verwachteKm;
     const deposit = data.voertuig.soort === "Auto" ? 400 : data.voertuig.soort === "Caravan" ? 750 : 1500;
     const tax = (carPrice + insurance + kmCharge) * 0.21;
     const korting = 0; /*utilize later after adding korting column*/
@@ -15,12 +15,12 @@ export default function EmployeeBox({data}) {
 
     return (
         <main className='employee-box__main'>
-            <h2 className='employee-box-title__h2'>{data.wettelijke_naam}</h2>
+            <h2 className='employee-box-title__h2'>{data.wettelijkeNaam}</h2>
             <div className="employee-box-details__div">
                 <div className="employee-box-voertuig-details__div">
                     <div className="employee-box-voertuig__div">
                         <p className="employee-box-voertuig-title__p">Voertuig</p>
-                        <p className="employee-box-voertuig-data__p">{data.voertuig.merk} {data.voertuig.type}</p>
+                        <p className="employee-box-voertuig-data__p">{data.voertuig.naam}</p>
                     </div>
 
                     <div className="employee-box-kenteken__div">
