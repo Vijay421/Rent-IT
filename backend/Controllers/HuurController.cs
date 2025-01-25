@@ -102,7 +102,26 @@ public class HuurController : ControllerBase
                 .ToListAsync();
         }
 
-        return Ok(huuraanvragen);
+        return Ok(huuraanvragen.Select(h => new
+        {
+            Id = h.Id,
+            Wettelijke_naam = h.Wettelijke_naam,
+            Adresgegevens = h.Adresgegevens,
+            Reisaard = h.Reisaard,
+            Verwachte_km = h.Verwachte_km,
+            Vereiste_bestemming = h.Vereiste_bestemming,
+            Startdatum = h.Startdatum,
+            Einddatum = h.Einddatum,
+            
+            Voertuig = new
+            {
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Prijs = h.Voertuig.Prijs,
+            }
+        }));
     }
 
     
