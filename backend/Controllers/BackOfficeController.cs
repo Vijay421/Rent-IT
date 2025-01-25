@@ -37,6 +37,7 @@ namespace backend.Controllers
 
             return Ok(huuraanvraagen.Select(h => new
             {
+                Id = h.Id,
                 WettelijkeNaam = h.Wettelijke_naam,
                 Adres = h.Adresgegevens,
                 RijbewijsNummer = h.Rijbewijsnummer,
