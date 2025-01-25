@@ -30,7 +30,23 @@ public class HuurController : ControllerBase
             .Include(h => h.Voertuig)
             .ToListAsync();
 
-        return Ok(huuraanvragen);
+        return Ok(huuraanvragen.Select(h => new
+        {
+            Voertuig = new
+            {
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kenteken = h.Voertuig.Kenteken,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Soort = h.Voertuig.Soort,
+                Status = h.Voertuig.Status,
+                Prijs = h.Voertuig.Prijs,
+                StartDatum = h.Startdatum,
+                EindDatum = h.Einddatum,
+            },
+            Wettelijke_naam = h.Wettelijke_naam
+        }));
     }
     
     
