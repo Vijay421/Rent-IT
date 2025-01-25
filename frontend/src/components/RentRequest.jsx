@@ -107,7 +107,7 @@ import "../styles/RentRequest.css";
                 <p>{data.wettelijkeNaam}</p>
 
                 <p className="rent-request__label">Adresgegevens</p>
-                <p>{data.adresGegevens}</p>
+                <p>{data.adres}</p>
 
                 <p className="rent-request__label">Rijbewijsnummer</p>
                 <p>{data.rijbewijsNummer}</p>
