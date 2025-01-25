@@ -25,17 +25,17 @@ namespace backend.Controllers
         [HttpGet("huuraanvragen")]
         public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
         {
-            var huuraanvraagen = await _context
+            var huuraanvragen = await _context
                 .Huuraanvragen
                 .Include(h => h.Voertuig)
                 .ToListAsync();
             
-            if (huuraanvraagen == null || !huuraanvraagen.Any())
+            if (huuraanvragen == null || !huuraanvragen.Any())
             {
                 return NotFound("Geen huuraanvragen gevonden");
             }
 
-            return Ok(huuraanvraagen.Select(h => new
+            return Ok(huuraanvragen.Select(h => new
             {
                 Id = h.Id,
                 WettelijkeNaam = h.Wettelijke_naam,
