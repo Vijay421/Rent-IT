@@ -138,7 +138,7 @@ import "../styles/RentRequest.css";
                 <p className="rent-request__label">Status</p>
                 <p>{data.voertuig.status}</p>
 
-                <p className="rent-request__label">Prijs</p>
+                <p className="rent-request__label">Prijs per maand</p>
                 <p>€{data.voertuig.prijs.toFixed(2)}</p>
             </div>
 
