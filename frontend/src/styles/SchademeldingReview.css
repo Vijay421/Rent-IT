@@ -1,0 +1,7 @@
+.schademeldingTab{
+    display: flex;
+}
+
+.schademelding_Foto{
+    width:50%;
+}

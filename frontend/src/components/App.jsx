@@ -31,6 +31,8 @@ import RegisterZakelijkeHuurderPage from "../pages/RegisterZakelijkeHuurderPage.
 import ZbRentHistoryPage from "../pages/ZbRentHistoryPage.jsx";
 import NotFoundPage from "../pages/NotFoundPage.jsx";
 
+import SchademeldingOverviewPage from "../pages/SchademeldingOverviewPage.jsx";
+
 function App() {
     return (
         <Router>
@@ -62,6 +64,7 @@ function App() {
                 <Route path="/verhuurde-voertuigen" element=    {<VerhuurdeVoertuigPage/>}/>
                 <Route path="/frontoffice/intake" element=      {<FrontofficeIntakePage/>}/>
                 <Route path="/frontoffice/uitgave" element=     {<FrontofficeExpenditurePage/>}/>
+                <Route path="/backoffice/schadeclaims" element=      {<SchademeldingOverviewPage/>}/>
                 <Route path="/voertuig-staten" element=         {<VoertuigStatenPage/>}/>
                 <Route path="/privacy" element=                 {<PrivacyPage/>}/>
                 <Route path="/abonnementsoverzicht" element=    {<AbonnementOverzichtPage/>}/>

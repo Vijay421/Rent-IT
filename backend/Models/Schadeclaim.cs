@@ -13,5 +13,6 @@ namespace backend.Models
         [MinLength(5)]
         public required string Beschrijving {get;set;}
         public string? Foto {get;set;}
+        public string Status {get;set;}
     }
 }

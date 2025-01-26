@@ -5,17 +5,17 @@ import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
-    const {view, setView} = useState([]);
+    const [isGeschiedenis, setView] = useState("nee");
+    const [schadeclaims, setSchadeclaims] = useState([]);
     
-    const [vehicles, setVehicles] = useState([]);
     if (userRole === null) {
         return <Navigate to='/'/>
     }
     useEffect(() => {
         async function fetchVehicles() {
-            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)
+            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie & Schadeclaims)
             try {
-                const response = await fetch('https://localhost:53085/api/Voertuig', {
+                const response = await fetch('https://localhost:53085/api/Schadeclaim', {
                     method: 'GET',
 
                     // TODO: change to 'same-origin' when in production.
@@ -25,8 +25,8 @@ function SchademeldingOverview() {
                     },
                 });
                 const data = await response.json();
-                setVehicles(data);
-                
+                setSchadeclaims(data);
+                console.log(userRole);
             }
             catch (e) {
                 console.error(e);
@@ -34,38 +34,32 @@ function SchademeldingOverview() {
         }
         fetchVehicles();
     }, []);
-
-    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
+    // const filteredSchadeclaims = schadeclaims.filter((schadeclaim) => {
+    //     if (isGeschiedenis !== "ja" && schadeclaim.status.toLowerCase() !== "verhuurbaar") return false;
+    //     return true;
+    // });
+    const sortedSchadeclaims = schadeclaims.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (
         <main className="content">
             <div className="divMain">
-                <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
-                <label className='label' htmlFor="select-input">Possible values:</label>
+                <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
                 <select id="select-input" onChange={(e) => setView(e.target?.value)}>
-                    <option>Not defined</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="nee">Openstaand</option>
+                    <option value="ja">Geschiedenis</option>
                 </select>
                 <div>
-                    {(() => {
-                        switch(view){
-                            case(0):
-                                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
-                                        sortedVehicles.map((vehicle) => {
-                                            return (
-                                                <SchademeldingReview
-                                                    key={vehicle.id}
-                                                    data={vehicle}
-                                                />
-                                            );
-                                        })
-                                    }
-
-                            case(1):
-                        }
-                    })}
-                    
+                    {sortedSchadeclaims.length === 0 ? (<p>Geen schadeclaims aanwezig</p>) :
+                        sortedSchadeclaims.map((schadeclaim) => {
+                            return (
+                                <SchademeldingReview
+                                    key={schadeclaim.id}
+                                    data={schadeclaim}
+                                    setSchadeclaims={setSchadeclaims}
+                                />
+                            );
+                        })
+                    }
                 </div>
             </div>
         </main>

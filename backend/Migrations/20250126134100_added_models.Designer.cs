@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250126114152_added_models")]
+    [Migration("20250126134100_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -335,6 +335,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")

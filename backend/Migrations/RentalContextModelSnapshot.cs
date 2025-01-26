@@ -51,43 +51,43 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e5833647-c6ca-4d22-b71c-9fcde8c92f5f",
+                            Id = "47bff041-884b-468a-b6eb-6934e1f61ca4",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5a6caf4a-7bf0-45af-937e-e3bfca473fd4",
+                            Id = "57770f5d-db4f-4126-b491-c8dcb800974a",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "d559eb76-e33b-4422-ba35-bdae2ce3f582",
+                            Id = "93f9681a-32d2-46e0-8749-c302fd5b33c8",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "2b75332c-e0aa-4e46-9bce-94ecc82efae6",
+                            Id = "4bc968f8-e966-494f-8b5b-09de6915b792",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "da6d106c-9ddf-40d5-9995-eaeb5ba44bdd",
+                            Id = "4c61051d-f202-484e-aaf8-2c2ba6c808e7",
                             Name = "bedrijf",
                             NormalizedName = "BEDRIJF"
                         },
                         new
                         {
-                            Id = "d0e14342-2199-48fb-aebe-b723f59b2e80",
+                            Id = "0a561921-1446-4e47-9ff4-6e18c3848ff1",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "010c0963-3f88-4d0a-b6f3-89d646e296b7",
+                            Id = "fe2bee2b-27fe-413f-a5f1-1d8efd249d22",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -388,6 +388,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")

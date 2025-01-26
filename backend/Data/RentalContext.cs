@@ -62,7 +62,7 @@ namespace backend.Data
 
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
 
-             /*
+            /*
                         var roleConfig = new RoleConfiguration();
                         modelBuilder.ApplyConfiguration(roleConfig);
 

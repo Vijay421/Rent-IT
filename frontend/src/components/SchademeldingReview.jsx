@@ -1,44 +1,39 @@
-import { useState } from "react";
-import "../styles/VehicleReview.css";
+/*eslint-disable*/
 
-export default function VehicleReview({ data }) {
-    const [foto, setFoto] = useState(null);
-    const [beschrijving, setBeschrijving] = useState("");
+import { useState } from "react";
+import "../styles/SchademeldingReview.css";
+import mock from '../assets/toyota-corolla.png';
+import {useNavigate} from "react-router-dom";
+
+export default function SchadeclaimReview({ data, setSchadeclaims }) {
+    const navigate = useNavigate();
+    const [status, setStatus] = useState("In behandeling");
+    const [opmerkingen, setOpmerkingen] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
-
-    async function voertuigAccepteren(){
-        try {
-            const response = await fetch(`https://localhost:53085/api/Schadeclaim/voertuig-accepteren/${data.id}`, {
-                method: 'PUT',
-        
-                // TODO: change to 'same-origin' when in production.
-                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-                headers: {
-                    'content-type': 'application/json'
-                },
-            });
-            if(response.ok) alert("Voertuig is geaccepteerd!");
-            // else alert(response);
+    async function handleCreate(){
+        if (beschrijving.length < 5) {
+            setConfirmationMessage("De beschrijving moet langer zijn dan 4 characters.");
+            setMessageType('error');
+            return;
         }
-        catch (e) {
-            alert(e);
-        }
-    }
 
-    async function handleWeigeren(){       
         if (beschrijving && foto) {
             const schadeClaim = {
                 Voertuig: data,
                 beschrijving: beschrijving,
-                foto: foto ? URL.createObjectURL(foto) : null,
+                datum: data.datum,
+                foto: foto ? new URL(`${process.env.PUBLIC_URL}/img/${foto}`) : null,
+                status: status,
             };
             try {
                 setConfirmationMessage("");
-                await voertuigWeigeren(schadeClaim);
+                await createSchadeclaim(schadeClaim);
                 alert("Voertuig is succcesvol geweigerd!");
             }
             catch (e) {
+                console.log('error')
+                console.log(e)
                 window.alert(e);
             }
         }
@@ -47,32 +42,77 @@ export default function VehicleReview({ data }) {
             setMessageType('error');
         }
     }
+    async function handleUpdate(){
+        const schadeClaim = {
+            beschrijving: opmerkingen,
+            status: status,
+        };
 
+        try{
+            setConfirmationMessage("");
+            await updateSchadeclaim(schadeClaim, data);
+            alert("Schadeclaim is geupdate!");
+            updateSchadeclaimsLijst(data.id);
+        }
+        catch (e){            
+            window.alert(e);
+        }
+    }
+
+    
+
+    function updateSchadeclaimsLijst(id) {
+        setSchadeclaims((old) => {
+            const copy = [...old];
+
+            const schadeclaims = copy.filter(vehicle => vehicle.id === id);
+            if (schadeclaims.length > 1) {
+                return copy;
+            }
+            const schadeclaim = schadeclaims[0];
+
+            return copy;
+        });
+    }
+   
     return (
         <div className="voertuigTab">
             <p className="voertuigTab__text">
-                {data.merk} {data.type} - {data.kenteken}
+                {data.VoertuigId}
             </p>
-            <div className="voertuigTab__inputs">
-                <input
-                    type="text"
-                    placeholder="Beschrijving"
-                    value={beschrijving}
-                    onChange={(e) => setBeschrijving(e.target.value)}
-                />
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFoto(e.target.files[0])}
-                />
-                <button onClick={voertuigAccepteren}>Accepteer</button>
-                <button onClick={handleWeigeren}>Weiger</button>
+            <p>
+                {data.beschrijving} - {new Date(data.datum).toLocaleDateString()}
+            </p>
+            <div className="schademeldingTab">
+                Foto:<img src={mock}  className='schademelding_Foto' ></img>
+                {/* {`${process.env.PUBLIC_URL}/img/${data.foto}`} */}
+                <div className="voertuigTab__inputs">
+                    <select onChange={(e) => setStatus(e.target.value)}>
+                        <option value="In behandeling">In behandeling</option>
+                        <option value="In reparatie">In reparatie</option>
+                        <option value="Afgehandeld">Afgehandeld</option>
+                    </select>
+                    
+                    <input
+                        type="text"
+                        placeholder="Opmerkingen"
+                        value={opmerkingen}
+                        onChange={(e) => setOpmerkingen(e.target.value)}
+                    />
+                    {/* TO-DO: Knop moet navigeren naar Voertuig aanpassing */}
+                    <button 
+                        onClick={() => navigate("/voertuig-aanpassen", { state: { mode: "update", vehicle: data, } })}
+                        data-cy="update-vehicle"
+                    >Voertuig aanpassen</button>
+                    
+                    <button onClick={handleUpdate}>Update</button>
+                </div>
+                {confirmationMessage && (
+                    <p className={`confirmationMessage ${messageType}`}>
+                        {confirmationMessage}
+                    </p>
+                )}
             </div>
-            {confirmationMessage && (
-                <p className={`confirmationMessage ${messageType}`}>
-                    {confirmationMessage}
-                </p>
-            )}
         </div>
     );
 }
@@ -81,7 +121,28 @@ export default function VehicleReview({ data }) {
 * @param {Object} payload 
 * @returns {Object}
 */
-async function voertuigWeigeren(payload) {
+async function updateSchadeclaim(payload, data){
+    try {
+        const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
+            method: 'PUT',
+
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        const newData = await response.json();
+        console.log(newData);
+
+        return newData;
+    } catch(e) {
+        throw e;
+    }
+}
+async function createSchadeclaim(payload) {
     const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
         method: 'POST',
 
@@ -94,3 +155,5 @@ async function voertuigWeigeren(payload) {
     });
     return await response.json();
 }
+
+
