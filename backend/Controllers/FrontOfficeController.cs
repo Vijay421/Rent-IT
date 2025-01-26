@@ -52,7 +52,7 @@ namespace backend.Controllers
 
         [Authorize(Roles = "frontoffice_medewerker")]
         [HttpPost("uitgave/{id}")]
-        public async Task<ActionResult<Voertuigregistratie>> RegistreerVoertuigUitgave(int id, [FromBody]CreateVoertuigRegistratieDTO createVoertuigRegistratieDTO)
+        public async Task<ActionResult<Voertuigregistratie>> RegistreerVoertuigUitgave(int id, VoertuigRegistratieDTO createVoertuigRegistratieDTO)
         {
             var huuraanvraag = await _context.Huuraanvragen.FindAsync(id);
             if (huuraanvraag == null)
