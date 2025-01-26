@@ -1,0 +1,123 @@
+.register-page {
+    display: flex;
+    place-items: center;
+}
+
+/*register box that contains all the register fields in center of screen*/
+.register-box {
+    background-color: white;
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    min-width: 340px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    width: 25%;
+    height: auto;
+    margin: 30px auto;
+    border: 3px solid black
+}
+
+/*Large text at the top of the register box*/
+.register-box__text {
+    margin: 20px 0 0 0;
+    font-size: clamp(2.5rem, 3vw, 3rem);
+}
+
+.register-box__response-text {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.register-box__response-text::first-letter {
+    text-transform: capitalize;
+}
+
+.register-box__response-text:after {
+    content: ".";
+ }
+
+.register-box__response-text--success {
+    color: green;
+}
+
+.register-box__response-text--error {
+    color: red;
+}
+
+/*Input fields inside the register box*/
+.register-box__input-field {
+    display: flex;
+    width: 75%;
+    height: 30px;
+    font-size: 1.25rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Input text above the input fields inside the register box*/
+.register-box__input-text {
+    /*background-color: lightgreen;*/
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: 12%;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/*Register button at the bottom of the register box*/
+.register-box__button {
+    width: 140px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin: 20px auto;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    display: block;
+}
+
+/*Action for hovering on the register button*/
+.register-box__button:hover {
+    background-color: dimgray;
+    transition: background-color 0.1s;
+    cursor: pointer;
+}
+
+/*Action for when the register button is active (clicking)*/
+.register-box__button:active {
+    background-color: var(--tertiary-color);
+}
+
+/*Hyperlink div under the register button*/
+.register-box__hyperlinks {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Hyperlinks inside said div above inside the register box*/
+.register-box__hyperlinks a {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1em;
+    color: #0000EE;
+}
+
+/*Action for when hyperlinks inside hyperlink div is active (clicking)*/
+.register-box__hyperlinks a:active {
+    color: var(--secondary-color);
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-items: center;
+}
+
+.register-box form {
+    width: 100%;
+}

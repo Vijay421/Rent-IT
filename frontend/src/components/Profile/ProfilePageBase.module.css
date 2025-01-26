@@ -1,0 +1,52 @@
+.TopDiv {
+    background-color: var(--main-color);
+    width: 66.5%;
+    height: auto;
+    margin: 25px auto 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.MainDiv {
+    background-color: var(--main-color);
+    width: 28%;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.MainProfileDiv {
+    background-color: var(--main-color);
+    min-width: 340px;
+    width: 25%;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.MainDivTextWelkom {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 2em;
+}
+
+
+@media only screen and (max-width: 1111px) {
+    .MainDiv {
+        width: 66.5%;
+    }
+}

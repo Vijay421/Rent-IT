@@ -1,0 +1,193 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    width: 80%;
+}
+
+.title {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.employees {
+    background-color: var(--main-color);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.emptyText {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.employee {
+    display: grid;
+    /* The *-l means: *-label and *-b means: *-button */
+    grid-template-areas:
+    "id-l username-l email-l role-l locked-date-l"
+    "id username email role locked-date"
+    ". . lockout-b . ."
+    ;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+
+    margin: 15px auto;
+    width: 95%;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: 2px solid black;
+    padding: 10px;
+    font-size: 1.3em;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.idLabel {
+    grid-area: id-l;
+}
+.id {
+    grid-area: id;
+    word-break: break-all;
+}
+
+.usernameLabel {
+    grid-area: username-l;
+}
+.username {
+    grid-area: username;
+    word-break: break-all;
+}
+
+.emailLabel {
+    grid-area: email-l;
+}
+.email {
+    grid-area: email;
+    word-break: break-all;
+}
+
+.roleLabel {
+    grid-area: role-l;
+}
+.role {
+    grid-area: role;
+    word-break: break-all;
+}
+
+.lockedDateLabel {
+    grid-area: locked-date-l;
+}
+.lockedDate {
+    grid-area: locked-date;
+    word-break: break-all;
+}
+
+.lockedLabel {
+    grid-area: locked-l;
+}
+.locked {
+    grid-area: locked;
+    word-break: break-all;
+}
+
+.loginFailedLabel {
+    grid-area: login-failed-l;
+}
+.loginFailed {
+    grid-area: login-failed;
+    word-break: break-all;
+}
+
+.controls {
+    grid-area: lockout-b;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 1100px) {
+    .employee {
+        grid-template-areas:
+        "id-l username-l email-l"
+        "id username email"
+        "role-l locked-date-l ."
+        "role locked-date ."
+        ". lockout-b ."
+        ;
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 20px;
+
+        padding: 5px;
+    }
+}
+
+@media only screen and (max-width: 630px) {
+    .employee {
+        grid-template-areas:
+        "id-l username-l"
+        "id username"
+        "email-l role-l"
+        "email role"
+        "locked-date-l ."
+        "locked-date ."
+        "lockout-b lockout-b"
+        ;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    .employee {
+        grid-template-areas:
+        "id-l"
+        "id"
+        "."
+
+        "username-l"
+        "username"
+        "."
+
+        "email-l"
+        "email"
+        "."
+
+        "role-l"
+        "role"
+        "."
+
+        "locked-date-l"
+        "locked-date"
+        "."
+
+        "lockout-b"
+        ;
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 5px;
+    }
+
+    .id {
+        width: 230px;
+    }
+
+    .lockout {
+        width: 150px;
+        justify-self: center;
+    }
+}

@@ -1,0 +1,22 @@
+:root {
+  --main-color: #c8d8e4;
+  --secondary-color: #2b6777;
+  --tertiary-color: #52ab98;
+}
+
+* {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  overflow: auto;
+  background-image: url("../assets/backgroundblurred.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;
+}

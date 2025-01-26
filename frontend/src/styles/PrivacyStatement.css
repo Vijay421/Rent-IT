@@ -1,0 +1,66 @@
+.Main-Content {
+    height: 90vh;
+    display: flex;
+    margin: 0 auto;
+    place-items: center;
+}
+
+.PrivacyStatement__div {
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    background-color: white;
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    width: max(290px, 35%);
+    padding: 0 10px 10px 10px;
+    border-radius: 15px;
+    height: auto;
+    margin: 0 auto;
+    border: 2px solid black;
+    overflow-y: auto;
+    max-height: 80vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.backoffice-medewerker__Content {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.privacy-input {
+    height: 40px;
+    display: flex;
+    margin: 0 auto;
+    resize: vertical;
+    width: max(285px, 90%);
+}
+
+.privacy-statement-title__h1 {
+    margin: 10px 0;
+}
+
+.change-privacy-statement__button {
+    display: flex;
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 200px;
+    height: 40px;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px auto;
+    justify-content: center;
+}
+
+.change-privacy-statement__button:hover {
+    background-color: var(--tertiary-color);
+}
+
+.change-privacy-statement__button:visited {
+    color: #FFFFFF;
+}

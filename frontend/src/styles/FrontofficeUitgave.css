@@ -1,0 +1,25 @@
+.divMain__text__FrontOffice {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.voertuigTab {
+    margin: 20px auto;
+}
+
+.voertuigTab__inputs input {
+    font-size: 1.2em;
+}
+
+.voertuigTab__inputs button {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.voertuigTab__empty-text {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}

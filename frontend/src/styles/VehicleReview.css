@@ -1,0 +1,55 @@
+.voertuigTab {
+    display: flex;
+    flex-direction: column;
+    max-width: 96%;
+    margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.voertuigTab__text {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.voertuigTab__inputs {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px;
+    margin-top: 10px; /* Add spacing above the inputs */
+}
+
+.voertuigTab__inputs input,
+.voertuigTab__inputs button {
+    font-size: 1rem; /* Reduced font size */
+    text-align: center;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+}
+
+.confirmationMessage {
+    text-align: right;
+    font-size: 0.8rem; /* Slightly smaller font for messages */
+    margin-top: 5px;
+}
+
+/* Red for error messages */
+.confirmationMessage.error {
+    color: rgb(194, 0, 0);
+    font-weight: bold;
+}
+
+/* Green for success messages */
+.confirmationMessage.success {
+    color: darkgreen;
+    font-weight: bold;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .voertuigTab__inputs {
+        flex-direction: column; /* Stack inputs and button on small screens */
+    }
+}

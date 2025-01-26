@@ -1,0 +1,116 @@
+.SubmitMainDiv {
+    background-color: var(--main-color);
+    width: 40%;
+    height: auto;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.TopDiv {
+    background-color: var(--main-color);
+    width: 66.5%;
+    height: auto;
+    margin: 25px auto 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.HuurFormWrapper {
+    flex-direction: column;
+    margin: 0 auto 0 3.5%;
+        width: 96%;
+}
+
+.Huurlabel {
+    margin-right: auto;
+    font-size: min(20px ,4.5vw);
+    font-weight: bold;
+}
+
+#top-div__div {
+    height: auto;
+}
+
+.main-div-form__text {
+    margin-top: 10px;
+    font-size: min(36px ,5vw);
+    padding: 0 5px;
+    text-align: center;
+}
+
+.akkord-container__div {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    gap: 5px;
+}
+
+.renting-submit-form {
+    width: 96%;
+    margin-right: auto;
+    height: 24px;
+    font-size: 1.1em;
+}
+
+
+.price__text {
+    margin-top: 20px;
+}
+
+.submit-button__button {
+    margin: 15px 0;
+}
+
+.submit-button__button,
+.submit-button {
+    background-color: var(--secondary-color);
+    color: #FFFFFF;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 8px;
+    width: auto;
+    height: 50px;
+    padding: 0 10px;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.submit-button:hover {
+    background-color: var(--tertiary-color);
+}
+
+.confirmation-message {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.confirmation-message.success {
+    color: darkgreen;
+}
+
+.confirmation-message.error {
+    color: darkred;
+}
+
+@media only screen and (max-width: 1111px) {
+    .SubmitMainDiv {
+        width: 66%;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .SubmitMainDiv {
+        width: 90%;
+    }
+}

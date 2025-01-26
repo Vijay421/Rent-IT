@@ -1,0 +1,314 @@
+/*________________________________________________________________________________________________________________*/
+/* Main Div Layout (Content, divLeft, divTop, divMargin, divMain) */
+.content {
+    display: grid;
+    grid-template-areas:
+        "divLeft divTop"
+        "divLeft divMargin"
+        "divLeft divMain";
+    width: 100%;
+    margin: 3dvh 0;
+}
+
+.divLeft {
+    grid-area: divLeft;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: 25em;
+}
+
+.divTop {
+    grid-area: divTop;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    height: 160px;
+    width: 66.5vw;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    margin-bottom: 2vh;
+}
+
+/*select, input {*/
+/*    width: 110px;*/
+/*}*/
+
+.divMain {
+    grid-area: divMain;
+    background-color: #c8d8e4;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+    min-height: 35em;
+    height: auto;
+    width: 66.5vw;
+    border-radius: 8px;
+}
+
+#divMain-no-content__span {
+    display: block;
+    margin-top: 10px;
+    font-size: max(14px ,1.7vw);
+    font-weight: bold;
+    text-align: center;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* DivLeft consists of a textfield (DivLeft-Text-Filter) */
+
+.divLeft-Text-Filter {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 0.5em;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* DivTop consists of a topDiv (divTop-header) and 3 rowDivs (divTop-divSelect-Voertuig/ophaalDatum/inleverDatum) */
+
+.divTop-header {
+    text-align: center;
+    padding: 5px;
+}
+
+.divTop-header-Text-Huren {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 0.5em;
+    text-align: center;
+}
+
+.rowDivs {
+    display: grid; /* Align child divs horizontally */
+    justify-content: space-between; /* Spread divs evenly */
+    /*grid-template-columns: repeat(3, 1fr);*/
+    grid-template-areas:
+        "voertuig ophaalDatum inleverDatum"
+        "merk prijs beschikbaarheid"
+        "searchBar searchBar searchBar";
+    font-size: 1.25em;
+    margin: 0 10px;
+}
+
+.divTop-reset-filters__button {
+    font-size: 0.7em;
+}
+
+.divTop-divSelect-Voertuig {
+    grid-area: voertuig;
+}
+
+.divTop-divSelect-ophaalDatum {
+    grid-area: ophaalDatum;
+}
+
+.divTop-divSelect-inleverDatum {
+    grid-area: inleverDatum;
+}
+
+.divTop-divSelect-Merk {
+    grid-area: merk;
+}
+
+.divTop-divSelect-Prijs {
+    grid-area: prijs;
+}
+
+.divTop-divSelect-Beschikbaarheid {
+    grid-area: beschikbaarheid;
+}
+
+.divTop-search-bar-container {
+    grid-area: searchBar;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.divTop-divSelect-Sorteren-dropdown-container {
+    grid-area: sorteren;
+}
+
+.divTop-reset-filters__button {
+    grid-area: reset;
+}
+
+.divTop-divSelect-Voertuig, .divTop-divSelect-ophaalDatum, .divTop-divSelect-inleverDatum {
+    height: 2em;
+    flex: 1; /* Make divs equal width */
+    text-align: center;
+}
+.divTop-divSelect-inleverDatum div input,
+.divTop-divSelect-ophaalDatum div input {
+    width: 140px;
+}
+
+.divTop-divSelect-ophaalDatum div input,
+.divTop-divSelect-inleverDatum div input,
+.divTop-divSelect-merk-dropdown,
+.divTop-divSelect-prijs-dropdown,
+.divTop-divSelect-beschikbaarheid-dropdown,
+.divTop-divSelect-sorteren-dropdown,
+.divTop-divSelect-Voertuig div select {
+    height: 26px;
+    font-size: 0.9em;
+}
+
+.divTop-divSelect-Merk, .divTop-divSelect-Prijs, .divTop-divSelect-Beschikbaarheid {
+    height: 2em;
+    flex: 1; /* Make divs equal width */
+    text-align: center;
+}
+
+/*________________________________________________________________________________________________________________*/
+/* Next are all dropdown styles from divTop-divSelect-Voertuig */
+
+
+
+/*________________________________________________________________________________________________________________*/
+/* Next are all DateSelector styles from divTop-divSelect-ophaalDatum en divTop-divSelect-inleverDatum */
+
+.divTop-search-bar-container {
+    display: flex;
+    height: 30px;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 0 20px;
+}
+
+.divTop-divSelect-Sorteren-dropdown-container {
+    align-content: center;
+}
+
+.divTop-search-bar__input {
+    width: 400px;
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+.divTop-reset-filters__button {
+    width: 90px;
+}
+
+.date-input {
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 122px;
+}
+
+
+
+.date-input:hover, .date-input:focus {
+    border-color: #0056b3; /* Darker blue on hover/focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow */
+}
+
+.selected-date {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+@media only screen and (max-width: 1111px) {
+    .content {
+        margin: 3dvh 0;
+    }
+
+    .divTop {
+        height: 230px;
+    }
+
+    .rowDivs {
+        grid-template-areas:
+            "voertuig merk"
+            "ophaalDatum inleverDatum"
+            "prijs beschikbaarheid"
+            "searchBar searchBar";
+    }
+
+    .divTop-search-bar__input {
+        width: 80%;
+    }
+
+    .divTop-search-bar-container {
+        gap: 10px;
+    }
+
+    .divTop-divSelect-Voertuig {
+        height: 2em;
+    }
+
+    .divTop-divSelect-ophaalDatum, .divTop-divSelect-inleverDatum {
+        height: auto;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 777px) {
+    .divTop {
+        height: 250px;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .divTop-header-Text-Huren {
+        text-align: center;
+    }
+
+    .divTop {
+        height: auto;
+        align-items: center;
+    }
+
+    .rowDivs {
+        display: grid;
+        grid-template-areas:
+            "voertuig"
+            "merk"
+            "ophaalDatum"
+            "inleverDatum"
+            "prijs"
+            "beschikbaarheid"
+            "searchBar";
+        align-items: center;
+        margin: 0 auto 10px auto;
+    }
+
+    #options {
+        width: 148px;
+        text-align: center;
+    }
+
+    .date-input {
+        width: 140px;
+    }
+
+    .divTop-search-bar-container {
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.8em;
+        height: auto;
+        gap: 5px;
+    }
+
+    .divTop-reset-filters__button {
+        margin-top: 5px;
+        height: 30px;
+        font-size: 0.8em;
+    }
+
+    .rowDivs3 {
+        height: auto;
+        padding-bottom: 10px;
+    }
+
+    .divTop-divSelect-Sorteren-dropdown-container {
+        display: flex;
+        flex-direction: column;
+        width: 148px;
+        text-align: center;
+    }
+}

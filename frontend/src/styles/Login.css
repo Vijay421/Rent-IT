@@ -1,0 +1,113 @@
+.login-page {
+    height: 80vh;
+    display: flex;
+    place-items: center;
+}
+
+/*Login box that contains all the login fields in center of screen*/
+.login-box {
+    background-color: white;
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    min-width: 300px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    width: 25%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid black
+}
+
+/*Large text at the top of the login box*/
+.login-box__text {
+    margin: 20px 0 0 0;
+    font-size: clamp(2.5rem, 3vw, 3rem);
+}
+
+/*Input fields inside the login box*/
+.login-box__input-field {
+    display: flex;
+    width: 75%;
+    height: 30px;
+    font-size: 1.25rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Input text above the input fields inside the login box*/
+.login-box__input-text {
+    /*background-color: lightgreen;*/
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: 12%;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/*Login button at the bottom of the login box*/
+.login-box__button {
+    width: 120px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin: 20px auto;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    display: block;
+}
+
+/*Action for hovering on the login button*/
+.login-box__button:hover {
+    background-color: dimgray;
+    transition: background-color 0.1s;
+    cursor: pointer;
+}
+
+/*Action for when the login button is active (clicking)*/
+.login-box__button:active {
+    background-color: var(--tertiary-color);
+}
+
+/*Hyperlink div under the login button*/
+.login-box__hyperlinks {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Hyperlinks inside said div above inside the login box*/
+.login-box__hyperlinks a {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1em;
+    color: #0000EE;
+}
+
+/*Action for when hyperlinks inside hyperlink div is active (clicking)*/
+.login-box__hyperlinks a:active {
+    color: var(--secondary-color);
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-items: center;
+}
+
+.login-box form {
+    width: 100%;
+}
+
+#login-box__loginstatus {
+    width: 66%;
+    font-size: 1.1em;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}

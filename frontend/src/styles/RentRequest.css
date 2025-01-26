@@ -1,0 +1,124 @@
+.rent-request {
+    display: grid;
+    grid-template-areas:
+        "renter trip vehicle period status"
+        "review review review review review"
+    ;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 10px;
+    justify-items: center;
+
+    margin: 15px auto;
+    width: max(150px,62vw);
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: 2px solid black;
+    padding: 10px;
+}
+
+.rent-request__box {
+    width: 150px;
+}
+
+.rent-request__period {
+    grid-area: period;
+    font-size: 1.2em;
+}
+
+.rent-request__trip {
+    grid-area: trip;
+    font-size: 1.2em;
+}
+
+.rent-request__renter {
+    grid-area: renter;
+    font-size: 1.2em;
+}
+
+.rent-request__vehicle {
+    grid-area: vehicle;
+    font-size: 1.2em;
+}
+
+.rent-request__status {
+    grid-area: status;
+    font-size: 1.4em;
+}
+
+.rent-request__review {
+    grid-area: review;
+
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.rent-request__review--buttons {
+    display: grid;
+    grid-template-areas:
+        "back correct wrong"
+        "text text text"
+    ;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.rent-request__review--back {
+    grid-area: back;
+    font-size: 1.3em;
+}
+
+.rent-request__review--correct {
+    grid-area: correct;
+    font-size: 1.3em;
+}
+
+.rent-request__review--wrong {
+    grid-area: wrong;
+    font-size: 1.3em;
+}
+
+.rent-request__review--text {
+    grid-area: text;
+    font-size: 1.2em;
+    resize: vertical;
+}
+
+.rent-request__label {
+    color: dimgray;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.rent-request-beoordelen__button {
+    font-size: 1.3em;
+}
+@media only screen and (max-width: 1110px) {
+    .rent-request {
+        grid-template-areas:
+            "renter trip"
+            "vehicle period"
+            "status ."
+            "review review"
+        ;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .rent-request {
+        grid-template-areas:
+            "renter"
+            "trip"
+            "vehicle"
+            "period"
+            "status"
+            "review"
+        ;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+
+        padding: 5px;
+    }
+}

@@ -3,6 +3,11 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# local config file
+local_config.json
+
+/privacyStatement.txt
+
 # dotenv files
 .env
 

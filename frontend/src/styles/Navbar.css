@@ -1,0 +1,92 @@
+/*Entire navigation bar*/
+.navbar {
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px 0 15px;
+}
+
+.navbar-logo__img {
+    width: 80px;
+}
+
+/*Div for buttons in nagivation bar*/
+.navbar__navigation-buttons {
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 75%;
+    height: 100%;
+}
+/*The buttons inside the said div above*/
+.navbar__navigation-buttons button {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
+    border-radius: 6px;
+    border: transparent;
+    margin-left: 1vw;
+}
+
+/*Action for switching colors when hovering over both navigation and login buttons in navigation bar*/
+.navbar__navigation-buttons button:hover, .navbar__login-box__button button:hover {
+    background-color: var(--tertiary-color);
+    cursor: pointer;
+}
+
+/*Div for the login buttons in navigation bar*/
+.navbar__login-box__button {
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 25%;
+    height: 100%;
+}
+
+/*Buttons inside said div above*/
+.navbar__login-box__button button {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
+    border-radius: 2vw;
+    border: transparent;
+    margin-left: 1vw;
+}
+
+@media only screen and (max-width: 660px) {
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar-logo__img {
+        width: 70px;
+    }
+
+    .navbar__navigation-buttons button {
+        width: 60px;
+        height: 45px;
+        font-size: 0.8rem;
+    }
+
+    .navbar__login-box__button {
+        margin-right: 5px;
+    }
+
+    .navbar__login-box__button button {
+        width: 60px;
+        height: 45px;
+        font-size: 0.8rem;
+    }
+
+    #register-button__button {
+        width: 60px;
+        margin-right: 10px;
+    }
+}
