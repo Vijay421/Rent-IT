@@ -26,7 +26,7 @@ function SchademeldingOverview() {
                 });
                 const data = await response.json();
                 setVehicles(data);
-                console.log(userRole);
+                
             }
             catch (e) {
                 console.error(e);

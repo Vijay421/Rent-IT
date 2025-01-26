@@ -37,7 +37,7 @@ export default function ExpenditureReview({ uitgave }) {
             const data = await response.json();
             setConfirmationMessage("Expenditure successfully registered!");
             setMessageType('success');
-            console.log(data);
+            
         }
         catch (e) {
             setConfirmationMessage(e.message);

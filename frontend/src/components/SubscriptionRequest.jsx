@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 function SubscriptionRequest() {
     const location = useLocation();
     const pageData = location.state?.pageData;
-    console.log(location.state?.pageData);
     const mode = pageData ? "update" : "create";
 
 
