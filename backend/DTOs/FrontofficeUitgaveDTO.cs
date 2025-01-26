@@ -11,6 +11,7 @@ namespace backend.DTOs
         public string Kenteken {get; set;}
         public string Merk {get; set;}
         public string Type {get; set;}
+        public int? VoertuigId { get; set; }
         public DateOnly Startdatum {get; set;}
         public DateOnly Einddatum {get; set;}
 

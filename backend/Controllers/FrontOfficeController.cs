@@ -43,6 +43,7 @@ namespace backend.Controllers
                 frontofficeUitgaveDTO.Kenteken = huuraanvraag.Voertuig.Kenteken;
                 frontofficeUitgaveDTO.Merk = huuraanvraag.Voertuig.Merk;
                 frontofficeUitgaveDTO.Type = huuraanvraag.Voertuig.Type;
+                frontofficeUitgaveDTO.VoertuigId = huuraanvraag.VoertuigId;
 
                 frontofficeUitgave.Add(frontofficeUitgaveDTO);
             }

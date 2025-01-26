@@ -36,13 +36,14 @@ function FrontofficeExpenditure() {
                 <div>
                     <h1 className="divMain__text__FrontOffice">Voertuig uitgave</h1>
                     {uitgave.length === 0 ? (
-                        <p>Geen voertuigen aanwezig</p>
+                        <p className="voertuigTab__empty-text">Geen voertuigen aanwezig</p>
                     ) : (
                         uitgave.map((u) => {
                             return (
                                 <ExpenditureReview
                                     key={u.id}
                                     uitgave={u}
+                                    setUitgave={setUitgave}
                                 />
                             );
                         })

@@ -2,7 +2,7 @@ import { useState } from "react";
 import '../styles/FrontofficeUitgave.css';
 import PropTypes from "prop-types";
 
-export default function ExpenditureReview({ uitgave }) {
+export default function ExpenditureReview({ uitgave, setUitgave }) {
     const [beschrijving, setBeschrijving] = useState('');
     const [confirmationMessage, setConfirmationMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // 'error' or 'success'
@@ -37,12 +37,26 @@ export default function ExpenditureReview({ uitgave }) {
             const data = await response.json();
             setConfirmationMessage("Expenditure successfully registered!");
             setMessageType('success');
-            console.log(data);
+
+            // console.log(data);
+            return data;
         }
         catch (e) {
             setConfirmationMessage(e.message);
             setMessageType('error');
         }
+    }
+
+    async function handleUitgaven() {
+        const response = await changeVoertuigUitgaveStatus();
+        console.log(response);
+
+        setUitgave(old => {
+            debugger;
+            const copy = [...old];
+            const filtered = copy.filter(aanvraag => aanvraag.voertuigId != response.voertuigId);
+            return filtered;
+        });
     }
 
     return (
@@ -60,7 +74,7 @@ export default function ExpenditureReview({ uitgave }) {
                     value={beschrijving}
                     onChange={(e) => setBeschrijving(e.target.value)}
                 />
-                <button onClick={changeVoertuigUitgaveStatus}>Registreren</button>
+                <button onClick={handleUitgaven}>Registreren</button>
             </div>
             {confirmationMessage && (
                 <p className={`confirmationMessage ${messageType}`}>
