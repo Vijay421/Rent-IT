@@ -44,8 +44,7 @@ function SchademeldingOverview() {
         <main className="content">
             <div className="divMain">
                 <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
-                <select id="select-input" value={"Selecteer"} onChange={(e) => setView(e.target?.value)}>
-                    <option>Selecteer</option>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
                     <option value="nee">Openstaand</option>
                     <option value="ja">Geschiedenis</option>
                 </select>

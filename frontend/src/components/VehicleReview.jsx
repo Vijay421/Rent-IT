@@ -58,7 +58,7 @@ export default function VehicleReview({ data, setVehicles }) {
                 Voertuig: data,
                 beschrijving: beschrijving,
                 datum: new Date(),
-                foto: foto,
+                foto: "mock",
                 status: "In behandeling",
             };
             try {
