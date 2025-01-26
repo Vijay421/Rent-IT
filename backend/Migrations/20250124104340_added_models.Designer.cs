@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250117092319_added_seeding_data")]
-    partial class added_seeding_data
+    [Migration("20250124104340_added_models")]
+    partial class added_models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,50 +50,6 @@ namespace backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8fa7a0a3-613a-4914-9c1b-32dd24ac868d",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "ddddb548-37ef-47fb-bc6a-086e4d1889e6",
-                            Name = "backoffice_medewerker",
-                            NormalizedName = "BACKOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "f47d4b3b-b25b-4d7f-99e0-06163e155944",
-                            Name = "frontoffice_medewerker",
-                            NormalizedName = "FRONTOFFICE_MEDEWERKER"
-                        },
-                        new
-                        {
-                            Id = "04df298b-e4ac-42b7-bc8f-3cc6117f503d",
-                            Name = "zakelijke_beheerder",
-                            NormalizedName = "ZAKELIJKE_BEHEERDER"
-                        },
-                        new
-                        {
-                            Id = "17f99922-2f45-48cc-9892-f57a74f857da",
-                            Name = "bedrijf",
-                            NormalizedName = "BEDRIJF"
-                        },
-                        new
-                        {
-                            Id = "08a701df-a9d4-4a70-b6ab-0c3a2a1713b1",
-                            Name = "zakelijke_huurder",
-                            NormalizedName = "ZAKELIJKE_HUURDER"
-                        },
-                        new
-                        {
-                            Id = "0b4cd768-3904-4a2b-baef-d9d4565b7234",
-                            Name = "particuliere_huurder",
-                            NormalizedName = "PARTICULIERE_HUURDER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -246,18 +202,6 @@ namespace backend.Migrations
                     b.HasIndex("HuurbeheerderId");
 
                     b.ToTable("Abonnementen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Einddatum = new DateOnly(2026, 1, 1),
-                            Max_huurders = 10,
-                            Naam = "abbo",
-                            Prijs_per_maand = 12.199999999999999,
-                            Soort = "prepaid",
-                            Startdatum = new DateOnly(2025, 5, 12)
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -475,13 +419,17 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BackOfficeId");
+                    b.HasIndex("BackOfficeId")
+                        .IsUnique()
+                        .HasFilter("[BackOfficeId] IS NOT NULL");
 
                     b.HasIndex("BedrijfId");
 
                     b.HasIndex("FrontOfficeId");
 
-                    b.HasIndex("HuurbeheerderId");
+                    b.HasIndex("HuurbeheerderId")
+                        .IsUnique()
+                        .HasFilter("[HuurbeheerderId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -560,113 +508,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voertuigen");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Aanschafjaar = 2018,
-                            EindDatum = new DateOnly(2025, 1, 4),
-                            Kenteken = "AB-123-CD",
-                            Kleur = "Red",
-                            Merk = "Toyota",
-                            Opmerking = "",
-                            Prijs = 50.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2025, 1, 1),
-                            Status = "Verhuurbaar",
-                            Type = "Corolla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Aanschafjaar = 2019,
-                            EindDatum = new DateOnly(2025, 1, 4),
-                            Kenteken = "EF-456-GH",
-                            Kleur = "Blue",
-                            Merk = "Ford",
-                            Opmerking = "",
-                            Prijs = 51.390000000000001,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2025, 1, 1),
-                            Status = "Verhuurbaar",
-                            Type = "Focus"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2025, 1, 5),
-                            Kenteken = "IJ-789-KL",
-                            Kleur = "Black",
-                            Merk = "Volkswagen",
-                            Opmerking = "",
-                            Prijs = 40.0,
-                            Soort = "Auto",
-                            StartDatum = new DateOnly(2025, 1, 3),
-                            Status = "Verhuurbaar",
-                            Type = "Golf"
-                        },
-                        new
-                        {
-                            Id = 105,
-                            Aanschafjaar = 2021,
-                            EindDatum = new DateOnly(2025, 1, 24),
-                            Kenteken = "QR-345-ST",
-                            Kleur = "Gray",
-                            Merk = "Citroën",
-                            Opmerking = "",
-                            Prijs = 65.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2025, 1, 10),
-                            Status = "Verhuurbaar",
-                            Type = "Jumper"
-                        },
-                        new
-                        {
-                            Id = 106,
-                            Aanschafjaar = 2016,
-                            EindDatum = new DateOnly(2025, 2, 4),
-                            Kenteken = "UV-678-WX",
-                            Kleur = "Black",
-                            Merk = "Peugeot",
-                            Opmerking = "",
-                            Prijs = 68.0,
-                            Soort = "Camper",
-                            StartDatum = new DateOnly(2025, 2, 1),
-                            Status = "Verhuurbaar",
-                            Type = "Boxer"
-                        },
-                        new
-                        {
-                            Id = 185,
-                            Aanschafjaar = 2020,
-                            EindDatum = new DateOnly(2025, 6, 7),
-                            Kenteken = "GH-456-IJ",
-                            Kleur = "Blue",
-                            Merk = "Dethle-s",
-                            Opmerking = "",
-                            Prijs = 52.5,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2025, 5, 1),
-                            Status = "Verhuurbaar",
-                            Type = "C'go"
-                        },
-                        new
-                        {
-                            Id = 186,
-                            Aanschafjaar = 2017,
-                            EindDatum = new DateOnly(2025, 8, 24),
-                            Kenteken = "KL-789-MN",
-                            Kleur = "Red",
-                            Merk = "Burstner",
-                            Opmerking = "",
-                            Prijs = 48.0,
-                            Soort = "Caravan",
-                            StartDatum = new DateOnly(2025, 8, 21),
-                            Status = "Verhuurbaar",
-                            Type = "Premio Life"
-                        });
                 });
 
             modelBuilder.Entity("backend.Models.Voertuigregistratie", b =>
@@ -837,9 +678,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
                 {
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("Abonnement")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Huuraanvraag", b =>
@@ -870,8 +714,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.HasOne("backend.Rollen.BackOfficeMedewerker", "BackOffice")
-                        .WithMany()
-                        .HasForeignKey("BackOfficeId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "BackOfficeId");
 
                     b.HasOne("backend.Models.Rollen.Bedrijf", "Bedrijf")
                         .WithMany()
@@ -882,8 +726,8 @@ namespace backend.Migrations
                         .HasForeignKey("FrontOfficeId");
 
                     b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
-                        .WithMany()
-                        .HasForeignKey("HuurbeheerderId");
+                        .WithOne("User")
+                        .HasForeignKey("backend.Models.User", "HuurbeheerderId");
 
                     b.HasOne("backend.Rollen.ParticuliereHuurder", "ParticuliereHuurder")
                         .WithMany()
@@ -935,11 +779,14 @@ namespace backend.Migrations
                         .HasForeignKey("AbonnementId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("backend.Rollen.Huurbeheerder", null)
+                    b.HasOne("backend.Rollen.Huurbeheerder", "Huurbeheerder")
                         .WithMany("ZakelijkeHuurders")
-                        .HasForeignKey("HuurbeheerderId");
+                        .HasForeignKey("HuurbeheerderId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Abonnement");
+
+                    b.Navigation("Huurbeheerder");
                 });
 
             modelBuilder.Entity("backend.Models.Abonnement", b =>
@@ -957,9 +804,16 @@ namespace backend.Migrations
                     b.Navigation("HuurAanvragen");
                 });
 
+            modelBuilder.Entity("backend.Rollen.BackOfficeMedewerker", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("backend.Rollen.Huurbeheerder", b =>
                 {
                     b.Navigation("Abonnement");
+
+                    b.Navigation("User");
 
                     b.Navigation("ZakelijkeHuurders");
                 });

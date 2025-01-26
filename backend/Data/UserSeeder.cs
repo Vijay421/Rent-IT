@@ -44,6 +44,7 @@ namespace backend.Data
                 UserName = adminConfig["userName"] ?? throw new Exception("no userName field for admin in local_config.json"),
                 Email = adminConfig["email"] ?? throw new Exception("no email field for admin in local_config.json"),
                 EmailConfirmed = true,
+                PhoneNumber = "0673209453"
             };
             var result = await userManager.CreateAsync(admin, adminConfig["password"] ?? throw new Exception("no password field for admin in local_config.json"));
 
@@ -77,6 +78,7 @@ namespace backend.Data
                 Email = "buser@user.com",
                 EmailConfirmed = true,
                 BackOffice = backoffice,
+                PhoneNumber = "0632669086",
             };
             var result = await userManager.CreateAsync(bUser, "Qwerty123!");
 
@@ -107,6 +109,7 @@ namespace backend.Data
                 UserName = "z-user1",
                 Email = "zuser1@user.com",
                 EmailConfirmed = true,
+                PhoneNumber = "0652363193",
             };
             await userManager.CreateAsync(user1, "Qwerty123!");
             await userManager.AddToRoleAsync(user1, "zakelijke_huurder");
@@ -123,6 +126,7 @@ namespace backend.Data
                 UserName = "z-user2",
                 Email = "zuser2@google.com",
                 EmailConfirmed = true,
+                PhoneNumber = "0626485351"
             };
             await userManager.CreateAsync(user2, "Qwerty123!");
             await userManager.AddToRoleAsync(user2, "zakelijke_huurder");
@@ -139,8 +143,8 @@ namespace backend.Data
                 Name = "Google LLC",
                 Address = "Claude Debussylaan Etage, Md, Amsterdam 1082 15E 34",
                 KvK_nummer = 341985891111,
-                PhoneNumber = "423432423",
-                Domein = "google.com"
+                Domein = "google.com",
+                PhoneNumber = "0686880582"
             };
             context.Bedrijven.Add(bedrijf);
             await context.SaveChangesAsync();
@@ -161,6 +165,7 @@ namespace backend.Data
                 Email = "zbuser@user.com",
                 EmailConfirmed = true,
                 Huurbeheerder = zhuurder,
+                PhoneNumber = "0638107682"
             };
             var result = await userManager.CreateAsync(zbUser, "Qwerty123!");
 
@@ -274,6 +279,7 @@ namespace backend.Data
                 Email = "puser@user.com",
                 EmailConfirmed = true,
                 ParticuliereHuurder = pHuurder,
+                PhoneNumber = "0692545098"
             };
             var result = await userManager.CreateAsync(user, "Qwerty123!");
 
@@ -308,6 +314,7 @@ namespace backend.Data
                 Email = "fuser@user.com",
                 EmailConfirmed = true,
                 Frontoffice = frontoffice,
+                PhoneNumber = "0624705688"
             };
             var result = await userManager.CreateAsync(fUser, "Qwerty123!");
 

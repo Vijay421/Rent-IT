@@ -5,10 +5,10 @@ function ProfilePageZakelijkeBeheerder() {
 
     return (
         <ProfilePageBase>
-            <ProfilePageLinkButton link="/*" text="Instelligen aanpassen"/>
-            <ProfilePageLinkButton link="/*" text="Zakelijke huurders beheren"/>
+            <ProfilePageLinkButton link="/account-instellingen" text="Instellingen aanpassen"/>
             <ProfilePageLinkButton link="/abonnement" text="Abonnement aanmaken"/>
             <ProfilePageLinkButton link="/abonnementen" text="Abonnementen beheren"/>
+            <ProfilePageLinkButton link="/zb-huurgeschiedenis" text="Werknemersgeschiedenissen"/>
         </ProfilePageBase>
     );
 }

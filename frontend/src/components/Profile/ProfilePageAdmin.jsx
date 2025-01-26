@@ -5,7 +5,7 @@ function ProfilePageAdmin() {
 
     return (
         <ProfilePageBase>
-            <ProfilePageLinkButton link="/account-instellingen" text="Instelligen aanpassen"/>
+            <ProfilePageLinkButton link="/account-instellingen" text="Instellingen aanpassen"/>
             <ProfilePageLinkButton link="/medewerker-aanmaken" text="Medewerker aanmaken"/>
             <ProfilePageLinkButton link="/medewerkersoverzicht" text="Medewerkersoverzicht"/>
         </ProfilePageBase>
