@@ -58,7 +58,7 @@ export default function VehicleReview({ data, setVehicles }) {
                 Voertuig: data,
                 beschrijving: beschrijving,
                 datum: new Date(),
-                foto: foto ? new URL(`${process.env.PUBLIC_URL}/img/${foto}`) : null,
+                foto: foto,
                 status: "In behandeling",
             };
             try {

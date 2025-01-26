@@ -50,7 +50,6 @@ function SchademeldingOverview() {
                     <option value="ja">Geschiedenis</option>
                 </select>
                 <div>
-                    <button>Voeg nieuwe schadeclaim toe</button>
                     {sortedSchadeclaims.length === 0 ? (<p>Geen schadeclaims aanwezig</p>) :
                         sortedSchadeclaims.map((schadeclaim) => {
                             return (
