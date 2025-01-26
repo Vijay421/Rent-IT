@@ -25,12 +25,39 @@ namespace backend.Controllers
         [HttpGet("huuraanvragen")]
         public async Task<ActionResult<IEnumerable<Huuraanvraag>>> GetHuuraanvragen()
         {
-            var huuraanvraagen = await _context
+            var huuraanvragen = await _context
                 .Huuraanvragen
                 .Include(h => h.Voertuig)
                 .ToListAsync();
+            
+            if (huuraanvragen == null || !huuraanvragen.Any())
+            {
+                return NotFound("Geen huuraanvragen gevonden");
+            }
 
-            return Ok(huuraanvraagen);
+            return Ok(huuraanvragen.Select(h => new
+            {
+                Id = h.Id,
+                WettelijkeNaam = h.Wettelijke_naam,
+                Adres = h.Adresgegevens,
+                RijbewijsNummer = h.Rijbewijsnummer,
+                Reisaard = h.Reisaard,
+                VersteBestemming = h.Vereiste_bestemming,
+                VerwachteKm = h.Verwachte_km,
+        
+                Voertuig = new
+                {
+                    Naam = $"{h.Voertuig.Merk} {h.Voertuig.Type}",
+                    Soort = h.Voertuig.Soort,
+                    Status = h.Voertuig.Status,
+                    Prijs = h.Voertuig.Prijs,
+                },
+
+                StartDatum = h.Startdatum,
+                EindDatum = h.Einddatum,
+                Geaccepteerd = h.Geaccepteerd,
+                Reden = h.Reden
+            }));
         }
 
         [HttpPut("huuraanvragen-beoordelen/{id}")]

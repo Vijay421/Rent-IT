@@ -102,7 +102,24 @@ namespace backend.Controllers
                 return NotFound("Geen huuraanvragen gevonden voor de zakelijke huurders");
             }
 
-            return Ok(huuraanvragen);
+            return Ok(huuraanvragen.Select(h => new
+            {
+                WettelijkeNaam = h.Wettelijke_naam,
+                
+                Voertuig = new
+                {
+                    Naam = $"{h.Voertuig.Merk} {h.Voertuig.Type}",
+                    Kenteken = h.Voertuig.Kenteken,
+                    Kleur = h.Voertuig.Kleur,
+                    Aanschafjaar = h.Voertuig.Aanschafjaar,
+                    Soort = h.Voertuig.Soort,
+                    Prijs = h.Voertuig.Prijs,
+                },
+                
+                VerwachteKm = h.Verwachte_km,
+                Startdatum = h.Startdatum,
+                Einddatum = h.Einddatum,
+            }));
         }
     }
 }

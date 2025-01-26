@@ -42,11 +42,11 @@ export function DisplayAutoBox({ data, huurButtonStatus, onHuur }) {
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
                             Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
-                            Verzekering: €75<br/>
-                            Belasting: €37<br/>
-                            Benzine: €43<br/>
-                            Kilometervergoeding: €0.31/km<br/>
-                            Borg: €500
+                            Verzekering: €15.50 per dag<br/>
+                            Belasting: 21%<br/>
+                            Benzine: €50<br/>
+                            Kilometervergoeding: €0.23/km<br/>
+                            Borg: €400
                         </span>
                     )}
                 </p>
@@ -117,11 +117,11 @@ export function DisplayCaravanBox({ data, huurButtonStatus, onHuur }) {
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
                             Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
-                            Verzekering: €75<br/>
-                            Belasting: €37<br/>
-                            Benzine: €43<br/>
-                            Kilometervergoeding: €0.31/km<br/>
-                            Borg: €500
+                            Verzekering: €22 per dag<br/>
+                            Belasting: 21%<br/>
+                            Benzine: €0<br/>
+                            Kilometervergoeding: €0.23/km<br/>
+                            Borg: €750
                         </span>
                     )}
                 </p>
@@ -191,11 +191,11 @@ export function DisplayCamperBox({ data, huurButtonStatus, onHuur }) {
                     {showPopup && (
                         <span className='display-vehicle-huurprijs-popup__span'>
                             Huurprijs: €{data.prijs} (Aantal dagen x €{data.prijs})<br/>
-                            Verzekering: €75<br/>
-                            Belasting: €37<br/>
-                            Benzine: €43<br/>
-                            Kilometervergoeding: €0.31/km<br/>
-                            Borg: €500
+                            Verzekering: €0 (eigen verzekering)<br/>
+                            Belasting: 21%<br/>
+                            Benzine: €100<br/>
+                            Kilometervergoeding: €0.23/km<br/>
+                            Borg: €1500
                         </span>
                     )}
                 </p>
