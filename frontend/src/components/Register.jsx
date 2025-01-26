@@ -228,7 +228,6 @@ async function register(payload, setResponse, userRole) {
                     msg: 'de gebruiker is aangemaakt',
                     isError: false,
                 });
-                console.log(user);
             break;
 
             case 409:
