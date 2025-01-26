@@ -12,8 +12,13 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+    [Migration("20250126130739_added_seeding_Data")]
+    partial class added_seeding_Data
+========
     [Migration("20250126114212_added_seeding_data")]
     partial class added_seeding_data
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,43 +59,71 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "6aab6e2d-9878-4ff9-b013-4ef2f0dbb114",
+========
                             Id = "e5833647-c6ca-4d22-b71c-9fcde8c92f5f",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "e572e59e-621c-41cc-a866-a447bc407459",
+========
                             Id = "5a6caf4a-7bf0-45af-937e-e3bfca473fd4",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "5a5af28c-952c-41d3-880c-362e14e7922e",
+========
                             Id = "d559eb76-e33b-4422-ba35-bdae2ce3f582",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "9f78a6bc-b6e2-443a-9785-670a7b15d4e6",
+========
                             Id = "2b75332c-e0aa-4e46-9bce-94ecc82efae6",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "24ed2eeb-94f2-4120-a348-98ba00b68c39",
+========
                             Id = "da6d106c-9ddf-40d5-9995-eaeb5ba44bdd",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "bedrijf",
                             NormalizedName = "BEDRIJF"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "3a8c9cc5-31a2-4095-8c46-844e86eb00da",
+========
                             Id = "d0e14342-2199-48fb-aebe-b723f59b2e80",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
+<<<<<<<< HEAD:backend/Migrations/update/20250126130739_added_seeding_Data.Designer.cs
+                            Id = "2186960b-d8f0-48aa-89fd-71009e3494d6",
+========
                             Id = "010c0963-3f88-4d0a-b6f3-89d646e296b7",
+>>>>>>>> develop:backend/Migrations/20250126114212_added_seeding_data.Designer.cs
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -391,6 +424,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")

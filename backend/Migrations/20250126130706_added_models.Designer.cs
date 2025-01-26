@@ -12,7 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
+<<<<<<<< HEAD:backend/Migrations/update/20250126130706_added_models.Designer.cs
+    [Migration("20250126130706_added_models")]
+========
     [Migration("20250126114152_added_models")]
+>>>>>>>> develop:backend/Migrations/20250126114152_added_models.Designer.cs
     partial class added_models
     {
         /// <inheritdoc />
@@ -335,6 +339,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")

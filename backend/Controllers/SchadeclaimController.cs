@@ -101,13 +101,30 @@ public class SchadeclaimController : ControllerBase
 
         _context.Entry(voertuig).State = EntityState.Modified;
 
+        // Save picture first
+        // Set the file path (e.g., store in a folder named "uploads")
+        // var filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", file.FileName);
+
+        // // Create the uploads directory if it doesn't exist
+        // var directory = Path.GetDirectoryName(filePath);
+        // if (!Directory.Exists(directory))
+        // {
+        //     Directory.CreateDirectory(directory);
+        // }
+
+        // // Save the file to the specified path
+        // using (var stream = new FileStream(filePath, FileMode.Create))
+        // {
+        //     await file.CopyToAsync(stream);
+        // }
 
         var schadeclaim = new Schadeclaim
         {
             Voertuig = voertuig,
             Datum = schadeclaimDto.Datum,
             Beschrijving = schadeclaimDto.Beschrijving,
-            Foto = schadeclaimDto.Foto
+            Foto = schadeclaimDto.Foto,
+            Status = schadeclaimDto.Status
         };
 
         _context.Schadeclaims.Add(schadeclaim);
