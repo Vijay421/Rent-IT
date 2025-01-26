@@ -30,7 +30,23 @@ public class HuurController : ControllerBase
             .Include(h => h.Voertuig)
             .ToListAsync();
 
-        return Ok(huuraanvragen);
+        return Ok(huuraanvragen.Select(h => new
+        {
+            Voertuig = new
+            {
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kenteken = h.Voertuig.Kenteken,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Soort = h.Voertuig.Soort,
+                Status = h.Voertuig.Status,
+                Prijs = h.Voertuig.Prijs,
+                StartDatum = h.Startdatum,
+                EindDatum = h.Einddatum,
+            },
+            Wettelijke_naam = h.Wettelijke_naam
+        }));
     }
     
     
@@ -86,65 +102,102 @@ public class HuurController : ControllerBase
                 .ToListAsync();
         }
 
-        return Ok(huuraanvragen);
+        return Ok(huuraanvragen.Select(h => new
+        {
+            Id = h.Id,
+            ParticuliereHuurderId = h.ParticuliereHuurderId,
+            ZakelijkeHuurder = h.ZakelijkeHuurder,
+            VoertuigId = h.VoertuigId,
+            Wettelijke_naam = h.Wettelijke_naam,
+            Adresgegevens = h.Adresgegevens,
+            Reisaard = h.Reisaard,
+            Verwachte_km = h.Verwachte_km,
+            Vereiste_bestemming = h.Vereiste_bestemming,
+            Startdatum = h.Startdatum,
+            Einddatum = h.Einddatum,
+            Rijbewijsnummer = h.Rijbewijsnummer,
+            
+            Voertuig = new
+            {
+                Merk = h.Voertuig.Merk,
+                Type = h.Voertuig.Type,
+                Kleur = h.Voertuig.Kleur,
+                Aanschafjaar = h.Voertuig.Aanschafjaar,
+                Prijs = h.Voertuig.Prijs,
+            }
+        }));
     }
 
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHuuraanvraag(int id, Huuraanvraag updatedHuuraanvraag)
+public async Task<IActionResult> PutHuuraanvraag(int id, UpdateHuuraanvraagDTO dto)
+{
+    if (id != dto.Id)
     {
-        if (id != updatedHuuraanvraag.Id)
-        {
-            return BadRequest();
-        }
-
-        var currentHuuraanvraag = await _context.Huuraanvragen
-            .Include(h => h.Voertuig)
-            .FirstOrDefaultAsync(h => h.Id == id);
-
-        if (currentHuuraanvraag == null)
-        {
-            return NotFound("Huuraanvraag not found");
-        }
-
-        if (currentHuuraanvraag.VoertuigId != updatedHuuraanvraag.VoertuigId)
-        {
-            var previousVehicle = await _context.Voertuigen.FindAsync(currentHuuraanvraag.VoertuigId);
-            var newVehicle = await _context.Voertuigen.FindAsync(updatedHuuraanvraag.VoertuigId);
-
-            if (previousVehicle != null)
-            {
-                previousVehicle.Status = "Verhuurbaar";
-                _context.Voertuigen.Update(previousVehicle);
-            }
-
-            if (newVehicle != null)
-            {
-                newVehicle.Status = "Onverhuurbaar";
-                _context.Voertuigen.Update(newVehicle);
-            }
-        }
-
-        _context.Entry(currentHuuraanvraag).CurrentValues.SetValues(updatedHuuraanvraag);
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!HuuraanvraagExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent();
+        return BadRequest("ID mismatch");
     }
+
+    var currentHuuraanvraag = await _context.Huuraanvragen
+        .Include(h => h.Voertuig)
+        .FirstOrDefaultAsync(h => h.Id == id);
+
+    if (currentHuuraanvraag == null)
+    {
+        return NotFound("Huuraanvraag not found");
+    }
+
+    if (currentHuuraanvraag.VoertuigId != dto.VoertuigId)
+    {
+        var previousVehicle = await _context.Voertuigen.FindAsync(currentHuuraanvraag.VoertuigId);
+        var newVehicle = await _context.Voertuigen.FindAsync(dto.VoertuigId);
+
+        if (previousVehicle != null)
+        {
+            previousVehicle.Status = "Verhuurbaar";
+            _context.Voertuigen.Update(previousVehicle);
+        }
+
+        if (newVehicle != null)
+        {
+            newVehicle.Status = "Onverhuurbaar";
+            _context.Voertuigen.Update(newVehicle);
+        }
+    }
+
+    currentHuuraanvraag.ParticuliereHuurderId = dto.ParticuliereHuurderId;
+    currentHuuraanvraag.VoertuigId = dto.VoertuigId;
+    currentHuuraanvraag.Startdatum = dto.Startdatum;
+    currentHuuraanvraag.Einddatum = dto.Einddatum;
+    currentHuuraanvraag.Wettelijke_naam = dto.Wettelijke_naam;
+    currentHuuraanvraag.Adresgegevens = dto.Adresgegevens;
+    currentHuuraanvraag.Rijbewijsnummer = dto.Rijbewijsnummer;
+    currentHuuraanvraag.Reisaard = dto.Reisaard;
+    currentHuuraanvraag.Vereiste_bestemming = dto.Vereiste_bestemming;
+    currentHuuraanvraag.Verwachte_km = dto.Verwachte_km;
+    currentHuuraanvraag.Geaccepteerd = dto.Geaccepteerd;
+    currentHuuraanvraag.Reden = dto.Reden;
+    currentHuuraanvraag.VeranderDatum = dto.VeranderDatum;
+    currentHuuraanvraag.Gezien = dto.Gezien;
+
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!HuuraanvraagExists(id))
+        {
+            return NotFound();
+        }
+        else
+        {
+            throw;
+        }
+    }
+
+    return NoContent();
+}
+
 
 
     [Authorize(Roles = "particuliere_huurder, zakelijke_huurder")]

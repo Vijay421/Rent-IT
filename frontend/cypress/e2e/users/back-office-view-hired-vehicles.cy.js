@@ -3,6 +3,42 @@
 describe("Back office employees can view rented vehicles", () => {
     it('should let back office employees view a page that contains all the vehicles that are currently being rented/unavailable with their hired period and the renter', () => {
         cy.intercept("POST", "https://localhost:53085/auth/login?useCookies=true&useSessionCookies=true").as("loginRequest");
+        cy.intercept("GET", "https://localhost:53085/api/Voertuig").as("getVehicles");
+
+        cy.visit("http://localhost:5173/login");
+
+        cy.log("Login as backoffice medewerker");
+        cy.get("[data-cy='username']").type("b-user");
+        cy.get("[data-cy='password']").type("Qwerty123!");
+        cy.get("[data-cy='submit']").click();
+
+        cy.wait("@loginRequest").then((interception) => {
+            expect(interception.response.statusCode).to.equal(200);
+        });
+        cy.wait(1600);
+
+        cy.get("a[href='/voertuig-staten']").click();
+        cy.log("to /voertuig-staten page");
+        cy.wait("@getVehicles");
+        cy.wait(500);
+
+        cy.get("[data-cy='staten-voertuig-box']").children().then((children) => {
+            const VoertuigStatenLength = 10;
+
+            for (let i = 0; i < VoertuigStatenLength; i++) {
+                cy.get("[data-cy='staten-voertuig-box']")
+                    .children()
+                    .eq(i)
+                    .find("[data-cy='voertuig-status-select']")
+                    .select("Verhuurbaar");
+            }
+        });
+
+        // cy.wait(3000);
+
+        cy.get("button").contains("Logout").click();
+        cy.log("Logout of backoffice medewerker");
+
         cy.visit("http://localhost:5173/login");
 
         cy.log("Login as particuliere huurder");
@@ -46,6 +82,8 @@ describe("Back office employees can view rented vehicles", () => {
         });
         cy.wait(500);
 
+        cy.wait(4000);
+
         cy.get("button").contains("Profiel").click();
         cy.log("To /profiel page");
 
@@ -60,8 +98,8 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("button").contains("Huren").click();
         cy.log("To /huur-overzicht page");
 
-        cy.get("#date-picker-start").type("2025-02-01");
-        cy.get("#date-picker-end").type("2025-02-04");
+        cy.get("#date-picker-start").type("2025-08-21");
+        cy.get("#date-picker-end").type("2025-08-24");
 
         cy.get("#rental-vehicle-huur-box__button").first().click();
         cy.log("to /huur-indienen page");
@@ -88,12 +126,14 @@ describe("Back office employees can view rented vehicles", () => {
         });
         cy.wait(500);
 
+        cy.wait(4000);
+
         cy.get("button").contains("Logout").click();
         cy.log("Logout of particuliere huurder");
 
         cy.visit("http://localhost:5173/login");
 
-        cy.log("Login as back office medewerker");
+        cy.log("Login as backoffice medewerker");
         cy.get("[data-cy='username']").type("b-user");
         cy.get("[data-cy='password']").type("Qwerty123!");
         cy.get("[data-cy='submit']").click();
@@ -107,9 +147,9 @@ describe("Back office employees can view rented vehicles", () => {
         cy.log("to /verhuurde-voertuigen page");
 
         cy.get(".verhuurde-voertuig-box__div").should("have.length", 1);
-        //
-        cy.get("#verhuurde-ophaaldatum__input").type("2025-02-01");
-        cy.get("#verhuurde-inleverdatum__input").type("2025-02-04");
+
+        cy.get("#verhuurde-ophaaldatum__input").type("2025-04-15");
+        cy.get("#verhuurde-inleverdatum__input").type("2025-10-25");
 
         cy.get("[data-cy='vehicle']").should("have.length", 1);
 
@@ -129,10 +169,10 @@ describe("Back office employees can view rented vehicles", () => {
         cy.get("#verhuurde-reset-filters__button").click();
 
         cy.get("#verhuurde-voertuigtype__select").select("Auto");
-        cy.get("[data-cy='vehicle']").should("have.length", 0);
+        cy.get("[data-cy='vehicle']").should("have.length", 1);
 
         cy.get("#verhuurde-voertuigtype__select").select("Camper");
-        cy.get("[data-cy='vehicle']").should("have.length", 1);
+        cy.get("[data-cy='vehicle']").should("have.length", 0);
 
 
         cy.get("#verhuurde-voertuigtype__select").select("Caravan");
@@ -143,5 +183,23 @@ describe("Back office employees can view rented vehicles", () => {
 
 
         cy.get("#verhuurde-download_button").click();
+
+        cy.get("button").contains("Profiel").click();
+
+        cy.get("a[href='/voertuig-staten']").click();
+        cy.log("to /voertuig-staten page");
+        cy.wait("@getVehicles");
+
+        cy.get("[data-cy='staten-voertuig-box']").children().then((children) => {
+            const VoertuigStatenLength = 10;
+
+            for (let i = 0; i < VoertuigStatenLength; i++) {
+                cy.get("[data-cy='staten-voertuig-box']")
+                    .children()
+                    .eq(i)
+                    .find("[data-cy='voertuig-status-select']")
+                    .select("Verhuurbaar");
+            }
+        });
     })
 })

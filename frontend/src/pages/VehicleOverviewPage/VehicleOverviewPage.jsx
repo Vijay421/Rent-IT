@@ -94,13 +94,17 @@ function Vehicle({ data, setVehicles }) {
             <p>{data.soort}</p>
         </div>
 
-        <div className={pageStyles.vehicleComment}>
-            <p className={`${pageStyles.label} ${pageStyles.labelFirst}`}>Opmerking</p>
-            <p>{data.opmerking === null || data.opmerking.length === 0 ? "Geen." : data.opmerking}</p>
-        </div>
+            <div className={pageStyles.vehicleComment}>
+                <p className={`${pageStyles.label}`}>Status</p>
+                <p>{data.status === "Reparatie" ? "In reparatie" : data.status}</p>
 
-        <div className={pageStyles.vehicleCosts}>
-            <p className={`${pageStyles.vehicleCost} ${pageStyles.label} ${pageStyles.labelFirst}`}>Kosten</p>
+                <p className={`${pageStyles.label}`}>Opmerking</p>
+                <p>{data.opmerking === null || data.opmerking.length === 0 ? "Geen." : data.opmerking}</p>
+
+            </div>
+
+            <div className={pageStyles.vehicleCosts}>
+                <p className={`${pageStyles.vehicleCost} ${pageStyles.label} ${pageStyles.labelFirst}`}>Kosten</p>
             <p className="">€{data.prijs.toFixed(2)}</p>
         </div>
 

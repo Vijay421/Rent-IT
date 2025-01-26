@@ -24,7 +24,7 @@ describe("Back office employees can see vehicle states", () => {
         cy.wait("@getVehicles");
 
 
-        cy.intercept("PUT", "https://localhost:53085/api/Voertuig/*").as("updateStatusRequest");
+        cy.intercept("PUT", "https://localhost:53085/api/Voertuig/**").as("updateStatusRequest");
 
         cy.log("Set all vehicle statuses back to Verhuurbaar");
         cy.get("[data-cy='staten-voertuig-box']").children().eq(0).find("[data-cy='voertuig-status-select']").select("Verhuurbaar");
@@ -49,13 +49,26 @@ describe("Back office employees can see vehicle states", () => {
 
         cy.log('Set staat filter to Beschikbaar');
         cy.get("[data-cy='staat-filter-select']").select("Beschikbaar");
-        cy.wait(5000);
+        cy.wait(3000);
         cy.get("[data-cy='voertuig-status-select']")
             .each(element => {
                 cy.wrap(element)
                 .invoke('val')
                 .then(value => expect(value).to.equal("Verhuurbaar"));
             });
+
+        cy.log("Ensure at least one vehicle is set to Onverhuurbaar");
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(1)
+            .find("[data-cy='voertuig-status-select']")
+            .select("Onverhuurbaar");
+
+
+        cy.wait(3000);
+        cy.wait("@updateStatusRequest").then((interception) => {
+            expect(interception.response.statusCode).to.equal(200);
+        });
 
         cy.log('Set staat filter to Verhuurd');
         cy.get("[data-cy='staat-filter-select']").select("Verhuurd");
@@ -70,25 +83,81 @@ describe("Back office employees can see vehicle states", () => {
         cy.log('Reset all filters');
         cy.get("[data-cy='staten-reset-filter-button']").click();
 
-        cy.log('Set vehicle 4, 5 statuses to Reparatie and vehicle 6 status to geblokkeerd');
-        cy.get("[data-cy='staten-voertuig-box']").children().eq(3).find("[data-cy='voertuig-status-select']").select("Reparatie");
+        cy.log("Set vehicle 4 status to Reparatie and add a comment");
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(3)
+            .find("[data-cy='voertuig-status-select']")
+            .select("Geblokkeerd");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(3)
+            .find("[data-cy='voertuig-comment-textarea']")
+            .type("Vehicle needs major repairs");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(3)
+            .find("[data-cy='voertuig-save-button']")
+            .click();
+
+        cy.wait(3000);
+        cy.wait("@updateStatusRequest").then((interception) => {
+            expect(interception.response.statusCode).to.equal(200);
+        });
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(3)
+            .find("[data-cy='voertuig-status-select']")
+            .should("have.value", "Geblokkeerd");
+
+
+        cy.log("Set vehicle 5 status to Reparatie and vehicle 6 status to Geblokkeerd");
         cy.get("[data-cy='staten-voertuig-box']").children().eq(4).find("[data-cy='voertuig-status-select']").select("Reparatie");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(4)
+            .find("[data-cy='voertuig-comment-textarea']")
+            .type("Vehicle needs major repairs");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(4)
+            .find("[data-cy='voertuig-save-button']")
+            .click();
+
+
         cy.get("[data-cy='staten-voertuig-box']").children().eq(5).find("[data-cy='voertuig-status-select']").select("Geblokkeerd");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(5)
+            .find("[data-cy='voertuig-comment-textarea']")
+            .type("Vehicle needs major repairs");
+
+        cy.get("[data-cy='staten-voertuig-box']")
+            .children()
+            .eq(5)
+            .find("[data-cy='voertuig-save-button']")
+            .click();
         cy.wait("@updateStatusRequest");
+        cy.wait(3000);
 
         cy.log("Set staat filter to In reparatie and check if amount of vehicles is 2");
         cy.get("[data-cy='staat-filter-select']").select("In reparatie");
-        cy.wait("@updateStatusRequest");
+        cy.get("[data-cy='voertuig-status-select']").should("exist");  // This will retry until found
         cy.get("[data-cy='voertuig-status-select']")
             .each(element => {
-                cy.wrap(element)
-                .invoke('val')
-                .then(value => expect(value).to.equal("Reparatie"));
+                cy.wrap(element).invoke('val').then(value => {
+                    expect(value).to.equal("Reparatie");
+                });
             });
 
         cy.log("Set staat filter to Geblokkeerd and check if amount of vehicles is 1");
         cy.get("[data-cy='staat-filter-select']").select("Geblokkeerd");
-        cy.wait("@updateStatusRequest");
         cy.get("[data-cy='voertuig-status-select']")
             .each(element => {
                 cy.wrap(element)

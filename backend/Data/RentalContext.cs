@@ -44,6 +44,16 @@ namespace backend.Data
                 .HasForeignKey(z => z.AbonnementId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<Huurbeheerder>()
+                .HasMany(z => z.Abonnement)
+                .WithOne(a => a.Huurbeheerder)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Huurbeheerder>()
+                .HasMany(z => z.ZakelijkeHuurders)
+                .WithOne(z => z.Huurbeheerder)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Huuraanvraag>()
                 .HasOne(h => h.Voertuig)
                 .WithMany(v => v.HuurAanvragen)
@@ -52,15 +62,15 @@ namespace backend.Data
 
             /* Only uncomment the following when adding, removing or changing seeding data. Otherwise duplicate data will be created when migrating.*/
 
-/*
-            var roleConfig = new RoleConfiguration();
-            modelBuilder.ApplyConfiguration(roleConfig);
+             /*
+                        var roleConfig = new RoleConfiguration();
+                        modelBuilder.ApplyConfiguration(roleConfig);
 
-            var voertuigSeeder = new VoertuigSeeder();
-            voertuigSeeder.Seed(modelBuilder);
-            var abonnementSeeder = new AbonnementSeeder();
-            abonnementSeeder.Seed(modelBuilder);
-*/
+                        var voertuigSeeder = new VoertuigSeeder();
+                        voertuigSeeder.Seed(modelBuilder);
+                        var abonnementSeeder = new AbonnementSeeder();
+                        abonnementSeeder.Seed(modelBuilder);
+            */
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -72,7 +82,10 @@ namespace backend.Data
                 var dbUrl = _configuration.GetSection("db")["url"];
                 if (dbUrl != null)
                 {
-                    optionsBuilder.UseSqlServer(dbUrl);
+                    optionsBuilder
+                        .UseSqlServer(dbUrl);
+/*                        .LogTo(Console.WriteLine, LogLevel.Information)
+                        .EnableSensitiveDataLogging();*/
                 }
             }
         }

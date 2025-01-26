@@ -4,48 +4,46 @@ import { useState, useEffect } from "react";
 
 function FrontofficeExpenditure() {
 
-    // Mock data for vehicles
-    const mockVehicles = [
-        { id: 1, prijs: 25000, merk: "Toyota", type: "Corolla", kenteken: "AB-123-CD" },
-        { id: 2, prijs: 18000, merk: "Honda", type: "Civic", kenteken: "EF-456-GH" },
-        { id: 3, prijs: 30000, merk: "BMW", type: "320i", kenteken: "IJ-789-KL" },
-        { id: 4, prijs: 22000, merk: "Volkswagen", type: "Golf", kenteken: "MN-012-OP" },
-    ];
-
-    // Mock data for customer (assuming it is related to vehicle)
-    const mockCustomerData = [
-        { id: 1, naam: "John Doe" },
-        { id: 2, naam: "Alice Johnson" },
-        { id: 3, naam: "Bob White" },
-        { id: 4, naam: "Charlie Green" },
-    ];
-
-    const [vehicles, setVehicles] = useState([]);
-    const [customerData, setCustomerData] = useState(mockCustomerData);
+    const [uitgave, setUitgave] = useState([]);
 
     useEffect(() => {
-        setVehicles(mockVehicles);
+        fetchGeaccepteerdeHuuraanvragen();
     }, []);
 
-    // Sort the vehicles by price
-    const sortedVehicles = [...vehicles].sort((a, b) => a.prijs - b.prijs);
+    async function fetchGeaccepteerdeHuuraanvragen() {
+        try {
+            const response = await fetch('https://localhost:53085/api/FrontOffice/voertuig_uitgave', {
+                method: 'GET',
+
+                // TODO: change to 'same-origin' when in production.
+                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                headers: {
+                    'content-type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            setUitgave(data);
+            
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
 
     return (
         <main className="content">
             <div className="divMain">
                 <div>
                     <h1 className="divMain__text__FrontOffice">Voertuig uitgave</h1>
-                    {sortedVehicles.length === 0 ? (
-                        <p>Geen voertuigen aanwezig</p>
+                    {uitgave.length === 0 ? (
+                        <p className="voertuigTab__empty-text">Geen voertuigen aanwezig</p>
                     ) : (
-                        sortedVehicles.map((vehicle) => {
-                            const customer = customerData.find((cust) => cust.id === vehicle.id);
-
+                        uitgave.map((u) => {
                             return (
                                 <ExpenditureReview
-                                    key={vehicle.id}
-                                    vehicle={vehicle}
-                                    customer={customer}
+                                    key={u.id}
+                                    uitgave={u}
+                                    setUitgave={setUitgave}
                                 />
                             );
                         })

@@ -205,26 +205,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Voertuigregistraties",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VoertuigId = table.Column<int>(type: "int", nullable: false),
-                    Inname = table.Column<DateOnly>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Voertuigregistraties", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Voertuigregistraties_Voertuigen_VoertuigId",
-                        column: x => x.VoertuigId,
-                        principalTable: "Voertuigen",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Abonnementen",
                 columns: table => new
                 {
@@ -247,7 +227,36 @@ namespace backend.Migrations
                         name: "FK_Abonnementen_Huurbeheerders_HuurbeheerderId",
                         column: x => x.HuurbeheerderId,
                         principalTable: "Huurbeheerders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Voertuigregistraties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoertuigId = table.Column<int>(type: "int", nullable: false),
+                    Inname = table.Column<DateOnly>(type: "date", nullable: true),
+                    HuuraanvraagId = table.Column<int>(type: "int", nullable: false),
+                    Omschrijving = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Voertuigregistraties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Voertuigregistraties_Huuraanvragen_HuuraanvraagId",
+                        column: x => x.HuuraanvraagId,
+                        principalTable: "Huuraanvragen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Voertuigregistraties_Voertuigen_VoertuigId",
+                        column: x => x.VoertuigId,
+                        principalTable: "Voertuigen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -462,7 +471,9 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_BackOfficeId",
                 table: "AspNetUsers",
-                column: "BackOfficeId");
+                column: "BackOfficeId",
+                unique: true,
+                filter: "[BackOfficeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_BedrijfId",
@@ -477,7 +488,9 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_HuurbeheerderId",
                 table: "AspNetUsers",
-                column: "HuurbeheerderId");
+                column: "HuurbeheerderId",
+                unique: true,
+                filter: "[HuurbeheerderId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParticuliereHuurderId",
@@ -519,6 +532,11 @@ namespace backend.Migrations
                 column: "VoertuigId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Voertuigregistraties_HuuraanvraagId",
+                table: "Voertuigregistraties",
+                column: "HuuraanvraagId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Voertuigregistraties_VoertuigId",
                 table: "Voertuigregistraties",
                 column: "VoertuigId");
@@ -553,9 +571,6 @@ namespace backend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Huuraanvragen");
-
-            migrationBuilder.DropTable(
                 name: "Schadeclaims");
 
             migrationBuilder.DropTable(
@@ -568,7 +583,7 @@ namespace backend.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Voertuigen");
+                name: "Huuraanvragen");
 
             migrationBuilder.DropTable(
                 name: "BackOfficeMedewerkers");
@@ -577,10 +592,13 @@ namespace backend.Migrations
                 name: "FrontOfficeMedewerkers");
 
             migrationBuilder.DropTable(
+                name: "ZakelijkeHuurders");
+
+            migrationBuilder.DropTable(
                 name: "ParticuliereHuurders");
 
             migrationBuilder.DropTable(
-                name: "ZakelijkeHuurders");
+                name: "Voertuigen");
 
             migrationBuilder.DropTable(
                 name: "Abonnementen");

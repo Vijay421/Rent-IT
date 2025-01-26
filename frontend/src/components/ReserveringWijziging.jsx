@@ -74,7 +74,6 @@ export default function ReserveringWijziging() {
     }
 
     function handleVehicleHuurButtonClick(vehicle) {
-        console.log(vehicle);
         setSelectedVehicle(vehicle);
         document.getElementById("wijziging-voertuigen-list__div").style.display = 'none';
         document.getElementById("wijziging-voertuig-kosten__div").style.display = 'flex';
@@ -90,7 +89,6 @@ export default function ReserveringWijziging() {
         const statusText = document.getElementById('confirmation-button-box-status__span');
 
         if (!form.current.checkValidity()) {
-            console.log("not valid");
             statusText.textContent = "Formulier is niet geldig. Controleer uw invoer.";
             statusText.style.color = "red";
             statusText.style.display = "block";

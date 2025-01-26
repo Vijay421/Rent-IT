@@ -5,17 +5,17 @@ import SchademeldingReview from "./SchademeldingReview.jsx";
 
 function SchademeldingOverview() {
     const { userRole } = useContext(UserContext);
-    const [isGeschiedenis, setView] = useState("nee");
-    const [schadeclaims, setSchadeclaims] = useState([]);
+    const {view, setView} = useState([]);
     
+    const [vehicles, setVehicles] = useState([]);
     if (userRole === null) {
         return <Navigate to='/'/>
     }
     useEffect(() => {
         async function fetchVehicles() {
-            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie & Schadeclaims)
+            // TO:DO Voertuigen ophalen die geregistreerd zijn met inname id (Tabel VoertuigRegistratie)
             try {
-                const response = await fetch('https://localhost:53085/api/Schadeclaim', {
+                const response = await fetch('https://localhost:53085/api/Voertuig', {
                     method: 'GET',
 
                     // TODO: change to 'same-origin' when in production.
@@ -25,8 +25,8 @@ function SchademeldingOverview() {
                     },
                 });
                 const data = await response.json();
-                setSchadeclaims(data);
-                console.log(userRole);
+                setVehicles(data);
+                
             }
             catch (e) {
                 console.error(e);
@@ -34,34 +34,38 @@ function SchademeldingOverview() {
         }
         fetchVehicles();
     }, []);
-    // const filteredSchadeclaims = schadeclaims.filter((schadeclaim) => {
-    //     if (isGeschiedenis !== "ja" && schadeclaim.status.toLowerCase() !== "verhuurbaar") return false;
-    //     return true;
-    // });
-    const sortedSchadeclaims = schadeclaims.sort((a, b) => {return a.prijs - b.prijs;});
+
+    const sortedVehicles = vehicles.sort((a, b) => {return a.prijs - b.prijs;});
 
     return (
         <main className="content">
             <div className="divMain">
-                <h1 className="divMain__text__FrontOffice">Schadeclaims</h1>
-                <select id="select-input" value={"Selecteer"} onChange={(e) => setView(e.target?.value)}>
-                    <option>Selecteer</option>
-                    <option value="nee">Openstaand</option>
-                    <option value="ja">Geschiedenis</option>
+                <h1 className="divMain__text__FrontOffice">Frontoffice inname</h1>
+                <label className='label' htmlFor="select-input">Possible values:</label>
+                <select id="select-input" onChange={(e) => setView(e.target?.value)}>
+                    <option>Not defined</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                 </select>
                 <div>
-                    <button>Voeg nieuwe schadeclaim toe</button>
-                    {sortedSchadeclaims.length === 0 ? (<p>Geen schadeclaims aanwezig</p>) :
-                        sortedSchadeclaims.map((schadeclaim) => {
-                            return (
-                                <SchademeldingReview
-                                    key={schadeclaim.id}
-                                    data={schadeclaim}
-                                    setSchadeclaims={setSchadeclaims}
-                                />
-                            );
-                        })
-                    }
+                    {(() => {
+                        switch(view){
+                            case(0):
+                                {sortedVehicles.length === 0 ? (<p>Geen voertuigen aanwezig</p>) :
+                                        sortedVehicles.map((vehicle) => {
+                                            return (
+                                                <SchademeldingReview
+                                                    key={vehicle.id}
+                                                    data={vehicle}
+                                                />
+                                            );
+                                        })
+                                    }
+
+                            case(1):
+                        }
+                    })}
+                    
                 </div>
             </div>
         </main>
