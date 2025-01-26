@@ -9,25 +9,33 @@ export default function VehicleReview({ data, setVehicles }) {
     const [messageType, setMessageType] = useState("");
 
     async function voertuigAccepteren(){
-        try {
-            const response = await fetch(`https://localhost:53085/api/Schadeclaim/voertuig-accepteren/${data.id}`, {
-                method: 'PUT',
-        
-                // TODO: change to 'same-origin' when in production.
-                credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-                headers: {
-                    'content-type': 'application/json'
-                },
-            });
-            if(response.ok){
-                alert("Voertuig is geaccepteerd!");
-                updateVehicles(data.id, "Verhuurbaar");
-                downloadFile(`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`, "bevestigingsemail.txt")
-            } 
-            // else alert(response);
-        }
-        catch (e) {
-            alert(e);
+        if (beschrijving.length > 4) {
+            try {
+                const response = await fetch(`https://localhost:53085/api/Schadeclaim/voertuig-accepteren/${data.id}`, {
+                    method: 'PUT',
+
+                    // TODO: change to 'same-origin' when in production.
+                    credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                });
+                if(response.ok){
+                    alert("Voertuig is geaccepteerd!");
+                    updateVehicles(data.id, "Verhuurbaar");
+                    downloadFile(`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`, "bevestigingsemail.txt");
+                    setConfirmationMessage("Voertuig is geaccepteerd!");
+                    setMessageType('success');
+
+                }
+                // else alert(response);
+            }
+            catch (e) {
+                alert(e);
+            }
+        } else {
+            setConfirmationMessage("De beschrijving moet langer zijn dan 4 characters.");
+            setMessageType('error');
         }
     }
 
@@ -67,6 +75,7 @@ export default function VehicleReview({ data, setVehicles }) {
                 alert("Voertuig is succcesvol geweigerd!");
 
                 updateVehicles(data.id, "Onverhuurbaar");
+                downloadFile(`Dit hoort een email te zijn met informatie over de ${data.merk} ${data.type} - ${data.kenteken}`, "bevestigingsemail.txt");
             }
             catch (e) {
                 window.alert(e);
