@@ -12,6 +12,14 @@ namespace backend.Models
         [Required]
         public required int VoertuigId { get; set; }
 
-        public DateOnly Inname {get;set;}
+        public DateOnly? Inname {get;set;}
+
+        [Required]
+        public required int HuuraanvraagId { get; set; }
+
+        public Huuraanvraag? Huuraanvraag { get; set; }
+
+        [Required]
+        public string Omschrijving { get; set;}
     }
 }

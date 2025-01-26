@@ -62,7 +62,6 @@ export default function VehicleCreateAndUpdate() {
             eindDatum: endDate.length === 0 ? null : endDate,
         };
 
-        console.log("payload", payload);
 
         await save(payload, mode, setFormStatus, vehicle);
     }

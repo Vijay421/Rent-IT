@@ -23,7 +23,7 @@ export default function Reservering() {
         });
         const data = await response.json();
         setUserData(data);
-        console.log(data);
+        
     }
 
     function handleDelete(id) {
