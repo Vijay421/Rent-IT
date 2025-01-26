@@ -164,7 +164,6 @@ async function getUserClaims() {
 
     try {
         const response = await fetch('https://localhost:53085/api/User/claims', request);
-        console.log(response);
         return await response.json();
     } catch (error) {
         console.error('error when sending user claims request, or parsing the response:', error);

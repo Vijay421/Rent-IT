@@ -9,7 +9,6 @@ export default function NotificationsPage() {
     useEffect(() => {
         const getData = async () => {
             const receivedNotifications = await getNotifications();
-            console.log(receivedNotifications);
             setNotifications(receivedNotifications);
         };
 

@@ -143,14 +143,17 @@
 
 @media only screen and (max-width: 700px) {
     .Content {
+        margin: 0 auto;
         flex-direction: column;
         width: 100vw;
+        height: 1000px;
     }
 
     .MainDivLeft,
     .MainDivRight {
         height: 45%;
         width: 90%;
+        margin: 0 auto;
     }
 
     .ParticulierDiv {

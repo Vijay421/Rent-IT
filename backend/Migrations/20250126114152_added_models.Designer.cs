@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250124104340_added_models")]
+    [Migration("20250126114152_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
@@ -518,13 +518,22 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("Inname")
+                    b.Property<int>("HuuraanvraagId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly?>("Inname")
                         .HasColumnType("date");
+
+                    b.Property<string>("Omschrijving")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HuuraanvraagId");
 
                     b.HasIndex("VoertuigId");
 
@@ -752,11 +761,19 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voertuigregistratie", b =>
                 {
+                    b.HasOne("backend.Models.Huuraanvraag", "Huuraanvraag")
+                        .WithMany()
+                        .HasForeignKey("HuuraanvraagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()
                         .HasForeignKey("VoertuigId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Huuraanvraag");
 
                     b.Navigation("Voertuig");
                 });

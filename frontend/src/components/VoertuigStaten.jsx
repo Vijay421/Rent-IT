@@ -125,7 +125,6 @@ export default function VoertuigStaten() {
                 throw new Error("Kon het voertuig niet updaten");
             }
 
-            console.log("Status updated");
             setOptimisticStatuses((prevStatuses) => ({
                 ...prevStatuses,
                 [item.id]: status,
