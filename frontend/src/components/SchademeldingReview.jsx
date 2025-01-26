@@ -1,9 +1,13 @@
+/*eslint-disable*/
+
 import { useState } from "react";
 import "../styles/SchademeldingReview.css";
 import mock from '../assets/toyota-corolla.png';
+import {useNavigate} from "react-router-dom";
 
 export default function SchadeclaimReview({ data, setSchadeclaims }) {
-    const [status, setStatus] = useState("");
+    const navigate = useNavigate();
+    const [status, setStatus] = useState("In behandeling");
     const [opmerkingen, setOpmerkingen] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [messageType, setMessageType] = useState("");
@@ -28,6 +32,8 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                 alert("Voertuig is succcesvol geweigerd!");
             }
             catch (e) {
+                console.log('error')
+                console.log(e)
                 window.alert(e);
             }
         }
@@ -38,12 +44,13 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
     }
     async function handleUpdate(){
         const schadeClaim = {
-            opmerkingen: opmerkingen,
+            beschrijving: opmerkingen,
             status: status,
         };
+
         try{
             setConfirmationMessage("");
-            await updateSchadeclaim(schadeClaim);
+            await updateSchadeclaim(schadeClaim, data);
             alert("Schadeclaim is geupdate!");
             updateSchadeclaimsLijst(data.id);
         }
@@ -81,9 +88,9 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
                 {/* {`${process.env.PUBLIC_URL}/img/${data.foto}`} */}
                 <div className="voertuigTab__inputs">
                     <select onChange={(e) => setStatus(e.target.value)}>
-                        <option value="0">In behandeling</option>
-                        <option value="1">In reparatie</option>
-                        <option value="2">Afgehandeld</option>
+                        <option value="In behandeling">In behandeling</option>
+                        <option value="In reparatie">In reparatie</option>
+                        <option value="Afgehandeld">Afgehandeld</option>
                     </select>
                     
                     <input
@@ -114,19 +121,26 @@ export default function SchadeclaimReview({ data, setSchadeclaims }) {
 * @param {Object} payload 
 * @returns {Object}
 */
-async function updateSchadeclaim(payload){
-    const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
-        method: 'PUT',
-        
-        // TODO: change to 'same-origin' when in production.
-        credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(payload),
+async function updateSchadeclaim(payload, data){
+    try {
+        const response = await fetch(`https://localhost:53085/api/Schadeclaim/update/${data.id}`, {
+            method: 'PUT',
 
-    });
-    return await response.json();
+            // TODO: change to 'same-origin' when in production.
+            credentials: 'include', // 'credentials' has to be defined, otherwise the auth cookie will not be send in other fetch requests.
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        const newData = await response.json();
+        console.log(newData);
+
+        return newData;
+    } catch(e) {
+        throw e;
+    }
 }
 async function createSchadeclaim(payload) {
     const response = await fetch('https://localhost:53085/api/Schadeclaim/create', {
