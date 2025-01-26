@@ -91,7 +91,7 @@ export default function ZbRentHistory() {
             const costs = calculateCosts(record);
             return [
                 record.wettelijkeNaam,
-                record.voertuig?.merk + " " + record.voertuig?.type,
+                record.voertuig?.naam,
                 record.voertuig?.kenteken,
                 record.voertuig?.kleur,
                 record.voertuig?.aanschafjaar,
