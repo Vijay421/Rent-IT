@@ -51,43 +51,43 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6aab6e2d-9878-4ff9-b013-4ef2f0dbb114",
+                            Id = "47bff041-884b-468a-b6eb-6934e1f61ca4",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e572e59e-621c-41cc-a866-a447bc407459",
+                            Id = "57770f5d-db4f-4126-b491-c8dcb800974a",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "5a5af28c-952c-41d3-880c-362e14e7922e",
+                            Id = "93f9681a-32d2-46e0-8749-c302fd5b33c8",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "9f78a6bc-b6e2-443a-9785-670a7b15d4e6",
+                            Id = "4bc968f8-e966-494f-8b5b-09de6915b792",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "24ed2eeb-94f2-4120-a348-98ba00b68c39",
+                            Id = "4c61051d-f202-484e-aaf8-2c2ba6c808e7",
                             Name = "bedrijf",
                             NormalizedName = "BEDRIJF"
                         },
                         new
                         {
-                            Id = "3a8c9cc5-31a2-4095-8c46-844e86eb00da",
+                            Id = "0a561921-1446-4e47-9ff4-6e18c3848ff1",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "2186960b-d8f0-48aa-89fd-71009e3494d6",
+                            Id = "fe2bee2b-27fe-413f-a5f1-1d8efd249d22",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -3367,13 +3367,22 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("Inname")
+                    b.Property<int>("HuuraanvraagId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly?>("Inname")
                         .HasColumnType("date");
+
+                    b.Property<string>("Omschrijving")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HuuraanvraagId");
 
                     b.HasIndex("VoertuigId");
 
@@ -3601,11 +3610,19 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voertuigregistratie", b =>
                 {
+                    b.HasOne("backend.Models.Huuraanvraag", "Huuraanvraag")
+                        .WithMany()
+                        .HasForeignKey("HuuraanvraagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Models.Voertuig", "Voertuig")
                         .WithMany()
                         .HasForeignKey("VoertuigId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Huuraanvraag");
 
                     b.Navigation("Voertuig");
                 });

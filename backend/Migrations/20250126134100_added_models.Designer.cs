@@ -12,11 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-<<<<<<<< HEAD:backend/Migrations/update/20250126130706_added_models.Designer.cs
-    [Migration("20250126130706_added_models")]
-========
-    [Migration("20250126114152_added_models")]
->>>>>>>> develop:backend/Migrations/20250126114152_added_models.Designer.cs
+    [Migration("20250126134100_added_models")]
     partial class added_models
     {
         /// <inheritdoc />
