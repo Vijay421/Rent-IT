@@ -90,7 +90,7 @@ export default function ZbRentHistory() {
         const rows = filteredHuuraanvragen.map((record) => {
             const costs = calculateCosts(record);
             return [
-                record.wettelijke_naam,
+                record.wettelijkeNaam,
                 record.voertuig?.merk + " " + record.voertuig?.type,
                 record.voertuig?.kenteken,
                 record.voertuig?.kleur,
@@ -116,7 +116,7 @@ export default function ZbRentHistory() {
     };
 
     const filteredHuuraanvragen = data.filter((emp) => {
-        if (werknemer !== 'alles' && emp.wettelijke_naam !== werknemer) {
+        if (werknemer !== 'alles' && emp.wettelijkeNaam !== werknemer) {
             return false;
         }
         if (startDatum && emp.startdatum < startDatum) {
@@ -144,7 +144,7 @@ export default function ZbRentHistory() {
                         >
                             <option value="alles">Alles</option>
                             {
-                                [...new Set(data.map((emp) => emp.wettelijke_naam))].map((uniqueName, key) => (
+                                [...new Set(data.map((emp) => emp.wettelijkeNaam))].map((uniqueName, key) => (
                                     <option key={key} value={uniqueName}>{uniqueName}</option>
                                 ))
                             }
