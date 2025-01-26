@@ -123,7 +123,8 @@ public class SchadeclaimController : ControllerBase
             Voertuig = voertuig,
             Datum = schadeclaimDto.Datum,
             Beschrijving = schadeclaimDto.Beschrijving,
-            Foto = schadeclaimDto.Foto
+            Foto = schadeclaimDto.Foto,
+            Status = schadeclaimDto.Status
         };
 
         _context.Schadeclaims.Add(schadeclaim);

@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20250124104356_added_seeding_data")]
-    partial class added_seeding_data
+    [Migration("20250126130739_added_seeding_Data")]
+    partial class added_seeding_Data
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,43 +54,43 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f9483e96-966c-49e1-9e5f-93675503abcf",
+                            Id = "6aab6e2d-9878-4ff9-b013-4ef2f0dbb114",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0288980e-ee1b-45ac-af20-bc25d2a7a71d",
+                            Id = "e572e59e-621c-41cc-a866-a447bc407459",
                             Name = "backoffice_medewerker",
                             NormalizedName = "BACKOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "56dec7d1-19f2-4b84-913c-7665e1863e0c",
+                            Id = "5a5af28c-952c-41d3-880c-362e14e7922e",
                             Name = "frontoffice_medewerker",
                             NormalizedName = "FRONTOFFICE_MEDEWERKER"
                         },
                         new
                         {
-                            Id = "82e1671e-e1aa-44af-8e31-1b7a427d3658",
+                            Id = "9f78a6bc-b6e2-443a-9785-670a7b15d4e6",
                             Name = "zakelijke_beheerder",
                             NormalizedName = "ZAKELIJKE_BEHEERDER"
                         },
                         new
                         {
-                            Id = "97a648ab-8710-4c9b-be70-c6cd5fd23e7a",
+                            Id = "24ed2eeb-94f2-4120-a348-98ba00b68c39",
                             Name = "bedrijf",
                             NormalizedName = "BEDRIJF"
                         },
                         new
                         {
-                            Id = "cc42b525-7ea5-41a6-879d-cc50b450734a",
+                            Id = "3a8c9cc5-31a2-4095-8c46-844e86eb00da",
                             Name = "zakelijke_huurder",
                             NormalizedName = "ZAKELIJKE_HUURDER"
                         },
                         new
                         {
-                            Id = "fb63803c-82ec-4593-b9fc-175f5e3b07ae",
+                            Id = "2186960b-d8f0-48aa-89fd-71009e3494d6",
                             Name = "particuliere_huurder",
                             NormalizedName = "PARTICULIERE_HUURDER"
                         });
@@ -391,6 +391,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VoertuigId")
