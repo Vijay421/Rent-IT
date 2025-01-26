@@ -46,11 +46,14 @@ export default function ExpenditureReview({ uitgave, setUitgave }) {
     }
 
     async function handleUitgaven() {
+        if (beschrijving.length === 0) {
+            window.alert("Vul een beschrijving in.");
+            return;
+        }
+
         const response = await changeVoertuigUitgaveStatus();
-        console.log(response);
 
         setUitgave(old => {
-            debugger;
             const copy = [...old];
             const filtered = copy.filter(aanvraag => aanvraag.voertuigId != response.voertuigId);
             return filtered;
@@ -90,7 +93,6 @@ ExpenditureReview.propTypes = {
         kenteken: PropTypes.string.isRequired,
         startdatum: PropTypes.string.isRequired,
         einddatum: PropTypes.string.isRequired,
-        wettelijkenaam: PropTypes.string.isRequired,
         rijbewijsnummer: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired
     }).isRequired,
